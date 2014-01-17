@@ -1,0 +1,31 @@
+/libs/autobahn-0.5.0.jar
+
+/libs/jackson-core-asl-1.9.7.jar
+
+/libs/jackson-mapper-asl-1.9.7.jar
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+
+# Local configuration file (sdk path, etc)
+local.properties
+.settings
+/
+
+
+/.project
+/.classpath
+
+/proguard-project.txt

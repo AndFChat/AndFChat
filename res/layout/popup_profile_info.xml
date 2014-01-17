@@ -1,0 +1,97 @@
+<!--
+      This file is part of AndFChat.
+  
+      AndFChat is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+  
+      AndFChat is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+  
+      You should have received a copy of the GNU General Public License
+      along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"    
+   	android:gravity="center"
+  	android:background="@color/black">      
+    
+	<Button 
+   		android:id="@+id/buttonCloseInfo"
+        android:text="CLOSE"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+            
+    <LinearLayout     
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal">
+    	
+        <ImageView 
+            android:id="@+id/imageAvatar"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:contentDescription=""/>
+        
+        <LinearLayout 
+			android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical">
+            
+            <TextView 
+                android:id="@+id/textName"
+                android:text="[NAME]"
+                android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"/>
+            
+            <TextView 
+                android:id="@+id/textGender"
+                android:text="[GENDER]"
+                android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"/>
+            
+            <TextView 
+                android:id="@+id/textOrientation"
+                android:text="[ORIENTATION]"
+                android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"/>
+            
+            <TextView 
+                android:id="@+id/textDomSub"
+                android:text="[DOM/SUB]"
+                android:layout_width="fill_parent"
+            	android:layout_height="wrap_content"/>
+            
+        </LinearLayout>       		
+    </LinearLayout>
+    
+        <LinearLayout     
+        	android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="horizontal">
+            
+            <Button 
+                android:id="@+id/buttonPM"
+                android:text="PRIVATE MESSAGE"
+                android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"/>           
+            <Button 
+                android:id="@+id/buttonBookmark"
+                android:text="BOOKMARK"
+                android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"/>
+            <Button 
+                android:id="@+id/buttonDetails"
+                android:text="BROWSE DETAILS"
+                android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"/>
+            
+		</LinearLayout>    
+    
+</LinearLayout>

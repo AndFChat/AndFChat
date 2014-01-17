@@ -1,0 +1,144 @@
+<!--
+      This file is part of AndFChat.
+  
+      AndFChat is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+  
+      AndFChat is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+  
+      You should have received a copy of the GNU General Public License
+      along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainScreen" 
+    android:orientation="vertical">
+    
+    <LinearLayout         
+        android:id="@+id/chat_window"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"    
+    	android:orientation="horizontal">   
+    	        
+        <ListView 
+            android:id="@+id/sidebareLeft"
+            android:layout_height="fill_parent"
+            android:layout_width="90dp"
+            />        
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+	    	android:layout_height="fill_parent"
+	    	android:orientation="vertical">         
+                    
+            <LinearLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content" 
+			    android:layout_gravity="center_horizontal"   
+			    android:gravity="center_horizontal"
+		    	android:orientation="horizontal">
+	    	
+                <Button
+			        android:id="@+id/showDescription"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:onClick="showDescription"
+			        android:text="SHOW_DESCRIPTION"/>
+                
+                <TextView 
+                    android:id="@+id/channelName"
+            		android:layout_height="wrap_content"
+            		android:layout_width="wrap_content"
+            		android:gravity="center_horizontal"
+            		android:orientation="horizontal"
+            		android:textSize="20dp"
+            		android:textColor="@color/white"            		
+            		android:text="CHANNEL_NAME"
+            		/>
+                
+	                                    
+	            <LinearLayout
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"    
+			    	android:orientation="horizontal"
+			        android:layout_gravity="right"
+			        android:gravity="right"
+			    	>
+                
+	   			    <Button
+				        android:id="@+id/leaveButton"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:onClick="leaveActiveChat"
+				        android:layout_gravity="right"
+				        android:layout_alignParentRight="true"
+				        android:gravity="right"
+				        android:text="LEAVE_CHANNEL"/>
+	   			    
+   			    </LinearLayout>
+                
+            </LinearLayout> 
+            
+	        <ListView 
+	            android:id="@+id/chat"
+	            android:layout_weight="1.0"
+	            android:layout_height="0dp"
+	            android:layout_width="wrap_content"
+	            />            
+	         
+            <LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"    
+	    	android:orientation="horizontal">
+	        
+			    <EditText
+			        android:id="@+id/chatMessage"
+			        android:layout_width="0dp"
+			        android:layout_weight="1.0"
+			        android:layout_height="wrap_content"
+			        android:singleLine="true">
+			    </EditText>	
+			    
+			    <Button
+			        android:id="@+id/sendButton"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:onClick="sendMessage"
+			        android:text="SEND"/>
+			    
+		    </LinearLayout>       
+            
+        </LinearLayout>
+        
+        <TextView        
+			android:id="@+id/sidebarScroller"  	
+            android:layout_width="10dp"
+	    	android:layout_height="fill_parent"
+	    	android:clickable="true"
+	    	android:background="@android:color/darker_gray"/>        
+        
+        <LinearLayout
+            android:id="@+id/memberSidebar"
+         	android:layout_width="140dp"
+	    	android:layout_height="fill_parent"
+	    	android:orientation="horizontal" >	    	            
+            
+	        <ListView 
+	            android:id="@+id/chatmember"
+	            android:layout_height="fill_parent"
+	            android:layout_width="fill_parent"
+	            />
+	        
+        </LinearLayout>        
+        
+    </LinearLayout>
+
+</LinearLayout>
