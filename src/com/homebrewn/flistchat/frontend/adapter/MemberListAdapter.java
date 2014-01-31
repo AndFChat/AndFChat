@@ -21,45 +21,67 @@ package com.homebrewn.flistchat.frontend.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import roboguice.RoboGuice;
+import roboguice.event.EventManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.inject.Inject;
 import com.homebrewn.flistchat.R;
+import com.homebrewn.flistchat.core.connection.handler.PrivateMessageHandler;
+import com.homebrewn.flistchat.core.data.Chatroom;
+import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
+import com.homebrewn.flistchat.core.data.SessionData;
 import com.homebrewn.flistchat.core.util.FlistCharComparator;
 
 public class MemberListAdapter extends ArrayAdapter<FlistChar> {
 
-    private final FlistCharComparator comparator = new FlistCharComparator();
-    private final Context context;
+    private final static FlistCharComparator COMPARATOR = new FlistCharComparator();
+
+    @Inject
+    private ChatroomManager chatroomManager;
+    @Inject
+    private SessionData sessionData;
+    @Inject
+    protected EventManager eventManager;
+
+    private FlistChar activeCharacter;
 
     public MemberListAdapter(Context context) {
         super(context, R.layout.list_item_member, new ArrayList<FlistChar>());
-        this.context = context;
+
+        RoboGuice.getInjector(context).injectMembers(this);
     }
 
     public MemberListAdapter(Context context, List<FlistChar> chars) {
         super(context, R.layout.list_item_member, chars);
         if (chars.size() > 1) {
-            this.sort(comparator);
+            this.sort(COMPARATOR);
         }
-        this.context = context;
+
+        RoboGuice.getInjector(context).injectMembers(this);
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
+        final FlistChar character = this.getItem(position);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        rowView = inflater.inflate(R.layout.list_item_member, null);
-        FlistChar character = this.getItem(position);
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.list_item_member, null);
+        // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(character.toFormattedText());
+
+        // Set icon
         ImageView itemIcon = (ImageView)rowView.findViewById(R.id.itemIcon);
 
         switch (character.getStatus()) {
@@ -82,6 +104,54 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
         }
 
+        View userLabel = rowView.findViewById(R.id.userlabel);
+
+        userLabel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!sessionData.getCharacterName().equals(character.getName())) {
+                    activeCharacter = character;
+                    notifyDataSetChanged();
+                }
+            }
+        });
+
+        if (activeCharacter != null && activeCharacter.getName().equals(character.getName())) {
+            rowView.findViewById(R.id.pmuser).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Chatroom chatroom;
+                    if (chatroomManager.hasOpenPrivateConversation(activeCharacter) == false) {
+                        chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter);
+                    } else {
+                        chatroom = chatroomManager.getPrivateChatFor(activeCharacter);
+                    }
+
+                    activeCharacter = null;
+                    chatroomManager.setActiveChat(chatroom);
+                    eventManager.fire(chatroom);
+                }
+            });
+
+            rowView.findViewById(R.id.details).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.f-list.net/c/" + character.getName()));
+                    getContext().startActivity(browserIntent);
+                }
+            });
+
+            rowView.findViewById(R.id.closeUsermenu).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    activeCharacter = null;
+                    notifyDataSetChanged();
+                }
+            });
+        } else {
+            rowView.findViewById(R.id.usermenu).setVisibility(View.GONE);
+        }
+
         return rowView;
     }
 
@@ -93,7 +163,7 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
 
         super.add(object);
         if (this.getCount() > 1) {
-            this.sort(comparator);
+            this.sort(COMPARATOR);
         }
     }
 

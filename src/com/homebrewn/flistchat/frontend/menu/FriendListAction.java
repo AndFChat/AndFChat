@@ -33,13 +33,12 @@ import android.widget.PopupWindow;
 import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
-import com.homebrewn.flistchat.frontend.actions.CanOpenUserDetails;
 import com.homebrewn.flistchat.frontend.adapter.MemberListAdapter;
 import com.homebrewn.flistchat.frontend.popup.FListPopupWindow;
 
 public class FriendListAction {
 
-    public static void open(Activity activity, CanOpenUserDetails openUserDetails) {
+    public static void open(Activity activity) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layout = inflater.inflate(R.layout.popup_friendlist, null);

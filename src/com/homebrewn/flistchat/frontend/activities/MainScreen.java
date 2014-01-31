@@ -22,8 +22,6 @@ import roboguice.activity.RoboFragmentActivity;
 import roboguice.event.Observes;
 import roboguice.util.Ln;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
@@ -32,27 +30,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.google.inject.Inject;
 import com.homebrewn.flistchat.R;
-import com.homebrewn.flistchat.core.connection.FeedbackListner;
-import com.homebrewn.flistchat.core.connection.FlistHttpClient;
 import com.homebrewn.flistchat.core.connection.FlistWebSocketConnection;
-import com.homebrewn.flistchat.core.connection.handler.PrivateMessageHandler;
-import com.homebrewn.flistchat.core.data.CharRelation;
 import com.homebrewn.flistchat.core.data.Chatroom;
 import com.homebrewn.flistchat.core.data.ChatroomManager;
-import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.core.data.SessionData;
 import com.homebrewn.flistchat.core.util.SmileyReader;
 import com.homebrewn.flistchat.frontend.fragments.ChannelListFragment;
 import com.homebrewn.flistchat.frontend.fragments.ChatFragment;
 import com.homebrewn.flistchat.frontend.fragments.UserListFragment;
 import com.homebrewn.flistchat.frontend.menu.DisconnectAction;
+import com.homebrewn.flistchat.frontend.menu.FriendListAction;
 import com.homebrewn.flistchat.frontend.menu.JoinChannelAction;
 import com.homebrewn.flistchat.frontend.popup.FListPopupWindow;
 
@@ -76,7 +69,7 @@ public class MainScreen extends RoboFragmentActivity {
 
     private boolean paused = true;
 
-    private PopupWindow pwindo = null;
+    private final PopupWindow pwindo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,113 +211,6 @@ public class MainScreen extends RoboFragmentActivity {
         paused = true;
     }
 
-    public void openUserDetails(final FlistChar character) {
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View layout = inflater.inflate(R.layout.popup_profile_info, null);
-        pwindo = new PopupWindow(layout);
-        pwindo.setFocusable(true);
-
-        layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        pwindo.setHeight(layout.getMeasuredHeight());
-        pwindo.setWidth(layout.getMeasuredWidth());
-        pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
-        TextView nameText = (TextView)layout.findViewById(R.id.textName);
-        nameText.setText(character.toFormattedText());
-
-        TextView genderText = (TextView)layout.findViewById(R.id.textGender);
-        genderText.setText(character.getGender().getName());
-
-        Button buttonCloseInfo = (Button)layout.findViewById(R.id.buttonCloseInfo);
-        buttonCloseInfo.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeUserDetails();
-            }
-        });
-
-        Button buttonPM = (Button)layout.findViewById(R.id.buttonPM);
-        buttonPM.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Chatroom Chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, character);
-                closeUserDetails();
-                chatroomManager.setActiveChat(Chatroom);
-            }
-        });
-
-        Button buttonBookmark = (Button)layout.findViewById(R.id.buttonBookmark);
-        if (character.isFriend() || character.isBookmarked()) {
-            buttonBookmark.setText("UNBOOKMARK");
-            buttonBookmark.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    FeedbackListner removeBookmarkFeedback = new FeedbackListner() {
-
-                        @Override
-                        public void onResponse(String response) {
-                            character.removeRelation(CharRelation.BOOKMARKED);
-                        }
-
-                        @Override
-                        public void onError(Exception ex) {}
-
-                    };
-
-                    String account = sessionData.getAccount();
-                    String ticketId = sessionData.getTicket();
-                    String charName = character.getName();
-
-                    FlistHttpClient.removeBookmark(account, ticketId, charName, removeBookmarkFeedback);
-                    closeUserDetails();
-                }
-            });
-        } else {
-            buttonBookmark.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    FeedbackListner addBookmarkFeedback = new FeedbackListner() {
-
-                        @Override
-                        public void onResponse(String response) {
-                            character.addRelation(CharRelation.BOOKMARKED);
-                        }
-
-                        @Override
-                        public void onError(Exception ex) {}
-
-                    };
-
-                    String account = sessionData.getAccount();
-                    String ticketId = sessionData.getTicket();
-                    String charName = character.getName();
-
-                    FlistHttpClient.addBookmark(account, ticketId, charName, addBookmarkFeedback);
-                    closeUserDetails();
-                }
-            });
-        }
-
-        Button buttonDetails = (Button)layout.findViewById(R.id.buttonDetails);
-        buttonDetails.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Uri uriUrl = Uri.parse(DETAIL_URL + character.getName());
-                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                startActivity(launchBrowser);
-            }
-
-        });
-    }
-
-    public void closeUserDetails() {
-        pwindo.dismiss();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -341,7 +227,7 @@ public class MainScreen extends RoboFragmentActivity {
                 JoinChannelAction.open(this);
                 return true;
             case R.id.action_open_friendlist:
-//                FriendListAction.open(this, this);
+                FriendListAction.open(this);
                 return true;
             case R.id.action_disconnect:
                 DisconnectAction.disconnect(this);
