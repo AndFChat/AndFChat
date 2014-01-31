@@ -24,36 +24,34 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import roboguice.util.Ln;
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class FlistHttpClient {
 
-    private final static String TAG = FlistHttpClient.class.getSimpleName();
-
-    private final static String logInUri = "https://www.f-list.net/json/getApiTicket.php?account={1}&password={2}";
-    private final static String addBookmarkUri = "https://www.f-list.net/json/api/bookmark-add.php?account={1}&ticket={2}&name={3}";
-    private final static String removeBookmarkUri = "https://www.f-list.net/json/api/bookmark-remove.php?account={1}&ticket={2}&name={3}";
+    private final static String logInUri = "http://www.f-list.net/json/getApiTicket.php?account={1}&password={2}";
+    private final static String addBookmarkUri = "http://www.f-list.net/json/api/bookmark-add.php?account={1}&ticket={2}&name={3}";
+    private final static String removeBookmarkUri = "http://www.f-list.net/json/api/bookmark-remove.php?account={1}&ticket={2}&name={3}";
 
 
-    public void logIn(String account, String password, FeedbackListner feedbackListner) {
-        this.sendMessage(feedbackListner, logInUri, account, password);
+    public static void logIn(String account, String password, FeedbackListner feedbackListner) {
+        sendMessage(feedbackListner, logInUri, account, password);
     }
 
-    public void addBookmark(String account, String ticket, String name, FeedbackListner feedbackListner) {
-        this.sendMessage(feedbackListner, addBookmarkUri, account, ticket, name);
+    public static void addBookmark(String account, String ticket, String name, FeedbackListner feedbackListner) {
+        sendMessage(feedbackListner, addBookmarkUri, account, ticket, name);
     }
 
-    public void removeBookmark(String account, String ticket, String name, FeedbackListner feedbackListner) {
-        this.sendMessage(feedbackListner, removeBookmarkUri, account, ticket, name);
+    public static void removeBookmark(String account, String ticket, String name, FeedbackListner feedbackListner) {
+        sendMessage(feedbackListner, removeBookmarkUri, account, ticket, name);
     }
 
-    private void sendMessage(FeedbackListner feedbackListner, String url, String... arguments) {
+    private static void sendMessage(FeedbackListner feedbackListner, String url, String... arguments) {
         for (int i = 1; i < arguments.length + 1; i++) {
             url = url.replace("{" + i + "}", arguments[i - 1]);
         }
 
-        Log.d(TAG, "Open url: " + url);
+        Ln.d("Open url");
         HttpWebCall webCall = new HttpWebCall(url, feedbackListner);
         webCall.execute();
     }
@@ -63,7 +61,7 @@ public class FlistHttpClient {
         return s.hasNext() ? s.next() : "";
     }
 
-    private class HttpWebCall extends AsyncTask<Void, Void, Void> {
+    private static class HttpWebCall extends AsyncTask<Void, Void, Void> {
 
         private final String uri;
         private final FeedbackListner feedbackListner;
@@ -81,7 +79,7 @@ public class FlistHttpClient {
 
                 HttpResponse response = client.execute(request);
                 String responseString = convertStreamToString(response.getEntity().getContent());
-                Log.d(TAG, "Got Response: " + responseString);
+                Ln.d("Got Response: " + responseString);
                 feedbackListner.onResponse(responseString);
 
                 return null;

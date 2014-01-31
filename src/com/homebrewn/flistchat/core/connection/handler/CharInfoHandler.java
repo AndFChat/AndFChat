@@ -29,17 +29,12 @@ import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.FlistChar;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Tracks status changes for user (every user online).
  * @author AndFChat
  */
 public class CharInfoHandler extends TokenHandler {
-
-    public CharInfoHandler(SessionData sessionData) {
-        super(sessionData);
-    }
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
@@ -49,7 +44,7 @@ public class CharInfoHandler extends TokenHandler {
             String status = json.getString("status");
             String statusmsg = json.getString("statusmsg");
 
-            FlistChar flistChar = sessionData.getCharHandler().findCharacter(name);
+            FlistChar flistChar = characterManager.findCharacter(name);
             flistChar.setStatus(status, statusmsg);
 
             if (sessionData.getSessionSettings().showStatusChanges()) {

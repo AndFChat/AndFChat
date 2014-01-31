@@ -26,11 +26,10 @@ import org.json.JSONObject;
 
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
-import com.homebrewn.flistchat.core.data.CharacterHandler;
+import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.Chatroom;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Handles incoming messages for channel and Broadcasts
@@ -38,10 +37,6 @@ import com.homebrewn.flistchat.core.data.SessionData;
  *
  */
 public class MessageHandler extends TokenHandler {
-
-    public MessageHandler(SessionData sessionData) {
-        super(sessionData);
-    }
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) {
@@ -52,14 +47,14 @@ public class MessageHandler extends TokenHandler {
                 String message = jsonObject.getString("message");
                 String channel = jsonObject.getString("channel");
 
-                Chatroom log = ChatroomHandler.getChatroom(channel);
-                log.addMessage(message, sessionData.getCharHandler().findCharacter(character), new Date());
+                Chatroom log = chatroomManager.getChatroom(channel);
+                log.addMessage(message, characterManager.findCharacter(character), new Date());
 
                 log.setHasNewMessage(true);
             }
             else if(token == ServerToken.BRO) {
                 String message = jsonObject.getString("message");
-                ChatroomHandler.addBroadcast(new ChatEntry(message, sessionData.getCharHandler().findCharacter(CharacterHandler.USER_SYSTEM), new Date(), ChatEntryType.NOTATION_SYSTEM));
+                chatroomManager.addBroadcast(new ChatEntry(message, characterManager.findCharacter(CharacterManager.USER_SYSTEM), new Date(), ChatEntryType.NOTATION_SYSTEM));
             }
         } catch (JSONException e) {
             e.printStackTrace();

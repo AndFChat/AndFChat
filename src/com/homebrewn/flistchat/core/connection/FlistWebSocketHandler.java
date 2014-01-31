@@ -26,8 +26,13 @@ import java.util.Map;
 
 import org.json.JSONException;
 
-import android.util.Log;
+import roboguice.RoboGuice;
+import roboguice.util.Ln;
+import android.content.Context;
 
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import com.homebrewn.flistchat.core.connection.handler.ChannelDescriptionHandler;
 import com.homebrewn.flistchat.core.connection.handler.ChannelListHandler;
 import com.homebrewn.flistchat.core.connection.handler.CharInfoHandler;
@@ -42,9 +47,10 @@ import com.homebrewn.flistchat.core.connection.handler.PingHandler;
 import com.homebrewn.flistchat.core.connection.handler.PrivateMessageHandler;
 import com.homebrewn.flistchat.core.connection.handler.TokenHandler;
 import com.homebrewn.flistchat.core.data.AppProperties;
-import com.homebrewn.flistchat.core.data.CharacterHandler;
+import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
+import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.core.data.SessionData;
 
@@ -54,34 +60,43 @@ import de.tavendo.autobahn.WebSocketHandler;
  * Handles all input send from server, using the ServerToken to decide which TokenHandler should handle the input.
  * @author AndFChat
  */
+@Singleton
 public class FlistWebSocketHandler extends WebSocketHandler {
+
+    @Inject
+    protected ChatroomManager chatroomManager;
+    @Inject
+    protected CharacterManager characterManager;
+    @Inject
+    protected SessionData sessionData;
 
     private final HashMap<ServerToken, TokenHandler> handlerMap = new HashMap<ServerToken, TokenHandler>();
     private final Map<ServerToken, List<FeedbackListner>> feedbackListnerMap = new HashMap<ServerToken, List<FeedbackListner>>();
 
-    private static final String TAG = FlistWebSocketHandler.class.getName();
-
-    private final SessionData sessionData;
-
-    public FlistWebSocketHandler(SessionData sessionData) {
+    @Inject
+    public FlistWebSocketHandler(Context context) {
 
         // Initialize all handler with there tokens, they can handle.
         List<TokenHandler> availableTokenHandler = new ArrayList<TokenHandler>();
 
-        availableTokenHandler.add(new PingHandler(sessionData));
-        availableTokenHandler.add(new JoinedChannel(sessionData));
-        availableTokenHandler.add(new MessageHandler(sessionData));
-        availableTokenHandler.add(new CharListHandler(sessionData));
-        availableTokenHandler.add(new CharInfoHandler(sessionData));
-        availableTokenHandler.add(new PrivateMessageHandler(sessionData));
-        availableTokenHandler.add(new ChannelListHandler(sessionData));
-        availableTokenHandler.add(new FirstConnectionHandler(sessionData));
-        availableTokenHandler.add(new FriendListHandler(sessionData));
-        availableTokenHandler.add(new LeftChannelHandler(sessionData));
-        availableTokenHandler.add(new ChannelDescriptionHandler(sessionData));
-        availableTokenHandler.add(new ErrorMessageHandler(sessionData));
+        availableTokenHandler.add(new PingHandler());
+        availableTokenHandler.add(new JoinedChannel());
+        availableTokenHandler.add(new MessageHandler());
+        availableTokenHandler.add(new CharListHandler());
+        availableTokenHandler.add(new CharInfoHandler());
+        availableTokenHandler.add(new PrivateMessageHandler());
+        availableTokenHandler.add(new ChannelListHandler());
+        availableTokenHandler.add(new FirstConnectionHandler());
+        availableTokenHandler.add(new FriendListHandler());
+        availableTokenHandler.add(new LeftChannelHandler());
+        availableTokenHandler.add(new ChannelDescriptionHandler());
+        availableTokenHandler.add(new ErrorMessageHandler());
+
+
+        Injector injector = RoboGuice.getInjector(context);
 
         for (TokenHandler handler : availableTokenHandler) {
+            injector.injectMembers(handler);
             for (ServerToken token : handler.getAcceptableTokens()) {
                 if (!handlerMap.containsKey(token)) {
                     handlerMap.put(token, handler);
@@ -91,34 +106,32 @@ public class FlistWebSocketHandler extends WebSocketHandler {
             }
         }
 
-        Log.d(TAG, "Initialized TokenHandler, tokens, listend to: " + handlerMap.keySet().toString());
-
-        this.sessionData = sessionData;
+        Ln.d("Initialized TokenHandler, tokens, listend to: " + handlerMap.keySet().toString());
     }
 
     @Override
     public void onOpen() {
-       Log.d(TAG, "Status: Connected");
+       Ln.d("Status: Connected");
     }
 
     @Override
     public void onTextMessage(String payload) {
-        Log.v(TAG, "Incoming message: " + payload);
+        Ln.v("Incoming message: " + payload);
 
         if (sessionData.getSessionSettings().useDebugChannel()) {
-            FlistChar systemChar = sessionData.getCharHandler().findCharacter(CharacterHandler.USER_SYSTEM_INPUT);
-            sessionData.getChatroomHandler().getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE));
+            FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
+            chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE));
         }
 
         ServerToken token = null;
         try {
             token = ServerToken.valueOf(payload.substring(0, 3));
         } catch (IllegalArgumentException e) {
-            Log.w(TAG, "Can't find token '" + payload.substring(0, 3) + "' in ServerToken-Enum! -> Ignoring Message");
+            Ln.w("Can't find token '" + payload.substring(0, 3) + "' in ServerToken-Enum! -> Ignoring Message");
             return;
         }
 
-        Log.d(TAG, "found ServerToken: " + token.name());
+        Ln.d("found ServerToken: " + token.name());
 
         if (handlerMap.containsKey(token)) {
             try {
@@ -130,17 +143,17 @@ public class FlistWebSocketHandler extends WebSocketHandler {
                     handlerMap.get(token).incomingMessage(token, "", feedbackListnerMap.remove(token));
                 }
             } catch (JSONException ex) {
-                Log.e(TAG, "Can't parse json: " + payload);
+                Ln.e("Can't parse json: " + payload);
             }
         } else {
-            Log.e(TAG, "Can't find handler for token '" + token + "' -> Ignoring Message");
+            Ln.e("Can't find handler for token '" + token + "' -> Ignoring Message");
         }
 
     }
 
     @Override
     public void onClose(int code, String reason) {
-       Log.d(TAG, "Status: Connection closed: " + reason);
+       Ln.d("Status: Connection closed: " + reason);
     }
 
     public void addFeedbackListner(ServerToken serverToken, FeedbackListner feedbackListner) {

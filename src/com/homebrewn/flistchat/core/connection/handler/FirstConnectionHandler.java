@@ -22,9 +22,10 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import com.google.inject.Inject;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
+import com.homebrewn.flistchat.core.connection.FlistWebSocketConnection;
 import com.homebrewn.flistchat.core.connection.ServerToken;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * After Identification this handler is called first.
@@ -32,15 +33,13 @@ import com.homebrewn.flistchat.core.data.SessionData;
  */
 public class FirstConnectionHandler extends TokenHandler {
 
-    public FirstConnectionHandler(SessionData sessionData) {
-        super(sessionData);
-    }
+    @Inject
+    private FlistWebSocketConnection connection;
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
-        sessionData.getConnection().joinChannel("Frontpage");
-        sessionData.setIsConnected(true);
-        sessionData.getConnection().requestOfficialChannels();
+        connection.joinChannel("Frontpage");
+        connection.requestOfficialChannels();
     }
 
     @Override

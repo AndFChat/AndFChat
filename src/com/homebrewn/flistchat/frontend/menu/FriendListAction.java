@@ -21,6 +21,7 @@ package com.homebrewn.flistchat.frontend.menu;
 import java.util.ArrayList;
 import java.util.List;
 
+import roboguice.RoboGuice;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
@@ -30,7 +31,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.homebrewn.flistchat.R;
-import com.homebrewn.flistchat.backend.data.StaticDataContainer;
+import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.frontend.actions.CanOpenUserDetails;
 import com.homebrewn.flistchat.frontend.adapter.MemberListAdapter;
@@ -47,8 +48,8 @@ public class FriendListAction {
 
         final ListView friendList = (ListView)layout.findViewById(R.id.channlesToJoin);
 
-        List<FlistChar> friendsData = new ArrayList<FlistChar>(StaticDataContainer.sessionData.getOnlineFriends());
-        MemberListAdapter memberListData = new MemberListAdapter(activity, openUserDetails, friendsData);
+        List<FlistChar> friendsData = new ArrayList<FlistChar>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getFriendList().getOnlineFriends());
+        MemberListAdapter memberListData = new MemberListAdapter(activity, friendsData);
         friendList.setAdapter(memberListData);
     }
 }

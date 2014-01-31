@@ -24,24 +24,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
+import roboguice.util.Ln;
 
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.Channel;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Reads and saves official channels delivered by CHA-Token.
  * @author AndFChat
  */
 public class ChannelListHandler extends TokenHandler {
-
-    private static final String TAG = ChannelListHandler.class.getSimpleName();
-
-    public ChannelListHandler(SessionData sessionData) {
-        super(sessionData);
-    }
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
@@ -50,8 +43,8 @@ public class ChannelListHandler extends TokenHandler {
             JSONArray jsonArray = json.getJSONArray("channels");
             for (int i = 0; i < jsonArray.length(); i++) {
                 String channelName = jsonArray.getJSONObject(i).getString("name");
-                Log.i(TAG, "found channel: " + channelName);
-                sessionData.addOfficialChannel(channelName);
+                Ln.i("found channel: " + channelName);
+                chatroomManager.addOfficialChannel(channelName);
             }
         }
         else if (token == ServerToken.ORS) {
@@ -64,8 +57,8 @@ public class ChannelListHandler extends TokenHandler {
                 int users = jsonArray.getJSONObject(i).getInt("characters");
 
                 Channel channel = new Channel(channelId, channelName, users);
-                Log.i(TAG, "Found channel: " + channel.toString());
-                sessionData.addPrivateChannel(channel);
+                Ln.i("Found channel: " + channel.toString());
+                chatroomManager.addPrivateChannel(channel);
             }
 
             // Feedback, private channel list

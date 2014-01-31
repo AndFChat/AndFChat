@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import roboguice.RoboGuice;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
@@ -37,16 +38,22 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.google.inject.Inject;
 import com.homebrewn.flistchat.R;
-import com.homebrewn.flistchat.backend.data.StaticDataContainer;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
+import com.homebrewn.flistchat.core.connection.FlistWebSocketConnection;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.Channel;
+import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.frontend.popup.FListPopupWindow;
 
 public class JoinChannelAction {
 
     public static void open(Activity activity) {
+
+        final ChatroomManager chatroomManager = RoboGuice.getInjector(activity).getInstance(ChatroomManager.class);
+        final FlistWebSocketConnection connection = RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class);
+
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layout = inflater.inflate(R.layout.popup_add_channels, null);
@@ -56,7 +63,7 @@ public class JoinChannelAction {
 
         final ListView channelList = (ListView)layout.findViewById(R.id.channlesToJoin);
 
-        final CheckboxAdapter adapter = new CheckboxAdapter(activity, StaticDataContainer.sessionData.getOfficialChannels());
+        final CheckboxAdapter adapter = new CheckboxAdapter(activity, chatroomManager.getOfficialChannels());
         channelList.setAdapter(adapter);
 
         Button showPublicChannel = (Button)layout.findViewById(R.id.publicChannelButton);
@@ -65,7 +72,7 @@ public class JoinChannelAction {
             @Override
             public void onClick(View v) {
                 adapter.clear();
-                adapter.replaceChannels(StaticDataContainer.sessionData.getOfficialChannels());
+                adapter.replaceChannels(chatroomManager.getOfficialChannels());
                 adapter.setPrivate(false);
             }
         });
@@ -80,7 +87,7 @@ public class JoinChannelAction {
 
                     @Override
                     public void onResponse(String response) {
-                        adapter.replaceChannels(StaticDataContainer.sessionData.getPrivateChannelNames());
+                        adapter.replaceChannels(chatroomManager.getPrivateChannelNames());
                         adapter.setPrivate(true);
                     }
 
@@ -88,13 +95,18 @@ public class JoinChannelAction {
                     public void onError(Exception ex) {}
                 };
 
-                StaticDataContainer.sessionData.getConnection().registerFeedbackListner(ServerToken.ORS, feedbackListner);
-                StaticDataContainer.sessionData.getConnection().askForPrivateChannel();
+                connection.registerFeedbackListner(ServerToken.ORS, feedbackListner);
+                connection.askForPrivateChannel();
             }
         });
     }
 
     public static class CheckboxAdapter extends ArrayAdapter<String> {
+
+        @Inject
+        private ChatroomManager chatroomManager;
+        @Inject
+        private FlistWebSocketConnection connection;
 
         private List<String> channelNames = new ArrayList<String>();
         private boolean isPrivat = false;
@@ -102,6 +114,8 @@ public class JoinChannelAction {
         public CheckboxAdapter(Context context, Set<String> content) {
             super(context, R.layout.list_item_checkbox);
             this.replaceChannels(content);
+
+            RoboGuice.getInjector(context).injectMembers(this);
         }
 
         @Override
@@ -117,7 +131,7 @@ public class JoinChannelAction {
             textView.setText(this.getItem(position));
 
             final CheckBox checkbox = (CheckBox)rowView.findViewById(R.id.checkbox);
-            checkbox.setChecked(StaticDataContainer.sessionData.getChatroomHandler().getChatroom(channelName) != null);
+            checkbox.setChecked(chatroomManager.getChatroom(channelName) != null);
             checkbox.setClickable(false);
 
             rowView.setOnClickListener(new OnClickListener() {
@@ -126,12 +140,12 @@ public class JoinChannelAction {
                 public void onClick(View v) {
                     if (!checkbox.isChecked()) {
                         if (isPrivat) {
-                            Channel channel = StaticDataContainer.sessionData.getPrivateChannelByName(channelName);
+                            Channel channel = chatroomManager.getPrivateChannelByName(channelName);
                             if (channel != null) {
-                                StaticDataContainer.sessionData.getConnection().joinChannel(channel.getChannelId());
+                                connection.joinChannel(channel.getChannelId());
                             }
                         } else {
-                            StaticDataContainer.sessionData.getConnection().joinChannel(channelName);
+                            connection.joinChannel(channelName);
                         }
                         checkbox.setChecked(true);
                     }

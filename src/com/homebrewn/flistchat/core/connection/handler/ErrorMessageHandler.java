@@ -26,11 +26,10 @@ import org.json.JSONObject;
 
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
-import com.homebrewn.flistchat.core.data.CharacterHandler;
+import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.FlistChar;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Displays error messages send from server at the active chat.
@@ -38,15 +37,11 @@ import com.homebrewn.flistchat.core.data.SessionData;
  */
 public class ErrorMessageHandler extends TokenHandler {
 
-    public ErrorMessageHandler(SessionData sessionData) {
-        super(sessionData);
-    }
-
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         if (token == ServerToken.ERR) {
             JSONObject json = new JSONObject(msg);
-            FlistChar systemChar = sessionData.getCharHandler().findCharacter(CharacterHandler.USER_SYSTEM);
+            FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
             ChatEntry chatEntry = new ChatEntry(json.getString("message"), systemChar, new Date(), ChatEntryType.ERROR);
             this.addChatEntryToActiveChat(chatEntry);
         }

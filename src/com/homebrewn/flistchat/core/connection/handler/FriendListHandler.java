@@ -26,7 +26,6 @@ import org.json.JSONObject;
 
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Adds all friends/bookmarks to the internal friend-list.
@@ -34,16 +33,12 @@ import com.homebrewn.flistchat.core.data.SessionData;
  */
 public class FriendListHandler  extends TokenHandler {
 
-    public FriendListHandler(SessionData sessionData) {
-        super(sessionData);
-    }
-
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         JSONObject json = new JSONObject(msg);
         JSONArray friends = json.getJSONArray("characters");
         for (int i = 0; i < friends.length(); i++) {
-            sessionData.addFriend(friends.getString(i));
+            characterManager.getFriendList().addFriend(friends.getString(i));
         }
     }
 

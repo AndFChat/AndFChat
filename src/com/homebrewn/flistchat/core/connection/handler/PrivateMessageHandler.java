@@ -28,9 +28,8 @@ import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.Channel;
 import com.homebrewn.flistchat.core.data.Chatroom;
-import com.homebrewn.flistchat.core.data.ChatroomHandler;
+import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Handles private messages send to user.
@@ -40,10 +39,6 @@ public class PrivateMessageHandler extends TokenHandler {
 
     public final static String PRIVATE_MESSAGE_TOKEN = "PRIV:::";
 
-    public PrivateMessageHandler(SessionData sessionData) {
-        super(sessionData);
-    }
-
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         JSONObject jsonObject = new JSONObject(msg);
@@ -51,13 +46,13 @@ public class PrivateMessageHandler extends TokenHandler {
         String character = jsonObject.getString("character");
         String message = jsonObject.getString("message");
 
-        Chatroom Chatroom = ChatroomHandler.getChatroom(PRIVATE_MESSAGE_TOKEN + character);
-        if (Chatroom == null) {
-            Chatroom = openPrivateChat(ChatroomHandler, sessionData.getCharHandler().findCharacter(character));
+        Chatroom chatroom = chatroomManager.getChatroom(PRIVATE_MESSAGE_TOKEN + character);
+        if (chatroom == null) {
+            chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character));
         }
 
-        Chatroom.addMessage(message, sessionData.getCharHandler().findCharacter(character), new Date());
-        Chatroom.setHasNewMessage(true);
+        chatroom.addMessage(message, characterManager.findCharacter(character), new Date());
+        chatroom.setHasNewMessage(true);
     }
 
     @Override
@@ -65,12 +60,12 @@ public class PrivateMessageHandler extends TokenHandler {
         return new ServerToken[]{ServerToken.PRI};
     }
 
-    public static Chatroom openPrivateChat(ChatroomHandler ChatroomHandler, FlistChar character) {
+    public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FlistChar character) {
         String channelname = character.getName();
 
-        Chatroom Chatroom = new Chatroom(new Channel(PRIVATE_MESSAGE_TOKEN + channelname, channelname), character);
-        ChatroomHandler.addChatroom(Chatroom);
+        Chatroom chatroom = new Chatroom(new Channel(PRIVATE_MESSAGE_TOKEN + channelname, channelname), character);
+        chatroomManager.addChatroom(chatroom);
 
-        return Chatroom;
+        return chatroom;
     }
 }

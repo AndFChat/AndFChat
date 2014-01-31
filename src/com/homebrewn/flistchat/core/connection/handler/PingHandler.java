@@ -20,10 +20,11 @@ package com.homebrewn.flistchat.core.connection.handler;
 
 import java.util.List;
 
-import com.homebrewn.flistchat.core.connection.FeedbackListner;
+import com.google.inject.Inject;
 import com.homebrewn.flistchat.core.connection.ClientToken;
+import com.homebrewn.flistchat.core.connection.FeedbackListner;
+import com.homebrewn.flistchat.core.connection.FlistWebSocketConnection;
 import com.homebrewn.flistchat.core.connection.ServerToken;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * HelloServerI'mAlivePingHandler
@@ -31,14 +32,12 @@ import com.homebrewn.flistchat.core.data.SessionData;
  */
 public class PingHandler extends TokenHandler {
 
-    public PingHandler(SessionData sessionData) {
-        super(sessionData);
-    }
-
+    @Inject
+    private FlistWebSocketConnection connection;
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) {
-        sessionData.getConnection().sendMessage(ClientToken.PIN);
+        connection.sendMessage(ClientToken.PIN);
     }
 
     @Override

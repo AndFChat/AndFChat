@@ -28,7 +28,6 @@ import android.text.Spannable;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.Chatroom;
-import com.homebrewn.flistchat.core.data.SessionData;
 import com.homebrewn.flistchat.core.util.BBCodeReader;
 
 /**
@@ -36,10 +35,6 @@ import com.homebrewn.flistchat.core.util.BBCodeReader;
  * @author AndFChat
  */
 public class ChannelDescriptionHandler extends TokenHandler {
-
-    public ChannelDescriptionHandler(SessionData sessionData) {
-        super(sessionData);
-    }
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
@@ -50,7 +45,7 @@ public class ChannelDescriptionHandler extends TokenHandler {
 
             Spannable bbCodedDescription = BBCodeReader.createSpannableWithBBCode(description);
 
-            Chatroom Chatroom = ChatroomHandler.getChatroom(channelId);
+            Chatroom Chatroom = chatroomManager.getChatroom(channelId);
             if (Chatroom != null) {
                 Chatroom.setDescription(bbCodedDescription);
             }

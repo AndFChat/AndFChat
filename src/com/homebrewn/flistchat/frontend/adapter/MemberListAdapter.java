@@ -1,16 +1,16 @@
 /*******************************************************************************
  *     This file is part of AndFChat.
- * 
+ *
  *     AndFChat is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     AndFChat is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -24,7 +24,6 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -33,27 +32,23 @@ import android.widget.TextView;
 import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.core.util.FlistCharComparator;
-import com.homebrewn.flistchat.frontend.actions.CanOpenUserDetails;
 
 public class MemberListAdapter extends ArrayAdapter<FlistChar> {
 
-    private FlistCharComparator comparator = new FlistCharComparator();
-    private Context context;
-    private final CanOpenUserDetails target;
+    private final FlistCharComparator comparator = new FlistCharComparator();
+    private final Context context;
 
-    public MemberListAdapter(Context context, CanOpenUserDetails target) {
+    public MemberListAdapter(Context context) {
         super(context, R.layout.list_item_member, new ArrayList<FlistChar>());
         this.context = context;
-        this.target = target;
     }
 
-    public MemberListAdapter(Context context, CanOpenUserDetails target, List<FlistChar> chars) {
+    public MemberListAdapter(Context context, List<FlistChar> chars) {
         super(context, R.layout.list_item_member, chars);
         if (chars.size() > 1) {
             this.sort(comparator);
         }
         this.context = context;
-        this.target = target;
     }
 
     @Override
@@ -87,15 +82,6 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
         }
 
-
-        if (target != null) {
-            rowView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    target.openUserDetails(getItem(position));
-                }
-            });
-        }
         return rowView;
     }
 

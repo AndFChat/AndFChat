@@ -20,15 +20,20 @@ package com.homebrewn.flistchat.core.data;
 
 import java.util.HashMap;
 
-public class CharacterHandler {
+import com.google.inject.Singleton;
+
+@Singleton
+public class CharacterManager {
     private final HashMap<String, FlistChar> knownCharacters = new HashMap<String, FlistChar>();
+
+    private final Friendlist friendlist = new Friendlist(this);
 
     // Username for system accounts
     public static final String USER_SYSTEM = "System";
     public static final String USER_SYSTEM_OUTPUT = "Output";
     public static final String USER_SYSTEM_INPUT = "Input";
 
-    public CharacterHandler() {
+    public CharacterManager() {
         this.addCharacter(new FlistChar(USER_SYSTEM));
         this.addCharacter(new FlistChar(USER_SYSTEM_OUTPUT, Gender.MALE));
         this.addCharacter(new FlistChar(USER_SYSTEM_INPUT, Gender.FEMALE));
@@ -73,5 +78,13 @@ public class CharacterHandler {
 
     public void clear() {
         knownCharacters.clear();
+        // Reactivate
+        this.addCharacter(new FlistChar(USER_SYSTEM));
+        this.addCharacter(new FlistChar(USER_SYSTEM_OUTPUT, Gender.MALE));
+        this.addCharacter(new FlistChar(USER_SYSTEM_INPUT, Gender.FEMALE));
+    }
+
+    public Friendlist getFriendList() {
+        return friendlist;
     }
 }

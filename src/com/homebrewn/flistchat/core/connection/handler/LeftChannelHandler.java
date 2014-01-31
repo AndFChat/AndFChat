@@ -30,17 +30,12 @@ import com.homebrewn.flistchat.core.data.AppProperties.PropertyName;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.FlistChar;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Handles left events on channels.
  * @author AndFChat
  */
 public class LeftChannelHandler extends TokenHandler {
-
-    public LeftChannelHandler(SessionData sessionData) {
-        super(sessionData);
-    }
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) {
@@ -50,15 +45,15 @@ public class LeftChannelHandler extends TokenHandler {
             String channel = json.getString("channel");
             String character = json.getString("character");
             if (character.equals(sessionData.getCharacterName())) {
-                ChatroomHandler.removeChatroom(channel);
+                chatroomManager.removeChatroom(channel);
             } else {
-                FlistChar flistChar = sessionData.getCharHandler().findCharacter(character);
+                FlistChar flistChar = characterManager.findCharacter(character);
                 if (sessionData.getProperties().getBooleanValue(PropertyName.SHOW_Chatroom_INFOS)) {
                     ChatEntry chatEntry = new ChatEntry("LEFT THE CHANNEL.", flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
-                    ChatroomHandler.getChatroom(channel).addMessage(chatEntry);
+                    chatroomManager.getChatroom(channel).addMessage(chatEntry);
                 }
 
-                ChatroomHandler.getChatroom(channel).removeCharacter(flistChar);
+                chatroomManager.getChatroom(channel).removeCharacter(flistChar);
             }
         } catch (JSONException e) {
             e.printStackTrace();

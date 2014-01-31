@@ -22,22 +22,23 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import com.google.inject.Inject;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
+import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.ChatEntry;
-import com.homebrewn.flistchat.core.data.ChatroomHandler;
+import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.core.data.SessionData;
 
 public abstract class TokenHandler {
 
-    protected final ChatroomHandler ChatroomHandler;
-    protected final SessionData sessionData;
-
-    public TokenHandler(SessionData sessionData) {
-        this.sessionData = sessionData;
-        this.ChatroomHandler = sessionData.getChatroomHandler();
-    }
+    @Inject
+    protected ChatroomManager chatroomManager;
+    @Inject
+    protected CharacterManager characterManager;
+    @Inject
+    protected SessionData sessionData;
 
     public abstract void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException;
 
@@ -45,19 +46,19 @@ public abstract class TokenHandler {
 
     protected void broadcastSystemInfo(ChatEntry chatEntry, FlistChar flistChar) {
         if (flistChar.isFriend() || flistChar.isBookmarked()) {
-            ChatroomHandler.getActiveChat().addMessage(chatEntry);
+            chatroomManager.getActiveChat().addMessage(chatEntry);
 
-            if (ChatroomHandler.hasOpenPrivateConversation(flistChar)) {
-                ChatroomHandler.getPrivateChatFor(flistChar).addMessage(chatEntry);
+            if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
+                chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
             }
         }
-        else if (ChatroomHandler.hasOpenPrivateConversation(flistChar)) {
-            ChatroomHandler.getPrivateChatFor(flistChar).addMessage(chatEntry);
+        else if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
+            chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
         }
     }
 
     protected void addChatEntryToActiveChat(ChatEntry chatEntry) {
-        ChatroomHandler.getActiveChat().addMessage(chatEntry);
+        chatroomManager.getActiveChat().addMessage(chatEntry);
     }
 
 }

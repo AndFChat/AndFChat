@@ -20,11 +20,18 @@ package com.homebrewn.flistchat.core.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import roboguice.util.Ln;
+
+import com.google.inject.Singleton;
 import com.homebrewn.flistchat.core.connection.handler.PrivateMessageHandler;
 
-public class ChatroomHandler {
+@Singleton
+public class ChatroomManager {
+
     private final HashMap<String, Chatroom> chats = new HashMap<String, Chatroom>();
 
     private Chatroom activeChat;
@@ -33,6 +40,10 @@ public class ChatroomHandler {
     private final List<Chatroom> removedRooms = new ArrayList<Chatroom>();
 
     private final HashMap<String, List<ChatEntry>> chatRoomHistory = new HashMap<String, List<ChatEntry>>();
+
+    // List of channels
+    private final Set<String> officialChannelSet = new HashSet<String>();
+    private final Set<Channel> privateChannelSet = new HashSet<Channel>();
 
     public void addChatEntry(String Chatroom, ChatEntry entry) {
         chats.get(Chatroom).addMessage(entry);
@@ -103,16 +114,13 @@ public class ChatroomHandler {
         removedRooms.clear();
     }
 
-    public void clear() {
-        chats.clear();
-    }
-
     public Chatroom getActiveChat() {
         return activeChat;
     }
 
-    public void setActiveChat(Chatroom log) {
-        activeChat = log;
+    public void setActiveChat(Chatroom chatroom) {
+        Ln.d("Set active chat to '" + chatroom.getName() + "'");
+        activeChat = chatroom;
     }
 
     public boolean hasOpenPrivateConversation(FlistChar flistChar) {
@@ -129,5 +137,52 @@ public class ChatroomHandler {
                 Chatroom.removeCharacter(flistChar);
             }
         }
+    }
+
+    public void addOfficialChannel(String name) {
+        if (officialChannelSet.contains(name) == false) {
+            officialChannelSet.add(name);
+        }
+    }
+
+    public Set<String> getOfficialChannels() {
+        return officialChannelSet;
+    }
+
+    public void clearPrivateChannels() {
+        privateChannelSet.clear();
+    }
+
+    public void addPrivateChannel(Channel channel) {
+        privateChannelSet.add(channel);
+    }
+
+    public Set<String> getPrivateChannelNames() {
+        Set<String> names = new HashSet<String>();
+
+        for (Channel channel : privateChannelSet) {
+            names.add(channel.getChannelName());
+        }
+        return names;
+    }
+
+    public Channel getPrivateChannelByName(String channelName) {
+        for (Channel channel : privateChannelSet) {
+            if (channel.getChannelName().equals(channelName)) {
+                return channel;
+            }
+        }
+
+        return null;
+    }
+
+    public Channel getPrivateChannelById(String channelId) {
+        for (Channel channel : privateChannelSet) {
+            if (channel.getChannelId().equals(channelId)) {
+                return channel;
+            }
+        }
+
+        return null;
     }
 }

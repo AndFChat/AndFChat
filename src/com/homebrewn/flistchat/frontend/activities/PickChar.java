@@ -18,56 +18,48 @@
 
 package com.homebrewn.flistchat.frontend.activities;
 
-import android.app.Activity;
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
+import roboguice.util.Ln;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.inject.Inject;
 import com.homebrewn.flistchat.R;
-import com.homebrewn.flistchat.backend.data.StaticDataContainer;
 import com.homebrewn.flistchat.core.connection.FlistWebSocketConnection;
 import com.homebrewn.flistchat.core.data.SessionData;
 
-public class PickChar extends Activity {
+public class PickChar extends RoboActivity {
 
+    @Inject
+    protected FlistWebSocketConnection connection;
+    @Inject
+    protected SessionData sessionData;
+
+    @InjectView(R.id.charField)
     private Spinner charSelector;
+
     private String[] characters;
-
-    private String ticket;
-    private String account;
-    private FlistWebSocketConnection connection;
-
-    private static final String TAG = "homebrewn.flistchat.PickChar";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_char);
 
-        charSelector = (Spinner) findViewById(R.id.charField);
-
         SharedPreferences preferences = this.getSharedPreferences("account", 0);
         characters = preferences.getString("characters", "").split(",");
 
         charSelector.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, characters));
 
-        ticket = preferences.getString("ticket", null);
-        account = preferences.getString("account", null);
-        StaticDataContainer.sessionData = new SessionData(ticket, account, this);
-
-        if (preferences.getBoolean("isLive", false)) {
-            connection = new FlistWebSocketConnection(account, ticket, StaticDataContainer.sessionData);
-        } else {
-//            connection = new FlistWebSocketConnectionMock(account, ticket, "TestCharakter", StaticDataContainer.sessionData);
-            throw new IllegalArgumentException("Running ServerMock is still not supported!");
+        // Connect websockets
+        if (connection.isConnected() == false) {
+            connection.connect();
         }
-
-        StaticDataContainer.sessionData.setConnection(connection);
     }
 
     @Override
@@ -81,20 +73,20 @@ public class PickChar extends Activity {
 
         String characterName = characters[charSelector.getSelectedItemPosition()];
 
-        StaticDataContainer.sessionData.setCharname(characterName);
-
-        if (StaticDataContainer.sessionData.getConnection().isConnected()) {
-            Log.i(TAG, "Connected to WebSocket!");
-            StaticDataContainer.sessionData.getConnection().identify();
+        sessionData.setCharname(characterName);
+        // Websocket is connected?
+        if (connection.isConnected()) {
+            Ln.i("Connected to WebSocket!");
+            // Identify the character
+            connection.identify();
 
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    while(StaticDataContainer.sessionData.isConnected() == false) {
+                    while(connection.isConnected() == false) {
                         try {
                             Thread.sleep(200);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                     }
@@ -107,7 +99,7 @@ public class PickChar extends Activity {
 
             new Thread(runnable).start();
         } else {
-            Log.i(TAG, "Can't connect to WebSocket!");
+            Ln.i("Can't connect to WebSocket!");
         }
 
     }

@@ -32,17 +32,12 @@ import com.homebrewn.flistchat.core.data.Channel;
 import com.homebrewn.flistchat.core.data.Chatroom;
 import com.homebrewn.flistchat.core.data.Chatroom.ChatroomType;
 import com.homebrewn.flistchat.core.data.FlistChar;
-import com.homebrewn.flistchat.core.data.SessionData;
 
 /**
  * Handles channel joins, still misses private channel handling.
  * @author AndFChat
  */
 public class JoinedChannel extends TokenHandler {
-
-    public JoinedChannel(SessionData sessionData) {
-        super(sessionData);
-    }
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
@@ -53,13 +48,13 @@ public class JoinedChannel extends TokenHandler {
         if (token == ServerToken.JCH) {
             JSONObject character = data.getJSONObject("character");
             String channelName = data.getString("title");
-            FlistChar flistChar = sessionData.getCharHandler().findCharacter(character.getString("identity"));
+            FlistChar flistChar = characterManager.findCharacter(character.getString("identity"));
             getChatroom(channelId, channelName).addCharacter(flistChar);
         }
         else if (token == ServerToken.ICH) {
             JSONArray users = data.getJSONArray("users");
 
-            Channel channel = sessionData.getPrivateChannelById(channelId);
+            Channel channel = chatroomManager.getPrivateChannelById(channelId);
             String channelName = channelId;
 
             if (channel != null) {
@@ -71,7 +66,7 @@ public class JoinedChannel extends TokenHandler {
             for (int i = 0; i < users.length(); i++) {
                 String character = users.getJSONObject(i).getString("identity");
                 Log.v("homebrewn.flistchat.JoinedChannle", "Adding Character to Channel('"+channelId+"'): " + character);
-                Chatroom.addCharacter(sessionData.getCharHandler().findCharacter(character));
+                Chatroom.addCharacter(characterManager.findCharacter(character));
             }
         }
     }
@@ -82,7 +77,7 @@ public class JoinedChannel extends TokenHandler {
     }
 
     public Chatroom getChatroom(String channelId, String channelName) {
-        Chatroom chatroom = ChatroomHandler.getChatroom(channelId);
+        Chatroom chatroom = chatroomManager.getChatroom(channelId);
 
         if (chatroom == null) {
             Channel channel = null;
@@ -90,13 +85,13 @@ public class JoinedChannel extends TokenHandler {
             if (!channelId.equals(channelName)) {
                 chatroomType = ChatroomType.PRIVATE_CHANNEL;
                 // Public known channel? use it!
-                channel = sessionData.getPrivateChannelById(channelId);
+                channel = chatroomManager.getPrivateChannelById(channelId);
             }
 
             if (channel == null) {
-                chatroom = ChatroomHandler.addChatroom(new Chatroom(new Channel(channelId, channelName), chatroomType));
+                chatroom = chatroomManager.addChatroom(new Chatroom(new Channel(channelId, channelName), chatroomType));
             } else {
-                chatroom = ChatroomHandler.addChatroom(new Chatroom(channel, chatroomType));
+                chatroom = chatroomManager.addChatroom(new Chatroom(channel, chatroomType));
             }
         }
 

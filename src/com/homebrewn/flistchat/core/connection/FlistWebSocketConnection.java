@@ -23,42 +23,48 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
+import roboguice.util.Ln;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.homebrewn.flistchat.core.connection.handler.PrivateMessageHandler;
 import com.homebrewn.flistchat.core.data.AppProperties;
 import com.homebrewn.flistchat.core.data.CharStatus;
-import com.homebrewn.flistchat.core.data.CharacterHandler;
+import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.Chatroom;
+import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.core.data.SessionData;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
 
+@Singleton
 public class FlistWebSocketConnection {
-
-    protected final WebSocketConnection connection = new WebSocketConnection();
-    protected final FlistWebSocketHandler handler;
-
-    private final SessionData sessionData;
 
     private final static String CLIENT_NAME = "AndFChat";
     private final static String CLIENT_VERSION = "alpha01";
     private final static String SERVER_URL = "ws://chat.f-list.net:8722/";
 
-    private final static String TAG = "flistchat.client.actions";
+    @Inject
+    private FlistWebSocketHandler handler;
+    @Inject
+    private SessionData sessionData;
+    @Inject
+    private ChatroomManager chatroomManager;
+    @Inject
+    private CharacterManager characterManager;
 
-    public FlistWebSocketConnection(String account, String ticket, SessionData sessionData) {
-        this.sessionData = sessionData;
-        handler = new FlistWebSocketHandler(sessionData);
+    private final WebSocketConnection connection = new WebSocketConnection();
+
+    public void connect() {
         try {
             connection.connect(SERVER_URL, handler);
         } catch (WebSocketException e) {
             e.printStackTrace();
-            Log.e(TAG, "Exception while connecting");
+            Ln.e("Exception while connecting");
         }
     }
 
@@ -72,20 +78,20 @@ public class FlistWebSocketConnection {
 
     public void sendMessage(ClientToken token, JSONObject data) {
         if (data == null) {
-            Log.i(TAG, "Sending token: " + token.name());
+            Ln.i("Sending token: " + token.name());
             connection.sendTextMessage(token.name());
 
             if (sessionData.getSessionSettings().useDebugChannel()) {
-                FlistChar systemChar = sessionData.getCharHandler().findCharacter(CharacterHandler.USER_SYSTEM_OUTPUT);
-                sessionData.getChatroomHandler().getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name(), systemChar, new Date(), ChatEntryType.MESSAGE));
+                FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
+                chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name(), systemChar, new Date(), ChatEntryType.MESSAGE));
             }
         } else {
-            Log.i(TAG, "Sending message: " + token.name() + " " + data.toString());
+            Ln.i("Sending message: " + token.name() + " " + data.toString());
             connection.sendTextMessage(token.name() + " " + data.toString());
 
             if (sessionData.getSessionSettings().useDebugChannel()) {
-                FlistChar systemChar = sessionData.getCharHandler().findCharacter(CharacterHandler.USER_SYSTEM_OUTPUT);
-                sessionData.getChatroomHandler().getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name() + " " + data.toString(), systemChar, new Date(), ChatEntryType.MESSAGE));
+                FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
+                chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name() + " " + data.toString(), systemChar, new Date(), ChatEntryType.MESSAGE));
             }
         }
     }
@@ -108,7 +114,7 @@ public class FlistWebSocketConnection {
             data.put("character", sessionData.getCharacterName());
             sendMessage(ClientToken.IDN, data);
         } catch (JSONException e) {
-            Log.w(TAG, "exception occured while identifying: " + e.getMessage());
+            Ln.w("exception occured while identifying: " + e.getMessage());
         }
     }
 
@@ -122,7 +128,7 @@ public class FlistWebSocketConnection {
             data.put("channel", channel);
             sendMessage(ClientToken.JCH, data);
         } catch (JSONException e) {
-            Log.w(TAG, "exception occured while joining channle: " + e.getMessage());
+            Ln.w("exception occured while joining channle: " + e.getMessage());
         }
     }
 
@@ -144,7 +150,7 @@ public class FlistWebSocketConnection {
             data.put("channel", Chatroom.getId());
             sendMessage(ClientToken.LCH, data);
         } catch (JSONException e) {
-            Log.w(TAG, "exception occured while leaving channle: " + e.getMessage());
+            Ln.w("exception occured while leaving channle: " + e.getMessage());
         }
     }
 
@@ -161,10 +167,10 @@ public class FlistWebSocketConnection {
             data.put("message", msg);
             sendMessage(ClientToken.MSG, data);
 
-            Chatroom.addMessage(msg, sessionData.getCharHandler().findCharacter(sessionData.getCharacterName()), new Date());
+            Chatroom.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
 
         } catch (JSONException e) {
-            Log.w(TAG, "exception occured while sending message: " + e.getMessage());
+            Ln.w("exception occured while sending message: " + e.getMessage());
         }
     }
 
@@ -181,11 +187,11 @@ public class FlistWebSocketConnection {
             sendMessage(ClientToken.PRI, data);
 
             String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + recipient;
-            Chatroom log = sessionData.getChatroomHandler().getChatroom(channelname);
-            log.addMessage(msg, sessionData.getCharHandler().findCharacter(sessionData.getCharacterName()), new Date());
+            Chatroom log = chatroomManager.getChatroom(channelname);
+            log.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
 
         } catch (JSONException e) {
-            Log.w(TAG, "exception occured while sending private message: " + e.getMessage());
+            Ln.w("exception occured while sending private message: " + e.getMessage());
         }
     }
 
@@ -202,7 +208,7 @@ public class FlistWebSocketConnection {
             data.put("character", sessionData.getCharacterName());
             sendMessage(ClientToken.STA, data);
         } catch (JSONException e) {
-            Log.w(TAG, "exception occured while sending private message: " + e.getMessage());
+            Ln.w("exception occured while sending private message: " + e.getMessage());
         }
     }
 
