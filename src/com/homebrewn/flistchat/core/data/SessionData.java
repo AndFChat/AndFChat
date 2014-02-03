@@ -73,12 +73,12 @@ public class SessionData {
     public class SessionSettings {
         private boolean useDebugChannel = true;
         private boolean showStatusChanges = true;
-        private final boolean showOnlineOfflineChanges = true;
+        private boolean showChannelInfo = true;
 
         public SessionSettings(AppProperties appProperties) {
             //this.setUseDebugChannel(appProperties.getBooleanValue(PropertyName.USE_DEBUG_CHANNEL));
             this.setUseDebugChannel(true);
-            this.showStatuschanges(true);
+            this.showStatusChanges(true);
         }
 
         public void setUseDebugChannel(boolean value) {
@@ -102,13 +102,17 @@ public class SessionData {
             return showStatusChanges;
         }
 
-        public void showStatuschanges(boolean value) {
+        public void showStatusChanges(boolean value) {
             showStatusChanges = value;
             appProperties.setBooleanValue(PropertyName.SHOW_USER_STATUS_CHANGES, value);
         }
 
-        public boolean showOnlineOfflineChanges() {
-            return showOnlineOfflineChanges;
+        public boolean showChannelInfos() {
+            return showChannelInfo;
+        }
+
+        public void setShowChannelInfo(boolean value) {
+            showChannelInfo = value;
         }
     }
 }

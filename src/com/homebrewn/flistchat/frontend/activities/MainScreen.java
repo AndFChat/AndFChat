@@ -20,6 +20,7 @@ package com.homebrewn.flistchat.frontend.activities;
 
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.event.Observes;
+import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.content.Context;
 import android.os.Bundle;
@@ -53,7 +54,6 @@ public class MainScreen extends RoboFragmentActivity {
 
     // Sleep time between two loops
     private static final long TICK_TIME = 250;
-    private static final String DETAIL_URL = "http://www.f-list.net/c/";
 
     @Inject
     protected ChatroomManager chatroomManager;
@@ -62,14 +62,17 @@ public class MainScreen extends RoboFragmentActivity {
     @Inject
     protected SessionData sessionData;
 
+    @InjectView(R.id.toggleSidebarLeft)
+    private Button toggleSidebarLeft;
+    @InjectView(R.id.toggleSidebarRight)
+    private Button toggleSidebarRight;
+
     // Fragments
     private ChatFragment chat;
     private UserListFragment userList;
     private ChannelListFragment channelList;
 
     private boolean paused = true;
-
-    private final PopupWindow pwindo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +86,24 @@ public class MainScreen extends RoboFragmentActivity {
 
     public void leaveActiveChat(View v) {
         Chatroom activeChat = chatroomManager.getActiveChat();
-        // TODO: Leave private chat without deleting "log"
-        if (!activeChat.isPrivateChat()) {
+        if (activeChat != null) {
             connection.leaveChannel(activeChat);
+        }
+    }
+
+    public void toggleSidebarRight(View v) {
+        if (userList.toggleVisibility()) {
+            toggleSidebarRight.setText(R.string.hide);
         } else {
-            chatroomManager.removeChatroom(activeChat.getId());
+            toggleSidebarRight.setText(R.string.show);
+        }
+    }
+
+    public void toggleSidebarLeft(View v) {
+        if (channelList.toggleVisibility()) {
+            toggleSidebarLeft.setText(R.string.hide);
+        } else {
+            toggleSidebarLeft.setText(R.string.show);
         }
     }
 
@@ -124,7 +140,7 @@ public class MainScreen extends RoboFragmentActivity {
         }
 
         if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
-            setChannelTitle(chatroom.getName()  + " - " + chatroom.getRecipient().getStatusMsg());
+            setChannelTitle(chatroom.getName() + " - " + chatroom.getRecipient().getStatusMsg());
         } else {
             setChannelTitle(chatroom.getName());
         }
@@ -139,7 +155,7 @@ public class MainScreen extends RoboFragmentActivity {
     }
 
     private void setChannelTitle(String name) {
-        ((TextView)this.findViewById(R.id.channelName)).setText(name);
+        this.setTitle(name);
     }
 
     @Override

@@ -122,12 +122,12 @@ public class FlistChar {
 
         if (color == null) {
             color = gender.getColor();
-        }
 
-        if (this.isBookmarked()) {
-            color = BOOKMARK_COLOR;
-        } else if (this.isFriend()) {
-            color = FRIEND_COLOR;
+            if (this.isBookmarked()) {
+                color = BOOKMARK_COLOR;
+            } else if (this.isFriend()) {
+                color = FRIEND_COLOR;
+            }
         }
 
         text.setSpan(new ForegroundColorSpan(color), 0, getName().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

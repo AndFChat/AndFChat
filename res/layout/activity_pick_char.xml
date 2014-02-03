@@ -16,26 +16,21 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="250dp"
     android:layout_height="match_parent"
     android:orientation="vertical"    
-   	android:gravity="center_horizontal"  
-    tools:context=".PickChar" >
-
-    <LinearLayout     
-        android:orientation="vertical"
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:layout_marginTop="100dp">
+   	android:layout_gravity="center"
+    android:gravity="center">
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Choose Charakter"/>
+        android:text="@string/select_character"
+    />
         
     <Spinner
         android:id="@+id/charField"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="13" >
         <requestFocus />
@@ -43,11 +38,10 @@
 
     <Button
         android:id="@+id/logInButton"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:onClick="logIn"/>
-
-    </LinearLayout>
+        android:text="@string/login"
+        android:onClick="logIn"
+    />
     
 </LinearLayout>

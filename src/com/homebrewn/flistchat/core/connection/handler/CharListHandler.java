@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import roboguice.util.Ln;
 
+import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.CharRelation;
@@ -81,15 +82,15 @@ public class CharListHandler extends TokenHandler {
 
             FlistChar flistChar = new FlistChar(json.getString("identity"), json.getString("gender"), json.getString("status"), null);
 
-            if (characterManager.getFriendList().isFriend(flistChar.getName())) {
-                flistChar.addRelation(CharRelation.FRIEND);
-            }
 
             Ln.v("Adding character to ChatLog: " + flistChar.toString());
             characterManager.addCharacter(flistChar);
 
-            ChatEntry chatEntry = new ChatEntry("CONNECTED.", flistChar, new Date(), ChatEntryType.NOTATION_CONNECT);
-            this.broadcastSystemInfo(chatEntry, flistChar);
+            if (characterManager.getFriendList().isFriend(flistChar.getName())) {
+                flistChar.addRelation(CharRelation.FRIEND);
+                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, flistChar, new Date(), ChatEntryType.NOTATION_CONNECT);
+                this.broadcastSystemInfo(chatEntry, flistChar);
+            }
 
         } // Charakter left
         else if (token == ServerToken.FLN) {
@@ -97,8 +98,10 @@ public class CharListHandler extends TokenHandler {
 
             FlistChar flistChar = characterManager.findCharacter(json.getString("character"));
 
-            ChatEntry chatEntry = new ChatEntry("DISCONNECTED.", flistChar, new Date(), ChatEntryType.NOTATION_DISCONNECT);
-            this.broadcastSystemInfo(chatEntry, flistChar);
+            if (flistChar.isBookmarked() || flistChar.isFriend()) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, flistChar, new Date(), ChatEntryType.NOTATION_DISCONNECT);
+                this.broadcastSystemInfo(chatEntry, flistChar);
+            }
 
             characterManager.removeCharacter(json.getString("character"));
             chatroomManager.removeFlistCharFromChat(flistChar);

@@ -20,10 +20,12 @@ package com.homebrewn.flistchat.core.connection.handler;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.ChatEntry;
@@ -44,18 +46,18 @@ public class CharInfoHandler extends TokenHandler {
             String status = json.getString("status");
             String statusmsg = json.getString("statusmsg");
 
-            FlistChar flistChar = characterManager.findCharacter(name);
-            flistChar.setStatus(status, statusmsg);
+            FlistChar flistChar = characterManager.changeStatus(name, status, statusmsg);
 
-            if (sessionData.getSessionSettings().showStatusChanges()) {
+            if (sessionData.getSessionSettings().showStatusChanges() && (flistChar.isBookmarked() || flistChar.isFriend())) {
+                ChatEntry chatEntry;
 
-                String message = "NEW USER STATUS: " + flistChar.getStatus();
-
+                status = String.valueOf(status.charAt(0)).toUpperCase(Locale.getDefault()) + status.substring(1);
                 if (statusmsg != null && statusmsg.length() > 0) {
-                    message += " MSG: " + flistChar.getStatusMsg();
+                    chatEntry = new ChatEntry(R.string.message_status_changed_with_message, new Object[]{status, statusmsg}, flistChar, new Date(), ChatEntryType.NOTATION_STATUS);
+                } else {
+                    chatEntry = new ChatEntry(R.string.message_status_changed, new Object[]{status}, flistChar, new Date(), ChatEntryType.NOTATION_STATUS);
                 }
 
-                ChatEntry chatEntry = new ChatEntry(message, flistChar, new Date(), ChatEntryType.NOTATION_STATUS);
                 this.broadcastSystemInfo(chatEntry, flistChar);
             }
         }

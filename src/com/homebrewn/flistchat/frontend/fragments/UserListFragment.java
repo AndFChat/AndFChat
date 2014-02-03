@@ -1,16 +1,16 @@
 /*******************************************************************************
  *     This file is part of AndFChat.
- * 
+ *
  *     AndFChat is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     AndFChat is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -33,6 +33,7 @@ import android.widget.ListView;
 
 import com.google.inject.Inject;
 import com.homebrewn.flistchat.R;
+import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.Chatroom;
 import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
@@ -42,6 +43,8 @@ public class UserListFragment extends RoboFragment {
 
     @Inject
     private ChatroomManager chatroomManager;
+    @Inject
+    private CharacterManager characterManager;
 
     @InjectView(R.id.userlist)
     private ListView memberListView;
@@ -101,12 +104,12 @@ public class UserListFragment extends RoboFragment {
             }
         }
 
-        if (isChanged) {
+        if (isChanged || characterManager.isStatusChanged()) {
             memberListData.notifyDataSetChanged();
         }
     }
 
-    public void toggleVisibility() {
+    public boolean toggleVisibility() {
         if (canBeDisplayed) {
             if (isVisible) {
                 getView().setVisibility(View.GONE);
@@ -116,5 +119,6 @@ public class UserListFragment extends RoboFragment {
                 isVisible = true;
             }
         }
+        return isVisible;
     }
 }

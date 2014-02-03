@@ -22,5 +22,35 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main_screen">MainScreen</string>
     <string name="title_activity_pick_char">PickChar</string>
+    
+    <string name="account">Account</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="bookmark_user">Bookmark</string>
+    <string name="show_details">Open Details</string>
+    <string name="pm_user">Private Message</string>
+    <string name="close">Close</string>
+    <string name="chatmessage_hint">Enter Message</string>
+    <string name="send_message">Send</string>
+    <string name="friendlist">Friendlist</string>
+    <string name="hide">Hide</string>
+    <string name="show">Show</string>
+    <string name="channels">Channels</string>
+    <string name="public_channels">Public Channels</string>
+    <string name="private_channels">Private Channels</string>
+    <string name="leave_channel">Leave Channel</string>
+    <string name="channel_description">Show Description</string>
+    <string name="select_character">Select Character</string>
+    
+    <string name="message_channel_joined">joined the channel.</string>
+    <string name="message_channel_left">left the channel.</string>
+    <string name="message_connected">connected.</string>
+    <string name="message_disconnected">disconnected.</string>
+    <string name="message_status_changed">is now %1$s.</string>
+    <string name="message_status_changed_with_message">is now %1$s. [%2$s]</string>
+    
+    
+    <string name="error_login">Login failed, maybe username or password wrong?</string>
+    
 
 </resources>

@@ -30,9 +30,10 @@ public enum ClientToken {
     ORS, // Request a list of open private rooms.
     PIN, // Sends a ping response to the server. Timeout detection, and activity to keep the connection alive.
     PRI, // Sends a private message to another user.
+    PRO, // Requests some of the profile tags on a character, such as Top/Bottom position and Language Preference.
     RLL, // Roll dice or spin the bottle.
     STA, // Request a new status be set for your character.
     TPN, // User x is typing/stopped typing/has entered text" for private messages.
-    WHS, // The client can send \x00WSH\xff to skip websocket negotiation. A little convenience thing for third party desktop chatclients.
+    WHS, // The client can send \x00WSH\xff to skip websocket negotiation. A little convenience thing for third party desktop chat clients.
 
 }

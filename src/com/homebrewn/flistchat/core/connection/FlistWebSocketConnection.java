@@ -144,13 +144,19 @@ public class FlistWebSocketConnection {
      * Asks the server to leave an channel
      * @param channel
      */
-    public void leaveChannel(Chatroom Chatroom) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put("channel", Chatroom.getId());
-            sendMessage(ClientToken.LCH, data);
-        } catch (JSONException e) {
-            Ln.w("exception occured while leaving channle: " + e.getMessage());
+    public void leaveChannel(Chatroom chatroom) {
+        // TODO: Leave private chat without deleting "log"
+        if (!chatroom.isPrivateChat()) {
+            JSONObject data = new JSONObject();
+            try {
+                data.put("channel", chatroom.getId());
+                sendMessage(ClientToken.LCH, data);
+            } catch (JSONException e) {
+                Ln.w("exception occured while leaving channle: " + e.getMessage());
+            }
+        } else {
+            // Private chats will just be removed.
+            chatroomManager.removeChatroom(chatroom.getId());
         }
     }
 
@@ -159,15 +165,15 @@ public class FlistWebSocketConnection {
      * @param channel
      * @param msg
      */
-    public void sendMessageToChannel(Chatroom Chatroom, String msg) {
+    public void sendMessageToChannel(Chatroom chatroom, String msg) {
         JSONObject data = new JSONObject();
         try {
-            data.put("channel", Chatroom.getId());
+            data.put("channel", chatroom.getId());
             data.put("character", sessionData.getCharacterName());
             data.put("message", msg);
             sendMessage(ClientToken.MSG, data);
 
-            Chatroom.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
+            chatroom.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
 
         } catch (JSONException e) {
             Ln.w("exception occured while sending message: " + e.getMessage());
@@ -207,6 +213,21 @@ public class FlistWebSocketConnection {
             data.put("statusmsg", msg);
             data.put("character", sessionData.getCharacterName());
             sendMessage(ClientToken.STA, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending private message: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Asks for character information
+     * @param status
+     * @param msg
+     */
+    public void askForInfos(FlistChar flistChar) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("character", flistChar.getName());
+            sendMessage(ClientToken.PRO, data);
         } catch (JSONException e) {
             Ln.w("exception occured while sending private message: " + e.getMessage());
         }

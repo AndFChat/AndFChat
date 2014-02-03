@@ -24,9 +24,9 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
-import com.homebrewn.flistchat.core.data.AppProperties.PropertyName;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.FlistChar;
@@ -48,8 +48,8 @@ public class LeftChannelHandler extends TokenHandler {
                 chatroomManager.removeChatroom(channel);
             } else {
                 FlistChar flistChar = characterManager.findCharacter(character);
-                if (sessionData.getProperties().getBooleanValue(PropertyName.SHOW_Chatroom_INFOS)) {
-                    ChatEntry chatEntry = new ChatEntry("LEFT THE CHANNEL.", flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
+                if (sessionData.getSessionSettings().showChannelInfos()) {
+                    ChatEntry chatEntry = new ChatEntry(R.string.leave_channel, flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
                     chatroomManager.getChatroom(channel).addMessage(chatEntry);
                 }
 

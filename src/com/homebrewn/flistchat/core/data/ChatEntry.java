@@ -1,16 +1,16 @@
 /*******************************************************************************
  *     This file is part of AndFChat.
- * 
+ *
  *     AndFChat is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     AndFChat is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -23,9 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import com.homebrewn.flistchat.core.util.BBCodeReader;
-import com.homebrewn.flistchat.core.util.SmileyReader;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -37,63 +34,87 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 
+import com.homebrewn.flistchat.core.util.BBCodeReader;
+import com.homebrewn.flistchat.core.util.SmileyReader;
+
 public class ChatEntry {
-    
+
     public enum ChatEntryType {
         MESSAGE,
         EMOTE(null, Typeface.ITALIC, ""),
         ERROR(Color.RED, Typeface.BOLD, " "),
-        NOTATION_CONNECT(Color.GRAY),
-        NOTATION_DISCONNECT(Color.GRAY),
-        NOTATION_LEFT(Color.GRAY),
-        NOTATION_JOINED(Color.GRAY),
+        NOTATION_CONNECT(Color.GRAY, " "),
+        NOTATION_DISCONNECT(Color.GRAY, " "),
+        NOTATION_LEFT(Color.GRAY, " "),
+        NOTATION_JOINED(Color.GRAY, " "),
         NOTATION_SYSTEM(Color.GRAY),
         NOTATION_STATUS(Color.GRAY);
-        
+
         private Integer color = null;
         private Integer typeFace = null;
         private String delimeter = ": ";
-        
+
         private ChatEntryType(int color) {
-            this.color = color;   
+            this.color = color;
         }
-        
-        private ChatEntryType(Integer color, int typeFace, String delimeter) {
-            this.typeFace = typeFace;
-            this.color = color;  
+
+        private ChatEntryType(Integer color, String delimeter) {
+            this.color = color;
             this.delimeter = delimeter;
         }
-        
+
+        private ChatEntryType(Integer color, int typeFace, String delimeter) {
+            this.typeFace = typeFace;
+            this.color = color;
+            this.delimeter = delimeter;
+        }
+
         private ChatEntryType() {
             this.color = null;
         }
-        
+
         public Integer getColor() {
             return color;
         }
-        
+
         public Integer getTypeFace() {
             return typeFace;
         }
-        
+
         public String getDelimeter() {
             return delimeter;
         }
     }
-    
+
     private final static int DATE_CHAR_LENGTH = 10;
-    
+
     private final Date date;
     private final Spannable text;
     private final FlistChar owner;
     private final ChatEntryType messageType;
 
+    private Integer stringId = null;
+    private Object[] values = null;
+
     private static DateFormat df = new SimpleDateFormat("[KK:mm aa]", Locale.US);
 
+    public ChatEntry(int stringId, FlistChar owner, Date date, ChatEntryType messageType) {
+        this(null, owner, date, messageType);
+
+        this.stringId = stringId;
+    }
+
+    public ChatEntry(int stringId, Object[] values, FlistChar owner, Date date, ChatEntryType messageType) {
+        this(null, owner, date, messageType);
+
+        this.stringId = stringId;
+        this.values = values;
+    }
+
     public ChatEntry(String text, FlistChar owner, Date date, ChatEntryType messageType) {
-        this.date = date;        
+        this.date = date;
         this.owner = owner;
-        
+
         if (messageType == ChatEntryType.MESSAGE) {
             if (text.startsWith("/me")) {
                 messageType = ChatEntryType.EMOTE;
@@ -103,9 +124,13 @@ public class ChatEntry {
                 }
             }
         }
-        
+
         this.messageType = messageType;
-        this.text = BBCodeReader.createSpannableWithBBCode(text);
+        if (text != null) {
+            this.text = BBCodeReader.createSpannableWithBBCode(text);
+        } else {
+            this.text = null;
+        }
     }
 
     public Date getDate() {
@@ -120,9 +145,9 @@ public class ChatEntry {
         String dateText = df.format(date);
         Spannable dateSpan = new SpannableString(dateText);
         dateSpan.setSpan(new ForegroundColorSpan(Color.GRAY), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        dateSpan.setSpan(new RelativeSizeSpan(0.75f), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);       
+        dateSpan.setSpan(new RelativeSizeSpan(0.75f), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         // Replace smileys in text
-        Spannable withSmileys = SmileyReader.addSmileys(context, this.text);
+        Spannable withSmileys = SmileyReader.addSmileys(context, getText(context));
         // Time and username
         SpannableStringBuilder finishedText = new SpannableStringBuilder(dateSpan).append(" ").append(owner.toFormattedText(messageType.getColor()));
         // Delimeter
@@ -133,8 +158,24 @@ public class ChatEntry {
         if (messageType.typeFace != null) {
             finishedText.setSpan(new StyleSpan(messageType.typeFace), DATE_CHAR_LENGTH, finishedText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         }
-        
+
         return finishedText;
+    }
+
+    private Spannable getText(Context context) {
+        if (text != null) {
+            return text;
+        } else if (stringId != null){
+            if (values == null) {
+                return new SpannableString(context.getString(stringId));
+            } else {
+                String text = context.getString(stringId);
+                String.format(text,  values);
+                return new SpannableString(text);
+            }
+        }
+
+        return new SpannableString("");
     }
 
     @Override

@@ -1,16 +1,16 @@
 /*******************************************************************************
  *     This file is part of AndFChat.
- * 
+ *
  *     AndFChat is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     AndFChat is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -41,6 +41,7 @@ import com.homebrewn.flistchat.core.connection.FlistWebSocketConnection;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.Chatroom;
 import com.homebrewn.flistchat.core.data.ChatroomManager;
+import com.homebrewn.flistchat.core.util.Console;
 import com.homebrewn.flistchat.frontend.adapter.ChatEntryListAdapter;
 
 public class ChatFragment extends RoboFragment {
@@ -49,6 +50,8 @@ public class ChatFragment extends RoboFragment {
     protected ChatroomManager chatroomManager;
     @Inject
     protected FlistWebSocketConnection connection;
+    @Inject
+    protected Console commands;
 
     @InjectView(R.id.chat)
     private ListView chatListView;
@@ -92,7 +95,18 @@ public class ChatFragment extends RoboFragment {
 
 
     private void sendMessage() {
-        if (inputText.getText().toString().length() > 0 && (System.currentTimeMillis() - lastMessage > 2000)) {
+        // Ignore empty messages
+        if (inputText.getText().toString().length() == 0 ) {
+            return;
+        }
+        // Text command like /help / open /close shouldn't be send to the server.
+        if (commands.checkForCommands(inputText.getText().toString())) {
+            // Reset input
+            inputText.setText("");
+            return;
+        }
+        else if ((System.currentTimeMillis() - lastMessage > 2000)) {
+
             Chatroom activeChat = chatroomManager.getActiveChat();
 
             if (activeChat.isPrivateChat()) {
@@ -100,13 +114,15 @@ public class ChatFragment extends RoboFragment {
             } else {
                 connection.sendMessageToChannel(activeChat, inputText.getText().toString());
             }
-            // Reset input
-            inputText.setText("");
+
             lastMessage = System.currentTimeMillis();
         }
         else {
             //TODO: Show error message (input to fast).
         }
+
+        // Reset input
+        inputText.setText("");
     }
 
     protected void setActiveChat(@Observes Chatroom chatroom) {

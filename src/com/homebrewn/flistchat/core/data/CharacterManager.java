@@ -24,9 +24,11 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class CharacterManager {
-    private final HashMap<String, FlistChar> knownCharacters = new HashMap<String, FlistChar>();
 
+    private final HashMap<String, FlistChar> knownCharacters = new HashMap<String, FlistChar>();
     private final Friendlist friendlist = new Friendlist(this);
+
+    private boolean statusChanged = false;
 
     // Username for system accounts
     public static final String USER_SYSTEM = "System";
@@ -86,5 +88,23 @@ public class CharacterManager {
 
     public Friendlist getFriendList() {
         return friendlist;
+    }
+
+    public boolean isStatusChanged() {
+        if (statusChanged) {
+            statusChanged = false;
+            return true;
+        }
+
+        return false;
+    }
+
+    public FlistChar changeStatus(String name, String status, String statusmsg) {
+        statusChanged = true;
+
+        FlistChar flistChar = findCharacter(name);
+        flistChar.setStatus(status, statusmsg);
+
+        return flistChar;
     }
 }

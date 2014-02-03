@@ -18,6 +18,7 @@
 
 package com.homebrewn.flistchat.core.connection.handler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -26,9 +27,12 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.Channel;
+import com.homebrewn.flistchat.core.data.ChatEntry;
+import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.Chatroom;
 import com.homebrewn.flistchat.core.data.Chatroom.ChatroomType;
 import com.homebrewn.flistchat.core.data.FlistChar;
@@ -50,6 +54,11 @@ public class JoinedChannel extends TokenHandler {
             String channelName = data.getString("title");
             FlistChar flistChar = characterManager.findCharacter(character.getString("identity"));
             getChatroom(channelId, channelName).addCharacter(flistChar);
+
+            if (sessionData.getSessionSettings().showChannelInfos()) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_channel_joined, flistChar, new Date(), ChatEntryType.NOTATION_JOINED);
+                chatroomManager.getChatroom(channelId).addMessage(chatEntry);
+            }
         }
         else if (token == ServerToken.ICH) {
             JSONArray users = data.getJSONArray("users");

@@ -61,4 +61,11 @@ public abstract class TokenHandler {
         chatroomManager.getActiveChat().addMessage(chatEntry);
     }
 
+    protected boolean isInScope(FlistChar flistChar) {
+        if (flistChar.isBookmarked() || flistChar.isFriend()) {
+            return true;
+        }
+
+        return chatroomManager.hasOpenPrivateConversation(flistChar);
+    }
 }

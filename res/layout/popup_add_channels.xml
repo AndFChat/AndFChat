@@ -30,7 +30,7 @@
     
 	    <TextView 
 	        android:id="@+id/joinChannelPopupTitle"
-	        android:text="JOIN CHANNELS"
+	        android:text="@string/channels"
 	        android:textSize="20sp"
 	        android:textStyle="bold"
 	        android:textColor="@color/black"
@@ -52,14 +52,18 @@
 		    android:layout_width="0px"
 		    android:layout_weight=".5"
 		    android:layout_height="wrap_content"
-		    android:text="PUBLIC CHANNEL"/>  
+		    android:text="@string/public_channels"
+            style="?android:attr/borderlessButtonStyle"
+        />  
 		    
 		<Button
 			android:id="@+id/privateChannelButton"
 		    android:layout_width="0px"
 		    android:layout_weight=".5"
 		    android:layout_height="wrap_content"
-		    android:text="PRIVATE CHANNEL"/> 		
+		    android:text="@string/private_channels"
+            style="?android:attr/borderlessButtonStyle"
+        /> 		
 		    
 	</LinearLayout>      
     

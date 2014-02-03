@@ -57,6 +57,8 @@ public class Login extends RoboActivity {
     private EditText account;
     @InjectView(R.id.passwordField)
     private EditText password;
+    @InjectView(R.id.loginErrorField)
+    private TextView errorField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,22 +97,16 @@ public class Login extends RoboActivity {
 
             @Override
             public void onError(Exception ex) {
-                String errorText = "Login failed, maybe username or password wrong?";
                 if (ex == null) {
                     Ln.i("Can't log in!");
                 } else {
                     Ln.i("Can't log in! " + ex.getMessage());
-                    errorText += " " + ex.getMessage();
                 }
-
-                // This really sucks, help, pls!
-                final String finalErrorText = errorText;
-                final TextView loginErrorField = (TextView)Login.this.findViewById(R.id.loginErrorField);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        loginErrorField.setText(finalErrorText);
+                        errorField.setText(R.string.error_login);
                     }
                 });
             }

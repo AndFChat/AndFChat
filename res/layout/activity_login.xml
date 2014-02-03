@@ -40,12 +40,13 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="ACCOUNT:"/>
+        android:text="@string/account"/>
         
     <EditText
         android:id="@+id/accountField"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:inputType="text" 
         android:ems="13" >
         <requestFocus />
     </EditText>
@@ -53,28 +54,22 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="PASSWORD:"/>    
+        android:text="@string/password"/>    
     
     <EditText
         android:id="@+id/passwordField"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:inputType="textPassword" 
         android:ems="13"
-        android:inputType="textPassword" />
+    />
 
     <Button
         android:id="@+id/logInButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="LOGIN"
+        android:text="@string/login"
         android:onClick="logIn"/>
-    
-        <LinearLayout     
-        android:orientation="vertical"
-	    android:layout_width="fill_parent"
-    	android:layout_height="wrap_content">
-	    
-		</LinearLayout>
 		
     </LinearLayout>
     

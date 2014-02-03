@@ -29,7 +29,7 @@
     
 	    <TextView 
 	        android:id="@+id/friendListTitle"
-	        android:text="FRIENDLIST"
+	        android:text="@string/friendlist"
 	        android:textSize="20sp"
 	        android:textStyle="bold"
 	        android:textColor="@color/black"
