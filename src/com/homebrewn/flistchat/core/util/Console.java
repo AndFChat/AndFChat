@@ -35,6 +35,7 @@ import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.core.util.commands.Bottle;
 import com.homebrewn.flistchat.core.util.commands.CloseChatroom;
+import com.homebrewn.flistchat.core.util.commands.Dice;
 import com.homebrewn.flistchat.core.util.commands.NotificationChannel;
 import com.homebrewn.flistchat.core.util.commands.OpenChatroom;
 import com.homebrewn.flistchat.core.util.commands.PMUser;
@@ -59,6 +60,7 @@ public class Console {
         availableCommands.add(new NotificationChannel());
         availableCommands.add(new OpenChatroom());
         availableCommands.add(new Bottle());
+        availableCommands.add(new Dice());
 
         Injector injector = RoboGuice.getInjector(context);
         for (TextCommand command : availableCommands) {

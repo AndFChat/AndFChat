@@ -261,4 +261,20 @@ public class FlistWebSocketConnection {
             Ln.w("exception occured while botteling: " + e.getMessage());
         }
     }
+
+    public void dice(Chatroom activeChat, String value) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", activeChat.getId());
+
+            if (value == null || value.length() == 0) {
+                value = "1d10";
+            }
+
+            data.put("dice", value);
+            sendMessage(ClientToken.RLL, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while botteling: " + e.getMessage());
+        }
+    }
 }

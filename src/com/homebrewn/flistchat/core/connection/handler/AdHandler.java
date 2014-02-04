@@ -18,48 +18,41 @@
 
 package com.homebrewn.flistchat.core.connection.handler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.text.Spannable;
-
-import com.google.inject.Inject;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
+import com.homebrewn.flistchat.core.data.ChatEntry;
+import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.Chatroom;
-import com.homebrewn.flistchat.core.util.BBCodeReader;
+import com.homebrewn.flistchat.core.data.FlistChar;
 
 /**
- * Sets and changes channel-description for official and unofficial channel.
+ * Displays add messages in channels.
  * @author AndFChat
  */
-public class ChannelDescriptionHandler extends TokenHandler {
-
-    @Inject
-    private Context context;
+public class AdHandler extends TokenHandler {
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
-        if (token == ServerToken.CDS) {
+        if (token == ServerToken.LRP) {
             JSONObject json = new JSONObject(msg);
-            String channelId = json.getString("channel");
-            String description = json.getString("description");
+            Chatroom chatroom = chatroomManager.getChatroom(json.getString("channel"));
+            FlistChar flistChar = characterManager.findCharacter(json.getString("character"));
+            String message = json.getString("message");
 
-            Spannable bbCodedDescription = BBCodeReader.createSpannableWithBBCode(description, context);
-
-            Chatroom Chatroom = chatroomManager.getChatroom(channelId);
-            if (Chatroom != null) {
-                Chatroom.setDescription(bbCodedDescription);
-            }
+            ChatEntry chatEntry = new ChatEntry(message, flistChar, new Date(), ChatEntryType.AD);
+            chatroom.addMessage(chatEntry);
         }
     }
 
     @Override
     public ServerToken[] getAcceptableTokens() {
-        return new ServerToken[] {ServerToken.CDS};
+        return new ServerToken[] {ServerToken.LRP};
     }
 
 }

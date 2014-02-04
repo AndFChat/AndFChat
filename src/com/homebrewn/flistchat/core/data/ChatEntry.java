@@ -43,13 +43,14 @@ public class ChatEntry {
         MESSAGE,
         EMOTE(null, Typeface.ITALIC, ""),
         ERROR(Color.RED, Typeface.BOLD, " "),
-        NOTATION_CONNECT(Color.GRAY, " "),
-        NOTATION_DISCONNECT(Color.GRAY, " "),
-        NOTATION_LEFT(Color.GRAY, " "),
-        NOTATION_JOINED(Color.GRAY, " "),
-        NOTATION_SYSTEM(Color.GRAY),
-        NOTATION_STATUS(Color.GRAY),
-        NOTATION_DICE(Color.WHITE, " ");
+        NOTATION_CONNECT(Color.WHITE, " "),
+        NOTATION_DISCONNECT(Color.WHITE, " "),
+        NOTATION_LEFT(Color.WHITE, " "),
+        NOTATION_JOINED(Color.WHITE, " "),
+        NOTATION_SYSTEM(Color.WHITE),
+        NOTATION_STATUS(Color.WHITE),
+        NOTATION_DICE(Color.WHITE, " "),
+        AD(Color.YELLOW);
 
         private Integer color = null;
         private Integer typeFace = null;
@@ -88,16 +89,19 @@ public class ChatEntry {
     }
 
     private final static int DATE_CHAR_LENGTH = 10;
+    private static DateFormat DATE_FORMAT = new SimpleDateFormat("[KK:mm aa]", Locale.US);
 
     private final Date date;
     private final FlistChar owner;
     private final ChatEntryType messageType;
 
-    private Spannable text;
+    private final String text;
     private Integer stringId = null;
     private Object[] values = null;
 
-    private static DateFormat df = new SimpleDateFormat("[KK:mm aa]", Locale.US);
+    private Spannable spannedText;
+    private boolean isCreated = false;
+
 
     public ChatEntry(int stringId, FlistChar owner, Date date, ChatEntryType messageType) {
         this(null, owner, date, messageType);
@@ -127,11 +131,7 @@ public class ChatEntry {
         }
 
         this.messageType = messageType;
-        if (text != null) {
-            this.text = BBCodeReader.createSpannableWithBBCode(text);
-        } else {
-            this.text = null;
-        }
+        this.text = text;
     }
 
     public Date getDate() {
@@ -143,38 +143,43 @@ public class ChatEntry {
     }
 
     public Spannable getChatMessage(Context context) {
-        String dateText = df.format(date);
-        Spannable dateSpan = new SpannableString(dateText);
-        dateSpan.setSpan(new ForegroundColorSpan(Color.GRAY), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        dateSpan.setSpan(new RelativeSizeSpan(0.75f), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        // Replace smileys in text
-        Spannable withSmileys = SmileyReader.addSmileys(context, getText(context));
-        // Time and username
-        SpannableStringBuilder finishedText = new SpannableStringBuilder(dateSpan).append(" ").append(owner.toFormattedText(messageType.getColor()));
-        // Delimeter
-        finishedText.append(messageType.getDelimeter());
-        // Message
-        finishedText.append(withSmileys);
-        // Add overall styles
-        if (messageType.typeFace != null) {
-            finishedText.setSpan(new StyleSpan(messageType.typeFace), DATE_CHAR_LENGTH, finishedText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        if (!isCreated) {
+            String dateText = DATE_FORMAT.format(date);
+            Spannable dateSpan = new SpannableString(dateText);
+            dateSpan.setSpan(new ForegroundColorSpan(Color.GRAY), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            dateSpan.setSpan(new RelativeSizeSpan(0.75f), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            // Replace smileys in text
+            Spannable withSmileys = SmileyReader.addSmileys(context, getText(context));
+            // Time and username
+            SpannableStringBuilder finishedText = new SpannableStringBuilder(dateSpan).append(" ").append(owner.toFormattedText(messageType.getColor()));
+            // Delimeter
+            finishedText.append(messageType.getDelimeter());
+            // Message
+            finishedText.append(withSmileys);
+            // Add overall styles
+            if (messageType.typeFace != null) {
+                finishedText.setSpan(new StyleSpan(messageType.typeFace), DATE_CHAR_LENGTH, finishedText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            }
+
+            spannedText = finishedText;
+            isCreated = true;
         }
 
-        return finishedText;
+        return spannedText;
     }
 
     private Spannable getText(Context context) {
         if (text != null) {
-            return text;
+            return BBCodeReader.createSpannableWithBBCode(text, context);
         } else if (stringId != null){
             // Load string only once, than save it at the text variable.
             if (values == null) {
-                return text = BBCodeReader.createSpannableWithBBCode(context.getString(stringId));
+                return BBCodeReader.createSpannableWithBBCode(context.getString(stringId), context);
             } else {
                 String unformattedText = context.getString(stringId);
                 String.format(unformattedText,  values);
 
-                return text = BBCodeReader.createSpannableWithBBCode(unformattedText);
+                return BBCodeReader.createSpannableWithBBCode(unformattedText, context);
             }
         }
 

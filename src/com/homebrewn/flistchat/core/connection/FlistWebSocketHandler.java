@@ -33,6 +33,7 @@ import android.content.Context;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import com.homebrewn.flistchat.core.connection.handler.AdHandler;
 import com.homebrewn.flistchat.core.connection.handler.ChannelDescriptionHandler;
 import com.homebrewn.flistchat.core.connection.handler.ChannelListHandler;
 import com.homebrewn.flistchat.core.connection.handler.CharInfoHandler;
@@ -93,6 +94,7 @@ public class FlistWebSocketHandler extends WebSocketHandler {
         availableTokenHandler.add(new ChannelDescriptionHandler());
         availableTokenHandler.add(new ErrorMessageHandler());
         availableTokenHandler.add(new DiceBottleHandler());
+        availableTokenHandler.add(new AdHandler());
 
         Injector injector = RoboGuice.getInjector(context);
 
