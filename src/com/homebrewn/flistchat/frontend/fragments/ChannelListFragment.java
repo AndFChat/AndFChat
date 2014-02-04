@@ -99,7 +99,7 @@ public class ChannelListFragment extends RoboFragment {
         }
 
         if (isChanged) {
-            Ln.d("Redraw channel list");
+            Ln.v("Redraw channel list");
             chatroomListAdapter.notifyDataSetChanged();
         }
     }

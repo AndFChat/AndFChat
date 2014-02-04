@@ -24,46 +24,42 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.connection.FeedbackListner;
 import com.homebrewn.flistchat.core.connection.ServerToken;
 import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
+import com.homebrewn.flistchat.core.data.Chatroom;
 import com.homebrewn.flistchat.core.data.FlistChar;
 
 /**
- * Handles left events on channels.
+ * Adds Dice and Bottle messages to channels.
  * @author AndFChat
  */
-public class LeftChannelHandler extends TokenHandler {
+public class DiceBottleHandler extends TokenHandler {
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) {
-
-        try {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+        if (token == ServerToken.RLL) {
             JSONObject json = new JSONObject(msg);
-            String channel = json.getString("channel");
+            String channelId = json.getString("channel");
+            String message = json.getString("message");
             String character = json.getString("character");
-            if (character.equals(sessionData.getCharacterName())) {
-                chatroomManager.removeChatroom(channel);
-            } else {
-                FlistChar flistChar = characterManager.findCharacter(character);
-                if (sessionData.getSessionSettings().showChannelInfos()) {
-                    ChatEntry chatEntry = new ChatEntry(R.string.message_channel_left, flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
-                    chatroomManager.getChatroom(channel).addMessage(chatEntry);
-                }
 
-                chatroomManager.getChatroom(channel).removeCharacter(flistChar);
+            FlistChar owner = characterManager.findCharacter(character);
+
+            Chatroom chatroom = chatroomManager.getChatroom(channelId);
+            if (chatroom != null) {
+                // Remove the first name, is already displayed by the ChatEntry.
+                message = message.substring(message.indexOf("[/b]") + "[/b]".length());
+                ChatEntry chatEntry = new ChatEntry(message, owner, new Date(), ChatEntryType.NOTATION_DICE);
+                chatroom.addMessage(chatEntry);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
-
     }
 
     @Override
     public ServerToken[] getAcceptableTokens() {
-        return new ServerToken[]{ServerToken.LCH};
+        return new ServerToken[] {ServerToken.RLL};
     }
 
 }

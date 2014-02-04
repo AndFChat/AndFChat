@@ -48,7 +48,8 @@ public class ChatEntry {
         NOTATION_LEFT(Color.GRAY, " "),
         NOTATION_JOINED(Color.GRAY, " "),
         NOTATION_SYSTEM(Color.GRAY),
-        NOTATION_STATUS(Color.GRAY);
+        NOTATION_STATUS(Color.GRAY),
+        NOTATION_DICE(Color.WHITE, " ");
 
         private Integer color = null;
         private Integer typeFace = null;

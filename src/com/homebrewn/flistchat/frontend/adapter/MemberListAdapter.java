@@ -162,6 +162,7 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
         }
 
         super.add(object);
+
         if (this.getCount() > 1) {
             this.sort(COMPARATOR);
         }

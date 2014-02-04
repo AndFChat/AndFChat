@@ -1,16 +1,16 @@
 /*******************************************************************************
  *     This file is part of AndFChat.
- * 
+ *
  *     AndFChat is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     AndFChat is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -33,8 +33,10 @@ import com.homebrewn.flistchat.core.data.ChatEntry;
 import com.homebrewn.flistchat.core.data.ChatEntry.ChatEntryType;
 import com.homebrewn.flistchat.core.data.ChatroomManager;
 import com.homebrewn.flistchat.core.data.FlistChar;
+import com.homebrewn.flistchat.core.util.commands.Bottle;
 import com.homebrewn.flistchat.core.util.commands.CloseChatroom;
 import com.homebrewn.flistchat.core.util.commands.NotificationChannel;
+import com.homebrewn.flistchat.core.util.commands.OpenChatroom;
 import com.homebrewn.flistchat.core.util.commands.PMUser;
 import com.homebrewn.flistchat.core.util.commands.StatusChange;
 import com.homebrewn.flistchat.core.util.commands.TextCommand;
@@ -55,6 +57,8 @@ public class Console {
         availableCommands.add(new PMUser());
         availableCommands.add(new CloseChatroom());
         availableCommands.add(new NotificationChannel());
+        availableCommands.add(new OpenChatroom());
+        availableCommands.add(new Bottle());
 
         Injector injector = RoboGuice.getInjector(context);
         for (TextCommand command : availableCommands) {

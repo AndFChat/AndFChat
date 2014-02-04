@@ -18,8 +18,6 @@
 
 package com.homebrewn.flistchat.frontend.fragments;
 
-import java.util.List;
-
 import roboguice.event.Observes;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -28,7 +26,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.inject.Inject;
@@ -36,7 +33,6 @@ import com.homebrewn.flistchat.R;
 import com.homebrewn.flistchat.core.data.CharacterManager;
 import com.homebrewn.flistchat.core.data.Chatroom;
 import com.homebrewn.flistchat.core.data.ChatroomManager;
-import com.homebrewn.flistchat.core.data.FlistChar;
 import com.homebrewn.flistchat.frontend.adapter.MemberListAdapter;
 
 public class UserListFragment extends RoboFragment {
@@ -49,7 +45,7 @@ public class UserListFragment extends RoboFragment {
     @InjectView(R.id.userlist)
     private ListView memberListView;
 
-    private ArrayAdapter<FlistChar> memberListData;
+    private MemberListAdapter memberListData;
 
     private boolean isVisible = true;
     private boolean canBeDisplayed = true;
@@ -84,27 +80,8 @@ public class UserListFragment extends RoboFragment {
 
     public void refreshList() {
         Chatroom activeChat = chatroomManager.getActiveChat();
-        boolean isChanged = false;
 
-        // Remove left chars
-        List<FlistChar> leftMembers = activeChat.getLeftChars();
-        if (leftMembers.size() > 0) {
-            for (final FlistChar entry : leftMembers) {
-                memberListData.remove(entry);
-                isChanged = true;
-            }
-        }
-
-        // Add joined chars
-        List<FlistChar> joinedMembers = activeChat.getJoinedChars();
-        if (joinedMembers.size() > 0) {
-            for (final FlistChar entry : joinedMembers) {
-                memberListData.add(entry);
-                isChanged = true;
-            }
-        }
-
-        if (isChanged || characterManager.isStatusChanged()) {
+        if (activeChat.hasChangedUser() || characterManager.isStatusChanged()) {
             memberListData.notifyDataSetChanged();
         }
     }

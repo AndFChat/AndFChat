@@ -240,4 +240,25 @@ public class FlistWebSocketConnection {
     public void closeConnection() {
         connection.disconnect();
     }
+
+    public void createPrivateChannel(String channelname) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", channelname);
+            sendMessage(ClientToken.CCR, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while creating a private channel: " + e.getMessage());
+        }
+    }
+
+    public void bottle(Chatroom activeChat) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", activeChat.getId());
+            data.put("dice", "bottle");
+            sendMessage(ClientToken.RLL, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while botteling: " + e.getMessage());
+        }
+    }
 }

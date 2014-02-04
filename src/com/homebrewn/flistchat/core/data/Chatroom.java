@@ -52,12 +52,10 @@ public class Chatroom {
     private List<ChatEntry> chatMessages;
     private final List<FlistChar> characters = new ArrayList<FlistChar>();
 
-    private List<FlistChar> joined = new ArrayList<FlistChar>();
-    private List<FlistChar> left = new ArrayList<FlistChar>();
-
     private Spannable description;
 
     private boolean hasNewMessage = false;
+    private boolean hasChangedUser = false;
 
     public Chatroom(Channel channel, ChatroomType type) {
         this.channel = channel;
@@ -145,21 +143,17 @@ public class Chatroom {
     public void addCharacter(FlistChar flistChar) {
         if (!characters.contains(flistChar)) {
             characters.add(flistChar);
-            joined.add(flistChar);
-            left.remove(flistChar);
+            hasChangedUser = true;
         }
     }
 
     public void removeCharacter(FlistChar flistChar) {
         if (characters.remove(flistChar) == true) {
-            joined.remove(flistChar);
-            left.add(flistChar);
+            hasChangedUser = true;
         }
     }
 
     public List<FlistChar> getCharacters() {
-        joined.clear();
-        left.clear();
         return characters;
     }
 
@@ -186,18 +180,6 @@ public class Chatroom {
         return messages;
     }
 
-    public List<FlistChar> getLeftChars() {
-        List<FlistChar> leftChars = left;
-        left = new ArrayList<FlistChar>();
-        return leftChars;
-    }
-
-    public List<FlistChar> getJoinedChars() {
-        List<FlistChar> joinedChars = joined;
-        joined = new ArrayList<FlistChar>();
-        return joinedChars;
-    }
-
     public FlistChar getRecipient() {
         return characters.get(0);
     }
@@ -212,5 +194,14 @@ public class Chatroom {
 
     public void setChatHistory(List<ChatEntry> chatMessages) {
         this.chatMessages = chatMessages;
+    }
+
+    public boolean hasChangedUser() {
+        if (hasChangedUser) {
+            hasChangedUser = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

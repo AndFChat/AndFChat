@@ -25,7 +25,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 
 import com.homebrewn.flistchat.core.connection.FlistWebSocketConnection;
-import com.homebrewn.flistchat.frontend.activities.PickChar;
+import com.homebrewn.flistchat.frontend.activities.Login;
 
 public class DisconnectAction {
 
@@ -38,7 +38,7 @@ public class DisconnectAction {
                 public void onClick(DialogInterface dialog, int id) {
                        RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection();
 
-                       Intent intent = new Intent(activity.getApplicationContext(), PickChar.class);
+                       Intent intent = new Intent(activity.getApplicationContext(), Login.class);
                        activity.startActivity(intent);
                        activity.finish();
                    }

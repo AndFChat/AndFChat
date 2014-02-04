@@ -37,6 +37,7 @@ import com.homebrewn.flistchat.core.connection.handler.ChannelDescriptionHandler
 import com.homebrewn.flistchat.core.connection.handler.ChannelListHandler;
 import com.homebrewn.flistchat.core.connection.handler.CharInfoHandler;
 import com.homebrewn.flistchat.core.connection.handler.CharListHandler;
+import com.homebrewn.flistchat.core.connection.handler.DiceBottleHandler;
 import com.homebrewn.flistchat.core.connection.handler.ErrorMessageHandler;
 import com.homebrewn.flistchat.core.connection.handler.FirstConnectionHandler;
 import com.homebrewn.flistchat.core.connection.handler.FriendListHandler;
@@ -91,7 +92,7 @@ public class FlistWebSocketHandler extends WebSocketHandler {
         availableTokenHandler.add(new LeftChannelHandler());
         availableTokenHandler.add(new ChannelDescriptionHandler());
         availableTokenHandler.add(new ErrorMessageHandler());
-
+        availableTokenHandler.add(new DiceBottleHandler());
 
         Injector injector = RoboGuice.getInjector(context);
 
