@@ -89,10 +89,10 @@ public class ChatEntry {
     private final static int DATE_CHAR_LENGTH = 10;
 
     private final Date date;
-    private final Spannable text;
     private final FlistChar owner;
     private final ChatEntryType messageType;
 
+    private Spannable text;
     private Integer stringId = null;
     private Object[] values = null;
 
@@ -166,12 +166,14 @@ public class ChatEntry {
         if (text != null) {
             return text;
         } else if (stringId != null){
+            // Load string only once, than save it at the text variable.
             if (values == null) {
-                return new SpannableString(context.getString(stringId));
+                return text = BBCodeReader.createSpannableWithBBCode(context.getString(stringId));
             } else {
-                String text = context.getString(stringId);
-                String.format(text,  values);
-                return new SpannableString(text);
+                String unformattedText = context.getString(stringId);
+                String.format(unformattedText,  values);
+
+                return text = BBCodeReader.createSpannableWithBBCode(unformattedText);
             }
         }
 

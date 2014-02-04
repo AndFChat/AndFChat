@@ -56,7 +56,6 @@
                 android:onClick="leaveActiveChat"
                 android:layout_gravity="right"
                 android:text="@string/leave_channel"
-                style="?android:attr/borderlessButtonStyle"
             />
                 
             <Button
@@ -65,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:onClick="toggleSidebarRight"
                 android:text="@string/hide"
-                style="?android:attr/borderlessButtonStyle"
             />
             
         </LinearLayout>
