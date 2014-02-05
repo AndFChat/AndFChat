@@ -31,10 +31,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.google.inject.Inject;
-import com.andfchat.R;
 
 public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
@@ -56,6 +56,10 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
         final Chatroom chatroom = getItem(position);
 
+        if (chatroom == null) {
+            return rowView;
+        }
+
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         rowView = inflater.inflate(R.layout.list_item_chat, null);
 
@@ -76,7 +80,6 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         else if (chatroom.hasNewMessage()) {
             rowView.setBackgroundColor(Color.RED);
         }
-
 
         return rowView;
     }

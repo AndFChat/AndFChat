@@ -48,10 +48,10 @@ import com.andfchat.core.connection.handler.TokenHandler;
 import com.andfchat.core.data.AppProperties;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -123,7 +123,8 @@ public class FlistWebSocketHandler extends WebSocketHandler {
 
         if (sessionData.getSessionSettings().useDebugChannel()) {
             FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
-            chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE));
+            ChatEntry entry = new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE);
+            chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(entry);
         }
 
         ServerToken token = null;
@@ -156,9 +157,12 @@ public class FlistWebSocketHandler extends WebSocketHandler {
 
     @Override
     public void onClose(int code, String reason) {
-       Ln.d("Status: Connection closed: " + reason);
+        Ln.d("Status: Connection closed: " + reason);
     }
 
+    /**
+     * Register a feedback called after receiving the ServerToken, the feedback will only be called once than removed.
+     */
     public void addFeedbackListner(ServerToken serverToken, FeedbackListner feedbackListner) {
         if (feedbackListnerMap.containsKey(serverToken)) {
             feedbackListnerMap.get(serverToken).add(feedbackListner);

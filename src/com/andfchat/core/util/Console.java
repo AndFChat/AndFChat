@@ -96,7 +96,7 @@ public class Console {
                         return true;
                     } else {
                         FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-                        ChatEntry chatEntry = new ChatEntry(R.string.error_command_not_allowed, systemChar, new Date(), ChatEntryType.NOTATION_SYSTEM);
+                        ChatEntry chatEntry = new ChatEntry(R.string.error_command_not_allowed, systemChar, new Date(), ChatEntryType.ERROR);
                         chatroomManager.getActiveChat().addMessage(chatEntry);
                         break;
                     }

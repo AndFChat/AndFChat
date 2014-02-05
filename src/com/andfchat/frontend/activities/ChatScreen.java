@@ -152,6 +152,7 @@ public class ChatScreen extends RoboFragmentActivity {
             setVisibilityForLeaveChannelButton(View.VISIBLE);
 
             if (chatroom.isPrivateChat()) {
+                toggleSidebarRight.setVisibility(View.GONE);
                 setVisibilityForChannelDescriptionButton(View.GONE);
             } else {
                 setVisibilityForChannelDescriptionButton(View.VISIBLE);

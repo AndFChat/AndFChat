@@ -27,5 +27,6 @@ public enum CharStatus {
     looking,
     busy,
     dnd,
-    away
+    away,
+    idle
 }

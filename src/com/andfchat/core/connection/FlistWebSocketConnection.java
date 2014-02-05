@@ -30,11 +30,11 @@ import com.andfchat.core.data.AppProperties;
 import com.andfchat.core.data.CharStatus;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -45,8 +45,9 @@ import de.tavendo.autobahn.WebSocketException;
 public class FlistWebSocketConnection {
 
     private final static String CLIENT_NAME = "AndFChat";
-    private final static String CLIENT_VERSION = "alpha01";
-    private final static String SERVER_URL = "ws://chat.f-list.net:8722/";
+    private final static String CLIENT_VERSION = "0.1";
+    private final static String SERVER_URL_DEV = "ws://chat.f-list.net:8722/";
+    private final static String SERVER_URL_LIVE = "ws://chat.f-list.net:9722/";
 
     @Inject
     private FlistWebSocketHandler handler;
@@ -61,7 +62,7 @@ public class FlistWebSocketConnection {
 
     public void connect() {
         try {
-            connection.connect(SERVER_URL, handler);
+            connection.connect(SERVER_URL_DEV, handler);
         } catch (WebSocketException e) {
             e.printStackTrace();
             Ln.e("Exception while connecting");
@@ -96,6 +97,9 @@ public class FlistWebSocketConnection {
         }
     }
 
+    /**
+     * Register a feedback called after receiving the ServerToken, the feedback will only be called once than removed.
+     */
     public void registerFeedbackListner(ServerToken serverToken, FeedbackListner feedbackListner) {
         handler.addFeedbackListner(serverToken, feedbackListner);
     }
@@ -120,7 +124,6 @@ public class FlistWebSocketConnection {
 
     /**
      * Asks the server for permission to enter a channel.
-     * @param channel
      */
     public void joinChannel(String channel) {
         JSONObject data = new JSONObject();
@@ -134,7 +137,6 @@ public class FlistWebSocketConnection {
 
     /**
      * Asks the server for all public private channel.
-     * @param channel
      */
     public void askForPrivateChannel() {
         sendMessage(ClientToken.ORS);
@@ -142,7 +144,6 @@ public class FlistWebSocketConnection {
 
     /**
      * Asks the server to leave an channel
-     * @param channel
      */
     public void leaveChannel(Chatroom chatroom) {
         // TODO: Leave private chat without deleting "log"
@@ -162,8 +163,6 @@ public class FlistWebSocketConnection {
 
     /**
      * Sends a message to an channel.
-     * @param channel
-     * @param msg
      */
     public void sendMessageToChannel(Chatroom chatroom, String msg) {
         JSONObject data = new JSONObject();
@@ -182,8 +181,6 @@ public class FlistWebSocketConnection {
 
     /**
      * Sends a private message.
-     * @param recipient
-     * @param msg
      */
     public void sendPrivatMessage(String recipient, String msg) {
         JSONObject data = new JSONObject();
@@ -203,8 +200,6 @@ public class FlistWebSocketConnection {
 
     /**
      * Set a status for the character.
-     * @param status
-     * @param msg
      */
     public void setStatus(CharStatus status, String msg) {
         JSONObject data = new JSONObject();
@@ -219,9 +214,7 @@ public class FlistWebSocketConnection {
     }
 
     /**
-     * Asks for character information
-     * @param status
-     * @param msg
+     * Asks for character information.
      */
     public void askForInfos(FlistChar flistChar) {
         JSONObject data = new JSONObject();
