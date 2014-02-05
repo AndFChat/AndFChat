@@ -2,13 +2,14 @@
 Developed with API Level: 14, Android 4.0 (Ice Cream Sandwich)
 
 Really not the best piece of code. My first time creating a bigger project with Android.
+
 Any help, tips and thanks are welcom! :)
 
 
-This is still a very early beta.
-Download: Coming soon!
+This is still a very early beta, first release is coming soon.
 
 Contact me for bugreports on Flist: AndFChat
+
 I prefere german for english, but I read both fluent.
 
 Dependencies:
