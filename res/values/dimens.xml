@@ -15,11 +15,13 @@
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-
-    <dimen name="slidingmenu_offset">60dp</dimen>
-    <dimen name="list_padding">10dp</dimen>
-    <dimen name="shadow_width">15dp</dimen>
-
-    <integer name="num_cols">1</integer>
+    <dimen name="width_user_sidebar">150dp</dimen>
+    <dimen name="width_channel_sidebar">90dp</dimen>
+    
+    <dimen name="image_size_chatroom">70dp</dimen>
+    <dimen name="image_size_user_status">25dp</dimen>
+    
+    <dimen name="text_size_button_small">12sp</dimen>
+    <dimen name="text_size_button_normal">14sp</dimen>
 
 </resources>

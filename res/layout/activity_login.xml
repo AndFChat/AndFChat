@@ -24,52 +24,62 @@
 
     <TextView
         android:id="@+id/loginErrorField"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="@color/red"
         android:text=""
-        android:gravity="center_horizontal"  
-        android:layout_marginTop="100dp"/>
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"/>
     
     <LinearLayout     
         android:orientation="vertical"
 	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content">
+    	android:layout_height="wrap_content">                
         
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/account"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/account"
+        />
+            
+        <EditText
+            android:id="@+id/accountField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" 
+            android:ems="13" >
+            <requestFocus />
+        </EditText>       
         
-    <EditText
-        android:id="@+id/accountField"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text" 
-        android:ems="13" >
-        <requestFocus />
-    </EditText>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password"
+        />    
+        
+        <EditText
+            android:id="@+id/passwordField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" 
+            android:ems="13"
+        />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/password"/>    
-    
-    <EditText
-        android:id="@+id/passwordField"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword" 
-        android:ems="13"
-    />
-
-    <Button
-        android:id="@+id/logInButton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login"
-        android:onClick="logIn"/>
+        <CheckBox 
+            android:id="@+id/rememberAccount"
+            android:text="@string/remember_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        /> 
+        
+        <Button
+            android:id="@+id/logInButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:onClick="logIn"
+        />
 		
     </LinearLayout>
     

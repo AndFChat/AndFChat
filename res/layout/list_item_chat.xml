@@ -16,7 +16,7 @@
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="80dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@color/black"
@@ -25,15 +25,15 @@
     
     <ImageView
         android:id="@+id/ChatroomImage" 
-	    android:layout_width="70dp"
-	    android:layout_height="70dp"  
+	    android:layout_width="@dimen/image_size_chatroom"
+	    android:layout_height="@dimen/image_size_chatroom"  
 	    android:src="@drawable/chat_room_icon"
 	    android:gravity="center"
         />
     
     <TextView
         android:id="@+id/ChatroomName" 
-        android:layout_width="75dp"
+        android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:maxLines="1"
   		android:textStyle="bold"

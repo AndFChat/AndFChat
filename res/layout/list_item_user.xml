@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      This file is part of AndFChat.
+  
+      AndFChat is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+  
+      AndFChat is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+  
+      You should have received a copy of the GNU General Public License
+      along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"    
+    android:orientation="vertical">
+    
+    <LinearLayout 
+        android:id="@+id/userlabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    
+        <ImageView 
+            android:layout_height="@dimen/image_size_user_status" 
+            android:layout_width="@dimen/image_size_user_status"
+            android:background="@drawable/icon_blue"
+            android:id="@+id/itemIcon"
+        />
+        
+        <TextView 
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="match_parent"        
+            android:id="@+id/itemText"
+            android:textSize="@dimen/text_size_button_normal"
+            android:singleLine="true"      
+            android:text=""
+            android:gravity="center_vertical"
+        />
+    
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/usermenu"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    
+        <Button             
+            android:id="@+id/pmuser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_button_small"
+            android:text="@string/pm_user"        
+        />
+        
+        <Button 
+            android:id="@+id/bmuser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_button_small"
+            android:text="@string/bookmark_user"        
+        />
+        
+        <Button 
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_button_small"
+            android:text="@string/show_details"        
+        />
+        
+        <Button 
+            android:id="@+id/closeUsermenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_button_small"
+            android:text="@string/close"        
+        />
+    
+    </LinearLayout>
+
+</LinearLayout>

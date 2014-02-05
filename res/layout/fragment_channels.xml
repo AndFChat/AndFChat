@@ -18,12 +18,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainScreen">
+    tools:context=".ChatScreen">
     
     <ListView 
         android:id="@+id/channelList"
-        android:layout_height="fill_parent"
-        android:layout_width="90dp"
-        />
+        android:layout_height="match_parent"
+        android:layout_width="@dimen/width_channel_sidebar"
+    />
     
 </RelativeLayout>

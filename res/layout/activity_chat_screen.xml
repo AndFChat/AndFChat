@@ -1,0 +1,100 @@
+<!--
+      This file is part of AndFChat.
+  
+      AndFChat is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+  
+      AndFChat is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+  
+      You should have received a copy of the GNU General Public License
+      along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChatScreen" 
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/toggleSidebarLeft"
+            android:layout_width="@dimen/width_channel_sidebar"
+            android:layout_height="wrap_content"            
+            android:onClick="toggleSidebarLeft"
+            android:text="@string/hide"
+        />
+        
+        <Button
+            android:id="@+id/showDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showDescription"
+            android:text="@string/channel_description"
+        />
+                                
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"    
+            android:orientation="horizontal"
+            android:layout_gravity="right"
+            android:gravity="right">
+        
+            <Button
+                android:id="@+id/leaveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="leaveActiveChat"
+                android:layout_gravity="right"
+                android:text="@string/leave_channel"
+            />
+                
+            <Button
+                android:id="@+id/toggleSidebarRight"
+                android:layout_width="@dimen/width_user_sidebar"
+                android:layout_height="wrap_content"
+                android:onClick="toggleSidebarRight"
+                android:text="@string/hide"
+            />
+            
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+    <RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">   
+    	        
+        <fragment android:name="com.andfchat.frontend.fragments.ChannelListFragment"
+                android:id="@+id/channelListFragment"                
+                android:layout_width="@dimen/width_channel_sidebar"
+                android:layout_height="match_parent"                
+        />       
+            
+        <fragment android:name="com.andfchat.frontend.fragments.ChatFragment"
+            android:id="@+id/chatFragment"                
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/channelListFragment"
+            android:layout_toLeftOf="@+id/userListFragment"
+        />
+    
+	   <fragment android:name="com.andfchat.frontend.fragments.UserListFragment"
+            android:id="@+id/userListFragment"                
+            android:layout_width="@dimen/width_user_sidebar"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+        />   
+        
+    </RelativeLayout>
+
+</LinearLayout>

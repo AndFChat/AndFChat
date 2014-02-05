@@ -1,4 +1,4 @@
-AndFChat
+AndFChat (3rd part Flist-Client)
 ========
 Developed with API Level: 14, Android 4.0 (Ice Cream Sandwich)
 

@@ -18,25 +18,25 @@
 
    <item android:id="@+id/action_add_chat"
      	android:icon="@drawable/add_chat"
-     	android:title="ADD_CHAT"
+     	android:title="@string/channels"
      	android:showAsAction="ifRoom" 
     />   
     
     <item android:id="@+id/action_open_friendlist"
      	android:icon="@drawable/friends"
-     	android:title="OPEN_FRIENDS"
+     	android:title="@string/friendlist"
      	android:showAsAction="ifRoom" 
     />
    
     <item android:id="@+id/action_open_settings"
      	android:icon="@drawable/settings"
-     	android:title="OPEN_SETTINGS"
+     	android:title="@string/settings"
      	android:showAsAction="ifRoom" 
     />
     
     <item android:id="@+id/action_disconnect"
      	android:icon="@drawable/disconnect"
-     	android:title="DISCONNECT"
+     	android:title="@string/logout"
      	android:showAsAction="ifRoom" 
     />      
 
