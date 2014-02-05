@@ -51,7 +51,7 @@
     <string name="message_status_changed_with_message">is now %1$s. [%2$s]</string>
     
     <string name="error_login">Login failed, maybe username or password wrong?</string>
-    <string name="error_command_not_allowed">This command isn't allowed to use in the active environment</string>      
+    <string name="error_command_not_allowed">This command isn\'t allowed to use in the active environment</string>      
     
     <string name="text_about">[b]AndFChat[/b] (Version 0.1) is developed under GPL3 licence.\n
         It\'s still a [b] [color=red]BETA[/color] [/b] so use with patients!\n
