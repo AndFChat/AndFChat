@@ -12,6 +12,7 @@ Contact me for bugreports on Flist: AndFChat
 I prefere german for english, but I read both fluent.
 
 Dependencies:
+
 roboguice-2.0
 - guice-3.0-no_aop
 - javax.inject-1
