@@ -24,7 +24,7 @@ import android.content.SharedPreferences;
 public class AppProperties {
     private final SharedPreferences settings;
 
-    public static final String DEBUG_CHANNEL_NAME = "Debug Channel";
+    public static final String DEBUG_CHANNEL_NAME = "Console";
 
     public enum PropertyName {
         IS_INITIATED,
