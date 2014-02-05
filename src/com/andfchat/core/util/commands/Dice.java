@@ -18,9 +18,15 @@
 
 package com.andfchat.core.util.commands;
 
+import com.andfchat.core.data.Chatroom.ChatroomType;
+
 
 
 public class Dice extends TextCommand {
+
+    public Dice() {
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
+    }
 
     @Override
     public String getDescription() {
@@ -36,5 +42,4 @@ public class Dice extends TextCommand {
     public void runCommand(String token, String text) {
         connection.dice(chatroomManager.getActiveChat(), text.trim());
     }
-
 }

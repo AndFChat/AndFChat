@@ -18,29 +18,33 @@
 
 package com.andfchat.core.util.commands;
 
+import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
 
-public class ShowDebugChannel extends TextCommand {
+public class ChannelNotification extends TextCommand {
+
+    public ChannelNotification() {
+        allowedIn = ChatroomType.values();
+    }
 
     @Inject
     protected SessionData sessionData;
 
     @Override
     public String getDescription() {
-        return "*  /show_debug [on/off] | ADDS A CHANNEL FOR DEBUGGING.";
+        return "*  /channel_info [on/off] | SET NOTATIONS ABOUT CHANNEL JOINS ON/OFF.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/show_debug");
+        return token.equals("/channel_info");
     }
 
     @Override
     public void runCommand(String token, String text) {
         boolean value = text.equals("on");
-        sessionData.getSessionSettings().setUseDebugChannel(value);
+        sessionData.getSessionSettings().setShowChannelInfo(value);
     }
-
 }

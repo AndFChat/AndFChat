@@ -33,7 +33,7 @@ public class Chatroom {
         PUBLIC_CHANNEL(true, true, 80),
         PRIVATE_CHANNEL(true, true, 60),
         PRIVATE_CHAT(true, false, 40),
-        SYSTEM(false, false, 100);
+        CONSOLE(false, false, 100);
 
         public final boolean closeable;
         public final boolean showUserList;
@@ -96,7 +96,7 @@ public class Chatroom {
         return chatroomType == ChatroomType.PRIVATE_CHAT;
     }
 
-    public boolean closeable() {
+    public boolean isCloseable() {
         return chatroomType.closeable;
     }
 
@@ -185,7 +185,7 @@ public class Chatroom {
     }
 
     public boolean isSystemChat() {
-        return this.chatroomType == ChatroomType.SYSTEM;
+        return this.chatroomType == ChatroomType.CONSOLE;
     }
 
     public List<ChatEntry> getChatHistory() {
@@ -203,5 +203,9 @@ public class Chatroom {
         } else {
             return false;
         }
+    }
+
+    public ChatroomType getChatroomType() {
+        return chatroomType;
     }
 }

@@ -18,9 +18,15 @@
 
 package com.andfchat.core.util.commands;
 
+import com.andfchat.core.data.Chatroom.ChatroomType;
+
 
 
 public class OpenChatroom extends TextCommand {
+
+    public OpenChatroom() {
+        allowedIn = ChatroomType.values();
+    }
 
     @Override
     public String getDescription() {
@@ -41,5 +47,4 @@ public class OpenChatroom extends TextCommand {
             }
         }
     }
-
 }

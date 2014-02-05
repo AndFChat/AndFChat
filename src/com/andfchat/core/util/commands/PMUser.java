@@ -21,15 +21,20 @@ package com.andfchat.core.util.commands;
 import roboguice.event.EventManager;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
-import com.andfchat.core.data.Chatroom;
-import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
+import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.andfchat.core.data.FlistChar;
 import com.google.inject.Inject;
 
 public class PMUser extends TextCommand {
 
     @Inject
     protected EventManager eventManager;
+
+    public PMUser() {
+        allowedIn = ChatroomType.values();
+    }
 
     @Override
     public String getDescription() {
@@ -64,5 +69,4 @@ public class PMUser extends TextCommand {
             eventManager.fire(chatroom);
         }
     }
-
 }

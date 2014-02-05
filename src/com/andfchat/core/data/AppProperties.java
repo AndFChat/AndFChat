@@ -27,7 +27,8 @@ public class AppProperties {
     public static final String DEBUG_CHANNEL_NAME = "Debug Channel";
 
     public enum PropertyName {
-        SHOW_CHATROOM_INFOS,
+        IS_INITIATED,
+        SHOW_CHANNEL_INFOS,
         SHOW_USER_STATUS_CHANGES,
         USE_DEBUG_CHANNEL
     }

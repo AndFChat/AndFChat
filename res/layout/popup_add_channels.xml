@@ -31,7 +31,7 @@
 	    <TextView 
 	        android:id="@+id/joinChannelPopupTitle"
 	        android:text="@string/channels"
-	        android:textSize="20sp"
+	        android:textSize="@dimen/text_size_popup_header"
 	        android:textStyle="bold"
 	        android:textColor="@color/black"
 	    	android:layout_width="match_parent"

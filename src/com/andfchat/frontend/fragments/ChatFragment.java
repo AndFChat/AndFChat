@@ -36,6 +36,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
@@ -43,7 +44,6 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.util.Console;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
 import com.google.inject.Inject;
-import com.andfchat.R;
 
 public class ChatFragment extends RoboFragment {
 
@@ -98,19 +98,19 @@ public class ChatFragment extends RoboFragment {
 
 
     private void sendMessage() {
+        Chatroom activeChat = chatroomManager.getActiveChat();
         // Ignore empty messages
         if (inputText.getText().toString().length() == 0 ) {
             return;
         }
-        // Text command like /help / open /close shouldn't be send to the server.
-        if (commands.checkForCommands(inputText.getText().toString())) {
+        // Text command like /help / open /close shouldn't be send to the server, console commands too.
+        if (commands.checkForCommands(inputText.getText().toString()) || activeChat.isSystemChat()) {
             // Reset input
             inputText.setText("");
             return;
         }
         else if ((System.currentTimeMillis() - lastMessage > 2000)) {
 
-            Chatroom activeChat = chatroomManager.getActiveChat();
 
             if (activeChat.isPrivateChat()) {
                 connection.sendPrivatMessage(activeChat.getRecipient().getName(), inputText.getText().toString());
@@ -135,8 +135,7 @@ public class ChatFragment extends RoboFragment {
         if (chatroom != null) {
             messages = chatroom.getLastMessages(chatroom.getMaxiumEntries());
         }
-        // Input text is disabled on System chats
-        inputText.setEnabled(!chatroom.isSystemChat());
+
         // Set messages
         chatListData.clear();
         chatListData.addAll(messages);

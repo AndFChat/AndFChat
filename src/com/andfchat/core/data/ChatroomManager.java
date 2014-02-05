@@ -27,6 +27,8 @@ import java.util.Set;
 import roboguice.util.Ln;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
+import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -44,6 +46,15 @@ public class ChatroomManager {
     // List of channels
     private final Set<String> officialChannelSet = new HashSet<String>();
     private final Set<Channel> privateChannelSet = new HashSet<Channel>();
+
+    @Inject
+    public ChatroomManager() {
+        initChats();
+    }
+
+    private void initChats() {
+        this.addChatroom(new Chatroom(new Channel(ChatroomType.CONSOLE.name(), "Console"), ChatroomType.CONSOLE));
+    }
 
     public void addChatEntry(String Chatroom, ChatEntry entry) {
         chats.get(Chatroom).addMessage(entry);
@@ -194,5 +205,7 @@ public class ChatroomManager {
         this.removedRooms.clear();
         this.officialChannelSet.clear();
         this.privateChannelSet.clear();
+
+        initChats();
     }
 }

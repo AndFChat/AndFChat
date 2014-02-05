@@ -38,6 +38,12 @@
      	android:icon="@drawable/disconnect"
      	android:title="@string/logout"
      	android:showAsAction="ifRoom" 
-    />      
+    />
+            
+    <item android:id="@+id/action_about"
+        android:icon="@drawable/disconnect"
+        android:title="@string/about"
+        android:showAsAction="never" 
+    />     
 
 </menu>

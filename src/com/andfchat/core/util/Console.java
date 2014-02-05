@@ -25,18 +25,19 @@ import java.util.List;
 import roboguice.RoboGuice;
 import android.content.Context;
 
+import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.util.commands.Bottle;
+import com.andfchat.core.util.commands.ChannelNotification;
 import com.andfchat.core.util.commands.CloseChatroom;
 import com.andfchat.core.util.commands.Dice;
-import com.andfchat.core.util.commands.NotificationChannel;
 import com.andfchat.core.util.commands.OpenChatroom;
 import com.andfchat.core.util.commands.PMUser;
-import com.andfchat.core.util.commands.ShowDebugChannel;
+import com.andfchat.core.util.commands.ShowServerConversation;
 import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.StatusNotification;
 import com.andfchat.core.util.commands.TextCommand;
@@ -62,9 +63,9 @@ public class Console {
         availableCommands.add(new PMUser());
         availableCommands.add(new CloseChatroom());
         availableCommands.add(new OpenChatroom());
-        availableCommands.add(new NotificationChannel());
+        availableCommands.add(new ChannelNotification());
         availableCommands.add(new StatusNotification());
-        availableCommands.add(new ShowDebugChannel());
+        availableCommands.add(new ShowServerConversation());
 
         Injector injector = RoboGuice.getInjector(context);
         for (TextCommand command : availableCommands) {
@@ -90,8 +91,15 @@ public class Console {
 
             for (TextCommand command : availableCommands) {
                 if (command.fitToCommand(token)) {
-                    command.runCommand(token, message.replace(token, "").trim());
-                    return true;
+                    if (command.isAllowedIn(chatroomManager.getActiveChat().getChatroomType())) {
+                        command.runCommand(token, message.replace(token, "").trim());
+                        return true;
+                    } else {
+                        FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
+                        ChatEntry chatEntry = new ChatEntry(R.string.error_command_not_allowed, systemChar, new Date(), ChatEntryType.NOTATION_SYSTEM);
+                        chatroomManager.getActiveChat().addMessage(chatEntry);
+                        break;
+                    }
                 }
             }
             // No fitting command found, show help.

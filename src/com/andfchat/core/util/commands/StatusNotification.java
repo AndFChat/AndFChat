@@ -18,6 +18,7 @@
 
 package com.andfchat.core.util.commands;
 
+import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
@@ -26,6 +27,10 @@ public class StatusNotification extends TextCommand {
 
     @Inject
     protected SessionData sessionData;
+
+    public StatusNotification() {
+        allowedIn = ChatroomType.values();
+    }
 
     @Override
     public String getDescription() {
@@ -42,5 +47,4 @@ public class StatusNotification extends TextCommand {
         boolean value = text.equals("on");
         sessionData.getSessionSettings().setShowStatusChanges(value);
     }
-
 }

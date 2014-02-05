@@ -133,10 +133,11 @@ public class Login extends RoboActivity {
     private boolean parseJson(String jsonText, Intent intent) {
         try {
             Ln.v(jsonText);
-            JSONObject jsonDocument = new JSONObject(jsonText);
+            final JSONObject jsonDocument = new JSONObject(jsonText);
 
             if (jsonDocument.getString(JsonTokens.error.name()).length() != 0) {
-                errorField.setText(jsonDocument.getString(JsonTokens.error.name()));
+                // TODO: Proper error handling
+                return false;
             } else {
                 JSONArray chars = jsonDocument.getJSONArray(JsonTokens.characters.name());
                 String charList = "";

@@ -23,5 +23,6 @@
     
     <dimen name="text_size_button_small">12sp</dimen>
     <dimen name="text_size_button_normal">14sp</dimen>
-
+    <dimen name="text_size_popup_header">20sp</dimen>
+    
 </resources>

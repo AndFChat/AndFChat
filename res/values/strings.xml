@@ -25,6 +25,7 @@
     <string name="login">Login</string>
     <string name="remember_account">Remember Account</string>
     <string name="logout">Logout</string>
+    <string name="about">About</string>    
     <string name="settings">Settings</string>
     <string name="bookmark_user">Bookmark</string>
     <string name="show_details">Open Details</string>
@@ -50,6 +51,16 @@
     <string name="message_status_changed_with_message">is now %1$s. [%2$s]</string>
     
     <string name="error_login">Login failed, maybe username or password wrong?</string>
+    <string name="error_command_not_allowed">This command isn't allowed to use in the active environment</string>      
     
-
+    <string name="text_about">[b]AndFChat[/b] (Version 0.1) is developed under GPL3 licence.\n
+        It\'s still a [b] [color=red]BETA[/color] [/b] so use with patients!\n
+        Found bugs can be send via note to [user]AndFChat[/user] (yes, this tags are still not parsed) or directly issued via GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
+        \n
+        [b] [color=red]Still looking for Help![/color] [/b]\n
+        * A native english speaker to redo the texts\n
+        * Artist/Designer to improve the interface and add some images.\n
+        * Experienced Android developer for UI-Design especially scaling questions for different display layouts.\n</string>
+    
+    
 </resources>

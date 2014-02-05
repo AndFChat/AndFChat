@@ -49,6 +49,7 @@ import com.andfchat.core.util.SmileyReader;
 import com.andfchat.frontend.fragments.ChannelListFragment;
 import com.andfchat.frontend.fragments.ChatFragment;
 import com.andfchat.frontend.fragments.UserListFragment;
+import com.andfchat.frontend.menu.AboutAction;
 import com.andfchat.frontend.menu.DisconnectAction;
 import com.andfchat.frontend.menu.FriendListAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
@@ -266,6 +267,9 @@ public class ChatScreen extends RoboFragmentActivity {
                 return true;
             case R.id.action_disconnect:
                 DisconnectAction.disconnect(this);
+                return true;
+            case R.id.action_about:
+                AboutAction.open(this, chat.getView(), height);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

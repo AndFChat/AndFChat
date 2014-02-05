@@ -21,7 +21,6 @@ package com.andfchat.core.data;
 import android.app.Activity;
 
 import com.andfchat.core.data.AppProperties.PropertyName;
-import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -78,25 +77,25 @@ public class SessionData {
 
 
     public class SessionSettings {
-        private boolean useDebugChannel = true;
+        private boolean useDebugChannel = false;
         private boolean showStatusChanges = true;
-        private boolean showChannelInfo = true;
+        private boolean showChannelInfo = false;
 
         public SessionSettings(AppProperties appProperties) {
-            this.setUseDebugChannel(appProperties.getBooleanValue(PropertyName.USE_DEBUG_CHANNEL));
-            this.setShowStatusChanges(appProperties.getBooleanValue(PropertyName.SHOW_USER_STATUS_CHANGES));
-            this.setShowChannelInfo(appProperties.getBooleanValue(PropertyName.SHOW_CHATROOM_INFOS));
+            if (appProperties.getBooleanValue(PropertyName.IS_INITIATED)) {
+                this.setUseDebugChannel(appProperties.getBooleanValue(PropertyName.USE_DEBUG_CHANNEL));
+                this.setShowStatusChanges(appProperties.getBooleanValue(PropertyName.SHOW_USER_STATUS_CHANGES));
+                this.setShowChannelInfo(appProperties.getBooleanValue(PropertyName.SHOW_CHANNEL_INFOS));
+            } else {
+                this.setUseDebugChannel(false);
+                this.setShowChannelInfo(false);
+                this.setShowStatusChanges(true);
+
+                appProperties.setBooleanValue(PropertyName.IS_INITIATED, true);
+            }
         }
 
         public void setUseDebugChannel(boolean value) {
-            if (value) {
-                if (chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME) == null) {
-                    chatroomManager.addChatroom(new Chatroom(new Channel(AppProperties.DEBUG_CHANNEL_NAME, AppProperties.DEBUG_CHANNEL_NAME), ChatroomType.SYSTEM));
-                }
-            } else {
-                chatroomManager.removeChatroom(AppProperties.DEBUG_CHANNEL_NAME);
-            }
-
             useDebugChannel = value;
             appProperties.setBooleanValue(PropertyName.USE_DEBUG_CHANNEL, value);
         }
@@ -120,6 +119,7 @@ public class SessionData {
 
         public void setShowChannelInfo(boolean value) {
             showChannelInfo = value;
+            appProperties.setBooleanValue(PropertyName.SHOW_CHANNEL_INFOS, value);
         }
     }
 }
