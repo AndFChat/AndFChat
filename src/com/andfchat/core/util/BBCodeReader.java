@@ -257,6 +257,10 @@ public class BBCodeReader {
         public boolean isEnd(String text, BBCodeType type);
     }
 
+    /**
+     * Matches simple tokens like [b] [sub].
+     * @author AndFChat
+     */
     public static class SimpleTextMatcher implements Matcher {
 
         @Override
@@ -270,6 +274,10 @@ public class BBCodeReader {
         }
     }
 
+    /**
+     * Matches tokens with additional info like [color=red] returns them via getVariable(...).
+     * @author AndFChat
+     */
     public static class VariableTextMatcher implements Matcher {
 
         @Override

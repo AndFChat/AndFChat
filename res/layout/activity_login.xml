@@ -80,6 +80,12 @@
             android:text="@string/login"
             android:onClick="logIn"
         />
+        
+        <Spinner
+            android:id="@+id/serverSelection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"    
+        />
 		
     </LinearLayout>
     

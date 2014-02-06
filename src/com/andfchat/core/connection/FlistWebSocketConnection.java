@@ -60,9 +60,13 @@ public class FlistWebSocketConnection {
 
     private final WebSocketConnection connection = new WebSocketConnection();
 
-    public void connect() {
+    public void connect(boolean onLive) {
         try {
-            connection.connect(SERVER_URL_DEV, handler);
+            if (onLive) {
+                connection.connect(SERVER_URL_LIVE, handler);
+            } else {
+                connection.connect(SERVER_URL_DEV, handler);
+            }
         } catch (WebSocketException e) {
             e.printStackTrace();
             Ln.e("Exception while connecting");

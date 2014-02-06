@@ -18,6 +18,9 @@
 
 package com.andfchat.frontend.activities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,8 +34,10 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andfchat.R;
@@ -45,6 +50,11 @@ public class Login extends RoboActivity {
 
     private static String SAVE_ACCOUNT_NAME = "SAVE_ACCOUNT_NAME";
     private static String ACCOUNT_NAME = "ACCOUNT_NAME";
+
+    public enum Server {
+        DEV_SERVER,
+        LIVE_SERVER;
+    }
 
     private enum JsonTokens {
         characters,
@@ -66,6 +76,8 @@ public class Login extends RoboActivity {
     private TextView errorField;
     @InjectView(R.id.rememberAccount)
     private CheckBox rememberAccount;
+    @InjectView(R.id.serverSelection)
+    private Spinner serverSelection;
 
     private SharedPreferences preferences;
 
@@ -81,6 +93,14 @@ public class Login extends RoboActivity {
             account.setText(preferences.getString(ACCOUNT_NAME, account.getText().toString()));
             password.requestFocus();
         }
+
+        List<String> list = new ArrayList<String>();
+        list.add(Server.DEV_SERVER.name());
+        list.add(Server.LIVE_SERVER.name());
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        serverSelection.setAdapter(dataAdapter);
+        serverSelection.setSelection(0);
     }
 
     @Override
@@ -169,6 +189,8 @@ public class Login extends RoboActivity {
                 }
                 prefEditor.commit();
 
+
+                intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 1);
                 intent.putExtra("characters", charList);
                 intent.putExtra("default_char", jsonDocument.getString(JsonTokens.default_character.name()));
                 intent.putExtra("bookmarks", bookmarksList);

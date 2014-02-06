@@ -1,16 +1,16 @@
 /*******************************************************************************
  *     This file is part of AndFChat.
- * 
+ *
  *     AndFChat is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     AndFChat is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
@@ -18,15 +18,16 @@
 
 package com.andfchat.core.data;
 
-import android.graphics.Color;
+import com.andfchat.R;
 
 public enum Gender {
-    MALE("Male", Color.BLUE),
-    FEMALE("Female", Color.RED),
-    CUNT_BOY("Cunt-boy", Color.GREEN),
-    SHEMALE("Shemale", Color.YELLOW),
-    HERM("Herm", Color.MAGENTA),
-    UNKNOWN("", Color.GRAY);
+    MALE("Male", R.color.name_male),
+    FEMALE("Female", R.color.name_female),
+    CUNT_BOY("Cunt-boy", R.color.name_cunt_boy),
+    SHEMALE("Shemale", R.color.name_shemale),
+    HERM("Herm", R.color.name_herm),
+    TRANSGENDER("Transgender", R.color.name_transgender),
+    UNKNOWN("", R.color.name_unknown);
 
     private String name;
     private int color;
@@ -40,7 +41,7 @@ public enum Gender {
         return name;
     }
 
-    public int getColor() {
+    public int getColorId() {
         return color;
     }
 

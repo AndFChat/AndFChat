@@ -28,12 +28,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.adapter.MemberListAdapter;
 import com.google.inject.Inject;
-import com.andfchat.R;
 
 public class UserListFragment extends RoboFragment {
 
@@ -81,8 +81,10 @@ public class UserListFragment extends RoboFragment {
     public void refreshList() {
         Chatroom activeChat = chatroomManager.getActiveChat();
 
-        if (activeChat.hasChangedUser() || characterManager.isStatusChanged()) {
-            memberListData.notifyDataSetChanged();
+        if (activeChat != null) {
+            if (activeChat.hasChangedUser() || characterManager.isStatusChanged()) {
+                memberListData.notifyDataSetChanged();
+            }
         }
     }
 

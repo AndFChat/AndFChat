@@ -31,11 +31,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.adapter.ChatroomListAdapter;
 import com.google.inject.Inject;
-import com.andfchat.R;
 
 public class ChannelListFragment extends RoboFragment {
 
@@ -91,7 +91,7 @@ public class ChannelListFragment extends RoboFragment {
         for (int i = 0; i < openChatrooms.size(); i++) {
             Chatroom room = openChatrooms.get(i);
 
-            if (room.hasNewMessage() && room.getId() != chatroomManager.getActiveChat().getId()) {
+            if (room.hasNewMessage() && (chatroomManager.getActiveChat() == null || room.getId() != chatroomManager.getActiveChat().getId())) {
                 isChanged = true;
                 // refresh is done, no need for more notifies.
                 break;

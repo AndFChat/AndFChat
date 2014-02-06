@@ -55,7 +55,7 @@ public class PickChar extends RoboActivity {
 
         // Connect websockets
         if (connection.isConnected() == false) {
-            connection.connect();
+            connection.connect(getIntent().getBooleanExtra("isLive", false));
         }
     }
 

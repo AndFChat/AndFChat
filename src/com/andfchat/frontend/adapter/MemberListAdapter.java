@@ -41,6 +41,7 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.FlistCharComparator;
+import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
 
 public class MemberListAdapter extends ArrayAdapter<FlistChar> {
@@ -79,7 +80,7 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
         View rowView = inflater.inflate(R.layout.list_item_user, null);
         // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
-        textView.setText(character.toFormattedText());
+        textView.setText(new NameSpannable(character, null, getContext().getResources()));
 
         // Set icon
         ImageView itemIcon = (ImageView)rowView.findViewById(R.id.itemIcon);

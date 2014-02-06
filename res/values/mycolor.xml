@@ -16,10 +16,44 @@
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-	<color name="red">#ff0000</color>
-	<color name="green">#00ff00</color>
-	<color name="blue">#0000ff</color>
+	<color name="red">#FF4444</color>
+	<color name="green">#44FF44</color>
+	<color name="blue">#1E90FF</color>
 	<color name="black">#000000</color>
-	<color name="white">#ffffff</color>
-	<color name="gray">#cccccc</color>
+	<color name="white">#FFFFFF</color>
+	<color name="gray">#D3D3D3</color>
+    <color name="orange">#FFA500</color>
+    <color name="cyan">#00FFFF</color>
+    <color name="brown">#967117</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="pink">#FFCBDB</color>
+    <color name="purple">#DD00FF</color>
+    
+    <color name="text_message_color">#FFFFFF</color>
+    <color name="text_annotation_color">#FFFFFF</color>
+    <color name="text_timestomp_color">#BBBBCC</color>
+    
+    <color name="border_small">#1E90FF</color>    
+    
+    <color name="background_color">#000000</color>
+    <color name="background_chat_empty">#000000</color>
+    <color name="background_chat_line">#043E80</color>
+    <color name="background_chat_line_owned">#0B255F</color>
+    <color name="background_chat_line_attention">#FF0000</color>
+    <color name="background_chat_line_system">#0B255F</color>
+    
+    <color name="name_annotation">#FFFFFF</color>
+    <color name="name_error">#FF0000</color>
+    <color name="name_ad">#FFFF00</color>
+    
+    <color name="name_friend">#87F717</color>
+    <color name="name_bookmark">#87F717</color>
+    
+    <color name="name_male">#6699FF</color>
+    <color name="name_female">#FF6699</color>
+    <color name="name_shemale">#CC66FF</color>
+    <color name="name_herm">#9B30FF</color>
+    <color name="name_cunt_boy">#00CC66</color>
+    <color name="name_transgender">#EE8822</color>
+    <color name="name_unknown">#FFFFBB</color>
 </resources>

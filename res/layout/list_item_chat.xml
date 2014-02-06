@@ -29,7 +29,7 @@
 	    android:layout_height="@dimen/image_size_chatroom"  
 	    android:src="@drawable/chat_room_icon"
 	    android:gravity="center"
-        />
+    />
     
     <TextView
         android:id="@+id/ChatroomName" 
@@ -39,6 +39,7 @@
   		android:textStyle="bold"
     	android:gravity="center"
     	android:layout_gravity="center_horizontal"
-        />
+        android:textColor="@color/text_message_color"
+    />
     
 </LinearLayout>

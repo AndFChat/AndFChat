@@ -22,23 +22,15 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import android.graphics.Color;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.StyleSpan;
-
 public class FlistChar {
+
     private final String name;
-    private CharStatus status = CharStatus.online;
     private Gender gender;
+
     private final Set<CharRelation> charRelations = new HashSet<CharRelation>();
 
+    private CharStatus status = CharStatus.online;
     private String statusMsg = null;
-
-    private static int FRIEND_COLOR = Color.GREEN;
-    private static int BOOKMARK_COLOR = Color.GREEN;
 
     public FlistChar(String name) {
         this.name = name;
@@ -111,29 +103,6 @@ public class FlistChar {
 
     public boolean isBookmarked() {
         return charRelations.contains(CharRelation.BOOKMARKED);
-    }
-
-    public Spannable toFormattedText() {
-        return toFormattedText(null);
-    }
-
-    public Spannable toFormattedText(Integer color) {
-        Spannable text = new SpannableString(getName());
-
-        if (color == null) {
-            color = gender.getColor();
-
-            if (this.isBookmarked()) {
-                color = BOOKMARK_COLOR;
-            } else if (this.isFriend()) {
-                color = FRIEND_COLOR;
-            }
-        }
-
-        text.setSpan(new ForegroundColorSpan(color), 0, getName().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        text.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, getName().length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        return text;
     }
 
     @Override

@@ -135,8 +135,6 @@ public class FlistWebSocketHandler extends WebSocketHandler {
             return;
         }
 
-        Ln.d("found ServerToken: " + token.name());
-
         if (handlerMap.containsKey(token)) {
             try {
                 // If the message has message, give them to handler without token.
