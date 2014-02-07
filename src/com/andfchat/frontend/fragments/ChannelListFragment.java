@@ -90,11 +90,8 @@ public class ChannelListFragment extends RoboFragment {
         // Refresh new message alert
         for (int i = 0; i < openChatrooms.size(); i++) {
             Chatroom room = openChatrooms.get(i);
-
-            if (room.hasNewMessage() && (chatroomManager.getActiveChat() == null || room.getId() != chatroomManager.getActiveChat().getId())) {
+            if (room.hasChanged() && (chatroomManager.getActiveChat() == null || room.getId() != chatroomManager.getActiveChat().getId())) {
                 isChanged = true;
-                // refresh is done, no need for more notifies.
-                break;
             }
         }
 

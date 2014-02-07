@@ -56,6 +56,7 @@ public class Chatroom {
 
     private boolean hasNewMessage = false;
     private boolean hasChangedUser = false;
+    private boolean hasChanged = false;
 
     public Chatroom(Channel channel, ChatroomType type) {
         this.channel = channel;
@@ -110,6 +111,21 @@ public class Chatroom {
 
     public void setHasNewMessage(boolean value) {
         hasNewMessage = value;
+        if (value) {
+            hasChanged = true;
+        } else {
+            hasChanged = true;
+        }
+    }
+
+    public boolean hasChanged() {
+        if (hasChanged) {
+            hasChanged = false;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public List<ChatEntry> getLastMessages(int amount) {

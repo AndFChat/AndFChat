@@ -24,6 +24,7 @@ import org.json.JSONException;
 
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
+import com.andfchat.core.data.AppProperties;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatroomManager;
@@ -45,7 +46,7 @@ public abstract class TokenHandler {
     public abstract ServerToken[] getAcceptableTokens();
 
     protected void broadcastSystemInfo(ChatEntry chatEntry, FlistChar flistChar) {
-        if (flistChar.isFriend() || flistChar.isBookmarked()) {
+        if (flistChar.isImportant()) {
             chatroomManager.getActiveChat().addMessage(chatEntry);
 
             if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
@@ -55,6 +56,8 @@ public abstract class TokenHandler {
         else if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
             chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
         }
+        // Add broadcasted message also to the console.
+        chatroomManager.addChatEntry(AppProperties.DEBUG_CHANNEL_NAME, chatEntry);
     }
 
     protected void addChatEntryToActiveChat(ChatEntry chatEntry) {
@@ -62,7 +65,7 @@ public abstract class TokenHandler {
     }
 
     protected boolean isInScope(FlistChar flistChar) {
-        if (flistChar.isBookmarked() || flistChar.isFriend()) {
+        if (flistChar.isImportant()) {
             return true;
         }
 

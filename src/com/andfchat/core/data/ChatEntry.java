@@ -49,7 +49,7 @@ public class ChatEntry {
         NOTATION_LEFT(R.color.name_annotation, " "),
         NOTATION_JOINED(R.color.name_annotation, " "),
         NOTATION_SYSTEM(R.color.name_annotation),
-        NOTATION_STATUS(R.color.name_annotation),
+        NOTATION_STATUS(R.color.name_annotation, " "),
         NOTATION_DICE(R.color.name_annotation, " "),
         AD(R.color.name_ad);
 
@@ -189,7 +189,7 @@ public class ChatEntry {
                 return BBCodeReader.createSpannableWithBBCode(context.getString(stringId), context);
             } else {
                 String unformattedText = context.getString(stringId);
-                String.format(unformattedText,  values);
+                unformattedText = String.format(unformattedText,  values);
 
                 return BBCodeReader.createSpannableWithBBCode(unformattedText, context);
             }

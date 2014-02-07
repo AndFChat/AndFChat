@@ -57,7 +57,9 @@ public class ChatroomManager {
     }
 
     public void addChatEntry(String Chatroom, ChatEntry entry) {
-        chats.get(Chatroom).addMessage(entry);
+        synchronized(this) {
+            chats.get(Chatroom).addMessage(entry);
+        }
     }
 
     public void addBroadcast(ChatEntry entry) {
@@ -126,12 +128,16 @@ public class ChatroomManager {
     }
 
     public Chatroom getActiveChat() {
-        return activeChat;
+        synchronized(this) {
+            return activeChat;
+        }
     }
 
     public void setActiveChat(Chatroom chatroom) {
-        Ln.d("Set active chat to '" + chatroom.getName() + "'");
-        activeChat = chatroom;
+        synchronized(this) {
+            Ln.d("Set active chat to '" + chatroom.getName() + "'");
+            activeChat = chatroom;
+        }
     }
 
     public boolean hasOpenPrivateConversation(FlistChar flistChar) {

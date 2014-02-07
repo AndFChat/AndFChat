@@ -32,6 +32,7 @@ import android.content.Context;
 
 import com.andfchat.core.connection.handler.AdHandler;
 import com.andfchat.core.connection.handler.ChannelDescriptionHandler;
+import com.andfchat.core.connection.handler.ChannelInviteHandler;
 import com.andfchat.core.connection.handler.ChannelListHandler;
 import com.andfchat.core.connection.handler.CharInfoHandler;
 import com.andfchat.core.connection.handler.CharListHandler;
@@ -95,6 +96,7 @@ public class FlistWebSocketHandler extends WebSocketHandler {
         availableTokenHandler.add(new ErrorMessageHandler());
         availableTokenHandler.add(new DiceBottleHandler());
         availableTokenHandler.add(new AdHandler());
+        availableTokenHandler.add(new ChannelInviteHandler());
 
         Injector injector = RoboGuice.getInjector(context);
 

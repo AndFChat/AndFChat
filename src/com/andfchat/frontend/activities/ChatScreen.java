@@ -217,8 +217,7 @@ public class ChatScreen extends RoboFragmentActivity {
 
                         // If an chat is open do some tasks
                         if (chatrooms.getActiveChat() != null) {
-
-                            // Reseting "new messages blink"
+                            // Active chat don't need new messages
                             chatrooms.getActiveChat().setHasNewMessage(false);
                             // Refresh chat log and user list
                             runOnUiThread(new Runnable() {

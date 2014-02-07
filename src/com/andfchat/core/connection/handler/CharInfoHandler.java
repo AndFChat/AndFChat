@@ -25,12 +25,12 @@ import java.util.Locale;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
-import com.andfchat.R;
+import com.andfchat.core.data.FlistChar;
 
 /**
  * Tracks status changes for user (every user online).
@@ -48,7 +48,7 @@ public class CharInfoHandler extends TokenHandler {
 
             FlistChar flistChar = characterManager.changeStatus(name, status, statusmsg);
 
-            if (sessionData.getSessionSettings().showStatusChanges() && (flistChar.isBookmarked() || flistChar.isFriend())) {
+            if (sessionData.getSessionSettings().showStatusChanges() && flistChar.isImportant()) {
                 ChatEntry chatEntry;
 
                 status = String.valueOf(status.charAt(0)).toUpperCase(Locale.getDefault()) + status.substring(1);

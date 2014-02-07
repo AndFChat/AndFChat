@@ -49,6 +49,7 @@
     <string name="message_disconnected">disconnected.</string>
     <string name="message_status_changed">is now %1$s.</string>
     <string name="message_status_changed_with_message">is now %1$s. [%2$s]</string>
+    <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session]</string>
     
     <string name="error_login">Login failed, maybe username or password wrong?</string>
     <string name="error_command_not_allowed">This command isn\'t allowed to use in the active environment</string>      

@@ -41,7 +41,8 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
     @Inject
     private ChatroomManager chatroomManager;
 
-    @Inject protected EventManager eventManager;
+    @Inject
+    protected EventManager eventManager;
 
 
     public ChatroomListAdapter(Context context, List<Chatroom> entries) {

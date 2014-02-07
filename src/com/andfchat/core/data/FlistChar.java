@@ -142,4 +142,8 @@ public class FlistChar {
     public void setInfos(FlistChar character) {
         this.gender = character.getGender();
     }
+
+    public boolean isImportant() {
+        return (isBookmarked() || isFriend());
+    }
 }
