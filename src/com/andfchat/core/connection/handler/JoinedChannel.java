@@ -25,7 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
+import roboguice.util.Ln;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
@@ -74,7 +74,7 @@ public class JoinedChannel extends TokenHandler {
 
             for (int i = 0; i < users.length(); i++) {
                 String character = users.getJSONObject(i).getString("identity");
-                Log.v("homebrewn.flistchat.JoinedChannle", "Adding Character to Channel('"+channelId+"'): " + character);
+                Ln.v("Adding Character to Channel('"+channelId+"'): " + character);
                 Chatroom.addCharacter(characterManager.findCharacter(character));
             }
         }

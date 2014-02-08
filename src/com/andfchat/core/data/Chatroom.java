@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import roboguice.util.Ln;
 import android.text.Spannable;
-import android.util.Log;
 
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
 
@@ -178,7 +178,7 @@ public class Chatroom {
     }
 
     public void addMessage(String message, FlistChar character, Date date) {
-        Log.d("ChatLog", "NEW MESSAGE: " + message + " FROM " + character.getName());
+        Ln.d("NEW MESSAGE: " + message + " FROM " + character.getName());
         this.addMessage(new ChatEntry(message, character, date, ChatEntryType.MESSAGE));
     }
 
