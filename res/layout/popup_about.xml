@@ -20,9 +20,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
  	android:background="@color/gray"
-    android:paddingLeft="2dp"
-    android:paddingRight="2dp"
-    android:paddingBottom="2dp">
+    android:padding="2dp">
  	
     <LinearLayout     
         android:orientation="vertical"

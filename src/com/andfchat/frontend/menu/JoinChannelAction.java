@@ -38,6 +38,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.connection.ServerToken;
@@ -45,7 +46,6 @@ import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.popup.FListPopupWindow;
 import com.google.inject.Inject;
-import com.andfchat.R;
 
 public class JoinChannelAction {
 
@@ -66,7 +66,7 @@ public class JoinChannelAction {
         }
 
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
-        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
         final ListView channelList = (ListView)layout.findViewById(R.id.channlesToJoin);
 

@@ -48,6 +48,6 @@ public class AboutAction {
         text.setText(BBCodeReader.createSpannableWithBBCode(text.getText().toString(), activity));
 
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
-        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
     }
 }

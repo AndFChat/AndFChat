@@ -18,48 +18,65 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import roboguice.util.Ln;
+
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
-import com.andfchat.core.data.Chatroom;
 
 /**
- * Handles incoming messages for channel and Broadcasts
+ * Displays add messages in channels.
  * @author AndFChat
- *
  */
-public class MessageHandler extends TokenHandler {
+public class VariableHandler extends TokenHandler {
+
+    public enum Variable {
+        chat_max(Integer.class),
+        priv_max(Integer.class),
+        lfrp_max(Integer.class),
+        lfrp_flood(Float.class),
+        msg_flood(Float.class),
+        permission(Integer.class);
+
+        private final Class type;
+
+        private Variable(Class type) {
+            this.type = type;
+        }
+
+        public Class getType() {
+            return type;
+        }
+    }
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
-        JSONObject jsonObject = new JSONObject(msg);
-        if(token == ServerToken.MSG) {
-            String character = jsonObject.getString("character");
-            String message = jsonObject.getString("message");
-            String channel = jsonObject.getString("channel");
+        if (token == ServerToken.VAR) {
+            JSONObject data = new JSONObject(msg);
+            String variableName = data.getString("variable");
 
-            Chatroom log = chatroomManager.getChatroom(channel);
-            log.addMessage(message, characterManager.findCharacter(character), new Date());
+            Variable variable;
+            try {
+                variable = Variable.valueOf(variableName);
+            }
+            catch(IllegalArgumentException e) {
+                Ln.e("Can't parse variable enum for '"+variableName+"' - skipping!");
+                return;
+            }
 
-            log.setHasNewMessage(true);
-        }
-        else if(token == ServerToken.BRO) {
-            String message = jsonObject.getString("message");
-            chatroomManager.addBroadcast(new ChatEntry(message, characterManager.findCharacter(CharacterManager.USER_SYSTEM), new Date(), ChatEntryType.NOTATION_SYSTEM));
+            if (variable.getType() == Integer.class) {
+                sessionData.setVariable(variable, data.getInt("value"));
+            }
         }
     }
 
     @Override
     public ServerToken[] getAcceptableTokens() {
-        return new ServerToken[]{ServerToken.MSG, ServerToken.BRO};
+        return new ServerToken[] {ServerToken.VAR};
     }
 
 }

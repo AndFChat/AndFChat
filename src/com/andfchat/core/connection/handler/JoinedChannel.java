@@ -27,15 +27,16 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
+import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.Chatroom;
-import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
+import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.R;
+import com.andfchat.core.data.FlistChar;
 
 /**
  * Handles channel joins, still misses private channel handling.
@@ -46,7 +47,6 @@ public class JoinedChannel extends TokenHandler {
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         JSONObject data = new JSONObject(msg);
-
         String channelId = data.getString("channel");
 
         if (token == ServerToken.JCH) {
@@ -97,10 +97,11 @@ public class JoinedChannel extends TokenHandler {
                 channel = chatroomManager.getPrivateChannelById(channelId);
             }
 
+            int maxTextLength = sessionData.getIntVariable(Variable.chat_max);
             if (channel == null) {
-                chatroom = chatroomManager.addChatroom(new Chatroom(new Channel(channelId, channelName), chatroomType));
+                chatroom = chatroomManager.addChatroom(new Chatroom(new Channel(channelId, channelName), chatroomType, maxTextLength));
             } else {
-                chatroom = chatroomManager.addChatroom(new Chatroom(channel, chatroomType));
+                chatroom = chatroomManager.addChatroom(new Chatroom(channel, chatroomType, maxTextLength));
             }
         }
 

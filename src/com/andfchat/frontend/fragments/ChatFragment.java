@@ -26,6 +26,7 @@ import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -139,6 +140,9 @@ public class ChatFragment extends RoboFragment {
         // Set messages
         chatListData.clear();
         chatListData.addAll(messages);
+
+        // Set maximum text length
+        inputText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(chatroom.getMaxTextLength())});
     }
 
     public void refreshChat() {

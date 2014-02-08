@@ -128,7 +128,11 @@ public class ChatScreen extends RoboFragmentActivity {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layout = inflater.inflate(R.layout.popup_description, null);
-        final PopupWindow descriptionPopup = new FListPopupWindow(layout, chat.getView(), 0.8f);
+
+        int width = (int)(chat.getView().getWidth() * 0.8f);
+        int scaledHeight = (int)(height * 0.7f);
+
+        final PopupWindow descriptionPopup = new FListPopupWindow(layout, width, scaledHeight);
         descriptionPopup.showAtLocation(chat.getView(), Gravity.CENTER, 0, 0);
 
         final TextView descriptionText = (TextView)layout.findViewById(R.id.descriptionText);

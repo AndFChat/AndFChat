@@ -48,6 +48,7 @@ public class Chatroom {
 
     private final Channel channel;
     private final ChatroomType chatroomType;
+    private final int maxTextLength;
 
     private List<ChatEntry> chatMessages;
     private final List<FlistChar> characters = new ArrayList<FlistChar>();
@@ -58,18 +59,21 @@ public class Chatroom {
     private boolean hasChangedUser = false;
     private boolean hasChanged = false;
 
-    public Chatroom(Channel channel, ChatroomType type) {
+
+    public Chatroom(Channel channel, ChatroomType type, int maxTextLength) {
         this.channel = channel;
-        chatroomType = type;
+        this.chatroomType = type;
+        this.maxTextLength = maxTextLength;
 
         this.chatMessages = new ArrayList<ChatEntry>(chatroomType.maxEntries);
     }
 
-    public Chatroom(Channel channel, FlistChar character) {
-        chatroomType = ChatroomType.PRIVATE_CHAT;
-
+    public Chatroom(Channel channel, FlistChar character, int maxTextLength) {
+        this.chatroomType = ChatroomType.PRIVATE_CHAT;
         this.channel = channel;
         this.characters.add(character);
+        this.maxTextLength = maxTextLength;
+
         this.chatMessages = new ArrayList<ChatEntry>(chatroomType.maxEntries);
     }
 
@@ -223,5 +227,9 @@ public class Chatroom {
 
     public ChatroomType getChatroomType() {
         return chatroomType;
+    }
+
+    public int getMaxTextLength() {
+        return maxTextLength;
     }
 }

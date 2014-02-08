@@ -36,6 +36,7 @@ import android.widget.TextView;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
+import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
@@ -123,7 +124,8 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
                 public void onClick(View v) {
                     Chatroom chatroom;
                     if (chatroomManager.hasOpenPrivateConversation(activeCharacter) == false) {
-                        chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter);
+                        int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
+                        chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter, maxTextLength);
                     } else {
                         chatroom = chatroomManager.getPrivateChatFor(activeCharacter);
                     }

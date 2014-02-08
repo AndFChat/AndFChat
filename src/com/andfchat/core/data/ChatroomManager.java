@@ -53,7 +53,7 @@ public class ChatroomManager {
     }
 
     private void initChats() {
-        addChatroom(new Chatroom(new Channel(AppProperties.DEBUG_CHANNEL_NAME, AppProperties.DEBUG_CHANNEL_NAME), ChatroomType.CONSOLE));
+        addChatroom(new Chatroom(new Channel(AppProperties.DEBUG_CHANNEL_NAME, AppProperties.DEBUG_CHANNEL_NAME), ChatroomType.CONSOLE, 50000));
     }
 
     public void addChatEntry(String Chatroom, ChatEntry entry) {

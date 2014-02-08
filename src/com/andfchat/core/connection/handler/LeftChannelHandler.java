@@ -24,12 +24,12 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
-import com.andfchat.R;
+import com.andfchat.core.data.FlistChar;
 
 /**
  * Handles left events on channels.
@@ -38,27 +38,21 @@ import com.andfchat.R;
 public class LeftChannelHandler extends TokenHandler {
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) {
-
-        try {
-            JSONObject json = new JSONObject(msg);
-            String channel = json.getString("channel");
-            String character = json.getString("character");
-            if (character.equals(sessionData.getCharacterName())) {
-                chatroomManager.removeChatroom(channel);
-            } else {
-                FlistChar flistChar = characterManager.findCharacter(character);
-                if (sessionData.getSessionSettings().showChannelInfos()) {
-                    ChatEntry chatEntry = new ChatEntry(R.string.message_channel_left, flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
-                    chatroomManager.getChatroom(channel).addMessage(chatEntry);
-                }
-
-                chatroomManager.getChatroom(channel).removeCharacter(flistChar);
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+        JSONObject json = new JSONObject(msg);
+        String channel = json.getString("channel");
+        String character = json.getString("character");
+        if (character.equals(sessionData.getCharacterName())) {
+            chatroomManager.removeChatroom(channel);
+        } else {
+            FlistChar flistChar = characterManager.findCharacter(character);
+            if (sessionData.getSessionSettings().showChannelInfos()) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_channel_left, flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
+                chatroomManager.getChatroom(channel).addMessage(chatEntry);
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
+            chatroomManager.getChatroom(channel).removeCharacter(flistChar);
+        }
     }
 
     @Override

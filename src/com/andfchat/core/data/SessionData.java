@@ -18,8 +18,11 @@
 
 package com.andfchat.core.data;
 
+import java.util.HashMap;
+
 import android.app.Activity;
 
+import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.AppProperties.PropertyName;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -36,6 +39,8 @@ public class SessionData {
 
     private AppProperties appProperties;
     private SessionSettings sessionSettings;
+
+    private final HashMap<Variable, Integer> intVariables = new HashMap<Variable, Integer>();
 
     public void initSession(String ticket, String account, Activity activity) {
         this.ticket = ticket;
@@ -73,8 +78,17 @@ public class SessionData {
         ticket = null;
         account = null;
         characterName = null;
+
+        intVariables.clear();
     }
 
+    public int getIntVariable(Variable variable) {
+        return intVariables.get(variable);
+    }
+
+    public void setVariable(Variable variable, int value) {
+        intVariables.put(variable, value);
+    }
 
     public class SessionSettings {
         private boolean useDebugChannel = false;

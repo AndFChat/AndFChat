@@ -26,6 +26,7 @@ import org.json.JSONObject;
 
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
+import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
@@ -48,7 +49,8 @@ public class PrivateMessageHandler extends TokenHandler {
 
         Chatroom chatroom = chatroomManager.getChatroom(PRIVATE_MESSAGE_TOKEN + character);
         if (chatroom == null) {
-            chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character));
+            int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
+            chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character), maxTextLength);
         }
 
         chatroom.addMessage(message, characterManager.findCharacter(character), new Date());
@@ -60,10 +62,10 @@ public class PrivateMessageHandler extends TokenHandler {
         return new ServerToken[]{ServerToken.PRI};
     }
 
-    public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FlistChar character) {
+    public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FlistChar character, int maxTextLength) {
         String channelname = character.getName();
 
-        Chatroom chatroom = new Chatroom(new Channel(PRIVATE_MESSAGE_TOKEN + channelname, channelname), character);
+        Chatroom chatroom = new Chatroom(new Channel(PRIVATE_MESSAGE_TOKEN + channelname, channelname), character, maxTextLength);
         chatroomManager.addChatroom(chatroom);
 
         return chatroom;

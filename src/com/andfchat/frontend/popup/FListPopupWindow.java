@@ -31,10 +31,6 @@ public class FListPopupWindow extends PopupWindow {
         FULL
     }
 
-    public FListPopupWindow(View content, View parent, float size) {
-        this(content, (int)(parent.getWidth() * size), (int)(parent.getHeight() * size));
-    }
-
     public FListPopupWindow(View content, int width, int height) {
         super(content, width, height, true);
 

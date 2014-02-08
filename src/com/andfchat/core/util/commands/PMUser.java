@@ -21,16 +21,20 @@ package com.andfchat.core.util.commands;
 import roboguice.event.EventManager;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
+import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
 public class PMUser extends TextCommand {
 
     @Inject
     protected EventManager eventManager;
+    @Inject
+    protected SessionData sessionData;
 
     public PMUser() {
         allowedIn = ChatroomType.values();
@@ -60,7 +64,8 @@ public class PMUser extends TextCommand {
         } else {
             Chatroom chatroom;
             if (chatroomManager.hasOpenPrivateConversation(flistChar) == false) {
-                chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, flistChar);
+                int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
+                chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, flistChar, maxTextLength);
             } else {
                 chatroom = chatroomManager.getPrivateChatFor(flistChar);
             }

@@ -30,11 +30,11 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.frontend.adapter.MemberListAdapter;
 import com.andfchat.frontend.popup.FListPopupWindow;
-import com.andfchat.R;
 
 public class FriendListAction {
 
@@ -51,7 +51,7 @@ public class FriendListAction {
         }
 
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
-        popupWindow.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
         final ListView friendList = (ListView)layout.findViewById(R.id.channlesToJoin);
 
