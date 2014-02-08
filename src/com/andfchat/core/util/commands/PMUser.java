@@ -38,7 +38,7 @@ public class PMUser extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /priv [USER] | OPEN A CONVERSATION WITH GIVEN USER.";
+        return "*  /priv [USER] | THIS OPENS A PRIVATE MESSAGE SESSION WITH ANOTHER CHARACTER. /ROLL AND /BOTTLE DO NOT WORK IN PRIVATE MESSAGES.";
     }
 
     @Override

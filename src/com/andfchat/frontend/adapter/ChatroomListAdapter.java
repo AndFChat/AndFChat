@@ -75,7 +75,7 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         TextView title = (TextView)rowView.findViewById(R.id.ChatroomName);
         title.setText("#" + chatroom.getName());
 
-        if (chatroomManager.getActiveChat().getId().equals(chatroom.getId())) {
+        if (chatroomManager.getActiveChat() != null && chatroomManager.getActiveChat().getId().equals(chatroom.getId())) {
             rowView.setBackgroundColor(Color.BLUE);
         }
         else if (chatroom.hasNewMessage()) {

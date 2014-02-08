@@ -19,9 +19,13 @@
 package com.andfchat.core.connection;
 
 public enum ClientToken {
+    CBU, // Ban
     CCR, // Create a private, invite-only channel.
     CHA, // Request a list of all public channels.
+    CIU, // Invite User to channel.
+    CKU, // Kick
     COL, // Requests the list of channel ops (channel moderators).
+    CUB, // Unban
     FKS, // Search for characters fitting the user's selections. Kinks is required, all other parameters are optional.
     IDN, // This command is used to identify with the server.
     IGN, // A multi-faceted command to handle actions related to the ignore list. The server does not actually handle much of the ignore process, as it is the client's responsibility to block out messages it recieves from the server if that character is on the user's ignore list.
@@ -33,8 +37,8 @@ public enum ClientToken {
     PRI, // Sends a private message to another user.
     PRO, // Requests some of the profile tags on a character, such as Top/Bottom position and Language Preference.
     RLL, // Roll dice or spin the bottle.
+    RST, // Sets a private room's status to closed or open. (private, public)
     STA, // Request a new status be set for your character.
     TPN, // User x is typing/stopped typing/has entered text" for private messages.
     WHS, // The client can send \x00WSH\xff to skip websocket negotiation. A little convenience thing for third party desktop chat clients.
-
 }

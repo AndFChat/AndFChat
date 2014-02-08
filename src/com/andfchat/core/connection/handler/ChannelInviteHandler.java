@@ -25,7 +25,7 @@ public class ChannelInviteHandler extends TokenHandler {
 
             FlistChar flistChar = characterManager.findCharacter(username, false);
             if (flistChar != null) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_invite_to_channel, new Object[]{channelName, channelId},flistChar, new Date(), ChatEntryType.EMOTE);
+                ChatEntry chatEntry = new ChatEntry(R.string.message_invite_to_channel, new Object[]{channelId, channelName},flistChar, new Date(), ChatEntryType.NOTATION_STATUS);
                 broadcastSystemInfo(chatEntry, flistChar);
             }
 

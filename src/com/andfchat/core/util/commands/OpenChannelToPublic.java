@@ -22,27 +22,28 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 
 
-public class CloseChatroom extends TextCommand {
 
-    public CloseChatroom() {
-        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
+public class OpenChannelToPublic extends TextCommand {
+
+    public OpenChannelToPublic() {
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
 
     @Override
     public String getDescription() {
-        return "*  /close | LEAVES THE CHANNEL IT IS TYPED IN.";
+        return "*  /openroom | THIS WILL MAKE A PRIVATE ROOM OPEN, ADDING IT TO THE LIST OF PRIVATE ROOMS, AND ALLOWING ANYONE TO JOIN.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/close");
+        return token.equals("/openroom");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        Chatroom activeChat = chatroomManager.getActiveChat();
-        if (activeChat != null) {
-            connection.leaveChannel(activeChat);
+        Chatroom chatroom = chatroomManager.getActiveChat();
+        if (chatroom != null) {
+            connection.openChannel(chatroom);
         }
     }
 }

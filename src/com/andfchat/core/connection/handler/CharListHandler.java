@@ -91,6 +91,10 @@ public class CharListHandler extends TokenHandler {
                 ChatEntry chatEntry = new ChatEntry(R.string.message_connected, flistChar, new Date(), ChatEntryType.NOTATION_CONNECT);
                 this.broadcastSystemInfo(chatEntry, flistChar);
             }
+            else if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, flistChar, new Date(), ChatEntryType.NOTATION_CONNECT);
+                chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
+            }
 
         } // Charakter left
         else if (token == ServerToken.FLN) {
@@ -98,9 +102,13 @@ public class CharListHandler extends TokenHandler {
 
             FlistChar flistChar = characterManager.findCharacter(json.getString("character"));
 
-            if (flistChar.isBookmarked() || flistChar.isFriend()) {
+            if (flistChar.isImportant()) {
                 ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, flistChar, new Date(), ChatEntryType.NOTATION_DISCONNECT);
                 this.broadcastSystemInfo(chatEntry, flistChar);
+            }
+            else if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, flistChar, new Date(), ChatEntryType.NOTATION_DISCONNECT);
+                chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
             }
 
             characterManager.removeCharacter(json.getString("character"));

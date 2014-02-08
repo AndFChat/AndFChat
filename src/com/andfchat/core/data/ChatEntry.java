@@ -43,7 +43,7 @@ public class ChatEntry {
     public enum ChatEntryType {
         MESSAGE,
         EMOTE(null, Typeface.ITALIC, "", " * "),
-        ERROR(R.color.name_error, Typeface.BOLD, " "),
+        ERROR(R.color.name_error, Typeface.BOLD, ":"),
         NOTATION_CONNECT(R.color.name_annotation, " "),
         NOTATION_DISCONNECT(R.color.name_annotation, " "),
         NOTATION_LEFT(R.color.name_annotation, " "),

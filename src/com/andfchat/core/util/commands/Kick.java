@@ -18,31 +18,38 @@
 
 package com.andfchat.core.util.commands;
 
-import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.SessionData;
+import com.google.inject.Inject;
 
 
-public class CloseChatroom extends TextCommand {
+public class Kick extends TextCommand {
 
-    public CloseChatroom() {
-        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
+    public Kick() {
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
+
+    @Inject
+    protected SessionData sessionData;
 
     @Override
     public String getDescription() {
-        return "*  /close | LEAVES THE CHANNEL IT IS TYPED IN.";
+        return "*  /kick [USER] | REMOVES CHARACTER FROM THE PRIVATE ROOM, BUT IF IT IS AN OPEN PRIVATE ROOM, DOES NOT PREVENT THEM FROM RE-ENTERING.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/close");
+        return token.equals("/kick");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        Chatroom activeChat = chatroomManager.getActiveChat();
-        if (activeChat != null) {
-            connection.leaveChannel(activeChat);
+        if (text != null) {
+            FlistChar flistChar = characterManager.findCharacter(text.trim(), false);
+            if (flistChar != null){
+                connection.kick(flistChar.getName(), chatroomManager.getActiveChat());
+            }
         }
     }
 }

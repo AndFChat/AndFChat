@@ -18,31 +18,38 @@
 
 package com.andfchat.core.util.commands;
 
-import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.SessionData;
+import com.google.inject.Inject;
 
 
-public class CloseChatroom extends TextCommand {
+public class InviteToChannel extends TextCommand {
 
-    public CloseChatroom() {
-        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
+    public InviteToChannel() {
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
+
+    @Inject
+    protected SessionData sessionData;
 
     @Override
     public String getDescription() {
-        return "*  /close | LEAVES THE CHANNEL IT IS TYPED IN.";
+        return "*  /invite [USER] | USUALLY USED FOR CLOSED PRIVATE ROOMS, THIS WILL INVITE ANOTHER CHARACTER TO THE ROOM, ESSENTIALLY GIVING THEM PERMISSION TO ENTER IT. DESPITE DOCUMENTATION TO THE CONTRARY, ELSEWHERE, THIS COMMAND WILL BE EFFECTIVE FOR THE ROOM IN WHICH IT IS TYPED (PROVIDED YOUR CURRENT CHARACTER IS A CHAN-OP OR ROOM OWNER), AND NOT JUST THE MOST RECENT ROOM YOU CREATED.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/close");
+        return token.equals("/invite");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        Chatroom activeChat = chatroomManager.getActiveChat();
-        if (activeChat != null) {
-            connection.leaveChannel(activeChat);
+        if (text != null) {
+            FlistChar flistChar = characterManager.findCharacter(text.trim(), false);
+            if (flistChar != null){
+                connection.invite(flistChar.getName(), chatroomManager.getActiveChat());
+            }
         }
     }
 }

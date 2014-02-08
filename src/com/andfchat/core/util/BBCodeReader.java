@@ -136,10 +136,12 @@ public class BBCodeReader {
             if (found) {
                 // Remove BBCode
                 text = text.substring(0, start) + text.substring(end);
+                // Move pointer
+                pointer = start;
+            } else {
+                pointer = start + 1;
             }
 
-            // Move pointer
-            pointer = start + 1;
         }
 
         Spannable textSpan = new SpannableString(text);

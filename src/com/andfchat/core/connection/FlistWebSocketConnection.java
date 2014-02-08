@@ -274,4 +274,70 @@ public class FlistWebSocketConnection {
             Ln.w("exception occured while botteling: " + e.getMessage());
         }
     }
+
+    public void closeChannel(Chatroom chatroom) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("status", "private");
+            sendMessage(ClientToken.RST, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending RST: " + e.getMessage());
+        }
+    }
+
+    public void openChannel(Chatroom chatroom) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("status", "public");
+            sendMessage(ClientToken.RST, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending RST: " + e.getMessage());
+        }
+    }
+
+    public void unban(String username, Chatroom chatroom) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", username);
+            sendMessage(ClientToken.CUB, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending CUB: " + e.getMessage());
+        }
+    }
+
+    public void ban(String username, Chatroom chatroom) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", username);
+            sendMessage(ClientToken.CBU, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending CBU: " + e.getMessage());
+        }
+    }
+
+    public void kick(String username, Chatroom chatroom) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", username);
+            sendMessage(ClientToken.CKU, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending CKU: " + e.getMessage());
+        }
+    }
+
+    public void invite(String username, Chatroom chatroom) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", username);
+            sendMessage(ClientToken.CIU, data);
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending CIU: " + e.getMessage());
+        }
+    }
 }

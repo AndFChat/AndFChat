@@ -30,7 +30,7 @@ public class Dice extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /dice | ROLL THE DICE, GOOD LUCK!";
+        return "*  /dice | THIS COMMAND ROLLS A NUMBER OF DICE, ALL WITH THE SAME NUMBER OF SIDES. FOR INSTANCE, BOB WANTS TO ROLL TWO DICE WITH SIX SIDES, BECAUSE HE'S PLAYING CRAPS. HE'D TYPE: /ROLL 2D6";
     }
 
     @Override

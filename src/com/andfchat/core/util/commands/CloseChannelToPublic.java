@@ -18,33 +18,32 @@
 
 package com.andfchat.core.util.commands;
 
+import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 
 
 
-public class OpenChatroom extends TextCommand {
+public class CloseChannelToPublic extends TextCommand {
 
-    public OpenChatroom() {
-        allowedIn = ChatroomType.values();
+    public CloseChannelToPublic() {
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
 
     @Override
     public String getDescription() {
-        return "*  /makeroom [name] | OPEN A NEW PRIVATE ROOM NAMED [name].";
+        return "*  /closeroom | THIS WILL CLOSE AN OPENEND PRIVATE ROOM, REMOVING IT FROM THE LIST, AND MAKING FURTHER ENTRY INVIT-ONLY.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/makeroom");
+        return token.equals("/closeroom");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        if (text != null) {
-            text = text.trim();
-            if (text.length() > 0) {
-                connection.createPrivateChannel(text);
-            }
+        Chatroom chatroom = chatroomManager.getActiveChat();
+        if (chatroom != null) {
+            connection.closeChannel(chatroom);
         }
     }
 }

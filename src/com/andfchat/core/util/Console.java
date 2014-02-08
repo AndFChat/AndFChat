@@ -31,16 +31,22 @@ import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.util.commands.Ban;
 import com.andfchat.core.util.commands.Bottle;
 import com.andfchat.core.util.commands.ChannelNotification;
+import com.andfchat.core.util.commands.CloseChannelToPublic;
 import com.andfchat.core.util.commands.CloseChatroom;
+import com.andfchat.core.util.commands.CreateChannel;
 import com.andfchat.core.util.commands.Dice;
-import com.andfchat.core.util.commands.OpenChatroom;
+import com.andfchat.core.util.commands.InviteToChannel;
+import com.andfchat.core.util.commands.Kick;
+import com.andfchat.core.util.commands.OpenChannelToPublic;
 import com.andfchat.core.util.commands.PMUser;
 import com.andfchat.core.util.commands.ShowServerConversation;
 import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.StatusNotification;
 import com.andfchat.core.util.commands.TextCommand;
+import com.andfchat.core.util.commands.Unban;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -62,7 +68,17 @@ public class Console {
         availableCommands.add(new Dice());
         availableCommands.add(new PMUser());
         availableCommands.add(new CloseChatroom());
-        availableCommands.add(new OpenChatroom());
+
+        // Channel OP commands
+        availableCommands.add(new CreateChannel());
+        availableCommands.add(new InviteToChannel());
+        availableCommands.add(new OpenChannelToPublic());
+        availableCommands.add(new CloseChannelToPublic());
+        availableCommands.add(new Kick());
+        availableCommands.add(new Ban());
+        availableCommands.add(new Unban());
+
+        // Config stuff
         availableCommands.add(new ChannelNotification());
         availableCommands.add(new StatusNotification());
         availableCommands.add(new ShowServerConversation());

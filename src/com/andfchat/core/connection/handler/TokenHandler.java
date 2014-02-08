@@ -46,18 +46,15 @@ public abstract class TokenHandler {
     public abstract ServerToken[] getAcceptableTokens();
 
     protected void broadcastSystemInfo(ChatEntry chatEntry, FlistChar flistChar) {
-        if (flistChar.isImportant()) {
-            chatroomManager.getActiveChat().addMessage(chatEntry);
-
-            if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
-                chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
-            }
+        chatroomManager.getActiveChat().addMessage(chatEntry);
+        // Add broadcasted message also to the console.
+        if (!chatroomManager.getActiveChat().isSystemChat()) {
+            chatroomManager.addChatEntry(AppProperties.DEBUG_CHANNEL_NAME, chatEntry);
         }
-        else if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
+
+        if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
             chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
         }
-        // Add broadcasted message also to the console.
-        chatroomManager.addChatEntry(AppProperties.DEBUG_CHANNEL_NAME, chatEntry);
     }
 
     protected void addChatEntryToActiveChat(ChatEntry chatEntry) {

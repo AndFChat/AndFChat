@@ -20,20 +20,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"    
    	android:gravity="center"
-   	android:background="@color/black">      
+    android:background="@color/gray"
+    android:paddingLeft="2dp"
+    android:paddingRight="2dp"
+    android:paddingBottom="2dp">      
     
     <LinearLayout     
         android:orientation="horizontal"
 	    android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-    	android:background="@color/gray">
+    	android:layout_height="wrap_content">
     
 	    <TextView 
 	        android:id="@+id/joinChannelPopupTitle"
 	        android:text="@string/channels"
 	        android:textSize="@dimen/text_size_popup_header"
 	        android:textStyle="bold"
-	        android:textColor="@color/black"
+            android:textColor="@color/black"
 	    	android:layout_width="match_parent"
 	    	android:layout_height="wrap_content"
 			android:paddingLeft="5dp"
@@ -45,7 +47,8 @@
 	<LinearLayout         
     	android:orientation="horizontal"
 	    android:layout_width="match_parent"
-    	android:layout_height="wrap_content">
+    	android:layout_height="wrap_content"
+        android:background="@color/black">
     	
 		<Button
 			android:id="@+id/publicChannelButton"
@@ -70,12 +73,13 @@
     <LinearLayout     
         android:orientation="vertical"
 	    android:layout_width="match_parent"
-    	android:layout_height="match_parent">
+    	android:layout_height="match_parent"
+        android:background="@color/black">
 
         <ListView 	            
             android:id="@+id/channlesToJoin"
 	        android:layout_height="wrap_content"
-	        android:layout_width="match_parent">             
+	        android:layout_width="match_parent"                            >             
         </ListView>
         
     </LinearLayout>
