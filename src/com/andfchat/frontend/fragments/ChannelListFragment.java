@@ -18,9 +18,6 @@
 
 package com.andfchat.frontend.fragments;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import roboguice.event.Observes;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -47,8 +44,6 @@ public class ChannelListFragment extends RoboFragment {
 
     private ChatroomListAdapter chatroomListAdapter;
 
-    private final List<Chatroom> openChatrooms = new ArrayList<Chatroom>();
-
     private boolean isVisible = true;
 
     @Override
@@ -61,7 +56,7 @@ public class ChannelListFragment extends RoboFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        chatroomListAdapter = new ChatroomListAdapter(getActivity(), openChatrooms);
+        chatroomListAdapter = new ChatroomListAdapter(getActivity(), chatroomManager.getChatRooms());
         chatroomList.setAdapter(chatroomListAdapter);
     }
 
@@ -71,25 +66,10 @@ public class ChannelListFragment extends RoboFragment {
     }
 
     public void refreshChannels() {
-        boolean isChanged = false;
-        // Remove Chatrooms left chatrooms from list
-        for (Chatroom room : chatroomManager.getRemovedRooms()) {
-            chatroomListAdapter.removeChatroom(room);
-            isChanged = true;
-        }
-        chatroomManager.clearRemovedRooms();
-
-        // Add new Chatrooms if there are new one
-        for (Chatroom room : chatroomManager.getNewRooms()) {
-            Ln.d("Found new channel '" + room.getName() + "'");
-            chatroomListAdapter.addChatroom(room);
-            isChanged = true;
-        }
-        chatroomManager.clearNewRooms();
+        boolean isChanged = chatroomManager.isChanged();
 
         // Refresh new message alert
-        for (int i = 0; i < openChatrooms.size(); i++) {
-            Chatroom room = openChatrooms.get(i);
+        for (Chatroom room : chatroomManager.getChatRooms()) {
             if (room.hasChanged() && (chatroomManager.getActiveChat() == null || room.getId() != chatroomManager.getActiveChat().getId())) {
                 isChanged = true;
             }

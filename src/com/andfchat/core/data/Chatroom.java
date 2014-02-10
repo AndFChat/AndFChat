@@ -201,7 +201,10 @@ public class Chatroom {
     }
 
     public FlistChar getRecipient() {
-        return characters.get(0);
+        if (characters.size() == 1) {
+            return characters.get(0);
+        }
+        return null;
     }
 
     public boolean isSystemChat() {

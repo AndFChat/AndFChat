@@ -19,6 +19,7 @@
 package com.andfchat.frontend.activities;
 
 import roboguice.activity.RoboFragmentActivity;
+import roboguice.event.EventManager;
 import roboguice.event.Observes;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
@@ -69,6 +70,8 @@ public class ChatScreen extends RoboFragmentActivity {
     protected SessionData sessionData;
     @Inject
     private InputMethodManager inputManager;
+    @Inject
+    private EventManager eventManager;
 
     @InjectView(R.id.toggleSidebarLeft)
     private Button toggleSidebarLeft;
@@ -187,10 +190,13 @@ public class ChatScreen extends RoboFragmentActivity {
         super.onResume();
         this.paused = false;
 
+        if (chatroomManager.getActiveChat() != null) {
+            eventManager.fire(chatroomManager.getActiveChat());
+        }
+
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                ChatroomManager chatrooms = chatroomManager;
 
                 while(!paused) {
                     try {
@@ -203,9 +209,9 @@ public class ChatScreen extends RoboFragmentActivity {
                         });
 
                         // If no Chatroom is open, try to open the first one
-                        if (chatrooms.getActiveChat() == null) {
-                            for (String key : chatrooms.getChatroomKeys()) {
-                                final Chatroom chatroom = chatrooms.getChatroom(key);
+                        if (chatroomManager.getActiveChat() == null) {
+                            for (final Chatroom chatroom : chatroomManager.getChatRooms()) {
+
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -220,9 +226,9 @@ public class ChatScreen extends RoboFragmentActivity {
                         }
 
                         // If an chat is open do some tasks
-                        if (chatrooms.getActiveChat() != null) {
+                        if (chatroomManager.getActiveChat() != null) {
                             // Active chat don't need new messages
-                            chatrooms.getActiveChat().setHasNewMessage(false);
+                            chatroomManager.getActiveChat().setHasNewMessage(false);
                             // Refresh chat log and user list
                             runOnUiThread(new Runnable() {
                                 @Override

@@ -49,7 +49,7 @@ public abstract class TokenHandler {
         chatroomManager.getActiveChat().addMessage(chatEntry);
         // Add broadcasted message also to the console.
         if (!chatroomManager.getActiveChat().isSystemChat()) {
-            chatroomManager.addChatEntry(AppProperties.DEBUG_CHANNEL_NAME, chatEntry);
+            chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(chatEntry);
         }
 
         if (chatroomManager.hasOpenPrivateConversation(flistChar)) {

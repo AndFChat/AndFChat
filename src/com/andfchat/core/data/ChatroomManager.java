@@ -19,14 +19,12 @@
 package com.andfchat.core.data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import roboguice.util.Ln;
 
-import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -34,14 +32,11 @@ import com.google.inject.Singleton;
 @Singleton
 public class ChatroomManager {
 
-    private final HashMap<String, Chatroom> chats = new HashMap<String, Chatroom>();
+    private final ArrayList<Chatroom> chats = new ArrayList<Chatroom>();
+    private final ArrayList<Chatroom> removedChats = new ArrayList<Chatroom>();
 
+    private boolean isChanged = false;
     private Chatroom activeChat;
-
-    private final List<Chatroom> newRooms = new ArrayList<Chatroom>();
-    private final List<Chatroom> removedRooms = new ArrayList<Chatroom>();
-
-    private final HashMap<String, List<ChatEntry>> chatRoomHistory = new HashMap<String, List<ChatEntry>>();
 
     // List of channels
     private final Set<String> officialChannelSet = new HashSet<String>();
@@ -56,75 +51,52 @@ public class ChatroomManager {
         addChatroom(new Chatroom(new Channel(AppProperties.DEBUG_CHANNEL_NAME, AppProperties.DEBUG_CHANNEL_NAME), ChatroomType.CONSOLE, 50000));
     }
 
-    public void addChatEntry(String Chatroom, ChatEntry entry) {
-        synchronized(this) {
-            chats.get(Chatroom).addMessage(entry);
-        }
-    }
-
     public void addBroadcast(ChatEntry entry) {
         synchronized(this) {
-            for (String key : chats.keySet()) {
-                chats.get(key).addMessage(entry);
+            for (Chatroom chat : chats) {
+                chat.addMessage(entry);
             }
         }
-    }
-
-    public List<String> getChatroomKeys() {
-        return new ArrayList<String>(chats.keySet());
+        isChanged = true;
     }
 
     public Chatroom getChatroom(String channelId) {
-        return chats.get(channelId);
+        for (Chatroom chat : chats) {
+            if (chat.getId().equals(channelId)) {
+                return chat;
+            }
+        }
+        return null;
     }
 
     public Chatroom addChatroom(Chatroom chatroom) {
         synchronized(this) {
-            if (!chats.containsKey(chatroom.getId())) {
-                chats.put(chatroom.getId(), chatroom);
-                newRooms.add(chatroom);
-                removedRooms.remove(chatroom);
+            for (int i = 0; i < removedChats.size(); i++) {
+                if (removedChats.get(i).equals(chatroom)) {
+                    chatroom = removedChats.get(i);
+                    removedChats.remove(i);
+                }
             }
+            chats.add(chatroom);
         }
-
-        // Handle chat history
-        if (chatRoomHistory.containsKey(chatroom.getId())) {
-            chatroom.setChatHistory(chatRoomHistory.get(chatroom.getId()));
-        } else {
-            chatRoomHistory.put(chatroom.getId(), chatroom.getChatHistory());
-        }
-
-        return chats.get(chatroom.getId());
+        isChanged = true;
+        return chatroom;
     }
 
     public void removeChatroom(String channelId) {
         synchronized(this) {
-            Chatroom Chatroom = chats.remove(channelId);
-            if (Chatroom != null) {
-                removedRooms.add(Chatroom);
-                newRooms.remove(Chatroom);
+            for (int i = 0; i < chats.size(); i++) {
+                if (chats.get(i).getId().equals(channelId)) {
+                    removedChats.add(chats.get(i));
+                    chats.remove(i);
+                }
             }
 
             if (activeChat != null && activeChat.getId().equals(channelId)) {
                 activeChat = null;
             }
         }
-    }
-
-    public List<Chatroom> getNewRooms() {
-        return newRooms;
-    }
-
-    public void clearNewRooms() {
-        newRooms.clear();
-    }
-
-    public List<Chatroom> getRemovedRooms() {
-        return removedRooms;
-    }
-
-    public void clearRemovedRooms() {
-        removedRooms.clear();
+        isChanged = true;
     }
 
     public Chatroom getActiveChat() {
@@ -137,19 +109,32 @@ public class ChatroomManager {
         synchronized(this) {
             Ln.d("Set active chat to '" + chatroom.getName() + "'");
             activeChat = chatroom;
+            isChanged = true;
         }
     }
 
     public boolean hasOpenPrivateConversation(FlistChar flistChar) {
-        return chats.containsKey(PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + flistChar.getName());
+        for (Chatroom chat : chats) {
+            if (chat.getRecipient() != null && chat.getRecipient().equals(flistChar)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Chatroom getPrivateChatFor(FlistChar flistChar) {
-        return chats.get(PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + flistChar.getName());
+        for (Chatroom chat : chats) {
+            if (chat.getRecipient() != null && chat.getRecipient().equals(flistChar)) {
+                return chat;
+            }
+        }
+
+        return null;
     }
 
     public void removeFlistCharFromChat(FlistChar flistChar) {
-        for (Chatroom Chatroom : chats.values()) {
+        for (Chatroom Chatroom : chats) {
             if (!Chatroom.isPrivateChat()) {
                 Chatroom.removeCharacter(flistChar);
             }
@@ -205,13 +190,24 @@ public class ChatroomManager {
 
     public void clear() {
         this.activeChat = null;
-        this.chatRoomHistory.clear();
+        this.removedChats.clear();
         this.chats.clear();
-        this.newRooms.clear();
-        this.removedRooms.clear();
         this.officialChannelSet.clear();
         this.privateChannelSet.clear();
 
         initChats();
+    }
+
+    public List<Chatroom> getChatRooms() {
+        return chats;
+    }
+
+    public boolean isChanged() {
+        if (isChanged) {
+            isChanged = false;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

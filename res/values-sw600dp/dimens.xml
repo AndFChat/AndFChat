@@ -15,15 +15,15 @@
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <dimen name="width_user_sidebar">100dp</dimen>
-    <dimen name="width_channel_sidebar">60dp</dimen>
+    <dimen name="width_user_sidebar">150dp</dimen>
+    <dimen name="width_channel_sidebar">90dp</dimen>
     
-    <dimen name="image_size_chatroom">45dp</dimen>
-    <dimen name="image_size_user_status">20dp</dimen>
+    <dimen name="image_size_chatroom">75dp</dimen>
+    <dimen name="image_size_user_status">25dp</dimen>
     
-    <dimen name="text_size_button_small">10sp</dimen>
-    <dimen name="text_size_button_normal">12sp</dimen>
-    <dimen name="text_size_button_greater">14sp</dimen>
-    <dimen name="text_size_popup_header">18sp</dimen>
+    <dimen name="text_size_button_small">12sp</dimen>
+    <dimen name="text_size_button_normal">14sp</dimen>
+    <dimen name="text_size_button_greater">18sp</dimen>    
+    <dimen name="text_size_popup_header">20sp</dimen>
     
 </resources>
