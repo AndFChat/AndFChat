@@ -79,6 +79,7 @@ public class FlistWebSocketHandler extends WebSocketHandler {
 
     @Inject
     public FlistWebSocketHandler(Context context) {
+        super();
 
         // Initialize all handler with there tokens, they can handle.
         List<TokenHandler> availableTokenHandler = new ArrayList<TokenHandler>();
@@ -119,6 +120,10 @@ public class FlistWebSocketHandler extends WebSocketHandler {
     @Override
     public void onOpen() {
        Ln.d("Status: Connected");
+
+       for (TokenHandler handler : handlerMap.values()) {
+           handler.connected();
+       }
     }
 
     @Override
@@ -160,6 +165,10 @@ public class FlistWebSocketHandler extends WebSocketHandler {
     @Override
     public void onClose(int code, String reason) {
         Ln.d("Status: Connection closed: " + reason);
+
+        for (TokenHandler handler : handlerMap.values()) {
+            handler.closed();
+        }
     }
 
     /**

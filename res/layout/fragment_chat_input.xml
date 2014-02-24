@@ -17,13 +17,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ChatScreen">
     
-    <ListView 
-        android:id="@+id/chat"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="@color/background_chat_empty"
-    />
+       <EditText
+            android:id="@+id/chatMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/chatmessage_hint"
+            android:layout_toLeftOf="@+id/sendButton"
+        />
+
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="@string/send_message"
+            android:layout_alignParentRight="true"
+        />  
 </RelativeLayout>

@@ -22,13 +22,8 @@ import roboguice.RoboGuice;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 
 import com.andfchat.core.connection.FlistWebSocketConnection;
-import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.SessionData;
-import com.andfchat.frontend.activities.Login;
 
 public class DisconnectAction {
 
@@ -39,14 +34,7 @@ public class DisconnectAction {
                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                    @Override
                 public void onClick(DialogInterface dialog, int id) {
-                       RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection();
-
-                       RoboGuice.getInjector(activity).getInstance(CharacterManager.class).clear();
-                       RoboGuice.getInjector(activity).getInstance(ChatroomManager.class).clear();
-                       RoboGuice.getInjector(activity).getInstance(SessionData.class).clear();
-
-                       Intent intent = new Intent(activity.getBaseContext(), Login.class);
-                       activity.startActivity(intent);
+                       RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection(activity);
                        activity.finish();
                    }
                })

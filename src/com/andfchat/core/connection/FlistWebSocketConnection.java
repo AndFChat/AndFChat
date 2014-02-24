@@ -23,7 +23,10 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import roboguice.RoboGuice;
 import roboguice.util.Ln;
+import android.content.Context;
+import android.content.Intent;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.data.AppProperties;
@@ -35,6 +38,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.frontend.activities.Login;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -234,8 +238,17 @@ public class FlistWebSocketConnection {
         sendMessage(ClientToken.CHA);
     }
 
-    public void closeConnection() {
-        connection.disconnect();
+    public void closeConnection(Context context) {
+        RoboGuice.getInjector(context).getInstance(CharacterManager.class).clear();
+        RoboGuice.getInjector(context).getInstance(ChatroomManager.class).clear();
+        RoboGuice.getInjector(context).getInstance(SessionData.class).clear();
+
+        Intent intent = new Intent(context, Login.class);
+        context.startActivity(intent);
+
+        if (connection.isConnected()) {
+            connection.disconnect();
+        }
     }
 
     public void createPrivateChannel(String channelname) {

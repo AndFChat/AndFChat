@@ -68,4 +68,7 @@ public abstract class TokenHandler {
 
         return chatroomManager.hasOpenPrivateConversation(flistChar);
     }
+
+    public void connected() {};
+    public void closed() {};
 }

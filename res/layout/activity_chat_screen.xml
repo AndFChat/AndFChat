@@ -18,9 +18,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatScreen"     
+    android:background="@color/background_color"
     android:orientation="vertical"
-    android:background="@color/background_color">
+    tools:context=".ChatScreen" >
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,14 +76,16 @@
     </LinearLayout>
     
     <RelativeLayout
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent">   
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
     	        
-        <fragment android:name="com.andfchat.frontend.fragments.ChannelListFragment"
-                android:id="@+id/channelListFragment"                
-                android:layout_width="@dimen/width_channel_sidebar"
-                android:layout_height="match_parent"                
-        />       
+        <fragment
+            android:id="@+id/channelListFragment"
+            android:name="com.andfchat.frontend.fragments.ChannelListFragment"
+            android:layout_width="@dimen/width_channel_sidebar"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/chatInputFragment" />
             
         <fragment android:name="com.andfchat.frontend.fragments.ChatFragment"
             android:id="@+id/chatFragment"                
@@ -91,6 +93,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/channelListFragment"
             android:layout_toLeftOf="@+id/userListFragment"
+            android:layout_above="@+id/chatInputFragment"
         />
     
 	   <fragment android:name="com.andfchat.frontend.fragments.UserListFragment"
@@ -98,8 +101,15 @@
             android:layout_width="@dimen/width_user_sidebar"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-        />   
+            android:layout_above="@+id/chatInputFragment"
+        />  
         
+        <fragment android:name="com.andfchat.frontend.fragments.ChatInputFragment"
+            android:id="@+id/chatInputFragment"                
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+        />  
+       
     </RelativeLayout>
-
 </LinearLayout>

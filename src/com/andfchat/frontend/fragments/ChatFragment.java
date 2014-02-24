@@ -26,15 +26,11 @@ import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.andfchat.R;
@@ -42,7 +38,6 @@ import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.util.Console;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
 import com.google.inject.Inject;
 
@@ -53,18 +48,10 @@ public class ChatFragment extends RoboFragment {
     @Inject
     protected FlistWebSocketConnection connection;
     @Inject
-    protected Console commands;
-    @Inject
     private InputMethodManager inputManager;
 
     @InjectView(R.id.chat)
     private ListView chatListView;
-    @InjectView(R.id.chatMessage)
-    private EditText inputText;
-    @InjectView(R.id.sendButton)
-    private Button sendButton;
-
-    private long lastMessage = System.currentTimeMillis();
 
     private ChatEntryListAdapter chatListData;
 
@@ -86,47 +73,6 @@ public class ChatFragment extends RoboFragment {
             // Stack chat from bottom to top
             chatListView.setStackFromBottom(true);
         }
-
-        { // Setup send button
-            sendButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendMessage();
-                }
-            });
-        }
-    }
-
-
-    private void sendMessage() {
-        Chatroom activeChat = chatroomManager.getActiveChat();
-        // Ignore empty messages
-        if (inputText.getText().toString().length() == 0 ) {
-            return;
-        }
-        // Text command like /help / open /close shouldn't be send to the server, console commands too.
-        if (commands.checkForCommands(inputText.getText().toString()) || activeChat.isSystemChat()) {
-            // Reset input
-            inputText.setText("");
-            return;
-        }
-        else if ((System.currentTimeMillis() - lastMessage > 2000)) {
-
-
-            if (activeChat.isPrivateChat()) {
-                connection.sendPrivatMessage(activeChat.getRecipient().getName(), inputText.getText().toString());
-            } else {
-                connection.sendMessageToChannel(activeChat, inputText.getText().toString());
-            }
-
-            lastMessage = System.currentTimeMillis();
-        }
-        else {
-            //TODO: Show error message (input to fast).
-        }
-
-        // Reset input
-        inputText.setText("");
     }
 
     protected void setActiveChat(@Observes Chatroom chatroom) {
@@ -140,9 +86,10 @@ public class ChatFragment extends RoboFragment {
         // Set messages
         chatListData.clear();
         chatListData.addAll(messages);
-
-        // Set maximum text length
-        inputText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(chatroom.getMaxTextLength())});
+        // Scroll to last message
+        if (messages.size() > 0) {
+            chatListView.setSelection(messages.size() - 1);
+        }
     }
 
     public void refreshChat() {
@@ -153,9 +100,5 @@ public class ChatFragment extends RoboFragment {
                 chatListData.add(entry);
             }
         }
-    }
-
-    public void hideKeyboard() {
-        inputManager.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
     }
 }

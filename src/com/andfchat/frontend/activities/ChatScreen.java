@@ -49,6 +49,7 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.SmileyReader;
 import com.andfchat.frontend.fragments.ChannelListFragment;
 import com.andfchat.frontend.fragments.ChatFragment;
+import com.andfchat.frontend.fragments.ChatInputFragment;
 import com.andfchat.frontend.fragments.UserListFragment;
 import com.andfchat.frontend.menu.AboutAction;
 import com.andfchat.frontend.menu.DisconnectAction;
@@ -77,11 +78,16 @@ public class ChatScreen extends RoboFragmentActivity {
     private Button toggleSidebarLeft;
     @InjectView(R.id.toggleSidebarRight)
     private Button toggleSidebarRight;
+    @InjectView(R.id.chatMessage)
+    private EditText inputText;
+    @InjectView(R.id.sendButton)
+    private Button sendButton;
 
     // Fragments
     private ChatFragment chat;
     private UserListFragment userList;
     private ChannelListFragment channelList;
+    private ChatInputFragment inputFragment;
 
     private boolean paused = true;
     // Display size
@@ -96,6 +102,7 @@ public class ChatScreen extends RoboFragmentActivity {
         chat = (ChatFragment)getSupportFragmentManager().findFragmentById(R.id.chatFragment);
         userList = (UserListFragment)getSupportFragmentManager().findFragmentById(R.id.userListFragment);
         channelList = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.channelListFragment);
+        inputFragment = (ChatInputFragment)getSupportFragmentManager().findFragmentById(R.id.chatInputFragment);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -302,7 +309,7 @@ public class ChatScreen extends RoboFragmentActivity {
             float y = event.getRawY() + w.getTop() - scrcoords[1];
 
             if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom()) ) {
-                chat.hideKeyboard();
+                inputFragment.hideKeyboard();
             }
         }
 
