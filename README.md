@@ -38,7 +38,7 @@ Pawel Kadysz - http://www.177designs.com
 
 ***Switching from wlan-> mobile internet or mobile internet -> wlan is disconnecting me, help?!***
 
-Sorry, you are swichting ip adresses. I see no easy way to fix this, despite reconnecting with other IP, but reconnecting is not implemented right now.
+Sorry, you are swichting ip adresses. I see no easy way to fix this, despite reconnecting with the other IP, but automatic reconnecting is not implemented right now.
 
 ***Why I can only connect with one character at the same time? Will there be any update to fix this?***
 
