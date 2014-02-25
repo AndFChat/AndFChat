@@ -36,10 +36,10 @@ Pawel Kadysz - http://www.177designs.com
 
 ## FAQ
 
-*** Switching from wlan-> mobile internet or mobile internet -> wlan is disconnecting me, help?! ***
+***Switching from wlan-> mobile internet or mobile internet -> wlan is disconnecting me, help?!***
 
 Sorry, you are swichting ip adresses. I see no easy way to fix this, despite reconnecting with other IP, but reconnecting is not implemented right now.
 
-*** Why I can only connect with one character at the same time? Will there be any update to fix this? ***
+***Why I can only connect with one character at the same time? Will there be any update to fix this?***
 
 Nope, seriously there is not enough space on a phone for one character. Don't see any reason to add multiple connections at the same time.
