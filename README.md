@@ -11,8 +11,8 @@ Any help, tips and thanks are welcomed! :)
 Contact me for bugreports on Flist: AndFChat
 I prefere german for english, but I can read (not write) both fluent.
 
-***AndFChat (Version 0.1)***
-is developed under GPL3 licence.
+***AndFChat (Version 0.1)*** is developed under GPL3 licence.
+
 It's still a BETA so use with patients!
 
 Still looking for Help!
