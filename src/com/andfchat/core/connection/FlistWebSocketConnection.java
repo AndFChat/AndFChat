@@ -87,7 +87,7 @@ public class FlistWebSocketConnection {
 
     public void sendMessage(ClientToken token, JSONObject data) {
         if (data == null) {
-            Ln.i("Sending token: " + token.name());
+            Ln.d("Sending token: " + token.name());
             connection.sendTextMessage(token.name());
 
             if (sessionData.getSessionSettings().useDebugChannel()) {

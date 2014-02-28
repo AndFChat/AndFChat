@@ -128,7 +128,7 @@ public class FlistWebSocketHandler extends WebSocketHandler {
 
     @Override
     public void onTextMessage(String payload) {
-        Ln.v("Incoming message: " + payload);
+        Ln.d("Incoming message: " + payload);
 
         if (sessionData.getSessionSettings().useDebugChannel()) {
             FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);

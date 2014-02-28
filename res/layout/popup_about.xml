@@ -20,13 +20,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
  	android:background="@color/gray"
-    android:padding="2dp">
+    android:padding="2dp"
+    android:paddingRight="2dp"
+    android:paddingBottom="2dp">
  	
     <LinearLayout     
         android:orientation="vertical"
 	    android:layout_width="match_parent"
-    	android:layout_height="wrap_content"
-        android:background="@color/black">
+    	android:layout_height="wrap_content">
     
     <TextView 
         android:id="@+id/descriptionPopupTitle"
@@ -46,8 +47,7 @@
         android:orientation="vertical"
 	    android:layout_width="match_parent"
     	android:layout_height="match_parent"
-        android:background="@color/black"
->
+        android:background="@color/black">
 
         <TextView 
             android:id="@+id/aboutText"

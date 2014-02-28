@@ -44,6 +44,7 @@ import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 
 public class Login extends RoboActivity {
@@ -95,12 +96,16 @@ public class Login extends RoboActivity {
         }
 
         List<String> list = new ArrayList<String>();
-        list.add(Server.DEV_SERVER.name());
         list.add(Server.LIVE_SERVER.name());
+        list.add(Server.DEV_SERVER.name());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         serverSelection.setAdapter(dataAdapter);
         serverSelection.setSelection(0);
+
+        if (AndFChatApplication.DEBUGGING_MODE == false) {
+            serverSelection.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -190,7 +195,7 @@ public class Login extends RoboActivity {
                 prefEditor.commit();
 
 
-                intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 1);
+                intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 0);
                 intent.putExtra("characters", charList);
                 intent.putExtra("default_char", jsonDocument.getString(JsonTokens.default_character.name()));
                 intent.putExtra("bookmarks", bookmarksList);
