@@ -22,6 +22,8 @@ Still looking for Help!
 
 Dependencies:
 
+acra-4.5.0
+
 roboguice-2.0
 - guice-3.0-no_aop
 - javax.inject-1
