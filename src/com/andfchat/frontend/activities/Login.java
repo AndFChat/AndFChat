@@ -103,7 +103,7 @@ public class Login extends RoboActivity {
         serverSelection.setAdapter(dataAdapter);
         serverSelection.setSelection(0);
 
-        if (AndFChatApplication.DEBUGGING_MODE == false) {
+        if (AndFChatApplication.DEBUGGING_MODE != true) {
             serverSelection.setVisibility(View.GONE);
         }
     }
