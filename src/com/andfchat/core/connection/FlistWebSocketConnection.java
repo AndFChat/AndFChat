@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
-import com.andfchat.core.data.AppProperties;
 import com.andfchat.core.data.CharStatus;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
@@ -39,6 +38,7 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.activities.Login;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -92,7 +92,7 @@ public class FlistWebSocketConnection {
 
             if (sessionData.getSessionSettings().useDebugChannel()) {
                 FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
-                chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name(), systemChar, new Date(), ChatEntryType.MESSAGE));
+                chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name(), systemChar, new Date(), ChatEntryType.MESSAGE));
             }
         } else {
             Ln.i("Sending message: " + token.name() + " " + data.toString());
@@ -100,7 +100,7 @@ public class FlistWebSocketConnection {
 
             if (sessionData.getSessionSettings().useDebugChannel()) {
                 FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
-                chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name() + " " + data.toString(), systemChar, new Date(), ChatEntryType.MESSAGE));
+                chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name() + " " + data.toString(), systemChar, new Date(), ChatEntryType.MESSAGE));
             }
         }
     }

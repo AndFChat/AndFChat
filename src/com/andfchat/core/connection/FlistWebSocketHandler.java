@@ -47,13 +47,13 @@ import com.andfchat.core.connection.handler.PingHandler;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.TokenHandler;
 import com.andfchat.core.connection.handler.VariableHandler;
-import com.andfchat.core.data.AppProperties;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntry.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -133,7 +133,7 @@ public class FlistWebSocketHandler extends WebSocketHandler {
         if (sessionData.getSessionSettings().useDebugChannel()) {
             FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
             ChatEntry entry = new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE);
-            chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(entry);
+            chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(entry);
         }
 
         ServerToken token = null;

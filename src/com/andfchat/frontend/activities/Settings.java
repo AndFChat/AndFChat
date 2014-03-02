@@ -16,35 +16,19 @@
  ******************************************************************************/
 
 
-package com.andfchat.core.util.commands;
+package com.andfchat.frontend.activities;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.core.data.SessionData;
-import com.google.inject.Inject;
+import roboguice.activity.RoboPreferenceActivity;
+import android.os.Bundle;
 
+import com.andfchat.R;
 
-public class ChannelNotification extends TextCommand {
-
-    public ChannelNotification() {
-        allowedIn = ChatroomType.values();
-    }
-
-    @Inject
-    protected SessionData sessionData;
+public class Settings extends RoboPreferenceActivity {
 
     @Override
-    public String getDescription() {
-        return "*  /channel_info [on/off] | SET NOTATIONS ABOUT CHANNEL JOINS ON/OFF.";
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.settings);
     }
 
-    @Override
-    public boolean fitToCommand(String token) {
-        return token.equals("/channel_info");
-    }
-
-    @Override
-    public void runCommand(String token, String text) {
-        boolean value = text.equals("on");
-        sessionData.getSessionSettings().setShowChannelInfo(value);
-    }
 }

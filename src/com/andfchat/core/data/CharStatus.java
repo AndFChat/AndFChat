@@ -28,5 +28,18 @@ public enum CharStatus {
     busy,
     dnd,
     away,
-    idle
+    idle(false),
+    crown(false);
+
+    private boolean allowedToSet = true;
+
+    private CharStatus() {}
+
+    private CharStatus(boolean isAllowedToSet) {
+        allowedToSet = isAllowedToSet;
+    }
+
+    public boolean isAllowedToSet() {
+        return allowedToSet;
+    }
 }

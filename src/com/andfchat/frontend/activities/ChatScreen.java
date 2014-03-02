@@ -24,6 +24,7 @@ import roboguice.event.Observes;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -120,17 +121,17 @@ public class ChatScreen extends RoboFragmentActivity {
 
     public void toggleSidebarRight(View v) {
         if (userList.toggleVisibility()) {
-            toggleSidebarRight.setText(R.string.hide);
+            toggleSidebarRight.setText(R.string.arrows_right);
         } else {
-            toggleSidebarRight.setText(R.string.show);
+            toggleSidebarRight.setText(R.string.arrows_left);
         }
     }
 
     public void toggleSidebarLeft(View v) {
         if (channelList.toggleVisibility()) {
-            toggleSidebarLeft.setText(R.string.hide);
+            toggleSidebarLeft.setText(R.string.arrows_left);
         } else {
-            toggleSidebarLeft.setText(R.string.show);
+            toggleSidebarLeft.setText(R.string.arrows_right);
         }
     }
 
@@ -284,6 +285,9 @@ public class ChatScreen extends RoboFragmentActivity {
                 return true;
             case R.id.action_disconnect:
                 DisconnectAction.disconnect(this);
+                return true;
+            case R.id.action_open_settings:
+                startActivity(new Intent(this, Settings.class));
                 return true;
             case R.id.action_about:
                 AboutAction.open(this, chat.getView(), height);

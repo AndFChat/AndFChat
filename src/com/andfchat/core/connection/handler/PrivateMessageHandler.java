@@ -24,6 +24,9 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import roboguice.util.Ln;
+import android.os.Vibrator;
+
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
@@ -31,6 +34,7 @@ import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
+import com.google.inject.Inject;
 
 /**
  * Handles private messages send to user.
@@ -39,6 +43,11 @@ import com.andfchat.core.data.FlistChar;
 public class PrivateMessageHandler extends TokenHandler {
 
     public final static String PRIVATE_MESSAGE_TOKEN = "PRIV:::";
+
+    @Inject
+    protected Vibrator vibrator;
+
+    private final static int VIBRATING_TIME = 300;
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
@@ -51,6 +60,14 @@ public class PrivateMessageHandler extends TokenHandler {
         if (chatroom == null) {
             int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
             chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character), maxTextLength);
+        }
+
+        // If vibration is allowed, do it on new messages!
+        if (sessionData.getSessionSettings().vibrationFeedback()) {
+            if (chatroomManager.getActiveChat().equals(chatroom) == false && chatroom.hasNewMessage() == false) {
+                Ln.d("New Message Vibration on!");
+                vibrator.vibrate(VIBRATING_TIME);
+            }
         }
 
         chatroom.addMessage(message, characterManager.findCharacter(character), new Date());

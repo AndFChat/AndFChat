@@ -26,6 +26,7 @@ import java.util.Set;
 import roboguice.util.Ln;
 
 import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -48,7 +49,7 @@ public class ChatroomManager {
     }
 
     private void initChats() {
-        addChatroom(new Chatroom(new Channel(AppProperties.DEBUG_CHANNEL_NAME, AppProperties.DEBUG_CHANNEL_NAME), ChatroomType.CONSOLE, 50000));
+        addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, AndFChatApplication.DEBUG_CHANNEL_NAME), ChatroomType.CONSOLE, 50000));
     }
 
     public void addBroadcast(ChatEntry entry) {

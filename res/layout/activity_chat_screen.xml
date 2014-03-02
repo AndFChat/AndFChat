@@ -29,11 +29,11 @@
 
         <Button
             android:id="@+id/toggleSidebarLeft"
-            android:layout_width="@dimen/width_channel_sidebar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"            
             android:onClick="toggleSidebarLeft"
             android:textSize="@dimen/text_size_button_greater"
-            android:text="@string/hide"
+            android:text="@string/arrows_left"
         />
         
         <Button
@@ -64,11 +64,11 @@
                 
             <Button
                 android:id="@+id/toggleSidebarRight"
-                android:layout_width="@dimen/width_user_sidebar"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="toggleSidebarRight"
                 android:textSize="@dimen/text_size_button_greater"
-                android:text="@string/hide"
+                android:text="@string/arrows_right"
             />
             
         </LinearLayout>

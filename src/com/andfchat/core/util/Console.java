@@ -33,7 +33,6 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.util.commands.Ban;
 import com.andfchat.core.util.commands.Bottle;
-import com.andfchat.core.util.commands.ChannelNotification;
 import com.andfchat.core.util.commands.CloseChannelToPublic;
 import com.andfchat.core.util.commands.CloseChatroom;
 import com.andfchat.core.util.commands.CreateChannel;
@@ -42,9 +41,7 @@ import com.andfchat.core.util.commands.InviteToChannel;
 import com.andfchat.core.util.commands.Kick;
 import com.andfchat.core.util.commands.OpenChannelToPublic;
 import com.andfchat.core.util.commands.PMUser;
-import com.andfchat.core.util.commands.ShowServerConversation;
 import com.andfchat.core.util.commands.StatusChange;
-import com.andfchat.core.util.commands.StatusNotification;
 import com.andfchat.core.util.commands.TextCommand;
 import com.andfchat.core.util.commands.Unban;
 import com.google.inject.Inject;
@@ -77,11 +74,6 @@ public class Console {
         availableCommands.add(new Kick());
         availableCommands.add(new Ban());
         availableCommands.add(new Unban());
-
-        // Config stuff
-        availableCommands.add(new ChannelNotification());
-        availableCommands.add(new StatusNotification());
-        availableCommands.add(new ShowServerConversation());
 
         Injector injector = RoboGuice.getInjector(context);
         for (TextCommand command : availableCommands) {

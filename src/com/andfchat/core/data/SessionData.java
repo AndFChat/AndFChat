@@ -21,9 +21,10 @@ package com.andfchat.core.data;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
-import com.andfchat.core.data.AppProperties.PropertyName;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -37,7 +38,6 @@ public class SessionData {
     private String account;
     private String characterName;
 
-    private AppProperties appProperties;
     private SessionSettings sessionSettings;
 
     private final HashMap<Variable, Integer> intVariables = new HashMap<Variable, Integer>();
@@ -46,8 +46,7 @@ public class SessionData {
         this.ticket = ticket;
         this.account = account;
 
-        appProperties = new AppProperties(activity);
-        sessionSettings = new SessionSettings(appProperties);
+        sessionSettings = new SessionSettings(activity);
     }
 
     public void setCharname(String name) {
@@ -70,10 +69,6 @@ public class SessionData {
         return sessionSettings;
     }
 
-    public AppProperties getProperties() {
-        return appProperties;
-    }
-
     public void clear() {
         ticket = null;
         account = null;
@@ -91,49 +86,24 @@ public class SessionData {
     }
 
     public class SessionSettings {
-        private boolean useDebugChannel = false;
-        private boolean showStatusChanges = true;
-        private boolean showChannelInfo = false;
+        private final SharedPreferences preferences;
 
-        public SessionSettings(AppProperties appProperties) {
-            if (appProperties.getBooleanValue(PropertyName.IS_INITIATED)) {
-                this.setUseDebugChannel(appProperties.getBooleanValue(PropertyName.USE_DEBUG_CHANNEL));
-                this.setShowStatusChanges(appProperties.getBooleanValue(PropertyName.SHOW_USER_STATUS_CHANGES));
-                this.setShowChannelInfo(appProperties.getBooleanValue(PropertyName.SHOW_CHANNEL_INFOS));
-            } else {
-                this.setUseDebugChannel(false);
-                this.setShowChannelInfo(false);
-                this.setShowStatusChanges(true);
-
-                appProperties.setBooleanValue(PropertyName.IS_INITIATED, true);
-            }
+        public SessionSettings(Activity activity) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         }
-
-        public void setUseDebugChannel(boolean value) {
-            useDebugChannel = value;
-            appProperties.setBooleanValue(PropertyName.USE_DEBUG_CHANNEL, value);
-        }
-
         public boolean useDebugChannel() {
-            return useDebugChannel;
+            return preferences.getBoolean(PropertyName.USE_DEBUG_CHANNEL.name().toLowerCase(), false);
         }
 
         public boolean showStatusChanges() {
-            return showStatusChanges;
+            return preferences.getBoolean(PropertyName.SHOW_USER_STATUS_CHANGES.name().toLowerCase(), false);
         }
-
-        public void setShowStatusChanges(boolean value) {
-            showStatusChanges = value;
-            appProperties.setBooleanValue(PropertyName.SHOW_USER_STATUS_CHANGES, value);
-        }
-
         public boolean showChannelInfos() {
-            return showChannelInfo;
+            return preferences.getBoolean(PropertyName.SHOW_CHANNEL_INFOS.name().toLowerCase(), false);
         }
 
-        public void setShowChannelInfo(boolean value) {
-            showChannelInfo = value;
-            appProperties.setBooleanValue(PropertyName.SHOW_CHANNEL_INFOS, value);
+        public boolean vibrationFeedback() {
+            return preferences.getBoolean(PropertyName.VIBRATION_FEEDBACK.name().toLowerCase(), false);
         }
     }
 }

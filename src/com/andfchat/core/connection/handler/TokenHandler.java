@@ -24,12 +24,12 @@ import org.json.JSONException;
 
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.AppProperties;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 
 public abstract class TokenHandler {
@@ -49,7 +49,7 @@ public abstract class TokenHandler {
         chatroomManager.getActiveChat().addMessage(chatEntry);
         // Add broadcasted message also to the console.
         if (!chatroomManager.getActiveChat().isSystemChat()) {
-            chatroomManager.getChatroom(AppProperties.DEBUG_CHANNEL_NAME).addMessage(chatEntry);
+            chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(chatEntry);
         }
 
         if (chatroomManager.hasOpenPrivateConversation(flistChar)) {

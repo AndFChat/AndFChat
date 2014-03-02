@@ -36,6 +36,8 @@
     <string name="friendlist">Friendlist</string>
     <string name="hide">Hide</string>
     <string name="show">Show</string>
+    <string name="arrows_left">&lt;&lt;</string>
+    <string name="arrows_right">&gt;&gt;</string>
     <string name="channels">Channels</string>
     <string name="public_channels">Public Channels</string>
     <string name="private_channels">Private Channels</string>
@@ -64,6 +66,20 @@
         * Artist/Designer to improve the interface and add some images.\n
         * Experienced Android developer for UI-Design especially scaling questions for different display layouts.\n</string>
     
-    <string name="crash_toast_text">Sorry! It looks like the App crashed, please send the crash report via mail</string>
+    <string name="crash_toast_text">Sorry! It looks like the App crashed, please send the crash report via mail or send me a note @ AndFChat on Flist</string>
+    
+    <!-- Settings translations -->
+    <string name="title_feedback">Feedback</string>
+    <string name="title_debug">Debug</string>
+    
+    <string name="title_show_channel_info">Show channel info</string>
+    <string name="description_show_channel_info">Show channel join/leave notifications</string>
+    <string name="title_show_user_status_changes">Show user status changes</string>
+    <string name="description_show_user_status_changes">Show status notifications for every user in your scope</string>
+    <string name="title_vibration_feedback">Vibration feedback on messages</string>
+    <string name="description_vibration_feedback">New messages trigger a short vibration as feedback.</string>
+    
+    <string name="title_use_debug_channel">Show debugging stuff</string>
+    <string name="description_use_debug_channel">Shows the input/output tags in the console</string>
     
 </resources>

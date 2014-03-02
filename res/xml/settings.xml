@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="@string/title_feedback"
+        android:key="feedback">
+    
+        <CheckBoxPreference 
+            android:key="show_channel_info"
+            android:summary="@string/description_show_channel_info"
+            android:title="@string/title_show_channel_info" 
+            android:defaultValue="false"
+        />
+        
+        <CheckBoxPreference 
+            android:key="show_user_status_changes"
+            android:summary="@string/description_show_user_status_changes"
+            android:title="@string/title_show_user_status_changes" 
+            android:defaultValue="true"
+        />
+        
+        <CheckBoxPreference 
+            android:key="vibration_feedback"
+            android:summary="@string/description_vibration_feedback"
+            android:title="@string/title_vibration_feedback" 
+            android:defaultValue="true"
+        />
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/title_debug"
+        android:key="debug">
+    
+        <CheckBoxPreference 
+            android:key="use_debug_channel"
+            android:summary="@string/description_use_debug_channel"
+            android:title="@string/title_use_debug_channel" 
+            android:defaultValue="false"
+        />
+        
+    </PreferenceCategory>
+</PreferenceScreen>
