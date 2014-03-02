@@ -19,11 +19,17 @@
 package com.andfchat.frontend.activities;
 
 import roboguice.activity.RoboPreferenceActivity;
+import android.app.NotificationManager;
 import android.os.Bundle;
 
 import com.andfchat.R;
+import com.andfchat.frontend.application.AndFChatApplication;
+import com.google.inject.Inject;
 
 public class Settings extends RoboPreferenceActivity {
+
+    @Inject
+    protected NotificationManager notificationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,4 +37,9 @@ public class Settings extends RoboPreferenceActivity {
         addPreferencesFromResource(R.xml.settings);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
+    }
 }

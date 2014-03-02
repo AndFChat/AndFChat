@@ -25,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import roboguice.util.Ln;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.os.Vibrator;
 
 import com.andfchat.core.connection.FeedbackListner;
@@ -34,6 +36,7 @@ import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 
 /**
@@ -46,6 +49,8 @@ public class PrivateMessageHandler extends TokenHandler {
 
     @Inject
     protected Vibrator vibrator;
+    @Inject
+    protected NotificationManager notificationManager;
 
     private final static int VIBRATING_TIME = 300;
 
@@ -64,9 +69,22 @@ public class PrivateMessageHandler extends TokenHandler {
 
         // If vibration is allowed, do it on new messages!
         if (sessionData.getSessionSettings().vibrationFeedback()) {
-            if (chatroomManager.getActiveChat().equals(chatroom) == false && chatroom.hasNewMessage() == false) {
+            // Vibrate if the active channel is not the same as the "messaged" one or the app is not visible and the chatroom isn't already set to "hasNewMessage".
+            if ((chatroomManager.getActiveChat().equals(chatroom) == false || sessionData.isVisible() == false) && chatroom.hasNewMessage() == false) {
                 Ln.d("New Message Vibration on!");
                 vibrator.vibrate(VIBRATING_TIME);
+            }
+        }
+
+        if (sessionData.getSessionSettings().ledFeedback()) {
+            if (sessionData.isVisible() == false) {
+                Ln.d("Set led active!");
+                Notification notif = new Notification();
+                notif.ledARGB = 0xFFffffff;
+                notif.flags = Notification.FLAG_SHOW_LIGHTS;
+                notif.ledOnMS = 200;
+                notif.ledOffMS = 200;
+                notificationManager.notify(AndFChatApplication.LED_NOTIFICATION_ID, notif);
             }
         }
 

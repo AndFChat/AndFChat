@@ -23,6 +23,7 @@ import roboguice.event.EventManager;
 import roboguice.event.Observes;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -48,6 +49,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.SmileyReader;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.fragments.ChannelListFragment;
 import com.andfchat.frontend.fragments.ChatFragment;
 import com.andfchat.frontend.fragments.ChatInputFragment;
@@ -74,6 +76,8 @@ public class ChatScreen extends RoboFragmentActivity {
     private InputMethodManager inputManager;
     @Inject
     private EventManager eventManager;
+    @Inject
+    protected NotificationManager notificationManager;
 
     @InjectView(R.id.toggleSidebarLeft)
     private Button toggleSidebarLeft;
@@ -196,6 +200,7 @@ public class ChatScreen extends RoboFragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        sessionData.setIsVisible(true);
         this.paused = false;
 
         if (chatroomManager.getActiveChat() != null) {
@@ -262,6 +267,18 @@ public class ChatScreen extends RoboFragmentActivity {
     protected void onPause() {
         super.onPause();
         paused = true;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        sessionData.setIsVisible(false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
     }
 
     @Override

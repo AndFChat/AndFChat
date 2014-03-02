@@ -78,6 +78,8 @@
     <string name="description_show_user_status_changes">Show status notifications for every user in your scope</string>
     <string name="title_vibration_feedback">Vibration feedback on messages</string>
     <string name="description_vibration_feedback">New messages trigger a short vibration as feedback.</string>
+    <string name="title_led_feedback">LED feedback on messages</string>
+    <string name="description_led_feedback">New messages trigger a whit LED flashing as feedback.</string>
     
     <string name="title_use_debug_channel">Show debugging stuff</string>
     <string name="description_use_debug_channel">Shows the input/output tags in the console</string>

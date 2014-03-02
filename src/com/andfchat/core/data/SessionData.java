@@ -21,10 +21,12 @@ package com.andfchat.core.data;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -33,10 +35,14 @@ public class SessionData {
 
     @Inject
     protected ChatroomManager chatroomManager;
+    @Inject
+    protected NotificationManager notificationManager;
 
     private String ticket;
     private String account;
     private String characterName;
+
+    private boolean isVisible = false;
 
     private SessionSettings sessionSettings;
 
@@ -69,10 +75,23 @@ public class SessionData {
         return sessionSettings;
     }
 
+    public void setIsVisible(boolean value) {
+        isVisible = value;
+        if (isVisible) {
+            notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
+        }
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
     public void clear() {
         ticket = null;
         account = null;
         characterName = null;
+
+        isVisible = true;
 
         intVariables.clear();
     }
@@ -104,6 +123,10 @@ public class SessionData {
 
         public boolean vibrationFeedback() {
             return preferences.getBoolean(PropertyName.VIBRATION_FEEDBACK.name().toLowerCase(), false);
+        }
+
+        public boolean ledFeedback() {
+            return preferences.getBoolean(PropertyName.LED_FEEDBACK.name().toLowerCase(), false);
         }
     }
 }

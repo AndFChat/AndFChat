@@ -25,6 +25,13 @@
             android:defaultValue="true"
         />
         
+        <CheckBoxPreference 
+            android:key="led_feedback"
+            android:summary="@string/description_led_feedback"
+            android:title="@string/title_led_feedback" 
+            android:defaultValue="true"
+        />
+                
     </PreferenceCategory>
     
     <PreferenceCategory 

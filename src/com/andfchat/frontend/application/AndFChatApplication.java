@@ -15,7 +15,10 @@ import com.andfchat.R;
 public class AndFChatApplication extends Application{
 
     public final static boolean DEBUGGING_MODE = true;
+
     public final static String DEBUG_CHANNEL_NAME = "Console";
+
+    public final static int LED_NOTIFICATION_ID = 1337;
 
     @Override
     public void onCreate() {
