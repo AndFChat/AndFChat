@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
     <PreferenceCategory 
+        android:title="@string/title_general"
+        android:key="general">
+      
+        <ListPreference
+            android:key="initial_channel"
+            android:summary="@string/description_initial_channel"
+            android:title="@string/title_initial_channel"
+            android:defaultValue="Frontpage"
+            />
+        
+    </PreferenceCategory>
+        
+    <PreferenceCategory 
         android:title="@string/title_feedback"
         android:key="feedback">
     
@@ -30,8 +43,7 @@
             android:summary="@string/description_led_feedback"
             android:title="@string/title_led_feedback" 
             android:defaultValue="true"
-        />
-                
+        />                
     </PreferenceCategory>
     
     <PreferenceCategory 

@@ -71,6 +71,10 @@
     <!-- Settings translations -->
     <string name="title_feedback">Feedback</string>
     <string name="title_debug">Debug</string>
+    <string name="title_general">General</string>
+    
+    <string name="title_initial_channel">Channel joined at connection: %s</string>
+    <string name="description_initial_channel">Choose a official channel you join on connecting.</string>
     
     <string name="title_show_channel_info">Show channel info</string>
     <string name="description_show_channel_info">Show channel join/leave notifications</string>

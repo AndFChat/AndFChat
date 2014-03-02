@@ -18,11 +18,19 @@
 
 package com.andfchat.frontend.activities;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import roboguice.activity.RoboPreferenceActivity;
 import android.app.NotificationManager;
 import android.os.Bundle;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 
 import com.andfchat.R;
+import com.andfchat.core.data.ChatroomManager;
+import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 
@@ -30,11 +38,40 @@ public class Settings extends RoboPreferenceActivity {
 
     @Inject
     protected NotificationManager notificationManager;
+    @Inject
+    protected ChatroomManager chatroomManager;
+    @Inject
+    protected SessionData sessionData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
+
+        final ListPreference initialChannelList = (ListPreference)findPreference("initial_channel");
+        ArrayList<String> channels = new ArrayList<String>(chatroomManager.getOfficialChannels());
+        Collections.sort(channels);
+
+        initialChannelList.setEntries(channels.toArray(new String[channels.size()]));
+        initialChannelList.setEntryValues(channels.toArray(new String[channels.size()]));
+
+        initialChannelList.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String title = getString(R.string.title_initial_channel);
+                title = String.format(title, newValue.toString());
+
+                initialChannelList.setTitle(title);
+                return true;
+            }
+        });
+
+        initialChannelList.setValue(sessionData.getSessionSettings().getInitialChannel());
+
+        String title = getString(R.string.title_initial_channel);
+        title = String.format(title, sessionData.getSessionSettings().getInitialChannel());
+        initialChannelList.setTitle(title);
     }
 
     @Override

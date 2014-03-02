@@ -133,6 +133,7 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
                     activeCharacter = null;
                     chatroomManager.setActiveChat(chatroom);
                     eventManager.fire(chatroom);
+                    notifyDataSetChanged();
                 }
             });
 

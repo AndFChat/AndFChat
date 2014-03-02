@@ -128,6 +128,10 @@ public class SessionData {
         public boolean ledFeedback() {
             return preferences.getBoolean(PropertyName.LED_FEEDBACK.name().toLowerCase(), false);
         }
+
+        public String getInitialChannel() {
+            return preferences.getString(PropertyName.INITIAL_CHANNEL.name().toLowerCase(), null);
+        }
     }
 }
 

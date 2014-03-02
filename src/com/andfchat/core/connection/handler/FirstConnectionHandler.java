@@ -38,7 +38,10 @@ public class FirstConnectionHandler extends TokenHandler {
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
-        connection.joinChannel("Frontpage");
+        String channel = sessionData.getSessionSettings().getInitialChannel();
+        if (channel != null) {
+            connection.joinChannel(channel);
+        }
         connection.requestOfficialChannels();
     }
 

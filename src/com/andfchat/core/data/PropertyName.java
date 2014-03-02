@@ -6,4 +6,5 @@ public enum PropertyName {
     USE_DEBUG_CHANNEL,
     VIBRATION_FEEDBACK,
     LED_FEEDBACK,
+    INITIAL_CHANNEL,
 }
