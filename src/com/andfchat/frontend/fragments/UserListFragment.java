@@ -18,6 +18,8 @@
 
 package com.andfchat.frontend.fragments;
 
+import java.util.ArrayList;
+
 import roboguice.event.Observes;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -32,6 +34,7 @@ import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
+import com.andfchat.core.data.FlistChar;
 import com.andfchat.frontend.adapter.MemberListAdapter;
 import com.google.inject.Inject;
 
@@ -60,7 +63,7 @@ public class UserListFragment extends RoboFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        memberListData = new MemberListAdapter(getActivity());
+        memberListData = new MemberListAdapter(getActivity(), new ArrayList<FlistChar>());
         memberListView.setAdapter(memberListData);
     }
 
