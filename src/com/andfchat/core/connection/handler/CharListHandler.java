@@ -33,7 +33,7 @@ import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharRelation;
 import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.FlistChar;
 
 /**

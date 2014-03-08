@@ -18,13 +18,13 @@
 
 package com.andfchat.core.data;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -38,68 +38,9 @@ import com.andfchat.core.util.BBCodeReader;
 import com.andfchat.core.util.SmileyReader;
 import com.andfchat.frontend.util.NameSpannable;
 
-public class ChatEntry {
+public class ChatEntry implements Serializable {
 
-    public enum ChatEntryType {
-        MESSAGE,
-        EMOTE(null, Typeface.ITALIC, "", " * "),
-        ERROR(R.color.name_error, Typeface.BOLD, ":"),
-        NOTATION_CONNECT(R.color.name_annotation, " "),
-        NOTATION_DISCONNECT(R.color.name_annotation, " "),
-        NOTATION_LEFT(R.color.name_annotation, " "),
-        NOTATION_JOINED(R.color.name_annotation, " "),
-        NOTATION_SYSTEM(R.color.name_annotation),
-        NOTATION_STATUS(R.color.name_annotation, " "),
-        NOTATION_DICE(R.color.name_annotation, " "),
-        AD(R.color.name_ad);
-
-        private Integer colorId = null;
-        private Integer typeFace = null;
-        private String delimiter = ": ";
-        private String delimiterFirstGap = " ";
-
-        private ChatEntryType(int color) {
-            this.colorId = color;
-        }
-
-        private ChatEntryType(Integer colorId, String delimeter) {
-            this.colorId = colorId;
-            this.delimiter = delimeter;
-        }
-
-        private ChatEntryType(Integer color, int typeFace, String delimiter) {
-            this.typeFace = typeFace;
-            this.colorId = color;
-            this.delimiter = delimiter;
-        }
-
-        private ChatEntryType(Integer color, int typeFace, String delimiter, String delimiterFirstGap) {
-            this.typeFace = typeFace;
-            this.colorId = color;
-            this.delimiter = delimiter;
-            this.delimiterFirstGap = delimiterFirstGap;
-        }
-
-        private ChatEntryType() {
-            this.colorId = null;
-        }
-
-        public Integer getColorId() {
-            return colorId;
-        }
-
-        public Integer getTypeFace() {
-            return typeFace;
-        }
-
-        public String getDelimeter() {
-            return delimiter;
-        }
-
-        public String getDelimiterFirstGap() {
-            return delimiterFirstGap;
-        }
-    }
+    private static final long serialVersionUID = 1L;
 
     private final static int DATE_CHAR_LENGTH = 10;
     private static DateFormat DATE_FORMAT = new SimpleDateFormat("[KK:mm aa]", Locale.US);
@@ -114,7 +55,6 @@ public class ChatEntry {
 
     private Spannable spannedText;
     private boolean isCreated = false;
-
 
     public ChatEntry(int stringId, FlistChar owner, Date date, ChatEntryType messageType) {
         this(null, owner, date, messageType);
@@ -169,8 +109,8 @@ public class ChatEntry {
             // Message
             finishedText.append(withSmileys);
             // Add overall styles
-            if (messageType.typeFace != null) {
-                finishedText.setSpan(new StyleSpan(messageType.typeFace), DATE_CHAR_LENGTH, finishedText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            if (messageType.getTypeFace() != null) {
+                finishedText.setSpan(new StyleSpan(messageType.getTypeFace()), DATE_CHAR_LENGTH, finishedText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             }
 
             spannedText = finishedText;

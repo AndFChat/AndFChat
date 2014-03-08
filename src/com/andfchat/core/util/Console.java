@@ -28,7 +28,7 @@ import android.content.Context;
 import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.util.commands.Ban;

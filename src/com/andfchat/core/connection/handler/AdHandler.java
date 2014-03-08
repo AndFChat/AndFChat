@@ -27,9 +27,9 @@ import org.json.JSONObject;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FlistChar;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
 
 /**
  * Displays add messages in channels.

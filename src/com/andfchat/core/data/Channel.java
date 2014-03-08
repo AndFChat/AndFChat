@@ -18,6 +18,10 @@
 
 package com.andfchat.core.data;
 
+/**
+ * Chatroom/Privatemessage identification object. Holds the simplest data about a channel.
+ * @author AndFChat
+ */
 public class Channel {
 
     private final String channelName;
