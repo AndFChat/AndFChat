@@ -62,6 +62,7 @@ public class PingHandler extends TokenHandler {
     @Override
     public void connected() {
         running = true;
+        lastPIN = System.currentTimeMillis();
 
         Runnable timeoutChecker = new Runnable() {
             @Override
@@ -69,21 +70,25 @@ public class PingHandler extends TokenHandler {
                 try {
                     int losts = 0;
                     while(running) {
-                        Ln.v("Check PIN messages");
 
-                        if (System.currentTimeMillis() - lastPIN > MAX_TIME_BETWEEN_PINGS) {
-                            losts++;
-                        } else {
-                            losts = 0;
-                        }
+                        if (sessionData.isInChat()) {
+                            Ln.v("Check PIN messages");
+                            if (System.currentTimeMillis() - lastPIN > MAX_TIME_BETWEEN_PINGS) {
+                                losts++;
+                            } else {
+                                losts = 0;
+                            }
 
-                        if (losts == 1 && System.currentTimeMillis() - lastPIN > MIN_TIME_BETWEEN_PINGS) {
-                            connection.sendMessage(ClientToken.PIN);
+                            if (losts == 1) {
+                                connection.sendMessage(ClientToken.PIN);
+                            }
+                            else if (losts == 2) {
+                                Ln.d("2 Lost PIN - Disconnecting");
+                                connection.closeConnection(context);
+                                running = false;
+                                losts = 0;
+                            }
                         }
-                        else if (losts == 2) {
-                            connection.closeConnection(context);
-                        }
-
                         Thread.sleep(MAX_TIME_BETWEEN_PINGS);
                     }
                 } catch (InterruptedException e) {

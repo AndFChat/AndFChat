@@ -43,6 +43,7 @@ public class SessionData {
     private String characterName;
 
     private boolean isVisible = false;
+    private boolean isInChat = false;
 
     private SessionSettings sessionSettings;
 
@@ -86,12 +87,21 @@ public class SessionData {
         return isVisible;
     }
 
+    public boolean isInChat() {
+        return isInChat;
+    }
+
+    public void setIsInChat(boolean value) {
+        isInChat = value;
+    }
+
     public void clear() {
         ticket = null;
         account = null;
         characterName = null;
 
         isVisible = true;
+        isInChat = false;
 
         intVariables.clear();
     }
