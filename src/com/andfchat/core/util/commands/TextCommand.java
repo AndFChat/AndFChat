@@ -23,7 +23,7 @@ import java.util.Date;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;

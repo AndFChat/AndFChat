@@ -18,7 +18,6 @@
 
 package com.andfchat.frontend.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import roboguice.RoboGuice;
@@ -57,18 +56,16 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
     protected EventManager eventManager;
 
     private FlistChar activeCharacter;
-
-    public MemberListAdapter(Context context) {
-        super(context, R.layout.list_item_user, new ArrayList<FlistChar>());
-
-        RoboGuice.getInjector(context).injectMembers(this);
-    }
+    private final List<FlistChar> chars;
 
     public MemberListAdapter(Context context, List<FlistChar> chars) {
         super(context, R.layout.list_item_user, chars);
+
         if (chars.size() > 1) {
             this.sort(COMPARATOR);
         }
+
+        this.chars = chars;
 
         RoboGuice.getInjector(context).injectMembers(this);
     }
@@ -160,16 +157,25 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
     }
 
     @Override
-    public void add(FlistChar object) {
-        if (object == null) {
+    public void add(FlistChar flistChar) {
+        if (flistChar == null) {
             return;
         }
 
-        super.add(object);
-
-        if (this.getCount() > 1) {
-            this.sort(COMPARATOR);
+        boolean added = false;
+        for (int i = 0; i < chars.size(); i++) {
+            if (COMPARATOR.compare(chars.get(i), flistChar) == 0) {
+                chars.add(i, flistChar);
+                added = true;
+                break;
+            }
         }
+
+        if (!added) {
+            chars.add(flistChar);
+        }
+
+        notifyDataSetChanged();
     }
 
 }

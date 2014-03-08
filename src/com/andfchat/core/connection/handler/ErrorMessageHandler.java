@@ -28,8 +28,8 @@ import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.FlistChar;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
 
 /**
  * Displays error messages send from server at the active chat.

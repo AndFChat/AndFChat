@@ -74,8 +74,8 @@ public class ChatroomManager {
         synchronized(this) {
             for (int i = 0; i < removedChats.size(); i++) {
                 if (removedChats.get(i).equals(chatroom)) {
-                    chatroom = removedChats.get(i);
-                    removedChats.remove(i);
+                    // Add the chat history to the rejoined chatroom
+                    chatroom.setChatHistory(removedChats.remove(i).getChatEntries());
                 }
             }
             chats.add(chatroom);

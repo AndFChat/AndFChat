@@ -43,6 +43,8 @@ public class FirstConnectionHandler extends TokenHandler {
             connection.joinChannel(channel);
         }
         connection.requestOfficialChannels();
+
+        sessionData.setIsInChat(true);
     }
 
     @Override

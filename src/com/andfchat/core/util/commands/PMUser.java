@@ -22,7 +22,7 @@ import roboguice.event.EventManager;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
-import com.andfchat.core.data.ChatEntry.ChatEntryType;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FlistChar;
