@@ -26,6 +26,7 @@ import roboguice.util.Ln;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -91,6 +92,8 @@ public class BBCodeReader {
         int pointer = 0;
 
         List<Span> spans = new ArrayList<Span>();
+        // Fixing html escapes
+        text =  Html.fromHtml(text).toString();
 
         while (pointer < text.length()) {
             int start = text.indexOf("[", pointer);
