@@ -34,6 +34,7 @@ import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.frontend.application.AndFChatApplication;
@@ -98,9 +99,9 @@ public class PrivateMessageHandler extends TokenHandler {
     }
 
     public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FlistChar character, int maxTextLength) {
-        String channelname = character.getName();
+        String username = character.getName();
 
-        Chatroom chatroom = new Chatroom(new Channel(PRIVATE_MESSAGE_TOKEN + channelname, channelname), character, maxTextLength);
+        Chatroom chatroom = new Chatroom(new Channel(username, ChatroomType.PRIVATE_CHAT), character, maxTextLength);
         chatroomManager.addChatroom(chatroom);
 
         return chatroom;

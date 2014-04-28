@@ -99,10 +99,10 @@ public class JoinedChannel extends TokenHandler {
 
             int maxTextLength = sessionData.getIntVariable(Variable.chat_max);
             if (channel == null) {
-                chatroom = chatroomManager.addChatroom(new Chatroom(new Channel(channelId, channelName), chatroomType, maxTextLength));
-            } else {
-                chatroom = chatroomManager.addChatroom(new Chatroom(channel, chatroomType, maxTextLength));
+                channel = new Channel(channelId, channelName, chatroomType);
             }
+
+            chatroom = chatroomManager.addChatroom(new Chatroom(channel, maxTextLength));
         }
 
         return chatroom;

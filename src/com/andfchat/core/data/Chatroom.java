@@ -45,7 +45,6 @@ public class Chatroom {
     }
 
     private final Channel channel;
-    private final ChatroomType chatroomType;
     private final int maxTextLength;
 
     private List<ChatEntry> chatMessages;
@@ -58,21 +57,15 @@ public class Chatroom {
     private boolean hasChanged = false;
 
 
-    public Chatroom(Channel channel, ChatroomType type, int maxTextLength) {
+    public Chatroom(Channel channel, int maxTextLength) {
         this.channel = channel;
-        this.chatroomType = type;
         this.maxTextLength = maxTextLength;
-
-        this.chatMessages = new ArrayList<ChatEntry>(chatroomType.maxEntries);
     }
 
     public Chatroom(Channel channel, FlistChar character, int maxTextLength) {
-        this.chatroomType = ChatroomType.PRIVATE_CHAT;
         this.channel = channel;
         this.characters.add(character);
         this.maxTextLength = maxTextLength;
-
-        this.chatMessages = new ArrayList<ChatEntry>(chatroomType.maxEntries);
     }
 
     public void setDescription(Spannable description) {
@@ -92,19 +85,19 @@ public class Chatroom {
     }
 
     public int getMaxiumEntries() {
-        return chatroomType.maxEntries;
+        return channel.getType().maxEntries;
     }
 
     public boolean isPrivateChat() {
-        return chatroomType == ChatroomType.PRIVATE_CHAT;
+        return channel.getType() == ChatroomType.PRIVATE_CHAT;
     }
 
     public boolean isCloseable() {
-        return chatroomType.closeable;
+        return channel.getType().closeable;
     }
 
     public boolean showUserList() {
-        return chatroomType.showUserList;
+        return channel.getType().showUserList;
     }
 
     public boolean hasNewMessage() {
@@ -150,7 +143,7 @@ public class Chatroom {
     }
 
     public void addMessage(ChatEntry entry) {
-        if (chatMessages.size() < chatroomType.maxEntries) {
+        if (chatMessages.size() < channel.getType().maxEntries) {
             chatMessages.add(entry);
         } else {
             chatMessages.remove(0);
@@ -206,7 +199,7 @@ public class Chatroom {
     }
 
     public boolean isSystemChat() {
-        return this.chatroomType == ChatroomType.CONSOLE;
+        return this.channel.getType() == ChatroomType.CONSOLE;
     }
 
     public List<ChatEntry> getChatHistory() {
@@ -227,11 +220,19 @@ public class Chatroom {
     }
 
     public ChatroomType getChatroomType() {
-        return chatroomType;
+        return channel.getType();
     }
 
     public int getMaxTextLength() {
         return maxTextLength;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public boolean isChannel(Channel channel) {
+        return this.channel.equals(channel);
     }
 
     @Override
@@ -258,4 +259,5 @@ public class Chatroom {
             return false;
         return true;
     }
+
 }

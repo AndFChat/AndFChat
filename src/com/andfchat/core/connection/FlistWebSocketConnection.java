@@ -61,6 +61,8 @@ public class FlistWebSocketConnection {
     private ChatroomManager chatroomManager;
     @Inject
     private CharacterManager characterManager;
+    @Inject
+    private FlistWebSocketHandler socketHandler;
 
     private final WebSocketConnection connection = new WebSocketConnection();
 
@@ -158,14 +160,14 @@ public class FlistWebSocketConnection {
         if (!chatroom.isPrivateChat()) {
             JSONObject data = new JSONObject();
             try {
-                data.put("channel", chatroom.getId());
+                data.put("channel", chatroom.getChannel().getChannelId());
                 sendMessage(ClientToken.LCH, data);
             } catch (JSONException e) {
                 Ln.w("exception occured while leaving channle: " + e.getMessage());
             }
         } else {
             // Private chats will just be removed.
-            chatroomManager.removeChatroom(chatroom.getId());
+            chatroomManager.removeChatroom(chatroom.getChannel());
         }
     }
 
@@ -239,16 +241,20 @@ public class FlistWebSocketConnection {
     }
 
     public void closeConnection(Context context) {
+        Ln.d("Disconnect!");
+
+        socketHandler.disconnected();
+
+        if (connection.isConnected()) {
+            connection.disconnect();
+        }
+
         RoboGuice.getInjector(context).getInstance(CharacterManager.class).clear();
         RoboGuice.getInjector(context).getInstance(ChatroomManager.class).clear();
         RoboGuice.getInjector(context).getInstance(SessionData.class).clear();
 
         Intent intent = new Intent(context, Login.class);
         context.startActivity(intent);
-
-        if (connection.isConnected()) {
-            connection.disconnect();
-        }
     }
 
     public void createPrivateChannel(String channelname) {

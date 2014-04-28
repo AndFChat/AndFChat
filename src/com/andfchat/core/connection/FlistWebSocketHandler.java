@@ -53,6 +53,7 @@ import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -73,9 +74,13 @@ public class FlistWebSocketHandler extends WebSocketHandler {
     protected CharacterManager characterManager;
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected HistoryManager historyManager;
 
     private final HashMap<ServerToken, TokenHandler> handlerMap = new HashMap<ServerToken, TokenHandler>();
     private final Map<ServerToken, List<FeedbackListner>> feedbackListnerMap = new HashMap<ServerToken, List<FeedbackListner>>();
+
+    private boolean disconnected;
 
     @Inject
     public FlistWebSocketHandler(Context context) {
@@ -121,6 +126,8 @@ public class FlistWebSocketHandler extends WebSocketHandler {
     public void onOpen() {
        Ln.d("Status: Connected");
 
+       disconnected = false;
+
        for (TokenHandler handler : handlerMap.values()) {
            handler.connected();
        }
@@ -128,38 +135,38 @@ public class FlistWebSocketHandler extends WebSocketHandler {
 
     @Override
     public void onTextMessage(String payload) {
-        Ln.d("Incoming message: " + payload);
-
-        if (sessionData.getSessionSettings().useDebugChannel()) {
-            FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
-            ChatEntry entry = new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE);
-            chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(entry);
-        }
-
-        ServerToken token = null;
-        try {
-            token = ServerToken.valueOf(payload.substring(0, 3));
-        } catch (IllegalArgumentException e) {
-            Ln.w("Can't find token '" + payload.substring(0, 3) + "' in ServerToken-Enum! -> Ignoring Message");
-            return;
-        }
-
-        if (handlerMap.containsKey(token)) {
-            try {
-                // If the message has message, give them to handler without token.
-                // FeedbackListner will only be called once and removed.
-                if (payload.length() > 3) {
-                    handlerMap.get(token).incomingMessage(token, payload.substring(4), feedbackListnerMap.remove(token));
-                } else {
-                    handlerMap.get(token).incomingMessage(token, "", feedbackListnerMap.remove(token));
-                }
-            } catch (JSONException ex) {
-                Ln.e("Can't parse json: " + payload);
+        if (!disconnected) {
+            Ln.d("Incoming message: " + payload);
+            if (sessionData.getSessionSettings().useDebugChannel()) {
+                FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
+                ChatEntry entry = new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE);
+                chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(entry);
             }
-        } else {
-            Ln.e("Can't find handler for token '" + token + "' -> Ignoring Message");
-        }
 
+            ServerToken token = null;
+            try {
+                token = ServerToken.valueOf(payload.substring(0, 3));
+            } catch (IllegalArgumentException e) {
+                Ln.w("Can't find token '" + payload.substring(0, 3) + "' in ServerToken-Enum! -> Ignoring Message");
+                return;
+            }
+
+            if (handlerMap.containsKey(token)) {
+                try {
+                    // If the message has message, give them to handler without token.
+                    // FeedbackListner will only be called once and removed.
+                    if (payload.length() > 3) {
+                        handlerMap.get(token).incomingMessage(token, payload.substring(4), feedbackListnerMap.remove(token));
+                    } else {
+                        handlerMap.get(token).incomingMessage(token, "", feedbackListnerMap.remove(token));
+                    }
+                } catch (JSONException ex) {
+                    Ln.e("Can't parse json: " + payload);
+                }
+            } else {
+                Ln.e("Can't find handler for token '" + token + "' -> Ignoring Message");
+            }
+        }
     }
 
     @Override
@@ -182,6 +189,10 @@ public class FlistWebSocketHandler extends WebSocketHandler {
             listnerList.add(feedbackListner);
             feedbackListnerMap.put(serverToken, listnerList);
         }
+    }
+
+    public void disconnected() {
+        disconnected = true;
     }
 
 }

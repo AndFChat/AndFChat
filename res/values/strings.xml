@@ -75,6 +75,12 @@
     
     <string name="title_initial_channel">Channel joined at connection: %s</string>
     <string name="description_initial_channel">Choose a official channel you join on connecting.</string>
+    <string name="title_log_history">Persistent log chat history.</string>
+    <string name="description_log_history">Persistent save chat history on disk (cant be seen easly). Becarefully that can fill up your Space.</string>
+    <string name="title_log_channel">Log public channels too</string>
+    <string name="description_log_channel">Log public channels too or only private conversations</string>
+    <string name="title_delete_history">Click here to delete your history</string>
+    <string name="description_delete_history">Removes all logs from disk</string>
     
     <string name="title_show_channel_info">Show channel info</string>
     <string name="description_show_channel_info">Show channel join/leave notifications</string>
@@ -87,5 +93,7 @@
     
     <string name="title_use_debug_channel">Show debugging stuff</string>
     <string name="description_use_debug_channel">Shows the input/output tags in the console</string>
+    
+    
     
 </resources>

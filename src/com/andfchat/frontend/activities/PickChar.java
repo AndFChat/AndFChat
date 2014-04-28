@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.history.HistoryManager;
 import com.google.inject.Inject;
 
 public class PickChar extends RoboActivity {
@@ -39,6 +40,8 @@ public class PickChar extends RoboActivity {
     protected FlistWebSocketConnection connection;
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected HistoryManager historyManager;
 
     @InjectView(R.id.charField)
     private Spinner charSelector;
@@ -74,6 +77,8 @@ public class PickChar extends RoboActivity {
         // Websocket is connected?
         if (connection.isConnected()) {
             Ln.i("Connected to WebSocket!");
+            Ln.d("loading logs");
+            historyManager.loadHistory();
             // Identify the character
             connection.identify();
             openChat();

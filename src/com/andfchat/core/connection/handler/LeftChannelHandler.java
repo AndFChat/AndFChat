@@ -29,6 +29,7 @@ import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
+import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FlistChar;
 
 /**
@@ -40,18 +41,25 @@ public class LeftChannelHandler extends TokenHandler {
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         JSONObject json = new JSONObject(msg);
-        String channel = json.getString("channel");
+        String channelId = json.getString("channel");
         String character = json.getString("character");
+
+        Chatroom chatroom = chatroomManager.getChatroom(channelId);
+
+        if (chatroom == null) {
+            return;
+        }
+
         if (character.equals(sessionData.getCharacterName())) {
-            chatroomManager.removeChatroom(channel);
+            chatroomManager.removeChatroom(chatroom.getChannel());
         } else {
             FlistChar flistChar = characterManager.findCharacter(character);
             if (sessionData.getSessionSettings().showChannelInfos()) {
                 ChatEntry chatEntry = new ChatEntry(R.string.message_channel_left, flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
-                chatroomManager.getChatroom(channel).addMessage(chatEntry);
+                chatroom.addMessage(chatEntry);
             }
 
-            chatroomManager.getChatroom(channel).removeCharacter(flistChar);
+            chatroom.removeCharacter(flistChar);
         }
     }
 

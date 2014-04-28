@@ -18,35 +18,33 @@
 
 package com.andfchat.core.data;
 
+import java.io.Serializable;
+
+import com.andfchat.core.data.Chatroom.ChatroomType;
+
 /**
  * Chatroom/Privatemessage identification object. Holds the simplest data about a channel.
  * @author AndFChat
  */
-public class Channel {
+public class Channel implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String channelName;
     private final String channelId;
 
-    private int user;
+    private final ChatroomType type;
 
-    public Channel(String channelId, String channelName) {
+    public Channel(String channelId, String channelName, ChatroomType type) {
         this.channelName = channelName;
         this.channelId = channelId;
-        user = 0;
+        this.type = type;
     }
 
-    public Channel(String channelId, String channelName, int user) {
-        this.channelName = channelName;
+    public Channel(String channelId, ChatroomType type) {
+        this.channelName = channelId;
         this.channelId = channelId;
-        this.user = user;
-    }
-
-    public int getUserInChannel() {
-        return user;
-    }
-
-    public void setUserInChannel(int user) {
-        this.user = user;
+        this.type = type;
     }
 
     public String getChannelName() {
@@ -57,9 +55,13 @@ public class Channel {
         return channelId;
     }
 
+    public ChatroomType getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
-        return "[" + channelName + " (" + user + "), ID:" + channelId + "]";
+        return "[" + channelName +  " / ID:" + channelId + "]";
     }
 
     @Override
@@ -68,6 +70,7 @@ public class Channel {
         int result = 1;
         result = prime * result
                 + ((channelId == null) ? 0 : channelId.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
     }
 
@@ -84,6 +87,8 @@ public class Channel {
             if (other.channelId != null)
                 return false;
         } else if (!channelId.equals(other.channelId))
+            return false;
+        if (type != other.type)
             return false;
         return true;
     }

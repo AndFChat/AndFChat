@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import roboguice.activity.RoboPreferenceActivity;
+import roboguice.util.Ln;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -31,6 +32,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import com.andfchat.R;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 
@@ -42,7 +44,8 @@ public class Settings extends RoboPreferenceActivity {
     protected ChatroomManager chatroomManager;
     @Inject
     protected SessionData sessionData;
-
+    @Inject
+    protected HistoryManager historyManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,18 @@ public class Settings extends RoboPreferenceActivity {
         String title = getString(R.string.title_initial_channel);
         title = String.format(title, sessionData.getSessionSettings().getInitialChannel());
         initialChannelList.setTitle(title);
+
+        Preference button = findPreference("button");
+        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                        @Override
+                        public boolean onPreferenceClick(Preference arg0) {
+
+                            Ln.d("Clear history!");
+                            historyManager.clearHistory(true);
+
+                            return true;
+                        }
+                    });
     }
 
     @Override

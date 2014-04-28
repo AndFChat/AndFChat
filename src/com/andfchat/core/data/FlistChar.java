@@ -18,11 +18,12 @@
 
 package com.andfchat.core.data;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FlistChar {
+public class FlistChar implements Serializable {
 
     private final String name;
     private Gender gender;

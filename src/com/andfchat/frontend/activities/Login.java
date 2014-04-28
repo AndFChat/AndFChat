@@ -43,6 +43,10 @@ import android.widget.TextView;
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.FlistHttpClient;
+import com.andfchat.core.data.Channel;
+import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
@@ -81,6 +85,9 @@ public class Login extends RoboActivity {
     private Spinner serverSelection;
 
     private SharedPreferences preferences;
+
+    @Inject
+    private ChatroomManager chatroomManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +135,7 @@ public class Login extends RoboActivity {
             public void onResponse(String response) {
                 if (parseJson(response, intent) == true) {
                     Ln.i("Succesfully logged in!");
+                    chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, ChatroomType.CONSOLE), 50000));
                     startActivity(intent);
                     finish();
                 } else {

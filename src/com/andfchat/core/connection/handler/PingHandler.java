@@ -79,11 +79,11 @@ public class PingHandler extends TokenHandler {
                                 losts = 0;
                             }
 
-                            if (losts == 1) {
+                            if (losts == 1 || losts == 2) {
                                 connection.sendMessage(ClientToken.PIN);
                             }
-                            else if (losts == 2) {
-                                Ln.d("2 Lost PIN - Disconnecting");
+                            else if (losts == 3) {
+                                Ln.d("3 Lost PIN - Disconnecting");
                                 connection.closeConnection(context);
                                 running = false;
                                 losts = 0;

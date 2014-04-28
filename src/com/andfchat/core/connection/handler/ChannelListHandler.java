@@ -29,6 +29,7 @@ import roboguice.util.Ln;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Channel;
+import com.andfchat.core.data.Chatroom.ChatroomType;
 
 /**
  * Reads and saves official channels delivered by CHA-Token.
@@ -54,9 +55,8 @@ public class ChannelListHandler extends TokenHandler {
             for (int i = 0; i < jsonArray.length(); i++) {
                 String channelId = jsonArray.getJSONObject(i).getString("name");
                 String channelName = jsonArray.getJSONObject(i).getString("title");
-                int users = jsonArray.getJSONObject(i).getInt("characters");
 
-                Channel channel = new Channel(channelId, channelName, users);
+                Channel channel = new Channel(channelId, channelName, ChatroomType.PRIVATE_CHANNEL);
                 Ln.i("Found channel: " + channel.toString());
                 chatroomManager.addPrivateChannel(channel);
             }

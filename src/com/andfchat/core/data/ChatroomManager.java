@@ -25,8 +25,7 @@ import java.util.Set;
 
 import roboguice.util.Ln;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.core.data.history.HistoryManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -34,8 +33,8 @@ import com.google.inject.Singleton;
 public class ChatroomManager {
 
     private final ArrayList<Chatroom> chats = new ArrayList<Chatroom>();
-    private final ArrayList<Chatroom> removedChats = new ArrayList<Chatroom>();
 
+    // Fi something is changed this indicates mention a redraw for the surface.
     private boolean isChanged = false;
     private Chatroom activeChat;
 
@@ -44,14 +43,9 @@ public class ChatroomManager {
     private final Set<Channel> privateChannelSet = new HashSet<Channel>();
 
     @Inject
-    public ChatroomManager() {
-        initChats();
-    }
+    private HistoryManager historyManager;
 
-    private void initChats() {
-        addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, AndFChatApplication.DEBUG_CHANNEL_NAME), ChatroomType.CONSOLE, 50000));
-    }
-
+    // Adds a chatmessage to evry channel
     public void addBroadcast(ChatEntry entry) {
         synchronized(this) {
             for (Chatroom chat : chats) {
@@ -61,6 +55,7 @@ public class ChatroomManager {
         isChanged = true;
     }
 
+    // Returns a existing chat or null.
     public Chatroom getChatroom(String channelId) {
         for (Chatroom chat : chats) {
             if (chat.getId().equals(channelId)) {
@@ -72,30 +67,29 @@ public class ChatroomManager {
 
     public Chatroom addChatroom(Chatroom chatroom) {
         synchronized(this) {
-            for (int i = 0; i < removedChats.size(); i++) {
-                if (removedChats.get(i).equals(chatroom)) {
-                    // Add the chat history to the rejoined chatroom
-                    chatroom.setChatHistory(removedChats.remove(i).getChatEntries());
-                }
-            }
-            chats.add(chatroom);
+            // HistoryManager loads data via the "channel" key.
+            chatroom.setChatHistory(historyManager.loadHistory(chatroom.getChannel()));
         }
+        chats.add(chatroom);
         isChanged = true;
         return chatroom;
     }
 
-    public void removeChatroom(String channelId) {
+    public void removeChatroom(Channel channel) {
         synchronized(this) {
-            for (int i = 0; i < chats.size(); i++) {
-                if (chats.get(i).getId().equals(channelId)) {
-                    removedChats.add(chats.get(i));
+            for (int i = chats.size() - 1; i >= 0; i--) {
+                Chatroom chatRoom = chats.get(i);
+                if  (chatRoom.isChannel(channel)) {
                     chats.remove(i);
+                    isChanged = true;
+                    break;
                 }
             }
-
-            if (activeChat != null && activeChat.getId().equals(channelId)) {
+            // if active chat is remove we have to them to null again.
+            if (activeChat != null && activeChat.isChannel(channel)) {
                 activeChat = null;
             }
+
         }
         isChanged = true;
     }
@@ -148,6 +142,7 @@ public class ChatroomManager {
         }
     }
 
+    // Gives the saved list of official channels.
     public Set<String> getOfficialChannels() {
         return officialChannelSet;
     }
@@ -191,12 +186,9 @@ public class ChatroomManager {
 
     public void clear() {
         this.activeChat = null;
-        this.removedChats.clear();
         this.chats.clear();
         this.officialChannelSet.clear();
         this.privateChannelSet.clear();
-
-        initChats();
     }
 
     public List<Chatroom> getChatRooms() {

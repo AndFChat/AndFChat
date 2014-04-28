@@ -53,8 +53,8 @@ public class ChatEntry implements Serializable {
     private Integer stringId = null;
     private Object[] values = null;
 
-    private Spannable spannedText;
-    private boolean isCreated = false;
+    private transient Spannable spannedText;
+    private transient boolean isCreated = false;
 
     public ChatEntry(int stringId, FlistChar owner, Date date, ChatEntryType messageType) {
         this(null, owner, date, messageType);

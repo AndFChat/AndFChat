@@ -48,6 +48,7 @@ import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.core.util.SmileyReader;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.fragments.ChannelListFragment;
@@ -78,6 +79,9 @@ public class ChatScreen extends RoboFragmentActivity {
     private EventManager eventManager;
     @Inject
     protected NotificationManager notificationManager;
+    @Inject
+    protected HistoryManager historyManager;
+
 
     @InjectView(R.id.toggleSidebarLeft)
     private Button toggleSidebarLeft;
@@ -273,6 +277,7 @@ public class ChatScreen extends RoboFragmentActivity {
     protected void onStop() {
         super.onStop();
         sessionData.setIsVisible(false);
+        historyManager.saveHistory();
     }
 
     @Override

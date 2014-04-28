@@ -25,7 +25,27 @@
             android:summary="@string/description_initial_channel"
             android:title="@string/title_initial_channel"
             android:defaultValue="Frontpage"
-            />
+        />
+        
+        <CheckBoxPreference 
+            android:key="log_history"
+            android:summary="@string/description_log_history"
+            android:title="@string/title_log_history" 
+            android:defaultValue="true"
+        />
+        
+        <CheckBoxPreference 
+            android:key="log_channel"
+            android:summary="@string/description_log_channel"
+            android:title="@string/title_log_channel" 
+            android:defaultValue="true"
+        />
+        
+        <Preference 
+            android:title="@string/title_delete_history"
+            android:key="button"
+            android:summary="@string/description_delete_history"
+        />
         
     </PreferenceCategory>
         

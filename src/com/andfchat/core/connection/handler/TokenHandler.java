@@ -29,6 +29,7 @@ import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FlistChar;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 
@@ -40,6 +41,8 @@ public abstract class TokenHandler {
     protected CharacterManager characterManager;
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected HistoryManager historyManager;
 
     public abstract void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException;
 
