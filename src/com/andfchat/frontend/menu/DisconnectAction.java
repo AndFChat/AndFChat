@@ -20,29 +20,27 @@ package com.andfchat.frontend.menu;
 
 import roboguice.RoboGuice;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
+import com.andfchat.frontend.util.FlistAlertDialog;
 
 public class DisconnectAction {
 
     public static void disconnect(final Activity activity) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("REALLY WANT TO DISCONNECT?")
-               .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                   @Override
-                public void onClick(DialogInterface dialog, int id) {
-                       RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection(activity);
-                       activity.finish();
-                   }
-               })
-               .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                   @Override
-                public void onClick(DialogInterface dialog, int id) {}
-               });
-        // Create the AlertDialog object and return it
-        builder.create().show();
+        FlistAlertDialog dialog = new FlistAlertDialog(activity, activity.getResources().getString(R.string.question_disconnect)) {
+
+            @Override
+            public void onYes() {
+                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection(activity);
+                activity.finish();
+            }
+
+            @Override
+            public void onNo() {}
+        };
+
+        dialog.show();
     }
 }
