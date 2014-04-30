@@ -43,7 +43,8 @@ public class ChatEntry implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final static int DATE_CHAR_LENGTH = 10;
-    private static DateFormat DATE_FORMAT = new SimpleDateFormat("[KK:mm aa]", Locale.US);
+    private static DateFormat DATE_FORMAT = new SimpleDateFormat("[KK:mm aa]", Locale.ENGLISH);
+    private static DateFormat DATE_FORMAT_OLD = new SimpleDateFormat("[dd/MM/yy]", Locale.ENGLISH);
 
     private final Date date;
     private final FlistChar owner;
@@ -95,6 +96,10 @@ public class ChatEntry implements Serializable {
     public Spannable getChatMessage(Context context) {
         if (!isCreated) {
             String dateText = DATE_FORMAT.format(date);
+            // older than 24h
+            if (date.before(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000))) {
+                dateText = DATE_FORMAT_OLD.format(date);
+            }
             Spannable dateSpan = new SpannableString(dateText);
             dateSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.text_timestomp_color)), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             dateSpan.setSpan(new RelativeSizeSpan(0.70f), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -106,6 +111,13 @@ public class ChatEntry implements Serializable {
             finishedText.append(new NameSpannable(owner, messageType.getColorId(), context.getResources()));
             // Delimiter
             finishedText.append(messageType.getDelimeter());
+
+            if (messageType == ChatEntryType.EMOTE) {
+                if (text.charAt(0) != '\'') {
+                    finishedText.append(" ");
+                }
+            }
+
             // Message
             finishedText.append(withSmileys);
             // Add overall styles
