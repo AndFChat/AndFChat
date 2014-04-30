@@ -28,8 +28,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.andfchat.core.data.ChatEntry;
 import com.andfchat.R;
+import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.ChatEntryType;
 
 public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
@@ -46,6 +47,10 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(this.getItem(position).getChatMessage(getContext()));
+
+        if (this.getItem(position).getMessageType() == ChatEntryType.WARNING) {
+            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_warning));
+        }
 
         // Follow links to browser
         textView.setMovementMethod(LinkMovementMethod.getInstance());

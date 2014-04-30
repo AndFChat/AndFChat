@@ -74,6 +74,11 @@ public class ChatEntry implements Serializable {
         this.date = date;
         this.owner = owner;
 
+        if (text != null && text.startsWith("/warn")) {
+            messageType = ChatEntryType.WARNING;
+            text = text.substring(5);
+        }
+
         if (messageType == ChatEntryType.MESSAGE) {
             if (text.startsWith("/me")) {
                 messageType = ChatEntryType.EMOTE;
@@ -91,6 +96,10 @@ public class ChatEntry implements Serializable {
 
     public FlistChar getOwner() {
         return owner;
+    }
+
+    public ChatEntryType getMessageType() {
+        return messageType;
     }
 
     public Spannable getChatMessage(Context context) {

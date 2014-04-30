@@ -35,12 +35,13 @@
     
     <color name="border_small">#1E90FF</color>        
     
-    <color name="background_color">#000000</color>
+    <color name="background_color">#000000</color>    
     <color name="background_chat_empty">#000000</color>
     <color name="background_chat_line">#043E80</color>
     <color name="background_chat_line_owned">#0B255F</color>
     <color name="background_chat_line_attention">#FF0000</color>
     <color name="background_chat_line_system">#0B255F</color>
+    <color name="background_chat_warning">#FF0000</color>
     
     <color name="background_chat_tab_active">#1E90FF</color>
     <color name="background_chat_tab_attention">#FF4444</color>
