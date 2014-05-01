@@ -18,6 +18,11 @@
 
 package com.andfchat.frontend.activities;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.event.EventManager;
 import roboguice.event.Observes;
@@ -38,9 +43,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andfchat.R;
@@ -50,6 +57,7 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.core.util.SmileyReader;
+import com.andfchat.frontend.adapter.ChatActionListAdapter;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.fragments.ChannelListFragment;
 import com.andfchat.frontend.fragments.ChatFragment;
@@ -63,6 +71,28 @@ import com.andfchat.frontend.popup.FListPopupWindow;
 import com.google.inject.Inject;
 
 public class ChatScreen extends RoboFragmentActivity {
+
+    public enum ChatAction {
+        DEFAULT(R.string.actions, 0),
+        DESCRIPTION(R.string.channel_description, 1),
+        LEAVE(R.string.leave_channel, 10);
+
+        int id;
+        Integer weight;
+
+        private ChatAction(int id, Integer weight) {
+            this.id = id;
+            this.weight = weight;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public Integer getWeight() {
+            return weight;
+        }
+    }
 
     // Sleep time between two loops
     private static final long TICK_TIME = 250;
@@ -91,6 +121,8 @@ public class ChatScreen extends RoboFragmentActivity {
     private EditText inputText;
     @InjectView(R.id.sendButton)
     private Button sendButton;
+    @InjectView(R.id.actionSpinner)
+    private Spinner actionSpinner;
 
     // Fragments
     private ChatFragment chat;
@@ -102,6 +134,8 @@ public class ChatScreen extends RoboFragmentActivity {
     // Display size
     private int width;
     private int height;
+
+    private ChatActionListAdapter chatActionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,9 +152,48 @@ public class ChatScreen extends RoboFragmentActivity {
         display.getSize(size);
         width = size.x;
         height = size.y;
+
+        List<ChatAction> actionList = new ArrayList<ChatAction>();
+
+        actionList.add(ChatAction.DEFAULT);
+        actionList.add(ChatAction.DESCRIPTION);
+        actionList.add(ChatAction.LEAVE);
+
+        Collections.sort(actionList, new ChatActionsSorter());
+
+        chatActionAdapter = new ChatActionListAdapter(this, actionList);
+
+        actionSpinner.setAdapter(chatActionAdapter);
+
+        actionSpinner.setOnItemSelectedListener(new  AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i > 0) {
+                    switch (chatActionAdapter.getItem(i)) {
+                        case DESCRIPTION:
+                            showDescription();
+                            break;
+                        case LEAVE:
+                            leaveActiveChat();
+                            break;
+                        case DEFAULT:
+                            break;
+                    }
+
+                    actionSpinner.setSelection(0);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                actionSpinner.setSelection(0);
+            }
+
+      });
     }
 
-    public void leaveActiveChat(View v) {
+    public void leaveActiveChat() {
         Chatroom activeChat = chatroomManager.getActiveChat();
         if (activeChat != null) {
             connection.leaveChannel(activeChat);
@@ -143,7 +216,7 @@ public class ChatScreen extends RoboFragmentActivity {
         }
     }
 
-    public void showDescription(View v) {
+    public void showDescription() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layout = inflater.inflate(R.layout.popup_description, null);
@@ -166,35 +239,32 @@ public class ChatScreen extends RoboFragmentActivity {
     protected void setActiveChat(@Observes Chatroom chatroom) {
         Ln.v("Active chat set event is called!");
 
+        List<ChatAction> actionList = new ArrayList<ChatAction>();
+
+        actionList.add(ChatAction.DEFAULT);
+
         if (chatroom.isSystemChat()) {
             toggleSidebarRight.setVisibility(View.GONE);
-            setVisibilityForLeaveChannelButton(View.GONE);
-            setVisibilityForChannelDescriptionButton(View.GONE);
         } else {
             toggleSidebarRight.setVisibility(View.VISIBLE);
-            setVisibilityForLeaveChannelButton(View.VISIBLE);
+            actionList.add(ChatAction.LEAVE);
 
             if (chatroom.isPrivateChat()) {
                 toggleSidebarRight.setVisibility(View.GONE);
-                setVisibilityForChannelDescriptionButton(View.GONE);
             } else {
-                setVisibilityForChannelDescriptionButton(View.VISIBLE);
+                actionList.add(ChatAction.DESCRIPTION);
             }
         }
+
+        chatActionAdapter.clear();
+        Collections.sort(actionList, new ChatActionsSorter());
+        chatActionAdapter.addAll(actionList);
 
         if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
             setChannelTitle(chatroom.getName() + " - " + chatroom.getRecipient().getStatusMsg());
         } else {
             setChannelTitle(chatroom.getName());
         }
-    }
-
-    private void setVisibilityForLeaveChannelButton(int visibility) {
-        ((Button)this.findViewById(R.id.leaveButton)).setVisibility(visibility);
-    }
-
-    private void setVisibilityForChannelDescriptionButton(int visibility) {
-        ((Button)this.findViewById(R.id.showDescription)).setVisibility(visibility);
     }
 
     private void setChannelTitle(String name) {
@@ -340,5 +410,14 @@ public class ChatScreen extends RoboFragmentActivity {
         }
 
         return ret;
+    }
+
+    public class ChatActionsSorter implements Comparator<ChatAction> {
+
+        @Override
+        public int compare(ChatAction lhs, ChatAction rhs) {
+            return lhs.getWeight().compareTo(rhs.getWeight());
+        }
+
     }
 }

@@ -46,6 +46,7 @@
     <string name="private_channels">Private Channels</string>
     <string name="leave_channel">Leave Channel</string>
     <string name="channel_description">Show Description</string>
+    <string name="actions">Actions</string>
     <string name="select_character">Select Character</string>
     
     <string name="message_channel_joined">joined the channel.</string>
