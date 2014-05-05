@@ -34,6 +34,7 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.util.FlistAlertDialog;
 import com.google.inject.Inject;
 
 public class Settings extends RoboPreferenceActivity {
@@ -81,8 +82,21 @@ public class Settings extends RoboPreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference arg0) {
 
-                            Ln.d("Clear history!");
-                            historyManager.clearHistory(true);
+                            FlistAlertDialog dialog = new FlistAlertDialog(Settings.this, Settings.this.getResources().getString(R.string.question_delete_log)) {
+
+                                @Override
+                                public void onYes() {
+                                    Ln.d("Clear history!");
+                                    historyManager.clearHistory(true);
+                                }
+
+                                @Override
+                                public void onNo() {
+                                    // Do nothing
+                                }
+                            };
+
+                            dialog.show();
 
                             return true;
                         }

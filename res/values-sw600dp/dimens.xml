@@ -26,4 +26,6 @@
     <dimen name="text_size_button_greater">18sp</dimen>    
     <dimen name="text_size_popup_header">20sp</dimen>
     
+        <dimen name="chat_actions_spinner_size">250dp</dimen>
+    
 </resources>

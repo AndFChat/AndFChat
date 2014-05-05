@@ -58,6 +58,7 @@
     <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session]</string>
     
     <string name="question_disconnect">Do you really want to disconnect?</string>
+    <string name="question_delete_log">Do you really want to delete the history?</string>
     
     
     
