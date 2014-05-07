@@ -32,7 +32,7 @@ import com.andfchat.R;
                 resToastText = R.string.crash_toast_text)
 public class AndFChatApplication extends Application {
 
-    public final static boolean DEBUGGING_MODE = true;
+    public final static boolean DEBUGGING_MODE = false;
 
     public final static String DEBUG_CHANNEL_NAME = "Console";
 
