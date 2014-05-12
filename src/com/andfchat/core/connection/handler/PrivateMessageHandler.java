@@ -99,9 +99,9 @@ public class PrivateMessageHandler extends TokenHandler {
     }
 
     public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FlistChar character, int maxTextLength) {
-        String username = character.getName();
+        String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + character.getName();
 
-        Chatroom chatroom = new Chatroom(new Channel(username, ChatroomType.PRIVATE_CHAT), character, maxTextLength);
+        Chatroom chatroom = new Chatroom(new Channel(channelname, ChatroomType.PRIVATE_CHAT), character, maxTextLength);
         chatroomManager.addChatroom(chatroom);
 
         return chatroom;

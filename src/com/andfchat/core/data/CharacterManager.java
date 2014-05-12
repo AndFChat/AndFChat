@@ -43,7 +43,7 @@ public class CharacterManager {
 
     public FlistChar findCharacter(String name, boolean create) {
         synchronized(this) {
-            if (knownCharacters.containsKey(name) == false && create) {
+            if (knownCharacters.containsKey(name) == false) {
                 if (create) {
                     knownCharacters.put(name, new FlistChar(name));
                 }
