@@ -24,6 +24,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import roboguice.util.Ln;
+
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
@@ -47,9 +49,14 @@ public class MessageHandler extends TokenHandler {
             String channel = jsonObject.getString("channel");
 
             Chatroom log = chatroomManager.getChatroom(channel);
-            log.addMessage(message, characterManager.findCharacter(character), new Date());
 
-            log.setHasNewMessage(true);
+            if (log != null) {
+                log.addMessage(message, characterManager.findCharacter(character), new Date());
+                log.setHasNewMessage(true);
+            }
+            else {
+                Ln.e("Incoming message is for a unknown channel: " + channel);
+            }
         }
         else if(token == ServerToken.BRO) {
             String message = jsonObject.getString("message");
