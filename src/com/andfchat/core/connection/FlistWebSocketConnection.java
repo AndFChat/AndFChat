@@ -201,7 +201,12 @@ public class FlistWebSocketConnection {
 
             String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + recipient;
             Chatroom log = chatroomManager.getChatroom(channelname);
-            log.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
+            if (log != null) {
+                log.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
+            }
+            else {
+                Ln.e("Can't find log for private message recipient " + recipient);
+            }
 
         } catch (JSONException e) {
             Ln.w("exception occured while sending private message: " + e.getMessage());
