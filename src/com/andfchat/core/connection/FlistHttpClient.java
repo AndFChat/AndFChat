@@ -19,6 +19,8 @@
 package com.andfchat.core.connection;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -48,7 +50,11 @@ public class FlistHttpClient {
 
     private static void sendMessage(FeedbackListner feedbackListner, String url, String... arguments) {
         for (int i = 1; i < arguments.length + 1; i++) {
-            url = url.replace("{" + i + "}", arguments[i - 1]);
+            try {
+                url = url.replace("{" + i + "}", URLEncoder.encode(arguments[i - 1], "utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                Ln.e(e);
+            }
         }
 
         Ln.d("Open url");
