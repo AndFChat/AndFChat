@@ -18,9 +18,14 @@
 
 package com.andfchat.frontend.activities;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import roboguice.activity.RoboFragmentActivity;
@@ -32,7 +37,10 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.method.LinkMovementMethod;
 import android.view.Display;
 import android.view.Gravity;
@@ -52,6 +60,9 @@ import android.widget.TextView;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
+import com.andfchat.core.data.CharacterManager;
+import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
@@ -68,6 +79,7 @@ import com.andfchat.frontend.menu.DisconnectAction;
 import com.andfchat.frontend.menu.FriendListAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
 import com.andfchat.frontend.popup.FListPopupWindow;
+import com.andfchat.frontend.util.Exporter;
 import com.google.inject.Inject;
 
 public class ChatScreen extends RoboFragmentActivity {
@@ -75,6 +87,7 @@ public class ChatScreen extends RoboFragmentActivity {
     public enum ChatAction {
         DEFAULT(R.string.actions, 0),
         DESCRIPTION(R.string.channel_description, 1),
+        EXPORT_TEXT(R.string.export_text, 7),
         LEAVE(R.string.leave_channel, 10);
 
         int id;
@@ -97,6 +110,8 @@ public class ChatScreen extends RoboFragmentActivity {
     // Sleep time between two loops
     private static final long TICK_TIME = 250;
 
+    @Inject
+    protected CharacterManager charManager;
     @Inject
     protected ChatroomManager chatroomManager;
     @Inject
@@ -157,6 +172,7 @@ public class ChatScreen extends RoboFragmentActivity {
 
         actionList.add(ChatAction.DEFAULT);
         actionList.add(ChatAction.DESCRIPTION);
+        actionList.add(ChatAction.EXPORT_TEXT);
         actionList.add(ChatAction.LEAVE);
 
         Collections.sort(actionList, new ChatActionsSorter());
@@ -176,6 +192,9 @@ public class ChatScreen extends RoboFragmentActivity {
                             break;
                         case LEAVE:
                             leaveActiveChat();
+                            break;
+                        case EXPORT_TEXT:
+                            exportChat();
                             break;
                         case DEFAULT:
                             break;
@@ -248,6 +267,7 @@ public class ChatScreen extends RoboFragmentActivity {
         } else {
             toggleSidebarRight.setVisibility(View.VISIBLE);
             actionList.add(ChatAction.LEAVE);
+            actionList.add(ChatAction.EXPORT_TEXT);
 
             if (chatroom.isPrivateChat()) {
                 toggleSidebarRight.setVisibility(View.GONE);
@@ -269,6 +289,46 @@ public class ChatScreen extends RoboFragmentActivity {
 
     private void setChannelTitle(String name) {
         this.setTitle(name);
+    }
+
+    public void exportChat() {
+        String filename =  "FListLog-" + chatroomManager.getActiveChat().getName() + "-" + System.currentTimeMillis() + ".txt";
+        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File file = new File(path, filename);
+
+        try {
+            path.mkdirs();
+
+            OutputStream os = new FileOutputStream(file);
+            os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
+            os.close();
+
+            chatroomManager.getActiveChat().addMessage(new ChatEntry(
+                    "Sucessfully exported to the download dictory, filename: " + filename,
+                    charManager.findCharacter(CharacterManager.USER_SYSTEM),
+                    new Date(),
+                    ChatEntryType.MESSAGE));
+
+            // Tell the media scanner about the new file so that it is
+            // immediately available to the user.
+            MediaScannerConnection.scanFile(this,
+                    new String[] { file.toString() }, null,
+                    new MediaScannerConnection.OnScanCompletedListener() {
+                @Override
+                public void onScanCompleted(String path, Uri uri) {
+
+                }
+            });
+        } catch (IOException e) {
+            Ln.w("ExternalStorage", "Error writing " + file, e);
+            // TODO: String!
+            chatroomManager.getActiveChat().addMessage(new ChatEntry(
+                    "Can't write output, download directory doesn't exist!",
+                    charManager.findCharacter(CharacterManager.USER_SYSTEM),
+                    new Date(),
+                    ChatEntryType.ERROR));
+        }
+
     }
 
     @Override
