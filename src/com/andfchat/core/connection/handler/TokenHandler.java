@@ -27,10 +27,11 @@ import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
 
 public abstract class TokenHandler {
@@ -43,28 +44,30 @@ public abstract class TokenHandler {
     protected SessionData sessionData;
     @Inject
     protected HistoryManager historyManager;
+    @Inject
+    protected AndFChatEventManager eventManager;
 
     public abstract void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException;
 
     public abstract ServerToken[] getAcceptableTokens();
 
-    protected void broadcastSystemInfo(ChatEntry chatEntry, FlistChar flistChar) {
-        chatroomManager.getActiveChat().addMessage(chatEntry);
+    protected void broadcastSystemInfo(ChatEntry chatEntry, FCharacter flistChar) {
+        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
         // Add broadcasted message also to the console.
         if (!chatroomManager.getActiveChat().isSystemChat()) {
-            chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(chatEntry);
+            chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), chatEntry);
         }
 
         if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
-            chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
+            chatroomManager.addMessage(chatroomManager.getPrivateChatFor(flistChar), chatEntry);
         }
     }
 
     protected void addChatEntryToActiveChat(ChatEntry chatEntry) {
-        chatroomManager.getActiveChat().addMessage(chatEntry);
+        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
     }
 
-    protected boolean isInScope(FlistChar flistChar) {
+    protected boolean isInScope(FCharacter flistChar) {
         if (flistChar.isImportant()) {
             return true;
         }

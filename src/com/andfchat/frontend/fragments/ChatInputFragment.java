@@ -18,10 +18,8 @@
 
 package com.andfchat.frontend.fragments;
 
-import roboguice.event.Observes;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
-import roboguice.util.Ln;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
@@ -37,9 +35,10 @@ import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.util.Console;
+import com.andfchat.frontend.events.ChatroomEventListner;
 import com.google.inject.Inject;
 
-public class ChatInputFragment extends RoboFragment {
+public class ChatInputFragment extends RoboFragment implements ChatroomEventListner {
 
     @Inject
     protected ChatroomManager chatroomManager;
@@ -90,8 +89,6 @@ public class ChatInputFragment extends RoboFragment {
             return;
         }
         else if ((System.currentTimeMillis() - lastMessage > 2000)) {
-
-
             if (activeChat.isPrivateChat()) {
                 connection.sendPrivatMessage(activeChat.getRecipient().getName(), inputText.getText().toString());
             } else {
@@ -108,14 +105,15 @@ public class ChatInputFragment extends RoboFragment {
         inputText.setText("");
     }
 
-    protected void setActiveChat(@Observes Chatroom chatroom) {
-        Ln.v("Active chat set event is called!");
-
-        // Set maximum text length
-        inputText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(chatroom.getMaxTextLength())});
-    }
-
     public void hideKeyboard() {
         inputManager.hideSoftInputFromWindow(inputText.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onEvent(Chatroom chatroom, ChatroomEventType type) {
+        if (type == ChatroomEventType.ACTIVE) {
+            // Set maximum text length
+            inputText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(chatroom.getMaxTextLength())});
+        }
     }
 }

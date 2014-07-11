@@ -18,10 +18,8 @@
 
 package com.andfchat.frontend.fragments;
 
-import roboguice.event.Observes;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
-import roboguice.util.Ln;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +30,10 @@ import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.adapter.ChatroomListAdapter;
+import com.andfchat.frontend.events.ChatroomEventListner;
 import com.google.inject.Inject;
 
-public class ChannelListFragment extends RoboFragment {
+public class ChannelListFragment extends RoboFragment implements ChatroomEventListner {
 
     @Inject
     private ChatroomManager chatroomManager;
@@ -60,27 +59,6 @@ public class ChannelListFragment extends RoboFragment {
         chatroomList.setAdapter(chatroomListAdapter);
     }
 
-    protected void setActiveChat(@Observes Chatroom chatroom) {
-        Ln.v("Active chat set event is called!");
-        chatroomListAdapter.notifyDataSetChanged();
-    }
-
-    public void refreshChannels() {
-        boolean isChanged = chatroomManager.isChanged();
-
-        // Refresh new message alert
-        for (Chatroom room : chatroomManager.getChatRooms()) {
-            if (room.hasChanged() && (chatroomManager.getActiveChat() == null || room.getId() != chatroomManager.getActiveChat().getId())) {
-                isChanged = true;
-            }
-        }
-
-        if (isChanged) {
-            Ln.v("Redraw channel list");
-            chatroomListAdapter.notifyDataSetChanged();
-        }
-    }
-
     public boolean toggleVisibility() {
         if (isVisible) {
             getView().setVisibility(View.GONE);
@@ -90,5 +68,16 @@ public class ChannelListFragment extends RoboFragment {
             isVisible = true;
         }
         return isVisible;
+    }
+
+    @Override
+    public void onEvent(Chatroom chatroom, ChatroomEventType type) {
+        getActivity().runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                chatroomListAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

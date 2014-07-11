@@ -47,7 +47,7 @@ public class ChatEntry implements Serializable {
     private static DateFormat DATE_FORMAT_OLD = new SimpleDateFormat("[dd/MM/yy]", Locale.ENGLISH);
 
     private final Date date;
-    private final FlistChar owner;
+    private final FCharacter owner;
     private final ChatEntryType messageType;
 
     private final String text;
@@ -57,21 +57,21 @@ public class ChatEntry implements Serializable {
     private transient Spannable spannedText;
     private transient boolean isCreated = false;
 
-    public ChatEntry(int stringId, FlistChar owner, Date date, ChatEntryType messageType) {
-        this(null, owner, date, messageType);
+    public ChatEntry(int stringId, FCharacter owner, ChatEntryType messageType) {
+        this(null, owner, messageType);
 
         this.stringId = stringId;
     }
 
-    public ChatEntry(int stringId, Object[] values, FlistChar owner, Date date, ChatEntryType messageType) {
-        this(null, owner, date, messageType);
+    public ChatEntry(int stringId, Object[] values, FCharacter owner,ChatEntryType messageType) {
+        this(null, owner, messageType);
 
         this.stringId = stringId;
         this.values = values;
     }
 
-    public ChatEntry(String text, FlistChar owner, Date date, ChatEntryType messageType) {
-        this.date = date;
+    public ChatEntry(String text, FCharacter owner, ChatEntryType messageType) {
+        this.date = new Date();
         this.owner = owner;
 
         if (text != null && text.startsWith("/warn")) {
@@ -94,7 +94,7 @@ public class ChatEntry implements Serializable {
         return date;
     }
 
-    public FlistChar getOwner() {
+    public FCharacter getOwner() {
         return owner;
     }
 
@@ -120,7 +120,7 @@ public class ChatEntry implements Serializable {
             finishedText.append(new NameSpannable(owner, messageType.getColorId(), context.getResources()));
             // Delimiter
             finishedText.append(messageType.getDelimeter());
-
+            // Emotes without a /me's should have a space.
             if (messageType == ChatEntryType.EMOTE) {
                 if (text.charAt(0) != '\'') {
                     finishedText.append(" ");

@@ -21,7 +21,6 @@ package com.andfchat.frontend.adapter;
 import java.util.List;
 
 import roboguice.RoboGuice;
-import roboguice.event.EventManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -40,10 +39,6 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
     @Inject
     private ChatroomManager chatroomManager;
-
-    @Inject
-    protected EventManager eventManager;
-
 
     public ChatroomListAdapter(Context context, List<Chatroom> entries) {
         super(context, R.layout.list_item_chat, entries);
@@ -68,7 +63,6 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             @Override
             public void onClick(View v) {
                 chatroomManager.setActiveChat(chatroom);
-                eventManager.fire(chatroom);
             }
         });
 
@@ -78,21 +72,13 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         if (chatroomManager.getActiveChat() != null && chatroomManager.getActiveChat().getId().equals(chatroom.getId())) {
             rowView.setBackgroundColor(Color.BLUE);
         }
-        else if (chatroom.hasNewMessage()) {
+        else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
             rowView.setBackgroundColor(Color.RED);
+        }
+        else {
+            rowView.setBackgroundColor(Color.BLACK);
         }
 
         return rowView;
     }
-
-    public void removeChatroom(Chatroom chatroom) {
-        this.remove(chatroom);
-        notifyDataSetChanged();
-    }
-
-    public void addChatroom(Chatroom chatroom) {
-        this.add(chatroom);
-        notifyDataSetChanged();
-    }
-
 }

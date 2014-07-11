@@ -18,8 +18,6 @@
 
 package com.andfchat.core.connection;
 
-import java.util.Date;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,10 +33,11 @@ import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.activities.Login;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -63,6 +62,8 @@ public class FlistWebSocketConnection {
     private CharacterManager characterManager;
     @Inject
     private FlistWebSocketHandler socketHandler;
+    @Inject
+    private AndFChatEventManager eventManager;
 
     private final WebSocketConnection connection = new WebSocketConnection();
 
@@ -93,16 +94,18 @@ public class FlistWebSocketConnection {
             connection.sendTextMessage(token.name());
 
             if (sessionData.getSessionSettings().useDebugChannel()) {
-                FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
-                chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name(), systemChar, new Date(), ChatEntryType.MESSAGE));
+                FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
+                ChatEntry entry = new ChatEntry(token.name(), systemChar, ChatEntryType.MESSAGE);
+                chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), entry);
             }
         } else {
             Ln.i("Sending message: " + token.name() + " " + data.toString());
             connection.sendTextMessage(token.name() + " " + data.toString());
 
             if (sessionData.getSessionSettings().useDebugChannel()) {
-                FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
-                chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(new ChatEntry(token.name() + " " + data.toString(), systemChar, new Date(), ChatEntryType.MESSAGE));
+                FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
+                ChatEntry entry = new ChatEntry(token.name() + " " + data.toString(), systemChar, ChatEntryType.MESSAGE);
+                chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), entry);
             }
         }
     }
@@ -182,7 +185,26 @@ public class FlistWebSocketConnection {
             data.put("message", msg);
             sendMessage(ClientToken.MSG, data);
 
-            chatroom.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
+            ChatEntry entry = new ChatEntry(msg, characterManager.findCharacter(sessionData.getCharacterName()), ChatEntryType.MESSAGE);
+            chatroomManager.addMessage(chatroom, entry);
+
+        } catch (JSONException e) {
+            Ln.w("exception occured while sending message: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Sends a message to an channel.
+     */
+    public void sendAdToChannel(Chatroom chatroom, String adMessage) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("message", adMessage);
+            sendMessage(ClientToken.LRP, data);
+
+            ChatEntry entry = new ChatEntry(adMessage, characterManager.findCharacter(sessionData.getCharacterName()), ChatEntryType.AD);
+            chatroomManager.addMessage(chatroom, entry);
 
         } catch (JSONException e) {
             Ln.w("exception occured while sending message: " + e.getMessage());
@@ -200,9 +222,10 @@ public class FlistWebSocketConnection {
             sendMessage(ClientToken.PRI, data);
 
             String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + recipient;
-            Chatroom log = chatroomManager.getChatroom(channelname);
-            if (log != null) {
-                log.addMessage(msg, characterManager.findCharacter(sessionData.getCharacterName()), new Date());
+            Chatroom chatroom = chatroomManager.getChatroom(channelname);
+            if (chatroom != null) {
+                ChatEntry entry = new ChatEntry(msg, characterManager.findCharacter(sessionData.getCharacterName()), ChatEntryType.MESSAGE);
+                chatroomManager.addMessage(chatroom, entry);
             }
             else {
                 Ln.e("Can't find log for private message recipient " + recipient);
@@ -231,7 +254,7 @@ public class FlistWebSocketConnection {
     /**
      * Asks for character information.
      */
-    public void askForInfos(FlistChar flistChar) {
+    public void askForInfos(FCharacter flistChar) {
         JSONObject data = new JSONObject();
         try {
             data.put("character", flistChar.getName());

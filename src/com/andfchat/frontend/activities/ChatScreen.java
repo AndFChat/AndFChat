@@ -22,15 +22,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
 
+import net.sourcerer.android.ActionItem;
+import net.sourcerer.android.QuickActionBar;
+import net.sourcerer.android.QuickActionClickListner;
+import net.sourcerer.android.QuickActionPreOpenListner;
 import roboguice.activity.RoboFragmentActivity;
-import roboguice.event.EventManager;
-import roboguice.event.Observes;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.app.NotificationManager;
@@ -50,12 +47,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andfchat.R;
@@ -68,47 +64,23 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.core.util.SmileyReader;
-import com.andfchat.frontend.adapter.ChatActionListAdapter;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.events.AndFChatEventManager;
+import com.andfchat.frontend.events.ChatroomEventListner;
+import com.andfchat.frontend.events.MessageEventListner;
+import com.andfchat.frontend.events.UserEventListner;
 import com.andfchat.frontend.fragments.ChannelListFragment;
 import com.andfchat.frontend.fragments.ChatFragment;
 import com.andfchat.frontend.fragments.ChatInputFragment;
 import com.andfchat.frontend.fragments.UserListFragment;
 import com.andfchat.frontend.menu.AboutAction;
 import com.andfchat.frontend.menu.DisconnectAction;
-import com.andfchat.frontend.menu.FriendListAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
 import com.andfchat.frontend.popup.FListPopupWindow;
 import com.andfchat.frontend.util.Exporter;
 import com.google.inject.Inject;
 
-public class ChatScreen extends RoboFragmentActivity {
-
-    public enum ChatAction {
-        DEFAULT(R.string.actions, 0),
-        DESCRIPTION(R.string.channel_description, 1),
-        EXPORT_TEXT(R.string.export_text, 7),
-        LEAVE(R.string.leave_channel, 10);
-
-        int id;
-        Integer weight;
-
-        private ChatAction(int id, Integer weight) {
-            this.id = id;
-            this.weight = weight;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public Integer getWeight() {
-            return weight;
-        }
-    }
-
-    // Sleep time between two loops
-    private static final long TICK_TIME = 250;
+public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListner {
 
     @Inject
     protected CharacterManager charManager;
@@ -121,7 +93,7 @@ public class ChatScreen extends RoboFragmentActivity {
     @Inject
     private InputMethodManager inputManager;
     @Inject
-    private EventManager eventManager;
+    private AndFChatEventManager eventManager;
     @Inject
     protected NotificationManager notificationManager;
     @Inject
@@ -136,8 +108,8 @@ public class ChatScreen extends RoboFragmentActivity {
     private EditText inputText;
     @InjectView(R.id.sendButton)
     private Button sendButton;
-    @InjectView(R.id.actionSpinner)
-    private Spinner actionSpinner;
+    @InjectView(R.id.actionButton)
+    private Button actionButton;
 
     // Fragments
     private ChatFragment chat;
@@ -145,71 +117,124 @@ public class ChatScreen extends RoboFragmentActivity {
     private ChannelListFragment channelList;
     private ChatInputFragment inputFragment;
 
-    private boolean paused = true;
-    // Display size
-    private int width;
+    // Display height
     private int height;
 
-    private ChatActionListAdapter chatActionAdapter;
+    private QuickActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_screen);
 
+        eventManager.clear();
+        eventManager.register(this);
+
         chat = (ChatFragment)getSupportFragmentManager().findFragmentById(R.id.chatFragment);
         userList = (UserListFragment)getSupportFragmentManager().findFragmentById(R.id.userListFragment);
         channelList = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.channelListFragment);
         inputFragment = (ChatInputFragment)getSupportFragmentManager().findFragmentById(R.id.chatInputFragment);
+        // Register fragments
+        eventManager.register((ChatroomEventListner)chat);
+        eventManager.register((MessageEventListner)chat);
+        eventManager.register((ChatroomEventListner)userList);
+        eventManager.register((UserEventListner)userList);
+        eventManager.register(channelList);
+        eventManager.register(inputFragment);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        width = size.x;
         height = size.y;
 
-        List<ChatAction> actionList = new ArrayList<ChatAction>();
 
-        actionList.add(ChatAction.DEFAULT);
-        actionList.add(ChatAction.DESCRIPTION);
-        actionList.add(ChatAction.EXPORT_TEXT);
-        actionList.add(ChatAction.LEAVE);
+        actionBar = new QuickActionBar(this);
+        actionBar.setOrientation(QuickActionBar.BOTTOM);
 
-        Collections.sort(actionList, new ChatActionsSorter());
-
-        chatActionAdapter = new ChatActionListAdapter(this, actionList);
-
-        actionSpinner.setAdapter(chatActionAdapter);
-
-        actionSpinner.setOnItemSelectedListener(new  AdapterView.OnItemSelectedListener() {
+        //
+        // Show description
+        //
+        ActionItem showDescprition = new ActionItem(getString(R.string.channel_description), null);
+        showDescprition.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i > 0) {
-                    switch (chatActionAdapter.getItem(i)) {
-                        case DESCRIPTION:
-                            showDescription();
-                            break;
-                        case LEAVE:
-                            leaveActiveChat();
-                            break;
-                        case EXPORT_TEXT:
-                            exportChat();
-                            break;
-                        case DEFAULT:
-                            break;
-                    }
+            public void onClick(ActionItem item, View view) {
+                showDescription();
+            }
+        });
 
-                    actionSpinner.setSelection(0);
+        showDescprition.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+
+            @Override
+            public void onPreOpen(ActionItem item) {
+                Chatroom chat = chatroomManager.getActiveChat();
+
+                if (chat.isPrivateChat() || chat.isSystemChat()) {
+                    item.setVisibility(View.GONE);
+                }
+                else {
+                    item.setVisibility(View.VISIBLE);
                 }
             }
+        });
+        actionBar.addActionItem(showDescprition);
+
+        //
+        // Export active chat
+        //
+        ActionItem exportActiveChat = new ActionItem(getString(R.string.export_text), null);
+        exportActiveChat.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                actionSpinner.setSelection(0);
+            public void onClick(ActionItem item, View view) {
+                exportChat();
             }
+        });
 
-      });
+        exportActiveChat.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+
+            @Override
+            public void onPreOpen(ActionItem item) {
+                Chatroom chat = chatroomManager.getActiveChat();
+                item.setEnabled(chat.isSystemChat() == false);
+            }
+        });
+        actionBar.addActionItem(exportActiveChat);
+
+
+        //
+        // Leave active chat
+        //
+        ActionItem leaveActiveChat = new ActionItem(getString(R.string.leave_channel), null);
+        leaveActiveChat.setQuickActionClickListner(new QuickActionClickListner() {
+
+            @Override
+            public void onClick(ActionItem item, View view) {
+                leaveActiveChat();
+            }
+        });
+
+        leaveActiveChat.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+
+            @Override
+            public void onPreOpen(ActionItem item) {
+                Chatroom chat = chatroomManager.getActiveChat();
+                if (chat.isCloseable()) {
+                    item.setVisibility(View.VISIBLE);
+                }
+                else {
+                    item.setVisibility(View.GONE);
+                }
+            }
+        });
+        actionBar.addActionItem(leaveActiveChat);
+
+        actionButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionBar.show(actionButton);
+            }
+        });
     }
 
     public void leaveActiveChat() {
@@ -252,38 +277,24 @@ public class ChatScreen extends RoboFragmentActivity {
         descriptionText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    /**
-     * Listen to setActiveChat-Events
-     */
-    protected void setActiveChat(@Observes Chatroom chatroom) {
-        Ln.v("Active chat set event is called!");
-
-        List<ChatAction> actionList = new ArrayList<ChatAction>();
-
-        actionList.add(ChatAction.DEFAULT);
-
-        if (chatroom.isSystemChat()) {
-            toggleSidebarRight.setVisibility(View.GONE);
-        } else {
-            toggleSidebarRight.setVisibility(View.VISIBLE);
-            actionList.add(ChatAction.LEAVE);
-            actionList.add(ChatAction.EXPORT_TEXT);
-
-            if (chatroom.isPrivateChat()) {
+    @Override
+    public void onEvent(Chatroom chatroom, ChatroomEventType type) {
+        if (type == ChatroomEventType.ACTIVE) {
+            if (chatroom.isSystemChat()) {
                 toggleSidebarRight.setVisibility(View.GONE);
             } else {
-                actionList.add(ChatAction.DESCRIPTION);
+                toggleSidebarRight.setVisibility(View.VISIBLE);
+
+                if (chatroom.isPrivateChat()) {
+                    toggleSidebarRight.setVisibility(View.GONE);
+                }
             }
-        }
 
-        chatActionAdapter.clear();
-        Collections.sort(actionList, new ChatActionsSorter());
-        chatActionAdapter.addAll(actionList);
-
-        if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
-            setChannelTitle(chatroom.getName() + " - " + chatroom.getRecipient().getStatusMsg());
-        } else {
-            setChannelTitle(chatroom.getName());
+            if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
+                setChannelTitle(chatroom.getName() + " - " + chatroom.getRecipient().getStatusMsg());
+            } else {
+                setChannelTitle(chatroom.getName());
+            }
         }
     }
 
@@ -303,11 +314,8 @@ public class ChatScreen extends RoboFragmentActivity {
             os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
             os.close();
 
-            chatroomManager.getActiveChat().addMessage(new ChatEntry(
-                    "Sucessfully exported to the download dictory, filename: " + filename,
-                    charManager.findCharacter(CharacterManager.USER_SYSTEM),
-                    new Date(),
-                    ChatEntryType.MESSAGE));
+            ChatEntry entry = new ChatEntry("Sucessfully exported to the download dictory, filename: " + filename, charManager.findCharacter(CharacterManager.USER_SYSTEM), ChatEntryType.MESSAGE);
+            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
 
             // Tell the media scanner about the new file so that it is
             // immediately available to the user.
@@ -322,11 +330,8 @@ public class ChatScreen extends RoboFragmentActivity {
         } catch (IOException e) {
             Ln.w("ExternalStorage", "Error writing " + file, e);
             // TODO: String!
-            chatroomManager.getActiveChat().addMessage(new ChatEntry(
-                    "Can't write output, download directory doesn't exist!",
-                    charManager.findCharacter(CharacterManager.USER_SYSTEM),
-                    new Date(),
-                    ChatEntryType.ERROR));
+            ChatEntry entry = new ChatEntry("Can't write output, download directory doesn't exist!", charManager.findCharacter(CharacterManager.USER_SYSTEM), ChatEntryType.ERROR);
+            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
         }
 
     }
@@ -335,72 +340,11 @@ public class ChatScreen extends RoboFragmentActivity {
     protected void onResume() {
         super.onResume();
         sessionData.setIsVisible(true);
-        this.paused = false;
 
+        // Reload chat
         if (chatroomManager.getActiveChat() != null) {
-            eventManager.fire(chatroomManager.getActiveChat());
+            chatroomManager.setActiveChat(chatroomManager.getActiveChat());
         }
-
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-
-                while(!paused) {
-                    try {
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                channelList.refreshChannels();
-                            }
-                        });
-
-                        // If no Chatroom is open, try to open the first one
-                        if (chatroomManager.getActiveChat() == null) {
-                            for (final Chatroom chatroom : chatroomManager.getChatRooms()) {
-
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Ln.d("Set new active chat!");
-                                        chatroomManager.setActiveChat(chatroom);
-                                        eventManager.fire(chatroom);
-                                    }
-                                });
-
-                                break;
-                            }
-                        }
-
-                        // If an chat is open do some tasks
-                        if (chatroomManager.getActiveChat() != null) {
-                            // Active chat don't need new messages
-                            chatroomManager.getActiveChat().setHasNewMessage(false);
-                            // Refresh chat log and user list
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    chat.refreshChat();
-                                    userList.refreshList();
-                                }
-                            });
-                        }
-                        Thread.sleep(TICK_TIME);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-
-        new Thread(runnable).start();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        paused = true;
     }
 
     @Override
@@ -414,6 +358,9 @@ public class ChatScreen extends RoboFragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
+        eventManager.clear();
+        Ln.i("Disconnecting!");
+        connection.closeConnection(this);
     }
 
     @Override
@@ -433,7 +380,7 @@ public class ChatScreen extends RoboFragmentActivity {
                 JoinChannelAction.open(this, chat.getView(), height);
                 return true;
             case R.id.action_open_friendlist:
-                FriendListAction.open(this, chat.getView(), height);
+                //FriendListAction.open(this, chat.getView(), height);
                 return true;
             case R.id.action_disconnect:
                 DisconnectAction.disconnect(this);
@@ -470,14 +417,5 @@ public class ChatScreen extends RoboFragmentActivity {
         }
 
         return ret;
-    }
-
-    public class ChatActionsSorter implements Comparator<ChatAction> {
-
-        @Override
-        public int compare(ChatAction lhs, ChatAction rhs) {
-            return lhs.getWeight().compareTo(rhs.getWeight());
-        }
-
     }
 }

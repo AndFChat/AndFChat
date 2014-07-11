@@ -31,6 +31,7 @@ public enum ClientToken {
     IGN, // A multi-faceted command to handle actions related to the ignore list. The server does not actually handle much of the ignore process, as it is the client's responsibility to block out messages it recieves from the server if that character is on the user's ignore list.
     JCH, // Send a channel join request.
     LCH, // Request to leave a channel.
+    LRP, // Send RP-Ad {channel:'ADH', message:'text'}
     MSG, // Sends a message to all other users in a channel.
     ORS, // Request a list of open private rooms.
     PIN, // Sends a ping response to the server. Timeout detection, and activity to keep the connection alive.

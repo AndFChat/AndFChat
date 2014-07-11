@@ -35,7 +35,7 @@ public class StatusChange extends TextCommand {
     @Override
     public boolean fitToCommand(String token) {
         for (CharStatus status : CharStatus.values()) {
-            if (token.equals("/" + status.name())) {
+            if (token.equalsIgnoreCase("/" + status.name())) {
                 return true;
             }
         }
@@ -44,7 +44,7 @@ public class StatusChange extends TextCommand {
 
     @Override
     public void runCommand(String token, String text) {
-        CharStatus status = CharStatus.valueOf(token.replace("/", ""));
+        CharStatus status = CharStatus.findStatus(token.replace("/", ""));
         connection.setStatus(status, text);
     }
 }

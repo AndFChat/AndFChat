@@ -44,7 +44,7 @@ public class ChannelListHandler extends TokenHandler {
             JSONArray jsonArray = json.getJSONArray("channels");
             for (int i = 0; i < jsonArray.length(); i++) {
                 String channelName = jsonArray.getJSONObject(i).getString("name");
-                Ln.i("found channel: " + channelName);
+                Ln.v("found channel: " + channelName);
                 chatroomManager.addOfficialChannel(channelName);
             }
         }

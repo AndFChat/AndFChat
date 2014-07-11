@@ -23,29 +23,30 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FlistChar implements Serializable {
+public class FCharacter implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final String name;
-    private Gender gender;
+    private Gender gender = Gender.UNKNOWN;
 
     private final Set<CharRelation> charRelations = new HashSet<CharRelation>();
 
-    private CharStatus status = CharStatus.online;
-    private String statusMsg = null;
+    private transient CharStatus status = CharStatus.ONLINE;
+    private transient String statusMsg = null;
 
-    public FlistChar(String name) {
+    public FCharacter(String name) {
         this.name = name;
-        this.gender = Gender.UNKNOWN;
     }
 
-    public FlistChar(String name, Gender gender) {
+    public FCharacter(String name, Gender gender) {
         this.name = name;
         this.gender = gender;
     }
 
-    public FlistChar(String name, String gender, String status, String statusMsg, CharRelation... charRelations) {
+    public FCharacter(String name, String gender, String status, String statusMsg, CharRelation... charRelations) {
         this.name = name;
-        this.status = CharStatus.valueOf(status);
+        this.status = CharStatus.findStatus(status);
 
         if (statusMsg != null && statusMsg.length() == 0) {
             this.statusMsg = null;
@@ -57,9 +58,6 @@ public class FlistChar implements Serializable {
             if (genderPos.getName().equals(gender)) {
                 this.gender = genderPos;
             }
-        }
-        if (this.gender == null) {
-            this.gender = Gender.UNKNOWN;
         }
 
         Collections.addAll(this.charRelations, charRelations);
@@ -74,7 +72,7 @@ public class FlistChar implements Serializable {
     }
 
     public void setStatus(String status, String statusMsg) {
-        this.status = CharStatus.valueOf(status);
+        this.status = CharStatus.findStatus(status);
         this.statusMsg = statusMsg;
 
         if (this.statusMsg != null && this.statusMsg.length() == 0) {
@@ -106,6 +104,18 @@ public class FlistChar implements Serializable {
         return charRelations.contains(CharRelation.BOOKMARKED);
     }
 
+    public boolean isImportant() {
+        return (isBookmarked() || isFriend());
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setInfos(FCharacter character) {
+        this.gender = character.getGender();
+    }
+
     @Override
     public String toString() {
         return "[" + name + " " + gender.name() + " " + status.name() + "]";
@@ -127,24 +137,12 @@ public class FlistChar implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        FlistChar other = (FlistChar) obj;
+        FCharacter other = (FCharacter) obj;
         if (name == null) {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
             return false;
         return true;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setInfos(FlistChar character) {
-        this.gender = character.getGender();
-    }
-
-    public boolean isImportant() {
-        return (isBookmarked() || isFriend());
     }
 }

@@ -19,7 +19,9 @@
 package com.andfchat.frontend.activities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,9 +46,11 @@ import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.data.Channel;
+import com.andfchat.core.data.CharRelation;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
+import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
@@ -67,11 +71,15 @@ public class Login extends RoboActivity {
         ticket,
         friends,
         bookmarks,
-        error
+        error,
+        source_name,
+        name
     }
 
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected RelationManager relationManager;
 
     @InjectView(R.id.accountField)
     private EditText account;
@@ -183,15 +191,23 @@ public class Login extends RoboActivity {
 
                 // Init session
                 sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString(), this);
-
+                // Add bookmarks to the RelationManager
                 JSONArray bookmarks = jsonDocument.getJSONArray(JsonTokens.bookmarks.name());
-                String bookmarksList = "";
+                Set<String> bookmarksList = new HashSet<String>();
                 for (int i = 0; i < bookmarks.length(); i++) {
-                    bookmarksList += bookmarks.getString(i);
-                    if (i + 1 < bookmarks.length()) {
-                        bookmarksList += ",";
-                    }
+                    bookmarksList.add(bookmarks.getJSONObject(i).getString(JsonTokens.name.name()));
                 }
+                relationManager.addCharacterToList(CharRelation.BOOKMARKED, bookmarksList);
+                Ln.v("Added " + bookmarksList.size() + " bookmarks.");
+
+                // Add friends to the RelationManager
+                JSONArray friends = jsonDocument.getJSONArray(JsonTokens.friends.name());
+                Set<String> friendList = new HashSet<String>();
+                for (int i = 0; i < friends.length(); i++) {
+                    friendList.add(friends.getJSONObject(i).getString(JsonTokens.source_name.name()));
+                }
+                relationManager.addCharacterToList(CharRelation.FRIEND, friendList);
+                Ln.v("Added " + friendList.size() + " friends.");
 
                 Editor prefEditor = preferences.edit();
                 prefEditor.putBoolean(SAVE_ACCOUNT_NAME, rememberAccount.isChecked());
@@ -206,7 +222,6 @@ public class Login extends RoboActivity {
                 intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 0);
                 intent.putExtra("characters", charList);
                 intent.putExtra("default_char", jsonDocument.getString(JsonTokens.default_character.name()));
-                intent.putExtra("bookmarks", bookmarksList);
 
                 return true;
             }

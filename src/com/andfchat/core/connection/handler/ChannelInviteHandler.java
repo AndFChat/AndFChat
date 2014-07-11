@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -29,7 +28,7 @@ import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 
 public class ChannelInviteHandler extends TokenHandler {
 
@@ -41,9 +40,9 @@ public class ChannelInviteHandler extends TokenHandler {
             String channelName = json.getString("name");
             String username = json.getString("sender");
 
-            FlistChar flistChar = characterManager.findCharacter(username, false);
+            FCharacter flistChar = characterManager.findCharacter(username, false);
             if (flistChar != null) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_invite_to_channel, new Object[]{channelId, channelName},flistChar, new Date(), ChatEntryType.NOTATION_STATUS);
+                ChatEntry chatEntry = new ChatEntry(R.string.message_invite_to_channel, new Object[]{channelId, channelName},flistChar, ChatEntryType.NOTATION_STATUS);
                 broadcastSystemInfo(chatEntry, flistChar);
             }
 

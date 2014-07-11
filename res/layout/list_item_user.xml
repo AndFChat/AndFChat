@@ -44,46 +44,4 @@
         />
     
     </LinearLayout>
-    
-    <LinearLayout 
-        android:id="@+id/usermenu"
-        android:layout_marginTop="2dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    
-        <Button             
-            android:id="@+id/pmuser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_button_small"
-            android:text="@string/pm_user"        
-        />
-        
-        <Button 
-            android:id="@+id/bmuser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_button_small"
-            android:text="@string/bookmark_user"        
-        />
-        
-        <Button 
-            android:id="@+id/details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_button_small"
-            android:text="@string/show_details"        
-        />
-        
-        <Button 
-            android:id="@+id/closeUsermenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_button_small"
-            android:text="@string/close"        
-        />
-    
-    </LinearLayout>
-
 </LinearLayout>

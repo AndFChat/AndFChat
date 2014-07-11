@@ -30,6 +30,7 @@ import android.widget.Spinner;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
+import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.google.inject.Inject;
@@ -42,6 +43,8 @@ public class PickChar extends RoboActivity {
     protected SessionData sessionData;
     @Inject
     protected HistoryManager historyManager;
+    @Inject
+    protected CharacterManager characterManager;
 
     @InjectView(R.id.charField)
     private Spinner charSelector;
