@@ -18,15 +18,20 @@
 
 package com.andfchat.core.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
 public class CharacterManager {
 
-    private final HashMap<String, FlistChar> knownCharacters = new HashMap<String, FlistChar>();
-    private final Friendlist friendlist = new Friendlist(this);
+    @Inject
+    private RelationManager relationManager;
+
+    private final HashMap<String, FCharacter> knownCharacters = new HashMap<String, FCharacter>();
 
     private boolean statusChanged = false;
 
@@ -35,28 +40,31 @@ public class CharacterManager {
     public static final String USER_SYSTEM_OUTPUT = "Output";
     public static final String USER_SYSTEM_INPUT = "Input";
 
+    @Inject
     public CharacterManager() {
-        this.addCharacter(new FlistChar(USER_SYSTEM));
-        this.addCharacter(new FlistChar(USER_SYSTEM_OUTPUT, Gender.MALE));
-        this.addCharacter(new FlistChar(USER_SYSTEM_INPUT, Gender.FEMALE));
+        clear();
     }
 
-    public FlistChar findCharacter(String name, boolean create) {
+    public FCharacter findCharacter(String name, boolean create) {
         synchronized(this) {
             if (knownCharacters.containsKey(name) == false) {
                 if (create) {
-                    knownCharacters.put(name, new FlistChar(name));
+                    FCharacter character = new FCharacter(name);
+                    relationManager.addRelationsToCharacter(character);
+                    knownCharacters.put(name, character);
                 }
             }
             return knownCharacters.get(name);
         }
     }
 
-    public FlistChar findCharacter(String character) {
+    public FCharacter findCharacter(String character) {
         return findCharacter(character, true);
     }
 
-    public void addCharacter(FlistChar character) {
+    public void addCharacter(FCharacter character) {
+        relationManager.addRelationsToCharacter(character);
+
         synchronized(this) {
             if (knownCharacters.containsKey(character.getName()) == true) {
                 knownCharacters.get(character.getName()).setInfos(character);
@@ -66,28 +74,27 @@ public class CharacterManager {
         }
     }
 
-    public void initCharacters(HashMap<String, FlistChar> characterList) {
+    public void initCharacters(HashMap<String, FCharacter> characterList) {
         synchronized(this) {
+            for (FCharacter character : characterList.values()) {
+                relationManager.addRelationsToCharacter(character);
+            }
             knownCharacters.putAll(characterList);
         }
     }
 
-    public void removeCharacter(String name) {
+    public void removeCharacter(FCharacter character) {
         synchronized(this) {
-            knownCharacters.remove(name);
+            knownCharacters.remove(character.getName());
         }
     }
 
     public void clear() {
         knownCharacters.clear();
-        // Reactivate
-        this.addCharacter(new FlistChar(USER_SYSTEM));
-        this.addCharacter(new FlistChar(USER_SYSTEM_OUTPUT, Gender.MALE));
-        this.addCharacter(new FlistChar(USER_SYSTEM_INPUT, Gender.FEMALE));
-    }
-
-    public Friendlist getFriendList() {
-        return friendlist;
+        // Reactivate standard user
+        knownCharacters.put(USER_SYSTEM, new FCharacter(USER_SYSTEM));
+        knownCharacters.put(USER_SYSTEM_OUTPUT, new FCharacter(USER_SYSTEM_OUTPUT, Gender.MALE));
+        knownCharacters.put(USER_SYSTEM_INPUT, new FCharacter(USER_SYSTEM_INPUT, Gender.FEMALE));
     }
 
     public boolean isStatusChanged() {
@@ -99,12 +106,24 @@ public class CharacterManager {
         return false;
     }
 
-    public FlistChar changeStatus(String name, String status, String statusmsg) {
+    public FCharacter changeStatus(String name, String status, String statusmsg) {
         statusChanged = true;
 
-        FlistChar flistChar = findCharacter(name);
+        FCharacter flistChar = findCharacter(name);
         flistChar.setStatus(status, statusmsg);
 
         return flistChar;
+    }
+
+    public List<FCharacter> getImportantCharacters() {
+        List<FCharacter> importantCharacters = new ArrayList<FCharacter>();
+
+        for (FCharacter character : knownCharacters.values()) {
+            if (character.isImportant()) {
+                importantCharacters.add(character);
+            }
+        }
+
+        return importantCharacters;
     }
 }

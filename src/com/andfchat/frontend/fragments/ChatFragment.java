@@ -21,10 +21,8 @@ package com.andfchat.frontend.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import roboguice.event.Observes;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
-import roboguice.util.Ln;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,9 +37,12 @@ import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
+import com.andfchat.frontend.events.AndFChatEventManager;
+import com.andfchat.frontend.events.ChatroomEventListner;
+import com.andfchat.frontend.events.MessageEventListner;
 import com.google.inject.Inject;
 
-public class ChatFragment extends RoboFragment {
+public class ChatFragment extends RoboFragment implements ChatroomEventListner, MessageEventListner {
 
     @Inject
     protected ChatroomManager chatroomManager;
@@ -49,6 +50,8 @@ public class ChatFragment extends RoboFragment {
     protected FlistWebSocketConnection connection;
     @Inject
     private InputMethodManager inputManager;
+    @Inject
+    protected AndFChatEventManager eventManager;
 
     @InjectView(R.id.chat)
     private ListView chatListView;
@@ -75,29 +78,36 @@ public class ChatFragment extends RoboFragment {
         }
     }
 
-    protected void setActiveChat(@Observes Chatroom chatroom) {
-        Ln.v("Active chat set event is called!");
-        List<ChatEntry> messages = new ArrayList<ChatEntry>();
+    @Override
+    public void onEvent(final ChatEntry entry, Chatroom chatroom) {
+        if (chatroom.equals(chatroomManager.getActiveChat())) {
+            synchronized(this) {
+                getActivity().runOnUiThread(new Runnable() {
 
-        if (chatroom != null) {
-            messages = chatroom.getLastMessages(chatroom.getMaxiumEntries());
-        }
-
-        // Set messages
-        chatListData.clear();
-        chatListData.addAll(messages);
-        // Scroll to last message
-        if (messages.size() > 0) {
-            chatListView.setSelection(messages.size() - 1);
+                    @Override
+                    public void run() {
+                        chatListData.add(entry);
+                    }
+                });
+            }
         }
     }
 
-    public void refreshChat() {
-        if (chatroomManager.getActiveChat() != null) {
-            List<ChatEntry> entries = chatroomManager.getActiveChat().getChatEntriesSince(chatListData.getLastMessageTime());
+    @Override
+    public void onEvent(Chatroom chatroom, ChatroomEventType type) {
+        if (type == ChatroomEventType.ACTIVE) {
+            List<ChatEntry> messages = new ArrayList<ChatEntry>();
 
-            for (final ChatEntry entry : entries) {
-                chatListData.add(entry);
+            if (chatroom != null) {
+                messages = chatroom.getLastMessages(chatroom.getMaxiumEntries());
+            }
+
+            // Set messages
+            chatListData.clear();
+            chatListData.addAll(messages);
+            // Scroll to last message
+            if (messages.size() > 0) {
+                chatListView.setSelection(messages.size() - 1);
             }
         }
     }

@@ -25,7 +25,7 @@ import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
@@ -57,7 +57,7 @@ public class PMUser extends TextCommand {
             return;
         }
 
-        FlistChar flistChar = characterManager.findCharacter(text, false);
+        FCharacter flistChar = characterManager.findCharacter(text, false);
 
         if (flistChar == null) {
             showMessage("NO USER WITH NAME '" + text + "' FOUND!", ChatEntryType.ERROR);

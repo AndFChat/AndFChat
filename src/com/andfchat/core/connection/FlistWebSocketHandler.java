@@ -19,7 +19,6 @@
 package com.andfchat.core.connection;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +38,6 @@ import com.andfchat.core.connection.handler.CharListHandler;
 import com.andfchat.core.connection.handler.DiceBottleHandler;
 import com.andfchat.core.connection.handler.ErrorMessageHandler;
 import com.andfchat.core.connection.handler.FirstConnectionHandler;
-import com.andfchat.core.connection.handler.FriendListHandler;
 import com.andfchat.core.connection.handler.JoinedChannel;
 import com.andfchat.core.connection.handler.LeftChannelHandler;
 import com.andfchat.core.connection.handler.MessageHandler;
@@ -50,11 +48,13 @@ import com.andfchat.core.connection.handler.VariableHandler;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
+import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -76,6 +76,8 @@ public class FlistWebSocketHandler extends WebSocketHandler {
     protected SessionData sessionData;
     @Inject
     protected HistoryManager historyManager;
+    @Inject
+    private AndFChatEventManager eventManager;
 
     private final HashMap<ServerToken, TokenHandler> handlerMap = new HashMap<ServerToken, TokenHandler>();
     private final Map<ServerToken, List<FeedbackListner>> feedbackListnerMap = new HashMap<ServerToken, List<FeedbackListner>>();
@@ -97,7 +99,6 @@ public class FlistWebSocketHandler extends WebSocketHandler {
         availableTokenHandler.add(new PrivateMessageHandler());
         availableTokenHandler.add(new ChannelListHandler());
         availableTokenHandler.add(new FirstConnectionHandler());
-        availableTokenHandler.add(new FriendListHandler());
         availableTokenHandler.add(new LeftChannelHandler());
         availableTokenHandler.add(new ChannelDescriptionHandler());
         availableTokenHandler.add(new ErrorMessageHandler());
@@ -136,16 +137,17 @@ public class FlistWebSocketHandler extends WebSocketHandler {
     @Override
     public void onTextMessage(String payload) {
         if (!disconnected) {
-            Ln.d("Incoming message: " + payload);
             if (sessionData.getSessionSettings().useDebugChannel()) {
-                FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
-                ChatEntry entry = new ChatEntry(payload, systemChar, new Date(), ChatEntryType.MESSAGE);
-                chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME).addMessage(entry);
+                FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
+                ChatEntry entry = new ChatEntry(payload, systemChar, ChatEntryType.MESSAGE);
+                Chatroom chatroom = chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME);
+                chatroomManager.addMessage(chatroom, entry);
             }
 
             ServerToken token = null;
             try {
                 token = ServerToken.valueOf(payload.substring(0, 3));
+                Ln.v("Incoming message with token: " + token.name());
             } catch (IllegalArgumentException e) {
                 Ln.w("Can't find token '" + payload.substring(0, 3) + "' in ServerToken-Enum! -> Ignoring Message");
                 return;

@@ -19,7 +19,6 @@
 package com.andfchat.core.util;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import roboguice.RoboGuice;
@@ -30,7 +29,7 @@ import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.util.commands.Ban;
 import com.andfchat.core.util.commands.Bottle;
 import com.andfchat.core.util.commands.CloseChannelToPublic;
@@ -41,6 +40,7 @@ import com.andfchat.core.util.commands.InviteToChannel;
 import com.andfchat.core.util.commands.Kick;
 import com.andfchat.core.util.commands.OpenChannelToPublic;
 import com.andfchat.core.util.commands.PMUser;
+import com.andfchat.core.util.commands.SendAd;
 import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.TextCommand;
 import com.andfchat.core.util.commands.Unban;
@@ -65,6 +65,7 @@ public class Console {
         availableCommands.add(new Dice());
         availableCommands.add(new PMUser());
         availableCommands.add(new CloseChatroom());
+        availableCommands.add(new SendAd());
 
         // Channel OP commands
         availableCommands.add(new CreateChannel());
@@ -103,9 +104,9 @@ public class Console {
                         command.runCommand(token, message.replace(token, "").trim());
                         return true;
                     } else {
-                        FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-                        ChatEntry chatEntry = new ChatEntry(R.string.error_command_not_allowed, systemChar, new Date(), ChatEntryType.ERROR);
-                        chatroomManager.getActiveChat().addMessage(chatEntry);
+                        FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
+                        ChatEntry chatEntry = new ChatEntry(R.string.error_command_not_allowed, systemChar, ChatEntryType.ERROR);
+                        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
                         break;
                     }
                 }
@@ -125,8 +126,8 @@ public class Console {
             message += "\n" + command.getDescription();
         }
 
-        FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-        ChatEntry chatEntry = new ChatEntry(message, systemChar, new Date(), ChatEntryType.NOTATION_SYSTEM);
-        chatroomManager.getActiveChat().addMessage(chatEntry);
+        FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
+        ChatEntry chatEntry = new ChatEntry(message, systemChar, ChatEntryType.NOTATION_SYSTEM);
+        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
     }
 }

@@ -20,13 +20,13 @@ package com.andfchat.core.util;
 
 import java.util.Comparator;
 
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 
 
-public class FlistCharComparator implements Comparator<FlistChar> {
+public class FlistCharComparator implements Comparator<FCharacter> {
 
     @Override
-    public int compare(FlistChar lhs, FlistChar rhs) {
+    public int compare(FCharacter lhs, FCharacter rhs) {
         int compareInt;
 
         if (lhs == null) {
@@ -37,11 +37,14 @@ public class FlistCharComparator implements Comparator<FlistChar> {
         }
 
         //compare bookmared/friend vs not bookmarked/friend
-        if ((lhs.isBookmarked() || lhs.isFriend()) && (!rhs.isBookmarked() && !rhs.isFriend())) {
+        if (lhs.isImportant() && !rhs.isImportant()) {
             return -1;
         }
-        else if ((!lhs.isBookmarked() && !lhs.isFriend()) && (rhs.isBookmarked() || rhs.isFriend())) {
+        else if (!lhs.isImportant() && rhs.isImportant()) {
             return 1;
+        }
+        else if (lhs.isImportant() && rhs.isImportant()) {
+            return lhs.getName().compareTo(rhs.getName());
         }
 
         //compare gender

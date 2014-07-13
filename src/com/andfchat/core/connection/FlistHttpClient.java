@@ -86,12 +86,16 @@ public class FlistHttpClient {
                 HttpResponse response = client.execute(request);
                 String responseString = convertStreamToString(response.getEntity().getContent());
                 Ln.d("Got Response: " + responseString);
-                feedbackListner.onResponse(responseString);
+                if (feedbackListner != null) {
+                    feedbackListner.onResponse(responseString);
+                }
 
                 return null;
             } catch (Exception ex) {
                 ex.printStackTrace();
-                feedbackListner.onError(ex);
+                if (feedbackListner != null) {
+                    feedbackListner.onError(ex);
+                }
             }
             return null;
         }

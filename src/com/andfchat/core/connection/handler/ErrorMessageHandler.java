@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -29,7 +28,7 @@ import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 
 /**
  * Displays error messages send from server at the active chat.
@@ -41,8 +40,8 @@ public class ErrorMessageHandler extends TokenHandler {
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         if (token == ServerToken.ERR) {
             JSONObject json = new JSONObject(msg);
-            FlistChar systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-            ChatEntry chatEntry = new ChatEntry(json.getString("message"), systemChar, new Date(), ChatEntryType.ERROR);
+            FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
+            ChatEntry chatEntry = new ChatEntry(json.getString("message"), systemChar, ChatEntryType.ERROR);
             this.addChatEntryToActiveChat(chatEntry);
         }
     }

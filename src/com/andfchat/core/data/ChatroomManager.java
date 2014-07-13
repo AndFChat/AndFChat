@@ -26,16 +26,18 @@ import java.util.Set;
 import roboguice.util.Ln;
 
 import com.andfchat.core.data.history.HistoryManager;
+import com.andfchat.frontend.events.AndFChatEventManager;
+import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
 public class ChatroomManager {
 
-    private final ArrayList<Chatroom> chats = new ArrayList<Chatroom>();
+    @Inject
+    protected AndFChatEventManager eventManager;
 
-    // Fi something is changed this indicates mention a redraw for the surface.
-    private boolean isChanged = false;
+    private final ArrayList<Chatroom> chats = new ArrayList<Chatroom>();
     private Chatroom activeChat;
 
     // List of channels
@@ -45,14 +47,17 @@ public class ChatroomManager {
     @Inject
     private HistoryManager historyManager;
 
-    // Adds a chatmessage to evry channel
+    // Adds a chat message to evry channel
     public void addBroadcast(ChatEntry entry) {
         synchronized(this) {
             for (Chatroom chat : chats) {
                 chat.addMessage(entry);
             }
         }
-        isChanged = true;
+
+        if (activeChat != null) {
+            eventManager.fire(entry, activeChat);
+        }
     }
 
     // Returns a existing chat or null.
@@ -67,11 +72,14 @@ public class ChatroomManager {
 
     public Chatroom addChatroom(Chatroom chatroom) {
         synchronized(this) {
+            Ln.d("Add chatroom '" + chatroom.getName() + "'");
             // HistoryManager loads data via the "channel" key.
             chatroom.setChatHistory(historyManager.loadHistory(chatroom.getChannel()));
+            chats.add(chatroom);
+            if (chats.size() == 1) {
+                setActiveChat(chatroom);
+            }
         }
-        chats.add(chatroom);
-        isChanged = true;
         return chatroom;
     }
 
@@ -81,7 +89,6 @@ public class ChatroomManager {
                 Chatroom chatRoom = chats.get(i);
                 if  (chatRoom.isChannel(channel)) {
                     chats.remove(i);
-                    isChanged = true;
                     break;
                 }
             }
@@ -91,7 +98,6 @@ public class ChatroomManager {
             }
 
         }
-        isChanged = true;
     }
 
     public Chatroom getActiveChat() {
@@ -103,12 +109,29 @@ public class ChatroomManager {
     public void setActiveChat(Chatroom chatroom) {
         synchronized(this) {
             Ln.d("Set active chat to '" + chatroom.getName() + "'");
+            // old active chat has no new messages
+            if (activeChat != null) {
+                activeChat.setHasNewMessage(false);
+            }
+
             activeChat = chatroom;
-            isChanged = true;
+            activeChat.setHasNewMessage(false);
+            // Inform about active chat change
+            eventManager.fire(chatroom, ChatroomEventType.ACTIVE);
         }
     }
 
-    public boolean hasOpenPrivateConversation(FlistChar flistChar) {
+    public void addMessage(Chatroom chatroom, ChatEntry entry) {
+        chatroom.addMessage(entry);
+        eventManager.fire(entry, chatroom);
+
+        if (chatroom.hasNewMessage() == false && isActiveChat(chatroom) == false) {
+            chatroom.setHasNewMessage(true);
+            eventManager.fire(chatroom, ChatroomEventType.NEW_MESSAGE);
+        }
+    }
+
+    public boolean hasOpenPrivateConversation(FCharacter flistChar) {
         for (Chatroom chat : chats) {
             if (chat.getRecipient() != null && chat.getRecipient().equals(flistChar)) {
                 return true;
@@ -118,7 +141,7 @@ public class ChatroomManager {
         return false;
     }
 
-    public Chatroom getPrivateChatFor(FlistChar flistChar) {
+    public Chatroom getPrivateChatFor(FCharacter flistChar) {
         for (Chatroom chat : chats) {
             if (chat.getRecipient() != null && chat.getRecipient().equals(flistChar)) {
                 return chat;
@@ -128,7 +151,7 @@ public class ChatroomManager {
         return null;
     }
 
-    public void removeFlistCharFromChat(FlistChar flistChar) {
+    public void removeFlistCharFromChat(FCharacter flistChar) {
         for (Chatroom Chatroom : chats) {
             if (!Chatroom.isPrivateChat()) {
                 Chatroom.removeCharacter(flistChar);
@@ -195,12 +218,11 @@ public class ChatroomManager {
         return chats;
     }
 
-    public boolean isChanged() {
-        if (isChanged) {
-            isChanged = false;
-            return true;
-        } else {
+    public boolean isActiveChat(Chatroom chatroom) {
+        if (activeChat == null) {
             return false;
         }
+
+        return chatroom.getId().equals(activeChat.getId());
     }
 }

@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,10 +30,11 @@ import roboguice.util.Ln;
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.CharRelation;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.RelationManager;
+import com.google.inject.Inject;
 
 /**
  * Tracks the online status and amount of user. Handles new connects and disconnects.
@@ -42,12 +42,15 @@ import com.andfchat.core.data.FlistChar;
  */
 public class CharListHandler extends TokenHandler {
 
+    @Inject
+    protected RelationManager relationManager;
+
     private int count;
     private Long time;
 
     private static long TIMEOUT = 1000 * 30; // 30 sec
 
-    private final HashMap<String, FlistChar> flistCharacters = new HashMap<String, FlistChar>();
+    private final HashMap<String, FCharacter> flistCharacters = new HashMap<String, FCharacter>();
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
@@ -62,15 +65,8 @@ public class CharListHandler extends TokenHandler {
             JSONArray characters = json.getJSONArray("characters");
             for (int i = 0; i < characters.length(); i++) {
                 JSONArray character = characters.getJSONArray(i);
-                Ln.v("Adding character to List: " + character.getString(0) + "/" + character.getString(1) + "/" + character.getString(2));
-
-                FlistChar flistChar = new FlistChar(character.getString(0), character.getString(1), character.getString(2), character.getString(3));
-
-                if (characterManager.getFriendList().isFriend(flistChar.getName())) {
-                    flistChar.addRelation(CharRelation.FRIEND);
-                }
-
-                flistCharacters.put(character.getString(0), flistChar);
+                FCharacter fCharacter = new FCharacter(character.getString(0), character.getString(1), character.getString(2), character.getString(3));
+                flistCharacters.put(character.getString(0), fCharacter);
             }
 
             if (count <= flistCharacters.size()) {
@@ -80,39 +76,37 @@ public class CharListHandler extends TokenHandler {
         else if (token == ServerToken.NLN) {
             JSONObject json = new JSONObject(msg);
 
-            FlistChar flistChar = new FlistChar(json.getString("identity"), json.getString("gender"), json.getString("status"), null);
+            FCharacter fCharacter = new FCharacter(json.getString("identity"), json.getString("gender"), json.getString("status"), null);
 
+            Ln.v("Adding character to ChatLog: " + fCharacter.toString());
+            characterManager.addCharacter(fCharacter);
 
-            Ln.v("Adding character to ChatLog: " + flistChar.toString());
-            characterManager.addCharacter(flistChar);
-
-            if (characterManager.getFriendList().isFriend(flistChar.getName())) {
-                flistChar.addRelation(CharRelation.FRIEND);
-                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, flistChar, new Date(), ChatEntryType.NOTATION_CONNECT);
-                this.broadcastSystemInfo(chatEntry, flistChar);
+            if (fCharacter.isImportant()) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, fCharacter, ChatEntryType.NOTATION_CONNECT);
+                broadcastSystemInfo(chatEntry, fCharacter);
             }
-            else if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, flistChar, new Date(), ChatEntryType.NOTATION_CONNECT);
-                chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
+            else if (chatroomManager.hasOpenPrivateConversation(fCharacter)) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, fCharacter, ChatEntryType.NOTATION_CONNECT);
+                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), chatEntry);
             }
 
-        } // Charakter left
+        } // Character left
         else if (token == ServerToken.FLN) {
             JSONObject json = new JSONObject(msg);
 
-            FlistChar flistChar = characterManager.findCharacter(json.getString("character"));
+            FCharacter fCharacter = characterManager.findCharacter(json.getString("character"));
 
-            if (flistChar.isImportant()) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, flistChar, new Date(), ChatEntryType.NOTATION_DISCONNECT);
-                this.broadcastSystemInfo(chatEntry, flistChar);
+            if (fCharacter.isImportant()) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, fCharacter, ChatEntryType.NOTATION_DISCONNECT);
+                broadcastSystemInfo(chatEntry, fCharacter);
             }
-            else if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, flistChar, new Date(), ChatEntryType.NOTATION_DISCONNECT);
-                chatroomManager.getPrivateChatFor(flistChar).addMessage(chatEntry);
+            else if (chatroomManager.hasOpenPrivateConversation(fCharacter)) {
+                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, fCharacter, ChatEntryType.NOTATION_DISCONNECT);
+                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), chatEntry);
             }
 
-            characterManager.removeCharacter(json.getString("character"));
-            chatroomManager.removeFlistCharFromChat(flistChar);
+            characterManager.removeCharacter(fCharacter);
+            chatroomManager.removeFlistCharFromChat(fCharacter);
         }
     }
 

@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -29,7 +28,7 @@ import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 
 /**
  * Displays add messages in channels.
@@ -42,11 +41,11 @@ public class AdHandler extends TokenHandler {
         if (token == ServerToken.LRP) {
             JSONObject json = new JSONObject(msg);
             Chatroom chatroom = chatroomManager.getChatroom(json.getString("channel"));
-            FlistChar flistChar = characterManager.findCharacter(json.getString("character"));
+            FCharacter flistChar = characterManager.findCharacter(json.getString("character"));
             String message = json.getString("message");
 
-            ChatEntry chatEntry = new ChatEntry(message, flistChar, new Date(), ChatEntryType.AD);
-            chatroom.addMessage(chatEntry);
+            ChatEntry chatEntry = new ChatEntry(message, flistChar, ChatEntryType.AD);
+            chatroomManager.addMessage(chatroom, chatEntry);
         }
     }
 

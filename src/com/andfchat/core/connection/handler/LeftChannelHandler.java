@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -30,7 +29,8 @@ import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
+import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
 
 /**
  * Handles left events on channels.
@@ -42,7 +42,7 @@ public class LeftChannelHandler extends TokenHandler {
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         JSONObject json = new JSONObject(msg);
         String channelId = json.getString("channel");
-        String character = json.getString("character");
+        String name = json.getString("character");
 
         Chatroom chatroom = chatroomManager.getChatroom(channelId);
 
@@ -50,16 +50,18 @@ public class LeftChannelHandler extends TokenHandler {
             return;
         }
 
-        if (character.equals(sessionData.getCharacterName())) {
+        if (name.equals(sessionData.getCharacterName())) {
             chatroomManager.removeChatroom(chatroom.getChannel());
+            eventManager.fire(chatroom, ChatroomEventType.LEFT);
         } else {
-            FlistChar flistChar = characterManager.findCharacter(character);
+            FCharacter character = characterManager.findCharacter(name);
             if (sessionData.getSessionSettings().showChannelInfos()) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_channel_left, flistChar, new Date(), ChatEntryType.NOTATION_LEFT);
-                chatroom.addMessage(chatEntry);
+                ChatEntry chatEntry = new ChatEntry(R.string.message_channel_left, character, ChatEntryType.NOTATION_LEFT);
+                chatroomManager.addMessage(chatroom, chatEntry);
             }
 
-            chatroom.removeCharacter(flistChar);
+            chatroom.removeCharacter(character);
+            eventManager.fire(character, chatroom);
         }
     }
 

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import roboguice.util.Ln;
 import android.text.Spannable;
 
 public class Chatroom {
@@ -48,13 +47,11 @@ public class Chatroom {
     private final int maxTextLength;
 
     private List<ChatEntry> chatMessages;
-    private final List<FlistChar> characters = new ArrayList<FlistChar>();
+    private final List<FCharacter> characters = new ArrayList<FCharacter>();
 
     private Spannable description;
 
     private boolean hasNewMessage = false;
-    private boolean hasChangedUser = false;
-    private boolean hasChanged = false;
 
 
     public Chatroom(Channel channel, int maxTextLength) {
@@ -62,7 +59,7 @@ public class Chatroom {
         this.maxTextLength = maxTextLength;
     }
 
-    public Chatroom(Channel channel, FlistChar character, int maxTextLength) {
+    public Chatroom(Channel channel, FCharacter character, int maxTextLength) {
         this.channel = channel;
         this.characters.add(character);
         this.maxTextLength = maxTextLength;
@@ -106,21 +103,6 @@ public class Chatroom {
 
     public void setHasNewMessage(boolean value) {
         hasNewMessage = value;
-        if (value) {
-            hasChanged = true;
-        } else {
-            hasChanged = true;
-        }
-    }
-
-    public boolean hasChanged() {
-        if (hasChanged) {
-            hasChanged = false;
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
     public List<ChatEntry> getLastMessages(int amount) {
@@ -142,7 +124,7 @@ public class Chatroom {
         return chatMessages.get(chatMessages.size() - 1).getDate().after(date);
     }
 
-    public void addMessage(ChatEntry entry) {
+    protected void addMessage(ChatEntry entry) {
         if (chatMessages.size() < channel.getType().maxEntries) {
             chatMessages.add(entry);
         } else {
@@ -151,26 +133,18 @@ public class Chatroom {
         }
     }
 
-    public void addCharacter(FlistChar flistChar) {
+    public void addCharacter(FCharacter flistChar) {
         if (!characters.contains(flistChar)) {
             characters.add(flistChar);
-            hasChangedUser = true;
         }
     }
 
-    public void removeCharacter(FlistChar flistChar) {
-        if (characters.remove(flistChar) == true) {
-            hasChangedUser = true;
-        }
+    public void removeCharacter(FCharacter flistChar) {
+        characters.remove(flistChar);
     }
 
-    public List<FlistChar> getCharacters() {
+    public List<FCharacter> getCharacters() {
         return characters;
-    }
-
-    public void addMessage(String message, FlistChar character, Date date) {
-        Ln.d("NEW MESSAGE: " + message + " FROM " + character.getName());
-        this.addMessage(new ChatEntry(message, character, date, ChatEntryType.MESSAGE));
     }
 
     public List<ChatEntry> getChatEntries() {
@@ -191,7 +165,7 @@ public class Chatroom {
         return messages;
     }
 
-    public FlistChar getRecipient() {
+    public FCharacter getRecipient() {
         if (characters.size() == 1) {
             return characters.get(0);
         }
@@ -208,15 +182,6 @@ public class Chatroom {
 
     public void setChatHistory(List<ChatEntry> chatMessages) {
         this.chatMessages = chatMessages;
-    }
-
-    public boolean hasChangedUser() {
-        if (hasChangedUser) {
-            hasChangedUser = false;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public ChatroomType getChatroomType() {

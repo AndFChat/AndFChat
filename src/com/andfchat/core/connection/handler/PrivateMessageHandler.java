@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -33,11 +32,14 @@ import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Channel;
+import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
 import com.google.inject.Inject;
 
 /**
@@ -66,6 +68,7 @@ public class PrivateMessageHandler extends TokenHandler {
         if (chatroom == null) {
             int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
             chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character), maxTextLength);
+            eventManager.fire(chatroom, ChatroomEventType.NEW);
         }
 
         // If vibration is allowed, do it on new messages!
@@ -89,8 +92,8 @@ public class PrivateMessageHandler extends TokenHandler {
             }
         }
 
-        chatroom.addMessage(message, characterManager.findCharacter(character), new Date());
-        chatroom.setHasNewMessage(true);
+        ChatEntry entry = new ChatEntry(message, characterManager.findCharacter(character), ChatEntryType.MESSAGE);
+        chatroomManager.addMessage(chatroom, entry);
     }
 
     @Override
@@ -98,7 +101,7 @@ public class PrivateMessageHandler extends TokenHandler {
         return new ServerToken[]{ServerToken.PRI};
     }
 
-    public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FlistChar character, int maxTextLength) {
+    public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FCharacter character, int maxTextLength) {
         String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + character.getName();
 
         Chatroom chatroom = new Chatroom(new Channel(channelname, character.getName(), ChatroomType.PRIVATE_CHAT), character, maxTextLength);

@@ -19,7 +19,7 @@
 package com.andfchat.core.util.commands;
 
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
@@ -46,7 +46,7 @@ public class InviteToChannel extends TextCommand {
     @Override
     public void runCommand(String token, String text) {
         if (text != null) {
-            FlistChar flistChar = characterManager.findCharacter(text.trim(), false);
+            FCharacter flistChar = characterManager.findCharacter(text.trim(), false);
             if (flistChar != null){
                 connection.invite(flistChar.getName(), chatroomManager.getActiveChat());
             }

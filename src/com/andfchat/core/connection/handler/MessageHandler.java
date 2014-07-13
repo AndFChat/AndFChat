@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -48,11 +47,11 @@ public class MessageHandler extends TokenHandler {
             String message = jsonObject.getString("message");
             String channel = jsonObject.getString("channel");
 
-            Chatroom log = chatroomManager.getChatroom(channel);
+            Chatroom chatroom = chatroomManager.getChatroom(channel);
 
-            if (log != null) {
-                log.addMessage(message, characterManager.findCharacter(character), new Date());
-                log.setHasNewMessage(true);
+            if (chatroom != null) {
+                ChatEntry entry = new ChatEntry(message, characterManager.findCharacter(character), ChatEntryType.MESSAGE);
+                chatroomManager.addMessage(chatroom, entry);
             }
             else {
                 Ln.e("Incoming message is for a unknown channel: " + channel);
@@ -60,7 +59,8 @@ public class MessageHandler extends TokenHandler {
         }
         else if(token == ServerToken.BRO) {
             String message = jsonObject.getString("message");
-            chatroomManager.addBroadcast(new ChatEntry(message, characterManager.findCharacter(CharacterManager.USER_SYSTEM), new Date(), ChatEntryType.NOTATION_SYSTEM));
+            ChatEntry entry = new ChatEntry(message, characterManager.findCharacter(CharacterManager.USER_SYSTEM), ChatEntryType.NOTATION_SYSTEM);
+            chatroomManager.addBroadcast(entry);
         }
     }
 

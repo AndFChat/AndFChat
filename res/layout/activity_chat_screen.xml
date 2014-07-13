@@ -36,11 +36,12 @@
             android:text="@string/arrows_left"
         />
         
-        <Spinner 
-            android:id="@+id/actionSpinner"
-            android:layout_width="@dimen/chat_actions_spinner_size"
+        <Button
+            android:id="@+id/actionButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_button_greater"
+            android:text="@string/actions"
         />
                                 
         <LinearLayout

@@ -27,5 +27,4 @@ public enum PropertyName {
     INITIAL_CHANNEL,
     LOG_HISTORY,
     LOG_CHANNEL
-
 }

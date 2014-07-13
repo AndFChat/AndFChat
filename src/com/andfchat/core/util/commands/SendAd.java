@@ -1,54 +1,45 @@
 /*******************************************************************************
  *     This file is part of AndFChat.
- * 
+ *
  *     AndFChat is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
- * 
+ *
  *     AndFChat is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
- * 
+ *
  *     You should have received a copy of the GNU General Public License
  *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
 
 
-package com.andfchat.core.data;
+package com.andfchat.core.util.commands;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.andfchat.core.data.Chatroom.ChatroomType;
 
-public class Friendlist {
 
-    private final CharacterManager characterManager;
 
-    public Friendlist(CharacterManager characterManager) {
-        this.characterManager = characterManager;
+public class SendAd extends TextCommand {
+
+    public SendAd() {
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
 
-    private final Set<String> friendList = new HashSet<String>();
-
-    public Set<FlistChar> getOnlineFriends() {
-        Set<FlistChar> onlineFriends = new HashSet<FlistChar>();
-        for (String username : friendList) {
-            FlistChar flistChar = characterManager.findCharacter(username, false);
-            if (flistChar != null) {
-                onlineFriends.add(flistChar);
-            }
-        }
-
-        return onlineFriends;
+    @Override
+    public String getDescription() {
+        return "*  /ad | POSTS A AD TO THE CHANNEL";
     }
 
-    public void addFriend(String charname) {
-        friendList.add(charname);
+    @Override
+    public boolean fitToCommand(String token) {
+        return token.equals("/ad");
     }
 
-    public boolean isFriend(String name) {
-        return friendList.contains(name);
+    @Override
+    public void runCommand(String token, String text) {
+        connection.sendAdToChannel(chatroomManager.getActiveChat(), text.trim());
     }
-
 }

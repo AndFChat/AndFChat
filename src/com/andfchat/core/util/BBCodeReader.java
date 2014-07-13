@@ -87,13 +87,21 @@ public class BBCodeReader {
         }
     }
 
+    private static final String NEW_LINE_DELIMETER = "NEW_LINE_DELIMETER";
+
     public static Spannable createSpannableWithBBCode(String text, Context context) {
         // Position in text
         int pointer = 0;
 
         List<Span> spans = new ArrayList<Span>();
+
+        // Save new lines
+        text = text.replace("\n", NEW_LINE_DELIMETER);
+
         // Fixing html escapes
         text =  Html.fromHtml(text).toString();
+
+        text = text.replace(NEW_LINE_DELIMETER, "\n");
 
         while (pointer < text.length()) {
             int start = text.indexOf("[", pointer);

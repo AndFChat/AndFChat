@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -36,7 +35,8 @@ import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
+import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
 
 /**
  * Handles channel joins, still misses private channel handling.
@@ -50,14 +50,23 @@ public class JoinedChannel extends TokenHandler {
         String channelId = data.getString("channel");
 
         if (token == ServerToken.JCH) {
-            JSONObject character = data.getJSONObject("character");
+            JSONObject characterObj = data.getJSONObject("character");
             String channelName = data.getString("title");
-            FlistChar flistChar = characterManager.findCharacter(character.getString("identity"));
-            getChatroom(channelId, channelName).addCharacter(flistChar);
+            FCharacter character = characterManager.findCharacter(characterObj.getString("identity"));
+            Chatroom chatroom = getChatroom(channelId, channelName);
+            chatroom.addCharacter(character);
 
             if (sessionData.getSessionSettings().showChannelInfos()) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_channel_joined, flistChar, new Date(), ChatEntryType.NOTATION_JOINED);
-                chatroomManager.getChatroom(channelId).addMessage(chatEntry);
+                ChatEntry chatEntry = new ChatEntry(R.string.message_channel_joined, character, ChatEntryType.NOTATION_JOINED);
+                chatroomManager.addMessage(chatroom, chatEntry);
+            }
+
+            if (character.getName().equals(sessionData.getCharacterName())) {
+                Ln.d("fire channel join event!");
+                eventManager.fire(chatroom, ChatroomEventType.NEW);
+            }
+            else {
+                eventManager.fire(character, chatroom);
             }
         }
         else if (token == ServerToken.ICH) {

@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,7 +29,7 @@ import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatEntryType;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 
 /**
  * Tracks status changes for user (every user online).
@@ -46,19 +45,19 @@ public class CharInfoHandler extends TokenHandler {
             String status = json.getString("status");
             String statusmsg = json.getString("statusmsg");
 
-            FlistChar flistChar = characterManager.changeStatus(name, status, statusmsg);
+            FCharacter flistChar = characterManager.changeStatus(name, status, statusmsg);
 
             if (sessionData.getSessionSettings().showStatusChanges() && flistChar.isImportant()) {
                 ChatEntry chatEntry;
 
                 status = String.valueOf(status.charAt(0)).toUpperCase(Locale.getDefault()) + status.substring(1);
                 if (statusmsg != null && statusmsg.length() > 0) {
-                    chatEntry = new ChatEntry(R.string.message_status_changed_with_message, new Object[]{status, statusmsg}, flistChar, new Date(), ChatEntryType.NOTATION_STATUS);
+                    chatEntry = new ChatEntry(R.string.message_status_changed_with_message, new Object[]{status, statusmsg}, flistChar, ChatEntryType.NOTATION_STATUS);
                 } else {
-                    chatEntry = new ChatEntry(R.string.message_status_changed, new Object[]{status}, flistChar, new Date(), ChatEntryType.NOTATION_STATUS);
+                    chatEntry = new ChatEntry(R.string.message_status_changed, new Object[]{status}, flistChar, ChatEntryType.NOTATION_STATUS);
                 }
 
-                this.broadcastSystemInfo(chatEntry, flistChar);
+                broadcastSystemInfo(chatEntry, flistChar);
             }
         }
     }

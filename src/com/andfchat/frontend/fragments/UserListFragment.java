@@ -20,10 +20,8 @@ package com.andfchat.frontend.fragments;
 
 import java.util.ArrayList;
 
-import roboguice.event.Observes;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
-import roboguice.util.Ln;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +32,13 @@ import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.frontend.adapter.MemberListAdapter;
+import com.andfchat.frontend.events.ChatroomEventListner;
+import com.andfchat.frontend.events.UserEventListner;
 import com.google.inject.Inject;
 
-public class UserListFragment extends RoboFragment {
+public class UserListFragment extends RoboFragment implements ChatroomEventListner, UserEventListner {
 
     @Inject
     private ChatroomManager chatroomManager;
@@ -63,31 +63,30 @@ public class UserListFragment extends RoboFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        memberListData = new MemberListAdapter(getActivity(), new ArrayList<FlistChar>());
+        memberListData = new MemberListAdapter(getActivity(), new ArrayList<FCharacter>());
         memberListView.setAdapter(memberListData);
     }
 
-    protected void setActiveChat(@Observes Chatroom chatroom) {
-        Ln.v("Active chat set event is called!");
-        canBeDisplayed = chatroom.showUserList();
-
-        if (canBeDisplayed && isVisible) {
-            getView().setVisibility(View.VISIBLE);
-        } else {
-            getView().setVisibility(View.GONE);
+    @Override
+    public void onEvent(FCharacter character, Chatroom chatroom) {
+        if (chatroom.equals(chatroomManager.getActiveChat())) {
+            memberListData.notifyDataSetChanged();
         }
-
-        memberListData = new MemberListAdapter(getActivity(), chatroom.getCharacters());
-        memberListView.setAdapter(memberListData);
     }
 
-    public void refreshList() {
-        Chatroom activeChat = chatroomManager.getActiveChat();
+    @Override
+    public void onEvent(Chatroom chatroom, ChatroomEventType type) {
+        if (type == ChatroomEventType.ACTIVE) {
+            canBeDisplayed = chatroom.showUserList();
 
-        if (activeChat != null) {
-            if (activeChat.hasChangedUser() || characterManager.isStatusChanged()) {
-                memberListData.notifyDataSetChanged();
+            if (canBeDisplayed && isVisible) {
+                getView().setVisibility(View.VISIBLE);
+            } else {
+                getView().setVisibility(View.GONE);
             }
+
+            memberListData = new MemberListAdapter(getActivity(), chatroom.getCharacters());
+            memberListView.setAdapter(memberListData);
         }
     }
 
@@ -103,4 +102,5 @@ public class UserListFragment extends RoboFragment {
         }
         return isVisible;
     }
+
 }

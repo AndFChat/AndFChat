@@ -20,8 +20,11 @@ package com.andfchat.frontend.adapter;
 
 import java.util.List;
 
+import net.sourcerer.android.ActionItem;
+import net.sourcerer.android.QuickActionBar;
+import net.sourcerer.android.QuickActionClickListner;
+import net.sourcerer.android.QuickActionPreOpenListner;
 import roboguice.RoboGuice;
-import roboguice.event.EventManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -34,17 +37,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andfchat.R;
+import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
+import com.andfchat.core.data.CharRelation;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FlistChar;
+import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
 
-public class MemberListAdapter extends ArrayAdapter<FlistChar> {
+public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
     private final static FlistCharComparator COMPARATOR = new FlistCharComparator();
 
@@ -53,12 +59,13 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
     @Inject
     private SessionData sessionData;
     @Inject
-    protected EventManager eventManager;
+    private RelationManager relationManager;
 
-    private FlistChar activeCharacter;
-    private final List<FlistChar> chars;
+    private final List<FCharacter> chars;
+    private final QuickActionBar quickActionBar;
+    private FCharacter activeCharacter;
 
-    public MemberListAdapter(Context context, List<FlistChar> chars) {
+    public MemberListAdapter(final Context context, List<FCharacter> chars) {
         super(context, R.layout.list_item_user, chars);
 
         if (chars.size() > 1) {
@@ -68,14 +75,87 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
         this.chars = chars;
 
         RoboGuice.getInjector(context).injectMembers(this);
+
+        quickActionBar = new QuickActionBar(context);
+        quickActionBar.setOrientation(QuickActionBar.LEFT);
+
+        // Add PM user
+        ActionItem pmUser = new ActionItem(context.getResources().getString(R.string.pm_user), context.getResources().getDrawable(R.drawable.add_chat));
+        pmUser.setQuickActionClickListner(new QuickActionClickListner() {
+
+            @Override
+            public void onClick(ActionItem item, View view) {
+                Chatroom chatroom;
+                if (chatroomManager.hasOpenPrivateConversation(activeCharacter) == false) {
+                    int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
+                    chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter, maxTextLength);
+                } else {
+                    chatroom = chatroomManager.getPrivateChatFor(activeCharacter);
+                }
+
+                activeCharacter = null;
+                chatroomManager.setActiveChat(chatroom);
+                notifyDataSetChanged();
+            }
+        });
+        quickActionBar.addActionItem(pmUser);
+
+        final String bookmarkText = context.getResources().getString(R.string.bookmark_user);
+        final String unbookmarkText = context.getResources().getString(R.string.unbookmark_user);
+
+        // Add Bookmark user
+        final ActionItem bookmark = new ActionItem(bookmarkText, context.getResources().getDrawable(R.drawable.friends));
+        bookmark.setQuickActionClickListner(new QuickActionClickListner() {
+
+            @Override
+            public void onClick(ActionItem item, View view) {
+                if (item.isSelected()) {
+                    FlistHttpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), null);
+                    relationManager.removeFromList(CharRelation.BOOKMARKED, activeCharacter);
+                }
+                else {
+                    FlistHttpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), null);
+                    relationManager.addOnList(CharRelation.BOOKMARKED, activeCharacter);
+                }
+            }
+        });
+
+        bookmark.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+
+            @Override
+            public void onPreOpen(ActionItem item) {
+                if (activeCharacter.isBookmarked()) {
+                    item.setSelected(true);
+                    item.setTitle(unbookmarkText);
+                }
+                else {
+                    item.setSelected(false);
+                    item.setTitle(bookmarkText);
+                }
+            }
+        });
+
+        quickActionBar.addActionItem(bookmark);
+
+        // Add show details
+        ActionItem showDetails = new ActionItem(context.getResources().getString(R.string.show_profile), context.getResources().getDrawable(R.drawable.info));
+        showDetails.setQuickActionClickListner(new QuickActionClickListner() {
+
+            @Override
+            public void onClick(ActionItem item, View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.f-list.net/c/" + activeCharacter.getName()));
+                getContext().startActivity(browserIntent);
+            }
+        });
+        quickActionBar.addActionItem(showDetails);
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final FlistChar character = this.getItem(position);
+        final FCharacter character = this.getItem(position);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.list_item_user, null);
+        final View rowView = inflater.inflate(R.layout.list_item_user, null);
         // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(new NameSpannable(character, null, getContext().getResources()));
@@ -84,19 +164,19 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
         ImageView itemIcon = (ImageView)rowView.findViewById(R.id.itemIcon);
 
         switch (character.getStatus()) {
-            case online:
+            case ONLINE:
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
                 break;
-            case busy:
+            case BUSY:
                 itemIcon.setBackgroundResource(R.drawable.icon_orange);
                 break;
-            case dnd:
+            case DND:
                 itemIcon.setBackgroundResource(R.drawable.icon_red);
                 break;
-            case looking:
+            case LOOKING:
                 itemIcon.setBackgroundResource(R.drawable.icon_green);
                 break;
-            case away:
+            case AWAY:
                 itemIcon.setBackgroundResource(R.drawable.icon_grey);
                 break;
             default:
@@ -110,54 +190,16 @@ public class MemberListAdapter extends ArrayAdapter<FlistChar> {
             public void onClick(View v) {
                 if (!sessionData.getCharacterName().equals(character.getName())) {
                     activeCharacter = character;
-                    notifyDataSetChanged();
+                    quickActionBar.show(v);
                 }
             }
         });
-
-        if (activeCharacter != null && activeCharacter.getName().equals(character.getName())) {
-            rowView.findViewById(R.id.pmuser).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Chatroom chatroom;
-                    if (chatroomManager.hasOpenPrivateConversation(activeCharacter) == false) {
-                        int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
-                        chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter, maxTextLength);
-                    } else {
-                        chatroom = chatroomManager.getPrivateChatFor(activeCharacter);
-                    }
-
-                    activeCharacter = null;
-                    chatroomManager.setActiveChat(chatroom);
-                    eventManager.fire(chatroom);
-                    notifyDataSetChanged();
-                }
-            });
-
-            rowView.findViewById(R.id.details).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.f-list.net/c/" + character.getName()));
-                    getContext().startActivity(browserIntent);
-                }
-            });
-
-            rowView.findViewById(R.id.closeUsermenu).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    activeCharacter = null;
-                    notifyDataSetChanged();
-                }
-            });
-        } else {
-            rowView.findViewById(R.id.usermenu).setVisibility(View.GONE);
-        }
 
         return rowView;
     }
 
     @Override
-    public void add(FlistChar flistChar) {
+    public void add(FCharacter flistChar) {
         if (flistChar == null) {
             return;
         }

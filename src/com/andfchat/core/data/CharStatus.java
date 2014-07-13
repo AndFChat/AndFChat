@@ -18,18 +18,20 @@
 
 package com.andfchat.core.data;
 
+import java.util.Locale;
+
 /**
  * Do not change the enum, used for comparing with strings.
  * @author AndFChat
  */
 public enum CharStatus {
-    online,
-    looking,
-    busy,
-    dnd,
-    away,
-    idle(false),
-    crown(false);
+    ONLINE,
+    LOOKING,
+    BUSY,
+    DND,
+    AWAY,
+    IDLE(false),
+    CROWN(false);
 
     private boolean allowedToSet = true;
 
@@ -42,4 +44,9 @@ public enum CharStatus {
     public boolean isAllowedToSet() {
         return allowedToSet;
     }
+
+    public static CharStatus findStatus(String statusText) {
+        return CharStatus.valueOf(statusText.toUpperCase(Locale.ENGLISH).trim());
+    }
+
 }
