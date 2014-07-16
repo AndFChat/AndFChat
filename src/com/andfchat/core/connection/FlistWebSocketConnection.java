@@ -18,10 +18,11 @@
 
 package com.andfchat.core.connection;
 
+import java.util.List;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import roboguice.RoboGuice;
 import roboguice.util.Ln;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.activities.Login;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
+import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -48,7 +50,7 @@ import de.tavendo.autobahn.WebSocketException;
 public class FlistWebSocketConnection {
 
     private final static String CLIENT_NAME = "AndFChat";
-    private final static String CLIENT_VERSION = "0.1";
+    private final static String CLIENT_VERSION = "0.2.0";
     private final static String SERVER_URL_DEV = "ws://chat.f-list.net:8722/";
     private final static String SERVER_URL_LIVE = "ws://chat.f-list.net:9722/";
 
@@ -170,7 +172,15 @@ public class FlistWebSocketConnection {
             }
         } else {
             // Private chats will just be removed.
+            boolean wasActive = chatroomManager.isActiveChat(chatroom);
+
             chatroomManager.removeChatroom(chatroom.getChannel());
+            eventManager.fire(chatroom, ChatroomEventType.LEFT);
+
+            if (wasActive) {
+                List<Chatroom> chatrooms = chatroomManager.getChatRooms();
+                chatroomManager.setActiveChat(chatrooms.get(chatrooms.size() - 1));
+            }
         }
     }
 
@@ -271,15 +281,16 @@ public class FlistWebSocketConnection {
     public void closeConnection(Context context) {
         Ln.d("Disconnect!");
 
-        socketHandler.disconnected();
-
         if (connection.isConnected()) {
             connection.disconnect();
         }
 
-        RoboGuice.getInjector(context).getInstance(CharacterManager.class).clear();
-        RoboGuice.getInjector(context).getInstance(ChatroomManager.class).clear();
-        RoboGuice.getInjector(context).getInstance(SessionData.class).clear();
+        socketHandler.disconnected();
+
+        sessionData.clear();
+        chatroomManager.clear();
+        characterManager.clear();
+        eventManager.clear();
 
         Intent intent = new Intent(context, Login.class);
         context.startActivity(intent);

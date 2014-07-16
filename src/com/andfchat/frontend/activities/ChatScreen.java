@@ -48,7 +48,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
@@ -90,8 +89,6 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     protected FlistWebSocketConnection connection;
     @Inject
     protected SessionData sessionData;
-    @Inject
-    private InputMethodManager inputManager;
     @Inject
     private AndFChatEventManager eventManager;
     @Inject
@@ -360,7 +357,15 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
         eventManager.clear();
         Ln.i("Disconnecting!");
-        connection.closeConnection(this);
+        if (connection.isConnected()) {
+            connection.closeConnection(this);
+        }
+        else {
+            sessionData.clear();
+            chatroomManager.clear();
+            charManager.clear();
+            eventManager.clear();
+        }
     }
 
     @Override

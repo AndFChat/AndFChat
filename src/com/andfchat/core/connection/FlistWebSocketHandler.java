@@ -54,7 +54,6 @@ import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
-import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -76,8 +75,6 @@ public class FlistWebSocketHandler extends WebSocketHandler {
     protected SessionData sessionData;
     @Inject
     protected HistoryManager historyManager;
-    @Inject
-    private AndFChatEventManager eventManager;
 
     private final HashMap<ServerToken, TokenHandler> handlerMap = new HashMap<ServerToken, TokenHandler>();
     private final Map<ServerToken, List<FeedbackListner>> feedbackListnerMap = new HashMap<ServerToken, List<FeedbackListner>>();

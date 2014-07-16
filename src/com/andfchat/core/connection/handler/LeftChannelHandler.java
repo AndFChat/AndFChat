@@ -51,8 +51,15 @@ public class LeftChannelHandler extends TokenHandler {
         }
 
         if (name.equals(sessionData.getCharacterName())) {
+            boolean wasActive = chatroomManager.isActiveChat(chatroom);
+
             chatroomManager.removeChatroom(chatroom.getChannel());
             eventManager.fire(chatroom, ChatroomEventType.LEFT);
+
+            if (wasActive) {
+                List<Chatroom> chatrooms = chatroomManager.getChatRooms();
+                chatroomManager.setActiveChat(chatrooms.get(chatrooms.size() - 1));
+            }
         } else {
             FCharacter character = characterManager.findCharacter(name);
             if (sessionData.getSessionSettings().showChannelInfos()) {
