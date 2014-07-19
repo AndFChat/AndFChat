@@ -23,10 +23,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sourcerer.android.ActionItem;
-import net.sourcerer.android.QuickActionBar;
-import net.sourcerer.android.QuickActionClickListner;
-import net.sourcerer.android.QuickActionPreOpenListner;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
@@ -63,7 +59,6 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.core.util.SmileyReader;
-import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListner;
 import com.andfchat.frontend.events.MessageEventListner;
@@ -77,6 +72,10 @@ import com.andfchat.frontend.menu.DisconnectAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
 import com.andfchat.frontend.popup.FListPopupWindow;
 import com.andfchat.frontend.util.Exporter;
+import com.andfchat.frontend.util.quickaction.ActionItem;
+import com.andfchat.frontend.util.quickaction.QuickActionBar;
+import com.andfchat.frontend.util.quickaction.QuickActionClickListner;
+import com.andfchat.frontend.util.quickaction.QuickActionPreOpenListner;
 import com.google.inject.Inject;
 
 public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListner {
@@ -354,18 +353,6 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
-        eventManager.clear();
-        Ln.i("Disconnecting!");
-        if (connection.isConnected()) {
-            connection.closeConnection(this);
-        }
-        else {
-            sessionData.clear();
-            chatroomManager.clear();
-            charManager.clear();
-            eventManager.clear();
-        }
     }
 
     @Override

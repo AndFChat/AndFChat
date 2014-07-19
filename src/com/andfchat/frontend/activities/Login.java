@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import roboguice.activity.RoboActivity;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -45,14 +46,18 @@ import android.widget.TextView;
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.FlistHttpClient;
+import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.CharRelation;
+import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
 
 public class Login extends RoboActivity {
@@ -80,6 +85,18 @@ public class Login extends RoboActivity {
     protected SessionData sessionData;
     @Inject
     protected RelationManager relationManager;
+    @Inject
+    protected CharacterManager charManager;
+    @Inject
+    protected ChatroomManager chatroomManager;
+    @Inject
+    protected FlistWebSocketConnection connection;
+    @Inject
+    private AndFChatEventManager eventManager;
+    @Inject
+    protected NotificationManager notificationManager;
+    @Inject
+    protected HistoryManager historyManager;
 
     @InjectView(R.id.accountField)
     private EditText account;
@@ -93,9 +110,6 @@ public class Login extends RoboActivity {
     private Spinner serverSelection;
 
     private SharedPreferences preferences;
-
-    @Inject
-    private ChatroomManager chatroomManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +144,28 @@ public class Login extends RoboActivity {
         return true;
     }
 
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Ln.d("Resume login");
+
+        notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
+        eventManager.clear();
+        Ln.i("Disconnecting!");
+        if (connection.isConnected()) {
+            connection.closeConnection(this);
+        }
+        else {
+            sessionData.clear();
+            chatroomManager.clear();
+            charManager.clear();
+            eventManager.clear();
+        }
+    }
+
     public void logIn(View v) {
         String account = this.account.getText().toString();
         String password = this.password.getText().toString();
@@ -145,7 +181,6 @@ public class Login extends RoboActivity {
                     Ln.i("Succesfully logged in!");
                     chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, ChatroomType.CONSOLE), 50000));
                     startActivity(intent);
-                    finish();
                 } else {
                     this.onError(null);
                 }

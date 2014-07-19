@@ -20,10 +20,6 @@ package com.andfchat.frontend.adapter;
 
 import java.util.List;
 
-import net.sourcerer.android.ActionItem;
-import net.sourcerer.android.QuickActionBar;
-import net.sourcerer.android.QuickActionClickListner;
-import net.sourcerer.android.QuickActionPreOpenListner;
 import roboguice.RoboGuice;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +44,10 @@ import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
+import com.andfchat.frontend.util.quickaction.ActionItem;
+import com.andfchat.frontend.util.quickaction.QuickActionBar;
+import com.andfchat.frontend.util.quickaction.QuickActionClickListner;
+import com.andfchat.frontend.util.quickaction.QuickActionPreOpenListner;
 import com.google.inject.Inject;
 
 public class MemberListAdapter extends ArrayAdapter<FCharacter> {

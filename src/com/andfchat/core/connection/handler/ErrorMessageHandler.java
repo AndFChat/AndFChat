@@ -23,6 +23,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import roboguice.util.Ln;
+
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
@@ -40,6 +42,9 @@ public class ErrorMessageHandler extends TokenHandler {
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
         if (token == ServerToken.ERR) {
             JSONObject json = new JSONObject(msg);
+
+            Ln.i("ERROR: " + json.getString("message"));
+
             FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
             ChatEntry chatEntry = new ChatEntry(json.getString("message"), systemChar, ChatEntryType.ERROR);
             this.addChatEntryToActiveChat(chatEntry);
