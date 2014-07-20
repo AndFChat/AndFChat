@@ -43,8 +43,8 @@
     <color name="background_chat_line_system">#0B255F</color>
     <color name="background_chat_warning">#FF0000</color>
     
-    <color name="background_chat_tab_active">#1E90FF</color>
-    <color name="background_chat_tab_attention">#FF4444</color>
+    <color name="background_chat_tab_active">#33B5E5</color>
+    <color name="background_chat_tab_attention">#FFBB33</color>
     
     <color name="name_annotation">#FFFFFF</color>
     <color name="name_error">#FF0000</color>
