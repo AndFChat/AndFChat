@@ -80,7 +80,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         quickActionBar.setOrientation(QuickActionBar.LEFT);
 
         // Add PM user
-        ActionItem pmUser = new ActionItem(context.getResources().getString(R.string.pm_user), context.getResources().getDrawable(R.drawable.add_chat));
+        ActionItem pmUser = new ActionItem(context.getResources().getString(R.string.pm_user), context.getResources().getDrawable(R.drawable.ic_pm));
         pmUser.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override
@@ -104,7 +104,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         final String unbookmarkText = context.getResources().getString(R.string.unbookmark_user);
 
         // Add Bookmark user
-        final ActionItem bookmark = new ActionItem(bookmarkText, context.getResources().getDrawable(R.drawable.friends));
+        final ActionItem bookmark = new ActionItem(bookmarkText, context.getResources().getDrawable(R.drawable.ic_bookmark));
         bookmark.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override
@@ -127,10 +127,12 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 if (activeCharacter.isBookmarked()) {
                     item.setSelected(true);
                     item.setTitle(unbookmarkText);
+                    item.setIcon(context.getResources().getDrawable(R.drawable.ic_bookmarked));
                 }
                 else {
                     item.setSelected(false);
                     item.setTitle(bookmarkText);
+                    item.setIcon(context.getResources().getDrawable(R.drawable.ic_bookmark));
                 }
             }
         });
@@ -138,7 +140,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         quickActionBar.addActionItem(bookmark);
 
         // Add show details
-        ActionItem showDetails = new ActionItem(context.getResources().getString(R.string.show_profile), context.getResources().getDrawable(R.drawable.info));
+        ActionItem showDetails = new ActionItem(context.getResources().getString(R.string.show_profile), context.getResources().getDrawable(R.drawable.ic_info));
         showDetails.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override

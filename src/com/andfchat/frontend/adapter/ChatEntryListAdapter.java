@@ -30,7 +30,6 @@ import android.widget.TextView;
 
 import com.andfchat.R;
 import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 
 public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
@@ -48,8 +47,31 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(this.getItem(position).getChatMessage(getContext()));
 
-        if (this.getItem(position).getMessageType() == ChatEntryType.WARNING) {
+        // Adding the right colour
+        switch (getItem(position).getMessageType()) {
+        case WARNING:
             textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_warning));
+            break;
+        case ERROR:
+            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_attention));
+            break;
+        case MESSAGE:
+            if (getItem(position).isOwned()) {
+                textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_owned));
+            }
+            else {
+                textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line));
+            }
+            break;
+        case EMOTE:
+            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line));
+            break;
+        case AD:
+            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_system));
+            break;
+        default:
+            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_system));
+            break;
         }
 
         // Follow links to browser

@@ -23,7 +23,7 @@
     <ListView 
         android:id="@+id/channelList"
         android:layout_height="match_parent"
-        android:layout_width="@dimen/width_channel_sidebar"
+        android:layout_width="match_parent"
     />
     
 </RelativeLayout>

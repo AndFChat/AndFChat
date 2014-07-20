@@ -54,6 +54,8 @@ public class ChatEntry implements Serializable {
     private Integer stringId = null;
     private Object[] values = null;
 
+    private boolean isOwned = false;
+
     private transient Spannable spannedText;
     private transient boolean isCreated = false;
 
@@ -88,6 +90,14 @@ public class ChatEntry implements Serializable {
 
         this.messageType = messageType;
         this.text = text;
+    }
+
+    public void setOwned(boolean isOwned) {
+        this.isOwned = isOwned;
+    }
+
+    public boolean isOwned() {
+        return isOwned;
     }
 
     public Date getDate() {

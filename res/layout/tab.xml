@@ -33,6 +33,6 @@
         android:id="@+id/tabIcon"
         android:layout_width="25dp"
     	android:layout_height="25dp"
-    	android:background="@drawable/cancel"/>
+    	android:background="@drawable/ic_cancel"/>
     
 </LinearLayout>    

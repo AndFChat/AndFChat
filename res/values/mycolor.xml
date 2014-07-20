@@ -29,22 +29,24 @@
     <color name="pink">#FFCBDB</color>
     <color name="purple">#DD00FF</color>
     
+    <!-- ChatEntry text color -->
     <color name="text_message_color">#FFFFFF</color>
     <color name="text_annotation_color">#FFFFFF</color>
     <color name="text_timestomp_color">#BBBBCC</color>
     
-    <color name="border_small">#1E90FF</color>        
+    <color name="background_color">#0b255f</color>    
+    <color name="background_chat_empty">#051538</color>
     
-    <color name="background_color">#000000</color>    
-    <color name="background_chat_empty">#000000</color>
+    <!-- ChatEntry backgrounds -->
     <color name="background_chat_line">#043E80</color>
     <color name="background_chat_line_owned">#0B255F</color>
     <color name="background_chat_line_attention">#FF0000</color>
-    <color name="background_chat_line_system">#0B255F</color>
-    <color name="background_chat_warning">#FF0000</color>
+    <color name="background_chat_line_system">#525580</color>
+    <color name="background_chat_warning">#FF0000</color>    
     
-    <color name="background_chat_tab_active">#33B5E5</color>
-    <color name="background_chat_tab_attention">#FFBB33</color>
+    <color name="background_chat_tab_active">#1E90FF</color>
+    <color name="background_chat_tab_attention">#FF4444</color>
+    <color name="background_chat_tab">#043E80</color>
     
     <color name="name_annotation">#FFFFFF</color>
     <color name="name_error">#FF0000</color>
@@ -53,6 +55,7 @@
     <color name="name_friend">#87F717</color>
     <color name="name_bookmark">#87F717</color>
     
+    <!-- GENDERS -->
     <color name="name_male">#6699FF</color>
     <color name="name_female">#FF6699</color>
     <color name="name_shemale">#CC66FF</color>

@@ -36,6 +36,10 @@ public class ChatroomManager {
 
     @Inject
     protected AndFChatEventManager eventManager;
+    @Inject
+    private HistoryManager historyManager;
+    @Inject
+    private SessionData sessionData;
 
     private final ArrayList<Chatroom> chats = new ArrayList<Chatroom>();
     private Chatroom activeChat;
@@ -44,8 +48,6 @@ public class ChatroomManager {
     private final Set<String> officialChannelSet = new HashSet<String>();
     private final Set<Channel> privateChannelSet = new HashSet<Channel>();
 
-    @Inject
-    private HistoryManager historyManager;
 
     // Adds a chat message to evry channel
     public void addBroadcast(ChatEntry entry) {
@@ -124,6 +126,8 @@ public class ChatroomManager {
     public void addMessage(Chatroom chatroom, ChatEntry entry) {
         chatroom.addMessage(entry);
         eventManager.fire(entry, chatroom);
+
+        entry.setOwned(sessionData.isUser(entry.getOwner()));
 
         if (chatroom.hasNewMessage() == false && isActiveChat(chatroom) == false) {
             chatroom.setHasNewMessage(true);

@@ -18,7 +18,7 @@
     <dimen name="width_user_sidebar">100dp</dimen>
     <dimen name="width_channel_sidebar">60dp</dimen>
     
-    <dimen name="image_size_chatroom">45dp</dimen>
+    <dimen name="image_size_chatroom">50dp</dimen>
     <dimen name="image_size_user_status">20dp</dimen>
     
     <dimen name="text_size_button_small">10sp</dimen>

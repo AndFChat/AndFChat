@@ -22,7 +22,6 @@ import java.util.List;
 
 import roboguice.RoboGuice;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,10 +39,18 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
     @Inject
     private ChatroomManager chatroomManager;
 
+    private final int activeColor;
+    private final int attentionColor;
+    private final int color;
+
     public ChatroomListAdapter(Context context, List<Chatroom> entries) {
         super(context, R.layout.list_item_chat, entries);
 
         RoboGuice.getInjector(context).injectMembers(this);
+
+        activeColor = context.getResources().getColor(R.color.background_chat_tab_active);
+        attentionColor = context.getResources().getColor(R.color.background_chat_tab_attention);
+        color = context.getResources().getColor(R.color.background_chat_tab);
     }
 
     @Override
@@ -70,13 +77,13 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         title.setText("#" + chatroom.getName());
 
         if (chatroomManager.getActiveChat() != null && chatroomManager.getActiveChat().getId().equals(chatroom.getId())) {
-            rowView.setBackgroundColor(Color.BLUE);
+            rowView.setBackgroundColor(activeColor);
         }
         else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
-            rowView.setBackgroundColor(Color.RED);
+            rowView.setBackgroundColor(attentionColor);
         }
         else {
-            rowView.setBackgroundColor(Color.BLACK);
+            rowView.setBackgroundColor(color);
         }
 
         return rowView;

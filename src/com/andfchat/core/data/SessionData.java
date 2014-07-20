@@ -72,6 +72,10 @@ public class SessionData {
         return characterName;
     }
 
+    public boolean isUser(FCharacter character) {
+        return character.getName().equals(characterName);
+    }
+
     public SessionSettings getSessionSettings() {
         return sessionSettings;
     }

@@ -17,31 +17,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
    <item android:id="@+id/action_add_chat"
-     	android:icon="@drawable/add_chat"
+     	android:icon="@drawable/ic_add_chat"
      	android:title="@string/channels"
      	android:showAsAction="ifRoom" 
     />   
     
     <item android:id="@+id/action_open_friendlist"
-     	android:icon="@drawable/friends"
+     	android:icon="@drawable/ic_show_friends"
      	android:title="@string/friendlist"
      	android:showAsAction="ifRoom" 
     />
    
     <item android:id="@+id/action_open_settings"
-     	android:icon="@drawable/settings"
+     	android:icon="@drawable/ic_settings"
      	android:title="@string/settings"
      	android:showAsAction="ifRoom" 
     />
     
     <item android:id="@+id/action_disconnect"
-     	android:icon="@drawable/disconnect"
+     	android:icon="@drawable/ic_disconnect"
      	android:title="@string/logout"
      	android:showAsAction="ifRoom" 
     />
             
     <item android:id="@+id/action_about"
-        android:icon="@drawable/disconnect"
+        android:icon="@drawable/ic_disconnect"
         android:title="@string/about"
         android:showAsAction="never" 
     />     
