@@ -19,14 +19,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+    android:background="@color/background_chat_empty"
     tools:context=".ChatScreen">
 	        
     <fragment
         android:id="@+id/channelListFragment"
         android:name="com.andfchat.frontend.fragments.ChannelListFragment"
         android:layout_width="@dimen/width_channel_sidebar"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+    />
     
     <LinearLayout
         android:id="@+id/chatActionBar"
@@ -35,41 +36,50 @@
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/chatFragment"
         android:layout_alignLeft="@+id/chatFragment"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/toggleSidebarLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
-            android:onClick="toggleSidebarLeft"
-            android:textSize="@dimen/text_size_button_greater"
-            android:text="@string/arrows_left"
-        />
+        android:orientation="horizontal"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp">
         
-        <Button
-            android:id="@+id/actionButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_button_greater"
-            android:text="@string/actions"
-        />
-                                
-        <LinearLayout
+        <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"    
-            android:orientation="horizontal"
-            android:layout_gravity="right"
-            android:gravity="right">
-                
+            android:layout_height="wrap_content"
+            android:background="@color/background_color">
+        
             <Button
-                android:id="@+id/toggleSidebarRight"
+                android:id="@+id/toggleSidebarLeft"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="toggleSidebarRight"
+                android:layout_height="wrap_content"            
+                android:onClick="toggleSidebarLeft"
                 android:textSize="@dimen/text_size_button_greater"
-                android:text="@string/arrows_right"
+                android:text="@string/arrows_left"
             />
             
+            <Button
+                android:id="@+id/actionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_button_greater"
+                android:text="@string/actions"
+            />
+                                    
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"    
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:gravity="right">
+                    
+                <Button
+                    android:id="@+id/toggleSidebarRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="toggleSidebarRight"
+                    android:textSize="@dimen/text_size_button_greater"
+                    android:text="@string/arrows_right"
+                />
+                
+            </LinearLayout>
+        
         </LinearLayout>
         
     </LinearLayout>
@@ -82,6 +92,7 @@
         android:layout_toLeftOf="@+id/userListFragment"
         android:layout_above="@+id/chatInputFragment"
         android:layout_below="@+id/chatActionBar"
+        
     />
 
    <fragment android:name="com.andfchat.frontend.fragments.UserListFragment"
@@ -90,7 +101,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_above="@+id/chatInputFragment"
-        
     />  
     
     <fragment android:name="com.andfchat.frontend.fragments.ChatInputFragment"

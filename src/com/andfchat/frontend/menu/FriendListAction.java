@@ -33,7 +33,7 @@ import android.widget.PopupWindow;
 import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.FCharacter;
-import com.andfchat.frontend.adapter.MemberListAdapter;
+import com.andfchat.frontend.adapter.FriendListAdapter;
 import com.andfchat.frontend.popup.FListPopupWindow;
 
 public class FriendListAction {
@@ -56,7 +56,7 @@ public class FriendListAction {
         final ListView friendList = (ListView)layout.findViewById(R.id.channlesToJoin);
 
         List<FCharacter> friendsData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getImportantCharacters());
-        MemberListAdapter memberListData = new MemberListAdapter(activity, friendsData);
-        friendList.setAdapter(memberListData);
+        FriendListAdapter friendListData = new FriendListAdapter(activity, friendsData);
+        friendList.setAdapter(friendListData);
     }
 }

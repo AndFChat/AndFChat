@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.andfchat.R;
-import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
@@ -42,8 +41,6 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListn
 
     @Inject
     private ChatroomManager chatroomManager;
-    @Inject
-    private CharacterManager characterManager;
 
     @InjectView(R.id.userlist)
     private ListView memberListView;

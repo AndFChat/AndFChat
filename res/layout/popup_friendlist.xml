@@ -47,12 +47,14 @@
         android:orientation="vertical"
 	    android:layout_width="match_parent"
     	android:layout_height="match_parent"
-     	android:background="@color/black">
+     	android:background="@color/background_color">
 
         <ListView 	            
             android:id="@+id/channlesToJoin"
 	        android:layout_height="match_parent"
-	        android:layout_width="match_parent">             
+	        android:layout_width="match_parent"
+            android:divider="@color/gray"
+            android:dividerHeight="1px">             
         </ListView>
         
     </LinearLayout>    

@@ -69,6 +69,7 @@ import com.andfchat.frontend.fragments.ChatInputFragment;
 import com.andfchat.frontend.fragments.UserListFragment;
 import com.andfchat.frontend.menu.AboutAction;
 import com.andfchat.frontend.menu.DisconnectAction;
+import com.andfchat.frontend.menu.FriendListAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
 import com.andfchat.frontend.popup.FListPopupWindow;
 import com.andfchat.frontend.util.Exporter;
@@ -142,7 +143,6 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         Point size = new Point();
         display.getSize(size);
         height = size.y;
-
 
         actionBar = new QuickActionBar(this);
         actionBar.setOrientation(QuickActionBar.BOTTOM);
@@ -372,7 +372,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
                 JoinChannelAction.open(this, chat.getView(), height);
                 return true;
             case R.id.action_open_friendlist:
-                //FriendListAction.open(this, chat.getView(), height);
+                FriendListAction.open(this, chat.getView(), height);
                 return true;
             case R.id.action_disconnect:
                 DisconnectAction.disconnect(this);

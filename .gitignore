@@ -23,3 +23,4 @@ local.properties
 /.classpath
 
 /proguard-project.txt
+lint.xml
