@@ -26,6 +26,8 @@ import java.util.Set;
 import roboguice.RoboGuice;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +51,7 @@ import com.google.inject.Inject;
 
 public class JoinChannelAction {
 
-    public static void open(Activity activity, View parent, int height) {
+    public static void open(Activity activity, View parent) {
 
         final ChatroomManager chatroomManager = RoboGuice.getInjector(activity).getInstance(ChatroomManager.class);
         final FlistWebSocketConnection connection = RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class);
@@ -58,12 +60,13 @@ public class JoinChannelAction {
 
         View layout = inflater.inflate(R.layout.popup_add_channels, null);
 
-        int width = (int)(parent.getWidth() * 0.8f);
-        height = (int)(height * 0.7f);
-        // Max width
-        if (width > 800) {
-            width = 800;
-        }
+        Display display = activity.getWindowManager().getDefaultDisplay();
+
+        Point size = new Point();
+        display.getSize(size);
+
+        int height = (int)(size.y * 0.8f);
+        int width = (int)(size.x * 0.8f);
 
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);

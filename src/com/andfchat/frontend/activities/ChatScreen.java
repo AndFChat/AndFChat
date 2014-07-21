@@ -369,10 +369,10 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         // Do smaller chat height on displayed keyboard the height is determined by display size.
         switch (item.getItemId()) {
             case R.id.action_add_chat:
-                JoinChannelAction.open(this, chat.getView(), height);
+                JoinChannelAction.open(this, chat.getView());
                 return true;
             case R.id.action_open_friendlist:
-                FriendListAction.open(this, chat.getView(), height);
+                FriendListAction.open(this, chat.getView());
                 return true;
             case R.id.action_disconnect:
                 DisconnectAction.disconnect(this);
@@ -381,7 +381,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
                 startActivity(new Intent(this, Settings.class));
                 return true;
             case R.id.action_about:
-                AboutAction.open(this, chat.getView(), height);
+                AboutAction.open(this, chat.getView());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

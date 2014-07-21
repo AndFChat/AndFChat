@@ -20,7 +20,9 @@ package com.andfchat.frontend.menu;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.text.method.LinkMovementMethod;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +35,18 @@ import com.andfchat.frontend.popup.FListPopupWindow;
 
 public class AboutAction {
 
-    public static void open(Activity activity, View parent, int height) {
+    public static void open(Activity activity, View parent) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layout = inflater.inflate(R.layout.popup_about, null);
 
-        int width = (int)(parent.getWidth() * 0.8f);
-        height = (int)(height * 0.7f);
+        Display display = activity.getWindowManager().getDefaultDisplay();
+
+        Point size = new Point();
+        display.getSize(size);
+
+        int height = (int)(size.y * 0.8f);
+        int width = (int)(size.x * 0.8f);
 
         TextView text = (TextView)layout.findViewById(R.id.aboutText);
         // Make links clickable.
