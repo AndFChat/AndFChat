@@ -21,6 +21,7 @@ package com.andfchat.frontend.adapter;
 import java.util.List;
 
 import roboguice.RoboGuice;
+import roboguice.util.Ln;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -213,6 +214,10 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 }
             }
         });
+
+        if (position == 1) {
+            Ln.d("Redrawn");
+        }
 
         return rowView;
     }

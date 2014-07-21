@@ -158,7 +158,7 @@ public class ChatroomManager {
 
     public void removeFlistCharFromChat(FCharacter character) {
         for (Chatroom chatroom : chats) {
-            if (!chatroom.isPrivateChat()) {
+            if (!chatroom.isPrivateChat() && chatroom.getCharacters().contains(character)) {
                 chatroom.removeCharacter(character);
                 eventManager.fire(character, UserEventType.LEFT, chatroom);
             }

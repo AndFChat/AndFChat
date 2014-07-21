@@ -24,6 +24,7 @@ import java.util.List;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
+import roboguice.util.Ln;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +69,9 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListn
 
     @Override
     public void onEvent(FCharacter character, UserEventType type, Chatroom chatroom) {
-        if (chatroom.equals(chatroomManager.getActiveChat())) {
+        if (chatroomManager.isActiveChat(chatroom)) {
+            Ln.d(character);
+
             if (type == UserEventType.JOINED) {
                 memberListData.add(character);
             }
