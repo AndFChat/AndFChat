@@ -150,7 +150,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         //
         // Show description
         //
-        ActionItem showDescprition = new ActionItem(getString(R.string.channel_description), null);
+        ActionItem showDescprition = new ActionItem(getString(R.string.channel_description), getResources().getDrawable(R.drawable.ic_description));
         showDescprition.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override
@@ -178,7 +178,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         //
         // Export active chat
         //
-        ActionItem exportActiveChat = new ActionItem(getString(R.string.export_text), null);
+        ActionItem exportActiveChat = new ActionItem(getString(R.string.export_text), getResources().getDrawable(R.drawable.ic_export));
         exportActiveChat.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override
@@ -201,7 +201,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         //
         // Leave active chat
         //
-        ActionItem leaveActiveChat = new ActionItem(getString(R.string.leave_channel), null);
+        ActionItem leaveActiveChat = new ActionItem(getString(R.string.leave_channel), getResources().getDrawable(R.drawable.ic_leave));
         leaveActiveChat.setQuickActionClickListner(new QuickActionClickListner() {
 
             @Override
@@ -242,17 +242,17 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     public void toggleSidebarRight(View v) {
         if (userList.toggleVisibility()) {
-            toggleSidebarRight.setText(R.string.arrows_right);
+            toggleSidebarRight.setBackgroundResource(R.drawable.ic_arrow_right);
         } else {
-            toggleSidebarRight.setText(R.string.arrows_left);
+            toggleSidebarRight.setBackgroundResource(R.drawable.ic_arrow_left);
         }
     }
 
     public void toggleSidebarLeft(View v) {
         if (channelList.toggleVisibility()) {
-            toggleSidebarLeft.setText(R.string.arrows_left);
+            toggleSidebarLeft.setBackgroundResource(R.drawable.ic_arrow_left);
         } else {
-            toggleSidebarLeft.setText(R.string.arrows_right);
+            toggleSidebarLeft.setBackgroundResource(R.drawable.ic_arrow_right);
         }
     }
 
