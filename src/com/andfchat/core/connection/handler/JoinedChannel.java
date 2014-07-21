@@ -37,6 +37,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
+import com.andfchat.frontend.events.UserEventListner.UserEventType;
 
 /**
  * Handles channel joins, still misses private channel handling.
@@ -66,7 +67,7 @@ public class JoinedChannel extends TokenHandler {
                 eventManager.fire(chatroom, ChatroomEventType.NEW);
             }
             else {
-                eventManager.fire(character, chatroom);
+                eventManager.fire(character, UserEventType.JOINED, chatroom);
             }
         }
         else if (token == ServerToken.ICH) {

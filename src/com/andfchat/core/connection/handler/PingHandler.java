@@ -51,6 +51,7 @@ public class PingHandler extends TokenHandler {
         if (System.currentTimeMillis() - lastPIN > MIN_TIME_BETWEEN_PINGS) {
             connection.sendMessage(ClientToken.PIN);
             lastPIN = System.currentTimeMillis();
+            Ln.d("Got ping!");
         }
     }
 

@@ -52,7 +52,7 @@ import com.google.inject.Inject;
 
 public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
-    private final static FlistCharComparator COMPARATOR = new FlistCharComparator();
+    public final static FlistCharComparator COMPARATOR = new FlistCharComparator();
 
     @Inject
     private ChatroomManager chatroomManager;
@@ -201,22 +201,23 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
     }
 
     @Override
-    public void add(FCharacter flistChar) {
-        if (flistChar == null) {
+    public void add(FCharacter fCharacter) {
+        if (fCharacter == null || chars.contains(fCharacter)) {
             return;
         }
 
         boolean added = false;
+
         for (int i = 0; i < chars.size(); i++) {
-            if (COMPARATOR.compare(chars.get(i), flistChar) == 0) {
-                chars.add(i, flistChar);
+            if (COMPARATOR.compare(chars.get(i), fCharacter) >= 0) {
+                chars.add(i, fCharacter);
                 added = true;
                 break;
             }
         }
 
         if (!added) {
-            chars.add(flistChar);
+            chars.add(fCharacter);
         }
 
         notifyDataSetChanged();

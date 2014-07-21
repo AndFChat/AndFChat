@@ -19,6 +19,8 @@
 package com.andfchat.frontend.fragments;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -65,9 +67,14 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListn
     }
 
     @Override
-    public void onEvent(FCharacter character, Chatroom chatroom) {
+    public void onEvent(FCharacter character, UserEventType type, Chatroom chatroom) {
         if (chatroom.equals(chatroomManager.getActiveChat())) {
-            memberListData.notifyDataSetChanged();
+            if (type == UserEventType.JOINED) {
+                memberListData.add(character);
+            }
+            else {
+                memberListData.remove(character);
+            }
         }
     }
 
@@ -82,7 +89,10 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListn
                 getView().setVisibility(View.GONE);
             }
 
-            memberListData = new MemberListAdapter(getActivity(), chatroom.getCharacters());
+            List<FCharacter>  characters = new ArrayList<FCharacter>(chatroom.getCharacters());
+            Collections.sort(characters, MemberListAdapter.COMPARATOR);
+
+            memberListData = new MemberListAdapter(getActivity(), characters);
             memberListView.setAdapter(memberListData);
         }
     }

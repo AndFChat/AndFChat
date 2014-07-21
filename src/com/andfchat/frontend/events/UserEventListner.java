@@ -4,5 +4,10 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 
 public interface UserEventListner {
-    public void onEvent(FCharacter character, Chatroom chatroom);
+    public enum UserEventType {
+        JOINED,
+        LEFT
+    }
+
+    public void onEvent(FCharacter character, UserEventType type, Chatroom chatroom);
 }

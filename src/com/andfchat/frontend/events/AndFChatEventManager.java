@@ -7,6 +7,7 @@ import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
+import com.andfchat.frontend.events.UserEventListner.UserEventType;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -40,9 +41,9 @@ public class AndFChatEventManager {
         }
     }
 
-    public synchronized void fire(FCharacter character, Chatroom chatroom) {
+    public synchronized void fire(FCharacter character, UserEventType type, Chatroom chatroom) {
         for (UserEventListner listner : userEventListner) {
-            listner.onEvent(character, chatroom);
+            listner.onEvent(character, type, chatroom);
         }
     }
 

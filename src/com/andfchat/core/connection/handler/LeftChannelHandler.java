@@ -31,6 +31,7 @@ import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
+import com.andfchat.frontend.events.UserEventListner.UserEventType;
 
 /**
  * Handles left events on channels.
@@ -68,7 +69,7 @@ public class LeftChannelHandler extends TokenHandler {
             }
 
             chatroom.removeCharacter(character);
-            eventManager.fire(character, chatroom);
+            eventManager.fire(character, UserEventType.LEFT, chatroom);
         }
     }
 
