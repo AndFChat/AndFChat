@@ -34,6 +34,8 @@
     <color name="text_annotation_color">#FFFFFF</color>
     <color name="text_timestomp_color">#BBBBCC</color>
     
+    <color name="selected_user_color">#043E80</color>   
+    
     <color name="background_color">#0b255f</color>    
     <color name="background_chat_empty">#051538</color>
     

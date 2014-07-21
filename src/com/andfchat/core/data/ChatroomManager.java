@@ -28,6 +28,7 @@ import roboguice.util.Ln;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
+import com.andfchat.frontend.events.UserEventListner.UserEventType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -155,10 +156,11 @@ public class ChatroomManager {
         return null;
     }
 
-    public void removeFlistCharFromChat(FCharacter flistChar) {
-        for (Chatroom Chatroom : chats) {
-            if (!Chatroom.isPrivateChat()) {
-                Chatroom.removeCharacter(flistChar);
+    public void removeFlistCharFromChat(FCharacter character) {
+        for (Chatroom chatroom : chats) {
+            if (!chatroom.isPrivateChat()) {
+                chatroom.removeCharacter(character);
+                eventManager.fire(character, UserEventType.LEFT, chatroom);
             }
         }
     }

@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 
 import com.andfchat.R;
@@ -64,6 +65,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
     private final List<FCharacter> chars;
     private final QuickActionBar quickActionBar;
     private FCharacter activeCharacter;
+    private View activeCharacterView;
 
     public MemberListAdapter(final Context context, List<FCharacter> chars) {
         super(context, R.layout.list_item_user, chars);
@@ -150,6 +152,17 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             }
         });
         quickActionBar.addActionItem(showDetails);
+
+        quickActionBar.setOnDismissListener(new OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+                if (activeCharacterView != null) {
+                    activeCharacterView.setBackgroundColor(getContext().getResources().getColor(R.color.background_color));
+                    activeCharacterView = null;
+                }
+            }
+        });
     }
 
     @Override
@@ -191,7 +204,11 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             @Override
             public void onClick(View v) {
                 if (!sessionData.getCharacterName().equals(character.getName())) {
+                    rowView.setBackgroundColor(getContext().getResources().getColor(R.color.selected_user_color));
+
+                    activeCharacterView = rowView;
                     activeCharacter = character;
+
                     quickActionBar.show(v);
                 }
             }

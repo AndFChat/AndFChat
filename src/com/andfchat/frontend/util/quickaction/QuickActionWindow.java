@@ -54,7 +54,6 @@ public class QuickActionWindow {
             throw new RuntimeException("Can't open a popup without content!");
         }
 
-        content.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         popupWindow.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
@@ -66,6 +65,8 @@ public class QuickActionWindow {
     }
 
     public void setContentView(View content) {
+        content.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+
         this.content = content;
     }
 

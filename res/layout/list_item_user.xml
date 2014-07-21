@@ -17,14 +17,16 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"    
+    android:layout_height="wrap_content"
     android:orientation="vertical">
     
     <LinearLayout 
         android:id="@+id/userlabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp">
     
         <ImageView 
             android:layout_height="@dimen/image_size_user_status" 
@@ -38,8 +40,8 @@
     	    android:layout_height="match_parent"        
             android:id="@+id/itemText"
             android:textSize="@dimen/text_size_button_normal"
-            android:singleLine="true"      
-            android:text=""
+            android:singleLine="true"
+            android:text=""            
             android:gravity="center_vertical"
         />
     
