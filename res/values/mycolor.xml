@@ -15,47 +15,21 @@
       You should have received a copy of the GNU General Public License
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
-	<color name="red">#FF4444</color>
-	<color name="green">#44FF44</color>
-	<color name="blue">#1E90FF</color>
-	<color name="black">#000000</color>
-	<color name="white">#FFFFFF</color>
-	<color name="gray">#D3D3D3</color>
+<resources>    
+       
+    <!--  USED STANDARD COLORS -->
+    <color name="red">#FF4444</color>
+    <color name="green">#44FF44</color>
+    <color name="blue">#1E90FF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#D3D3D3</color>
     <color name="orange">#FFA500</color>
     <color name="cyan">#00FFFF</color>
     <color name="brown">#967117</color>
     <color name="yellow">#FFFF00</color>
     <color name="pink">#FFCBDB</color>
     <color name="purple">#DD00FF</color>
-    
-    <!-- ChatEntry text color -->
-    <color name="text_message_color">#FFFFFF</color>
-    <color name="text_annotation_color">#FFFFFF</color>
-    <color name="text_timestomp_color">#BBBBCC</color>
-    
-    <color name="selected_user_color">#043E80</color>   
-    
-    <color name="background_color">#0b255f</color>    
-    <color name="background_chat_empty">#051538</color>
-    
-    <!-- ChatEntry backgrounds -->
-    <color name="background_chat_line">#043E80</color>
-    <color name="background_chat_line_owned">#0B255F</color>
-    <color name="background_chat_line_attention">#FF0000</color>
-    <color name="background_chat_line_system">#051538</color>
-    <color name="background_chat_warning">#FF0000</color>    
-    
-    <color name="background_chat_tab_active">#1E90FF</color>
-    <color name="background_chat_tab_attention">#FF4444</color>
-    <color name="background_chat_tab">#043E80</color>
-    
-    <color name="name_annotation">#FFFFFF</color>
-    <color name="name_error">#FF0000</color>
-    <color name="name_ad">#FFFF00</color>
-    
-    <color name="name_friend">#87F717</color>
-    <color name="name_bookmark">#87F717</color>
     
     <!-- GENDERS -->
     <color name="name_male">#6699FF</color>
@@ -64,5 +38,63 @@
     <color name="name_herm">#9B30FF</color>
     <color name="name_cunt_boy">#00CC66</color>
     <color name="name_transgender">#EE8822</color>
-    <color name="name_unknown">#FFFFBB</color>
+    <color name="name_unknown">#FFFFBB</color>    
+    
+    <!-- CHATENTRY -->
+    <color name="text_annotation_color">#FFFFFF</color>
+    <color name="text_timestomp_color">#BBBBCC</color>
+    
+    <!-- NAMEPLATES -->
+    <color name="name_friend">#87F717</color>
+    <color name="name_bookmark">#87F717</color>
+    
+    <!-- THEME -->
+    <!-- THEME -->
+    <!-- THEME -->
+    
+    <color name="background_color">#000000</color>
+        
+    <!-- UserList -->
+    <color name="selected_user_color">#575757</color>   
+    
+    <!-- ChatEntry -->
+    <color name="text_chat_color">#FFFFFF</color>    
+    
+    <!-- ChatEntry backgrounds -->
+    <color name="background_chat_empty">#0D0D0D</color>
+    <color name="background_chat_line">#1C1C1C</color>
+    <color name="background_chat_line_owned">#262626</color>
+    <color name="background_chat_line_system">#0D0D0D</color>
+    <color name="background_chat_line_attention">#FF0000</color>
+    <color name="background_chat_warning">#FF0000</color>    
+    
+    <!-- Channel list background -->
+    <color name="background_chat_tab">#919191</color>
+    <color name="background_chat_tab_active">#5C7394</color>
+    <color name="background_chat_tab_attention">#FF4444</color>
+    
+    <!-- Nameplate colors -->
+    <color name="name_annotation">#FFFFFF</color>
+    <color name="name_error">#FF0000</color>
+    <color name="name_ad">#FFFF00</color>
+    
+    <!-- THEME.BLUE -->
+    <!-- THEME.BLUE -->
+    <!-- THEME.BLUE -->
+        
+    <color name="background_color_blue">#0b255f</color>
+    
+    <!-- UserList -->
+    <color name="selected_user_color_blue">#043E80</color>   
+    
+        <!-- ChatEntry backgrounds -->
+    <color name="background_chat_empty_blue">#051538</color>
+    <color name="background_chat_line_blue">#043E80</color>
+    <color name="background_chat_line_owned_blue">#0B255F</color>
+    <color name="background_chat_line_system_blue">#051538</color>
+    
+    <!-- Channel list background -->
+    <color name="background_chat_tab_blue">#043E80</color>
+    <color name="background_chat_tab_active_blue">#1E90FF</color>
+    <color name="background_chat_tab_attention_blue">#FF4444</color>
 </resources>

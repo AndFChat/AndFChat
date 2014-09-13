@@ -30,10 +30,10 @@ import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.adapter.ChatroomListAdapter;
-import com.andfchat.frontend.events.ChatroomEventListner;
+import com.andfchat.frontend.events.ChatroomEventListener;
 import com.google.inject.Inject;
 
-public class ChannelListFragment extends RoboFragment implements ChatroomEventListner {
+public class ChannelListFragment extends RoboFragment implements ChatroomEventListener {
 
     @Inject
     private ChatroomManager chatroomManager;

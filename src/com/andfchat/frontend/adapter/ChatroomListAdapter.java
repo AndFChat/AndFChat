@@ -22,6 +22,7 @@ import java.util.List;
 
 import roboguice.RoboGuice;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,16 +42,23 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
     private final int activeColor;
     private final int attentionColor;
-    private final int color;
+    private final int standardColor;
 
     public ChatroomListAdapter(Context context, List<Chatroom> entries) {
         super(context, R.layout.list_item_chat, entries);
 
         RoboGuice.getInjector(context).injectMembers(this);
 
-        activeColor = context.getResources().getColor(R.color.background_chat_tab_active);
-        attentionColor = context.getResources().getColor(R.color.background_chat_tab_attention);
-        color = context.getResources().getColor(R.color.background_chat_tab);
+        TypedArray colorArray = context.getTheme().obtainStyledAttributes(new int[]{
+                R.attr.BackgroundChatTab,
+                R.attr.BackgroundChatTabActive,
+                R.attr.BackgroundChatTabAttention});
+
+        standardColor = colorArray.getColor(0, 0);
+        activeColor = colorArray.getColor(1, 0);
+        attentionColor = colorArray.getColor(2, 0);
+
+        colorArray.recycle();
     }
 
     @Override
@@ -63,8 +71,10 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             return rowView;
         }
 
-        LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        rowView = inflater.inflate(R.layout.list_item_chat, null);
+        if (rowView == null) {
+            LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = inflater.inflate(R.layout.list_item_chat, null);
+        }
 
         rowView.setOnClickListener(new OnClickListener() {
             @Override
@@ -76,14 +86,14 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         TextView title = (TextView)rowView.findViewById(R.id.ChatroomName);
         title.setText("#" + chatroom.getName());
 
-        if (chatroomManager.getActiveChat() != null && chatroomManager.getActiveChat().getId().equals(chatroom.getId())) {
+        if (chatroomManager.isActiveChat(chatroom)) {
             rowView.setBackgroundColor(activeColor);
         }
         else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
             rowView.setBackgroundColor(attentionColor);
         }
         else {
-            rowView.setBackgroundColor(color);
+            rowView.setBackgroundColor(standardColor);
         }
 
         return rowView;

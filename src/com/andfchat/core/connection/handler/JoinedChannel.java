@@ -36,8 +36,8 @@ import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
-import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
-import com.andfchat.frontend.events.UserEventListner.UserEventType;
+import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
+import com.andfchat.frontend.events.UserEventListener.UserEventType;
 
 /**
  * Handles channel joins, still misses private channel handling.

@@ -39,7 +39,7 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.activities.Login;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
-import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
+import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

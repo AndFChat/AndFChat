@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" android:dither="true">
+
+    <item android:state_selected="true"
+        android:drawable="@color/selected_user_color_blue" />
+    <item 
+        android:drawable="@color/background_color_blue" />
+
+</selector>

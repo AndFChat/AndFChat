@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <style name="AppTheme" parent="android:Theme.Holo">
+        <!-- COLORS -->   
+        <item name="BackgroundColor">@color/background_color</item>
+        <!-- CHAT COLORS -->
+        <item name="BackgroundChatEmpty">@color/background_chat_empty</item>
+        <item name="BackgroundChatLine">@color/background_chat_line</item>
+        <item name="BackgroundChatLineSelf">@color/background_chat_line_owned</item>
+        <item name="BackgroundChatSystem">@color/background_chat_line_system</item>
+        <item name="BackgroundChatAttention">@color/background_chat_line_attention</item>
+        <item name="BackgroundChatWarning">@color/background_chat_warning</item>
+        <!-- CHANNEL TABS COLORS -->
+        <item name="BackgroundChatTab">@color/background_chat_tab</item>
+        <item name="BackgroundChatTabActive">@color/background_chat_tab_active</item>
+        <item name="BackgroundChatTabAttention">@color/background_chat_tab_attention</item>
+        <!-- TEXT COLORS -->
+        <item name="ChatTextColor">@color/text_chat_color</item>
+        <!-- IMAGES -->
+        <item name="ToggleDirectionButton">@drawable/btn_direction_toggle</item>
+        <!-- STYLES -->
+        <item name="UserListBackground">@drawable/background_userlist</item>        
+    </style>
+    
+    <style name="AppTheme.Blue">
+        <!-- COLORS -->  
+        <item name="BackgroundColor">@color/background_color_blue</item>
+        <!-- CHAT COLORS -->
+        <item name="BackgroundChatEmpty">@color/background_chat_empty_blue</item>
+        <item name="BackgroundChatLine">@color/background_chat_line_blue</item>
+        <item name="BackgroundChatLineSelf">@color/background_chat_line_owned_blue</item>
+        <item name="BackgroundChatSystem">@color/background_chat_line_system_blue</item>
+        <!-- CHANNEL TABS COLORS -->
+        <item name="BackgroundChatTab">@color/background_chat_tab_blue</item>
+        <item name="BackgroundChatTabActive">@color/background_chat_tab_active_blue</item>
+        <item name="BackgroundChatTabAttention">@color/background_chat_tab_attention_blue</item>
+        <!-- TEXT COLORS -->
+           
+        <!-- IMAGES -->
+        
+        <!-- STYLES -->
+        <item name="UserListBackground">@drawable/background_userlist_blue</item>    
+    </style>
+</resources>

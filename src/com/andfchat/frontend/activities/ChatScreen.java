@@ -23,6 +23,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sourcerer.quickaction.ActionItem;
+import net.sourcerer.quickaction.QuickActionBar;
+import net.sourcerer.quickaction.QuickActionOnClickListener;
+import net.sourcerer.quickaction.QuickActionOnOpenListener;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
@@ -60,9 +64,9 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.core.util.SmileyReader;
 import com.andfchat.frontend.events.AndFChatEventManager;
-import com.andfchat.frontend.events.ChatroomEventListner;
-import com.andfchat.frontend.events.MessageEventListner;
-import com.andfchat.frontend.events.UserEventListner;
+import com.andfchat.frontend.events.ChatroomEventListener;
+import com.andfchat.frontend.events.MessageEventListener;
+import com.andfchat.frontend.events.UserEventListener;
 import com.andfchat.frontend.fragments.ChannelListFragment;
 import com.andfchat.frontend.fragments.ChatFragment;
 import com.andfchat.frontend.fragments.ChatInputFragment;
@@ -73,13 +77,9 @@ import com.andfchat.frontend.menu.FriendListAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
 import com.andfchat.frontend.popup.FListPopupWindow;
 import com.andfchat.frontend.util.Exporter;
-import com.andfchat.frontend.util.quickaction.ActionItem;
-import com.andfchat.frontend.util.quickaction.QuickActionBar;
-import com.andfchat.frontend.util.quickaction.QuickActionClickListner;
-import com.andfchat.frontend.util.quickaction.QuickActionPreOpenListner;
 import com.google.inject.Inject;
 
-public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListner {
+public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListener {
 
     @Inject
     protected CharacterManager charManager;
@@ -119,23 +119,30 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     private QuickActionBar actionBar;
 
+    // Saving stuff
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_screen);
 
+        toggleSidebarRight.setSelected(true);
+
         eventManager.clear();
         eventManager.register(this);
 
+        // Fetch fragments
         chat = (ChatFragment)getSupportFragmentManager().findFragmentById(R.id.chatFragment);
         userList = (UserListFragment)getSupportFragmentManager().findFragmentById(R.id.userListFragment);
         channelList = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.channelListFragment);
         inputFragment = (ChatInputFragment)getSupportFragmentManager().findFragmentById(R.id.chatInputFragment);
+
         // Register fragments
-        eventManager.register((ChatroomEventListner)chat);
-        eventManager.register((MessageEventListner)chat);
-        eventManager.register((ChatroomEventListner)userList);
-        eventManager.register((UserEventListner)userList);
+        eventManager.register((ChatroomEventListener)chat);
+        eventManager.register((MessageEventListener)chat);
+        eventManager.register((ChatroomEventListener)userList);
+        eventManager.register((UserEventListener)userList);
         eventManager.register(channelList);
         eventManager.register(inputFragment);
 
@@ -151,7 +158,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         // Show description
         //
         ActionItem showDescprition = new ActionItem(getString(R.string.channel_description), getResources().getDrawable(R.drawable.ic_description));
-        showDescprition.setQuickActionClickListner(new QuickActionClickListner() {
+        showDescprition.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
             public void onClick(ActionItem item, View view) {
@@ -159,10 +166,10 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             }
         });
 
-        showDescprition.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+        showDescprition.setQuickActionOnOpenListener(new QuickActionOnOpenListener() {
 
             @Override
-            public void onPreOpen(ActionItem item) {
+            public void onOpen(ActionItem item) {
                 Chatroom chat = chatroomManager.getActiveChat();
 
                 if (chat.isPrivateChat() || chat.isSystemChat()) {
@@ -179,7 +186,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         // Export active chat
         //
         ActionItem exportActiveChat = new ActionItem(getString(R.string.export_text), getResources().getDrawable(R.drawable.ic_export));
-        exportActiveChat.setQuickActionClickListner(new QuickActionClickListner() {
+        exportActiveChat.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
             public void onClick(ActionItem item, View view) {
@@ -187,10 +194,10 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             }
         });
 
-        exportActiveChat.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+        exportActiveChat.setQuickActionOnOpenListener(new QuickActionOnOpenListener() {
 
             @Override
-            public void onPreOpen(ActionItem item) {
+            public void onOpen(ActionItem item) {
                 Chatroom chat = chatroomManager.getActiveChat();
                 item.setEnabled(chat.isSystemChat() == false);
             }
@@ -202,7 +209,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         // Leave active chat
         //
         ActionItem leaveActiveChat = new ActionItem(getString(R.string.leave_channel), getResources().getDrawable(R.drawable.ic_leave));
-        leaveActiveChat.setQuickActionClickListner(new QuickActionClickListner() {
+        leaveActiveChat.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
             public void onClick(ActionItem item, View view) {
@@ -210,10 +217,10 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             }
         });
 
-        leaveActiveChat.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+        leaveActiveChat.setQuickActionOnOpenListener(new QuickActionOnOpenListener() {
 
             @Override
-            public void onPreOpen(ActionItem item) {
+            public void onOpen(ActionItem item) {
                 Chatroom chat = chatroomManager.getActiveChat();
                 if (chat.isCloseable()) {
                     item.setVisibility(View.VISIBLE);
@@ -241,19 +248,11 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     }
 
     public void toggleSidebarRight(View v) {
-        if (userList.toggleVisibility()) {
-            toggleSidebarRight.setBackgroundResource(R.drawable.ic_arrow_right);
-        } else {
-            toggleSidebarRight.setBackgroundResource(R.drawable.ic_arrow_left);
-        }
+        toggleSidebarRight.setSelected(userList.toggleVisibility());
     }
 
     public void toggleSidebarLeft(View v) {
-        if (channelList.toggleVisibility()) {
-            toggleSidebarLeft.setBackgroundResource(R.drawable.ic_arrow_left);
-        } else {
-            toggleSidebarLeft.setBackgroundResource(R.drawable.ic_arrow_right);
-        }
+        toggleSidebarLeft.setSelected(!channelList.toggleVisibility());
     }
 
     public void showDescription() {

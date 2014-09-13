@@ -20,7 +20,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"    
    	android:layout_gravity="center_horizontal"
-    android:background="@color/background_color">
+    android:background="?attr/BackgroundColor">
 
     <LinearLayout
         android:layout_width="250dp"
@@ -31,6 +31,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Small"
             android:text="@string/select_character"
             android:layout_marginTop="50dp"
         />
@@ -38,8 +39,7 @@
         <Spinner
             android:id="@+id/charField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="13" >
+            android:layout_height="wrap_content">
             <requestFocus />
         </Spinner>
     

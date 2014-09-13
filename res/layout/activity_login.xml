@@ -20,51 +20,55 @@
     android:layout_height="match_parent"
     android:orientation="vertical"    
    	android:gravity="center_horizontal"     
-    android:background="@color/background_color"
+    android:background="?attr/BackgroundColor"
     tools:context=".Login" >
 
     <TextView
         android:id="@+id/loginErrorField"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/red"
-        android:text=""
         android:gravity="center_horizontal"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textColor="@color/red"
         android:layout_marginTop="50dp"/>
     
     <LinearLayout     
+	    android:layout_width="250dp"
+    	android:layout_height="wrap_content"
         android:orientation="vertical"
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content">                
+        android:layout_gravity="center_horizontal">                
         
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/account"
+            android:textAppearance="@android:style/TextAppearance.Small"
         />
             
         <EditText
             android:id="@+id/accountField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" 
-            android:ems="13" >
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:inputType="text">
+            
             <requestFocus />
+            
         </EditText>       
         
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/password"
+            android:textAppearance="@android:style/TextAppearance.Small"
         />    
         
         <EditText
             android:id="@+id/passwordField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" 
-            android:ems="13"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            android:inputType="textPassword"
         />
 
         <CheckBox 

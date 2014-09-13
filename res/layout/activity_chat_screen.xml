@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_chat_empty"
+    android:background="?attr/BackgroundColor"
     tools:context=".ChatScreen">
 	        
     <fragment
@@ -42,22 +42,20 @@
         
         <LinearLayout 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background_color">
+            android:layout_height="wrap_content">
         
             <Button
                 android:id="@+id/toggleSidebarLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"            
                 android:onClick="toggleSidebarLeft"
-                android:background="@drawable/ic_arrow_left"
+                android:background="?attr/ToggleDirectionButton"
             />
             
             <Button
                 android:id="@+id/actionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_button_greater"
                 android:text="@string/actions"
             />
                                     
@@ -73,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="toggleSidebarRight"
-                    android:background="@drawable/ic_arrow_right"
+                    android:background="?attr/ToggleDirectionButton"
                 />
                 
             </LinearLayout>
@@ -89,8 +87,7 @@
         android:layout_toRightOf="@+id/channelListFragment"
         android:layout_toLeftOf="@+id/userListFragment"
         android:layout_above="@+id/chatInputFragment"
-        android:layout_below="@+id/chatActionBar"
-        
+        android:layout_below="@+id/chatActionBar"        
     />
 
    <fragment android:name="com.andfchat.frontend.fragments.UserListFragment"

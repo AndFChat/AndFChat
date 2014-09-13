@@ -114,6 +114,7 @@ public class ChatEntry implements Serializable {
 
     public Spannable getChatMessage(Context context) {
         if (!isCreated) {
+
             String dateText = DATE_FORMAT.format(date);
             // older than 24h
             if (date.before(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000))) {

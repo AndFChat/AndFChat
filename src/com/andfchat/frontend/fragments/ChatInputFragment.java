@@ -35,10 +35,10 @@ import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.util.Console;
-import com.andfchat.frontend.events.ChatroomEventListner;
+import com.andfchat.frontend.events.ChatroomEventListener;
 import com.google.inject.Inject;
 
-public class ChatInputFragment extends RoboFragment implements ChatroomEventListner {
+public class ChatInputFragment extends RoboFragment implements ChatroomEventListener {
 
     @Inject
     protected ChatroomManager chatroomManager;

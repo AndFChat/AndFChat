@@ -37,11 +37,11 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
 import com.andfchat.frontend.events.AndFChatEventManager;
-import com.andfchat.frontend.events.ChatroomEventListner;
-import com.andfchat.frontend.events.MessageEventListner;
+import com.andfchat.frontend.events.ChatroomEventListener;
+import com.andfchat.frontend.events.MessageEventListener;
 import com.google.inject.Inject;
 
-public class ChatFragment extends RoboFragment implements ChatroomEventListner, MessageEventListner {
+public class ChatFragment extends RoboFragment implements ChatroomEventListener, MessageEventListener {
 
     @Inject
     protected ChatroomManager chatroomManager;

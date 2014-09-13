@@ -54,7 +54,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
     private final List<FCharacter> chars;
 
     public FriendListAdapter(final Context context, List<FCharacter> chars) {
-        super(context, R.layout.list_item_user, chars);
+        super(context, R.layout.list_item_friend, chars);
 
         if (chars.size() > 1) {
             this.sort(COMPARATOR);
@@ -69,8 +69,12 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final FCharacter character = this.getItem(position);
 
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.list_item_friend, null);
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.list_item_friend, null);
+        }
+
+        final View rowView = convertView;
         // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(new NameSpannable(character, null, getContext().getResources()));

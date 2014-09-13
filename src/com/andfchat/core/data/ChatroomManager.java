@@ -27,8 +27,8 @@ import roboguice.util.Ln;
 
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.events.AndFChatEventManager;
-import com.andfchat.frontend.events.ChatroomEventListner.ChatroomEventType;
-import com.andfchat.frontend.events.UserEventListner.UserEventType;
+import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
+import com.andfchat.frontend.events.UserEventListener.UserEventType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

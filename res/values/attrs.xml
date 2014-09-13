@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <!-- COLORS -->   
+    <attr name="BackgroundColor" format="color|reference" />
+    <!-- CHAT COLORS -->
+    <attr name="BackgroundChatEmpty" format="color|reference" />
+    <attr name="BackgroundChatLine" format="color|reference" />
+    <attr name="BackgroundChatLineSelf" format="color|reference" />
+    <attr name="BackgroundChatSystem" format="color|reference" />
+    <attr name="BackgroundChatAttention" format="color|reference" />
+    <attr name="BackgroundChatWarning" format="color|reference" />
+    <!-- CHANNEL TABS COLORS -->
+    <attr name="BackgroundChatTab" format="color|reference" />
+    <attr name="BackgroundChatTabActive" format="color|reference" />
+    <attr name="BackgroundChatTabAttention" format="color|reference" />
+    <!-- TEXT COLORS -->
+    <attr name="ChatTextColor" format="color" />
+    <!-- IMAGES -->
+    <attr name="ToggleDirectionButton" format="reference" />
+    <!-- STYLES -->
+    <attr name="UserListBackground" format="color|reference"/>
+    
+</resources>

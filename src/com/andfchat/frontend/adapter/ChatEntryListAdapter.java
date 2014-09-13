@@ -21,6 +21,7 @@ package com.andfchat.frontend.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,16 +34,40 @@ import com.andfchat.core.data.ChatEntry;
 
 public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
+    private final int colorLine;
+    private final int colorOwned;
+    private final int colorSystem;
+    private final int colorWarning;
+    private final int colorAttention;
+
     public ChatEntryListAdapter(Context context, List<ChatEntry> entries) {
         super(context, R.layout.list_item_message, entries);
+
+        // Load theme colors
+        TypedArray styles = context.getTheme().obtainStyledAttributes(new int[]{
+                R.attr.BackgroundChatLine,
+                R.attr.BackgroundChatLineSelf,
+                R.attr.BackgroundChatSystem,
+                R.attr.BackgroundChatWarning,
+                R.attr.BackgroundChatAttention});
+
+        colorLine = styles.getColor(0, 0);
+        colorOwned = styles.getColor(1, 0);
+        colorSystem = styles.getColor(2, 0);
+        colorWarning = styles.getColor(3, 0);
+        colorAttention = styles.getColor(4, 0);
+
+        styles.recycle();
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
 
-        LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        rowView = inflater.inflate(R.layout.list_item_message, null);
+        if (rowView == null) {
+            LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = inflater.inflate(R.layout.list_item_message, null);
+        }
 
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(this.getItem(position).getChatMessage(getContext()));
@@ -50,27 +75,27 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
         // Adding the right colour
         switch (getItem(position).getMessageType()) {
         case WARNING:
-            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_warning));
+            textView.setBackgroundColor(colorWarning);
             break;
         case ERROR:
-            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_attention));
+            textView.setBackgroundColor(colorAttention);
             break;
         case MESSAGE:
             if (getItem(position).isOwned()) {
-                textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_owned));
+                textView.setBackgroundColor(colorOwned);
             }
             else {
-                textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line));
+                textView.setBackgroundColor(colorLine);
             }
             break;
         case EMOTE:
-            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line));
+            textView.setBackgroundColor(colorLine);
             break;
         case AD:
-            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_system));
+            textView.setBackgroundColor(colorSystem);
             break;
         default:
-            textView.setBackgroundColor(getContext().getResources().getColor(R.color.background_chat_line_system));
+            textView.setBackgroundColor(colorSystem);
             break;
         }
 

@@ -20,6 +20,10 @@ package com.andfchat.frontend.adapter;
 
 import java.util.List;
 
+import net.sourcerer.quickaction.ActionItem;
+import net.sourcerer.quickaction.QuickActionBar;
+import net.sourcerer.quickaction.QuickActionOnClickListener;
+import net.sourcerer.quickaction.QuickActionOnOpenListener;
 import roboguice.RoboGuice;
 import roboguice.util.Ln;
 import android.content.Context;
@@ -46,10 +50,6 @@ import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
-import com.andfchat.frontend.util.quickaction.ActionItem;
-import com.andfchat.frontend.util.quickaction.QuickActionBar;
-import com.andfchat.frontend.util.quickaction.QuickActionClickListner;
-import com.andfchat.frontend.util.quickaction.QuickActionPreOpenListner;
 import com.google.inject.Inject;
 
 public class MemberListAdapter extends ArrayAdapter<FCharacter> {
@@ -84,7 +84,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
         // Add PM user
         ActionItem pmUser = new ActionItem(context.getResources().getString(R.string.pm_user), context.getResources().getDrawable(R.drawable.ic_pm));
-        pmUser.setQuickActionClickListner(new QuickActionClickListner() {
+        pmUser.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
             public void onClick(ActionItem item, View view) {
@@ -108,7 +108,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
         // Add Bookmark user
         final ActionItem bookmark = new ActionItem(bookmarkText, context.getResources().getDrawable(R.drawable.ic_bookmark));
-        bookmark.setQuickActionClickListner(new QuickActionClickListner() {
+        bookmark.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
             public void onClick(ActionItem item, View view) {
@@ -123,10 +123,10 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             }
         });
 
-        bookmark.setQuickActionPreOpenListner(new QuickActionPreOpenListner() {
+        bookmark.setQuickActionOnOpenListener(new QuickActionOnOpenListener() {
 
             @Override
-            public void onPreOpen(ActionItem item) {
+            public void onOpen(ActionItem item) {
                 if (activeCharacter.isBookmarked()) {
                     item.setSelected(true);
                     item.setTitle(unbookmarkText);
@@ -144,7 +144,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
         // Add show details
         ActionItem showDetails = new ActionItem(context.getResources().getString(R.string.show_profile), context.getResources().getDrawable(R.drawable.ic_info));
-        showDetails.setQuickActionClickListner(new QuickActionClickListner() {
+        showDetails.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
             public void onClick(ActionItem item, View view) {
@@ -159,8 +159,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             @Override
             public void onDismiss() {
                 if (activeCharacterView != null) {
-                    activeCharacterView.setBackgroundColor(getContext().getResources().getColor(R.color.background_color));
-                    activeCharacterView = null;
+                    activeCharacterView.setSelected(false);
                 }
             }
         });
@@ -170,8 +169,14 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final FCharacter character = this.getItem(position);
 
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.list_item_user, null);
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.list_item_user, null);
+        }
+
+        final View rowView = convertView;
+        rowView.setSelected(false);
+
         // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(new NameSpannable(character, null, getContext().getResources()));
@@ -205,9 +210,8 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             @Override
             public void onClick(View v) {
                 if (!sessionData.getCharacterName().equals(character.getName())) {
-                    rowView.setBackgroundColor(getContext().getResources().getColor(R.color.selected_user_color));
-
                     activeCharacterView = rowView;
+                    activeCharacterView.setSelected(true);
                     activeCharacter = character;
 
                     quickActionBar.show(v);
