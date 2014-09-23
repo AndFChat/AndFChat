@@ -27,6 +27,7 @@
         android:name="com.andfchat.frontend.fragments.ChannelListFragment"
         android:layout_width="@dimen/width_channel_sidebar"
         android:layout_height="match_parent"
+        android:layout_above="@+id/chatInputFragment"
     />
     
     <LinearLayout
