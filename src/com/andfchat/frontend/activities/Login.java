@@ -114,6 +114,7 @@ public class Login extends RoboActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(sessionData.getSessionSettings().getTheme());
         setContentView(R.layout.activity_login);
 
         preferences = this.getPreferences(0);
@@ -225,7 +226,7 @@ public class Login extends RoboActivity {
                 }
 
                 // Init session
-                sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString(), this);
+                sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString());
                 // Add bookmarks to the RelationManager
                 JSONArray bookmarks = jsonDocument.getJSONArray(JsonTokens.bookmarks.name());
                 Set<String> bookmarksList = new HashSet<String>();

@@ -26,5 +26,6 @@ public enum PropertyName {
     LED_FEEDBACK,
     INITIAL_CHANNEL,
     LOG_HISTORY,
-    LOG_CHANNEL
+    LOG_CHANNEL,
+    THEME,
 }

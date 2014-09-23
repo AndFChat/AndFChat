@@ -20,4 +20,9 @@
     <!-- STYLES -->
     <attr name="UserListBackground" format="color|reference"/>
     
+    <string-array name="themes">
+        <item>AppTheme</item>
+        <item>AppTheme.Blue</item>
+    </string-array>
+    
 </resources>

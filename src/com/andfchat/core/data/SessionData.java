@@ -20,11 +20,12 @@ package com.andfchat.core.data;
 
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
@@ -49,11 +50,15 @@ public class SessionData {
 
     private final HashMap<Variable, Integer> intVariables = new HashMap<Variable, Integer>();
 
-    public void initSession(String ticket, String account, Activity activity) {
+    @Inject
+    public void SessionData(Context context) {
+
+        sessionSettings = new SessionSettings(context);
+    }
+
+    public void initSession(String ticket, String account) {
         this.ticket = ticket;
         this.account = account;
-
-        sessionSettings = new SessionSettings(activity);
     }
 
     public void setCharname(String name) {
@@ -120,8 +125,8 @@ public class SessionData {
     public class SessionSettings {
         private final SharedPreferences preferences;
 
-        public SessionSettings(Activity activity) {
-            preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        public SessionSettings(Context context) {
+            preferences = PreferenceManager.getDefaultSharedPreferences(context);
         }
         public boolean useDebugChannel() {
             return preferences.getBoolean(PropertyName.USE_DEBUG_CHANNEL.name().toLowerCase(), false);
@@ -150,6 +155,20 @@ public class SessionData {
         }
         public boolean logChannel() {
             return preferences.getBoolean(PropertyName.LOG_CHANNEL.name().toLowerCase(), true);
+        }
+
+        public int getTheme() {
+            String theme = preferences.getString(PropertyName.THEME.name().toLowerCase(), "AppTheme.Blue");
+
+            if (theme.equals("AppTheme")) {
+                return R.style.AppTheme;
+            }
+            else if (theme.equals("AppTheme.Blue")) {
+                return R.style.AppTheme_Blue;
+            }
+            else {
+                return R.style.AppTheme;
+            }
         }
     }
 }

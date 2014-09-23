@@ -125,6 +125,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setTheme(sessionData.getSessionSettings().getTheme());
         setContentView(R.layout.activity_chat_screen);
 
         toggleSidebarRight.setSelected(true);

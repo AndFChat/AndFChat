@@ -54,6 +54,7 @@ public class PickChar extends RoboActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(sessionData.getSessionSettings().getTheme());
         setContentView(R.layout.activity_pick_char);
 
         characters = getIntent().getStringExtra("characters").split(",");
