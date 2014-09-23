@@ -18,6 +18,8 @@
 
 package com.andfchat.core.util;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -178,6 +180,34 @@ public class BBCodeReader {
         }
 
         return polishedText;
+    }
+
+    public static String modifieUrls(String text, String urlIndicator) {
+        String newText = "";
+
+        if (text.contains(urlIndicator)) {
+
+            String[] parts = text.split(" ");
+
+            for (String part : parts) {
+                if (part.startsWith(urlIndicator)) {
+                    try {
+                        URL url = new URL(part);
+                        part = "[url="+part+"]" + url.getHost() + "[/url]";
+                        Ln.d("done");
+                    }
+                    catch (MalformedURLException e) {
+                        Ln.d("error");
+                    }
+                }
+                newText += part;
+            }
+        }
+        else {
+            return text;
+        }
+
+        return newText;
     }
 
     public static class Span {

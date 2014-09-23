@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import roboguice.util.Ln;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -89,7 +90,14 @@ public class ChatEntry implements Serializable {
         }
 
         this.messageType = messageType;
+
+        text = BBCodeReader.modifieUrls(text, "http://");
+        text = BBCodeReader.modifieUrls(text, "https://");
+
+        Ln.d("TEXT: " + text);
+
         this.text = text;
+
     }
 
     public void setOwned(boolean isOwned) {
