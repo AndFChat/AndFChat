@@ -53,6 +53,7 @@ public class Chatroom {
 
     private boolean hasNewMessage = false;
 
+    private String entry;
 
     public Chatroom(Channel channel, int maxTextLength) {
         this.channel = channel;
@@ -131,6 +132,14 @@ public class Chatroom {
             chatMessages.remove(0);
             chatMessages.add(entry);
         }
+    }
+
+    public String getEntry() {
+        return entry;
+    }
+
+    public void setEntry(String entry) {
+        this.entry = entry;
     }
 
     public void addCharacter(FCharacter flistChar) {

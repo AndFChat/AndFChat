@@ -406,6 +406,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
             if (event.getAction() == MotionEvent.ACTION_UP && (x < w.getLeft() || x >= w.getRight() || y < w.getTop() || y > w.getBottom()) ) {
                 inputFragment.hideKeyboard();
+                inputFragment.saveEntry();
             }
         }
 
