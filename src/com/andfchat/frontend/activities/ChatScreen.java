@@ -117,6 +117,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     // Display height
     private int height;
+    private int width;
 
     private QuickActionBar actionBar;
 
@@ -153,6 +154,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         Point size = new Point();
         display.getSize(size);
         height = size.y;
+        width = size.x;
 
         actionBar = new QuickActionBar(this);
         actionBar.setOrientation(QuickActionBar.BOTTOM);
@@ -263,10 +265,10 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
         View layout = inflater.inflate(R.layout.popup_description, null);
 
-        int width = (int)(chat.getView().getWidth() * 0.8f);
-        int scaledHeight = (int)(height * 0.7f);
+        int height = (int)(this.height * 0.8f);
+        int width = (int)(this.width * 0.8f);
 
-        final PopupWindow descriptionPopup = new FListPopupWindow(layout, width, scaledHeight);
+        final PopupWindow descriptionPopup = new FListPopupWindow(layout, width, height);
         descriptionPopup.showAtLocation(chat.getView(), Gravity.CENTER, 0, 0);
 
         final TextView descriptionText = (TextView)layout.findViewById(R.id.descriptionText);
