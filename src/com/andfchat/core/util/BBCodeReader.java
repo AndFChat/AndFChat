@@ -200,7 +200,7 @@ public class BBCodeReader {
                         Ln.d("error");
                     }
                 }
-                newText += part;
+                newText += part + " ";
             }
         }
         else {

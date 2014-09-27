@@ -435,6 +435,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     private void goBackToCharSelection() {
         Ln.d("Back to char Selection");
+        finish();
         super.onBackPressed();
     }
 
