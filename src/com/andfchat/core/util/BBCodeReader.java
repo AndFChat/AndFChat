@@ -185,7 +185,7 @@ public class BBCodeReader {
     public static String modifieUrls(String text, String urlIndicator) {
         String newText = "";
 
-        if (text.contains(urlIndicator)) {
+        if (text != null && text.contains(urlIndicator)) {
 
             String[] parts = text.split(" ");
 
