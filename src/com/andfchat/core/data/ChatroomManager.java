@@ -25,7 +25,9 @@ import java.util.Set;
 
 import roboguice.util.Ln;
 
+import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.history.HistoryManager;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.andfchat.frontend.events.UserEventListener.UserEventType;
@@ -48,7 +50,6 @@ public class ChatroomManager {
     // List of channels
     private final Set<String> officialChannelSet = new HashSet<String>();
     private final Set<Channel> privateChannelSet = new HashSet<Channel>();
-
 
     // Adds a chat message to evry channel
     public void addBroadcast(ChatEntry entry) {
@@ -76,8 +77,11 @@ public class ChatroomManager {
     public Chatroom addChatroom(Chatroom chatroom) {
         synchronized(this) {
             Ln.d("Add chatroom '" + chatroom.getName() + "'");
-            // HistoryManager loads data via the "channel" key.
-            chatroom.setChatHistory(historyManager.loadHistory(chatroom.getChannel()));
+            // Only load history for channel/pm's
+            if (chatroom.isSystemChat() == false) {
+                // HistoryManager loads data via the "channel" key.
+                chatroom.setChatHistory(historyManager.loadHistory(chatroom.getChannel()));
+            }
             chats.add(chatroom);
             if (chats.size() == 1) {
                 setActiveChat(chatroom);
@@ -218,6 +222,8 @@ public class ChatroomManager {
         this.chats.clear();
         this.officialChannelSet.clear();
         this.privateChannelSet.clear();
+
+        addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, ChatroomType.CONSOLE), 50000));
     }
 
     public List<Chatroom> getChatRooms() {

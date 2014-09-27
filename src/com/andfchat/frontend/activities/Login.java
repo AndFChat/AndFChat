@@ -117,6 +117,8 @@ public class Login extends RoboActivity {
         setTheme(sessionData.getSessionSettings().getTheme());
         setContentView(R.layout.activity_login);
 
+        chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, ChatroomType.CONSOLE), 50000));
+
         preferences = this.getPreferences(0);
         rememberAccount.setChecked(preferences.getBoolean(SAVE_ACCOUNT_NAME, false));
 
@@ -160,7 +162,7 @@ public class Login extends RoboActivity {
             connection.closeConnection(this);
         }
         else {
-            sessionData.clear();
+            sessionData.clearAll();
             chatroomManager.clear();
             charManager.clear();
             eventManager.clear();
@@ -180,7 +182,6 @@ public class Login extends RoboActivity {
             public void onResponse(String response) {
                 if (parseJson(response, intent) == true) {
                     Ln.i("Succesfully logged in!");
-                    chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, ChatroomType.CONSOLE), 50000));
                     startActivity(intent);
                 } else {
                     this.onError(null);

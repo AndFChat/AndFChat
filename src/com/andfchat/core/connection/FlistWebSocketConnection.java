@@ -50,7 +50,7 @@ import de.tavendo.autobahn.WebSocketException;
 public class FlistWebSocketConnection {
 
     private final static String CLIENT_NAME = "AndFChat";
-    private final static String CLIENT_VERSION = "0.2.0";
+    private final static String CLIENT_VERSION = "0.2.1";
     private final static String SERVER_URL_DEV = "ws://chat.f-list.net:8722/";
     private final static String SERVER_URL_LIVE = "ws://chat.f-list.net:9722/";
 
@@ -279,6 +279,10 @@ public class FlistWebSocketConnection {
     }
 
     public void closeConnection(Context context) {
+        this.closeConnection(context, true);
+    }
+
+    public void closeConnection(Context context, boolean goToLogin) {
         Ln.d("Disconnect!");
 
         if (connection.isConnected()) {
@@ -292,8 +296,10 @@ public class FlistWebSocketConnection {
         characterManager.clear();
         eventManager.clear();
 
-        Intent intent = new Intent(context, Login.class);
-        context.startActivity(intent);
+        if (goToLogin) {
+            Intent intent = new Intent(context, Login.class);
+            context.startActivity(intent);
+        }
     }
 
     public void createPrivateChannel(String channelname) {

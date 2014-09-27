@@ -77,6 +77,7 @@ import com.andfchat.frontend.menu.FriendListAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
 import com.andfchat.frontend.popup.FListPopupWindow;
 import com.andfchat.frontend.util.Exporter;
+import com.andfchat.frontend.util.FlistAlertDialog;
 import com.google.inject.Inject;
 
 public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListener {
@@ -412,4 +413,28 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
         return ret;
     }
+
+    @Override
+    public void onBackPressed() {
+        FlistAlertDialog dialog = new FlistAlertDialog(this, getResources().getString(R.string.question_back)) {
+
+            @Override
+            public void onYes() {
+                connection.closeConnection(ChatScreen.this, false);
+                goBackToCharSelection();
+            }
+
+            @Override
+            public void onNo() {}
+        };
+
+        dialog.show();
+    }
+
+    private void goBackToCharSelection() {
+        Ln.d("Back to char Selection");
+        super.onBackPressed();
+    }
+
+
 }

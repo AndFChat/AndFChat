@@ -104,7 +104,9 @@ public class PingHandler extends TokenHandler {
     @Override
     public void closed() {
         running = false;
-        connection.closeConnection(context);
+        if (sessionData.isInChat()) {
+            connection.closeConnection(context);
+        }
     }
 
 }

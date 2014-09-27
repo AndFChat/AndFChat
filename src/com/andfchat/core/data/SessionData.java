@@ -105,13 +105,15 @@ public class SessionData {
     }
 
     public void clear() {
-        ticket = null;
-        account = null;
-
         isVisible = true;
         isInChat = false;
 
         intVariables.clear();
+    }
+
+    public void clearAll() {
+        ticket = null;
+        account = null;
     }
 
     public int getIntVariable(Variable variable) {

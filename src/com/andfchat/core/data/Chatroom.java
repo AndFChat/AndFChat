@@ -58,12 +58,14 @@ public class Chatroom {
     public Chatroom(Channel channel, int maxTextLength) {
         this.channel = channel;
         this.maxTextLength = maxTextLength;
+        this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
     }
 
     public Chatroom(Channel channel, FCharacter character, int maxTextLength) {
         this.channel = channel;
         this.characters.add(character);
         this.maxTextLength = maxTextLength;
+        this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
     }
 
     public void setDescription(Spannable description) {

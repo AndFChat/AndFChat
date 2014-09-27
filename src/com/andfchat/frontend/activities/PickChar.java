@@ -23,6 +23,7 @@ import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -57,13 +58,32 @@ public class PickChar extends RoboActivity {
         setTheme(sessionData.getSessionSettings().getTheme());
         setContentView(R.layout.activity_pick_char);
 
-        characters = getIntent().getStringExtra("characters").split(",");
-        charSelector.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, characters));
-
-        // Connect websockets
-        if (connection.isConnected() == false) {
-            connection.connect(getIntent().getBooleanExtra("isLive", false));
+        if (characters == null) {
+            characters = getIntent().getStringExtra("characters").split(",");
         }
+
+        charSelector.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, characters));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Ln.d("on resume");
+
+        // On return via back button the connection occurs to be still disconnecting, so wait a second.
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+             @Override
+            public void run() {
+                 Ln.d("Checking connection");
+                 // Connect websocket
+                 if (connection.isConnected() == false) {
+                     Ln.d("Connecting...");
+                     connection.connect(getIntent().getBooleanExtra("isLive", true));
+                 }
+             }
+        }, 2000);
     }
 
     @Override
@@ -88,6 +108,8 @@ public class PickChar extends RoboActivity {
             openChat();
         } else {
             Ln.i("Can't connect to WebSocket!");
+            Ln.d("Connecting...");
+            connection.connect(getIntent().getBooleanExtra("isLive", true));
         }
 
     }
@@ -95,6 +117,5 @@ public class PickChar extends RoboActivity {
     public void openChat() {
         Intent intent = new Intent(getBaseContext(), ChatScreen.class);
         startActivity(intent);
-        finish();
     }
 }
