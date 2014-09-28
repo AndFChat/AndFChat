@@ -70,7 +70,7 @@
     <string name="error_login">Login failed. Check your username and password.</string>
     <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>      
     
-    <string name="text_about">[b]AndFChat[/b] (Version 0.2.0) is developed under the GPL3 licence.
+    <string name="text_about">[b]AndFChat[/b] (Version 0.2.1) is developed under the GPL3 licence.
         \n\nAndFChat is a [b][color=red]THIRD-PARTY[/color][/b] client for F-list.
         \n\nIt\'s still a [b][color=red]BETA[/color][/b], so please use with patience!        
         \nFound bugs can be send via note to [user]AndFChat[/user] (yes, some tags are still not parsed) or directly as issues via GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
