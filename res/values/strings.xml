@@ -88,7 +88,7 @@
     <string name="title_debug">Debug</string>
     <string name="title_general">General</string>
     
-    <string name="title_initial_channel">Channel on login: %s</string>
+    <string name="title_initial_channel">Channel on login</string>
     <string name="description_initial_channel">Choose which channel opens upon login</string>
     <string name="title_log_history">Save chat history</string>
     <string name="description_log_history">Save chat logs to internal storage.  Takes up memory as chat logs get bigger.</string>
@@ -110,10 +110,21 @@
     <string name="description_use_debug_channel">Shows the input/output tags in the console.</string>
     
     <string name="title_theme">Select app style</string>
-    <string name="description_theme">Select between different styles for your app. Selecting a new theme requires restarting the app to work.</string>
+    <string name="description_theme">Choose between different styles for your app. Selecting a new theme requires restarting the app to work.</string>
+    
+    <string name="title_chat_text_size">Font size</string>
+    <string name="description_chat_text_size">Choose the size of the text appearance for the chat</string>
+    
+    <string-array name="text_size_translation">
+        <item>Very Small</item>
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Big</item>
+    </string-array>
+    
     
     <!-- Themes -->  
-    <string-array name="themesTranslation">
+    <string-array name="themes_translation">
         <item>Black</item>
         <item>Blue</item>
     </string-array>

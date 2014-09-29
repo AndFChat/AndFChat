@@ -34,7 +34,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"        
         android:id="@+id/itemText"
-        android:textSize="@dimen/text_size_button_normal"
+        android:textSize="@dimen/text_size_button_small"
         android:singleLine="true"      
         android:text="Username"
         android:layout_centerVertical="true"

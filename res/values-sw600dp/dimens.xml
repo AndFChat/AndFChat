@@ -21,9 +21,9 @@
     <dimen name="image_size_chatroom">75dp</dimen>
     <dimen name="image_size_user_status">25dp</dimen>
     
-    <dimen name="text_size_button_small">12sp</dimen>
-    <dimen name="text_size_button_normal">14sp</dimen>
-    <dimen name="text_size_button_greater">18sp</dimen>    
+    <dimen name="text_size_button_very_small">12sp</dimen>
+    <dimen name="text_size_button_small">14sp</dimen>
+    <dimen name="text_size_button_medium">18sp</dimen>    
     <dimen name="text_size_popup_header">20sp</dimen>
     
         <dimen name="chat_actions_spinner_size">250dp</dimen>

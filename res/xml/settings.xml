@@ -16,10 +16,29 @@
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
     <PreferenceCategory 
         android:title="@string/title_general"
         android:key="general">
       
+        <ListPreference 
+            android:key="theme"
+            android:title="@string/title_theme"
+            android:summary="@string/description_theme"
+            android:entries="@array/themes_translation"
+            android:entryValues="@array/Themes"    
+            android:defaultValue="AppTheme.Blue"
+        />
+        
+        <ListPreference 
+            android:key="chat_text_size"
+            android:title="@string/title_chat_text_size"
+            android:summary="@string/description_chat_text_size"
+            android:entries="@array/text_size_translation"
+            android:entryValues="@array/TextSize"
+            android:defaultValue="medium"
+        />
+        
         <ListPreference
             android:key="initial_channel"
             android:summary="@string/description_initial_channel"
@@ -46,15 +65,6 @@
             android:title="@string/title_delete_history"
             android:summary="@string/description_delete_history"
         />
-        
-        <ListPreference 
-            android:key="theme"
-            android:title="@string/title_theme"
-            android:summary="@string/description_theme"
-            android:entries="@array/themesTranslation"
-            android:entryValues="@array/themes"    
-        />
-        
     </PreferenceCategory>
         
     <PreferenceCategory 

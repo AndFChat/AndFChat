@@ -18,11 +18,12 @@
 
 package com.andfchat.frontend.adapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.method.LinkMovementMethod;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 
 import com.andfchat.R;
 import com.andfchat.core.data.ChatEntry;
+import com.google.inject.Inject;
 
 public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
@@ -40,8 +42,11 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
     private final int colorWarning;
     private final int colorAttention;
 
-    public ChatEntryListAdapter(Context context, List<ChatEntry> entries) {
-        super(context, R.layout.list_item_message, entries);
+    private float textSize;
+
+    @Inject
+    public ChatEntryListAdapter(Context context, float textSize) {
+        super(context, R.layout.list_item_message, new ArrayList<ChatEntry>());
 
         // Load theme colors
         TypedArray styles = context.getTheme().obtainStyledAttributes(new int[]{
@@ -57,6 +62,8 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
         colorWarning = styles.getColor(3, 0);
         colorAttention = styles.getColor(4, 0);
 
+        this.textSize = textSize;
+
         styles.recycle();
     }
 
@@ -71,6 +78,8 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(this.getItem(position).getChatMessage(getContext()));
+        // Set text size
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
         // Adding the right colour
         switch (getItem(position).getMessageType()) {
@@ -110,6 +119,16 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
             return this.getItem(this.getCount() - 1).getDate().getTime();
         } else {
             return 0;
+        }
+    }
+
+    public void setTextSize(float textSize) {
+        boolean changed = textSize != this.textSize;
+        this.textSize = textSize;
+
+        if (changed) {
+            // Force to redraw
+            notifyDataSetChanged();
         }
     }
 

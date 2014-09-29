@@ -64,7 +64,7 @@ public class Settings extends RoboPreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 String title = getString(R.string.title_initial_channel);
-                title = String.format(title, newValue.toString());
+                title += ": " + newValue.toString();
 
                 initialChannelList.setTitle(title);
                 return true;
@@ -74,8 +74,30 @@ public class Settings extends RoboPreferenceActivity {
         initialChannelList.setValue(sessionData.getSessionSettings().getInitialChannel());
 
         String title = getString(R.string.title_initial_channel);
-        title = String.format(title, sessionData.getSessionSettings().getInitialChannel());
+        title += ": " + sessionData.getSessionSettings().getInitialChannel();
         initialChannelList.setTitle(title);
+
+        final ListPreference textSizeList = (ListPreference)findPreference("chat_text_size");
+
+        textSizeList.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String title = getString(R.string.title_chat_text_size);
+                // Find the right entry fitting to the value
+                CharSequence[] values = textSizeList.getEntryValues();
+                for (int i = 0; i < values.length; i++) {
+                    if (values[i].equals(newValue)) {
+                        title += ": " + textSizeList.getEntries()[i];
+                    }
+                }
+                textSizeList.setTitle(title);
+                return true;
+            }
+        });
+
+        title = getString(R.string.title_chat_text_size);
+        title += ": " + textSizeList.getEntry();
+        textSizeList.setTitle(title);
 
         Preference button = findPreference("button");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

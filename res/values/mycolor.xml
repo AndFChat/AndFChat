@@ -75,7 +75,7 @@
     
     <!-- Nameplate colors -->
     <color name="name_annotation">#FFFFFF</color>
-    <color name="name_error">#FF0000</color>
+    <color name="name_error">#FFFFFF</color>
     <color name="name_ad">#FFFF00</color>
     
     <!-- THEME.BLUE -->

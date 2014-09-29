@@ -40,7 +40,7 @@
     	    android:layout_width="wrap_content"
     	    android:layout_height="match_parent"        
             android:id="@+id/itemText"
-            android:textSize="@dimen/text_size_button_normal"
+            android:textSize="@dimen/text_size_button_small"
             android:singleLine="true"
             android:text=""            
             android:gravity="center_vertical"

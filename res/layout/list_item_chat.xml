@@ -39,7 +39,7 @@
     	android:gravity="center"
     	android:layout_gravity="center_horizontal"
         android:textColor="?attr/ChatTextColor"
-        android:textSize="@dimen/text_size_button_small"
+        android:textSize="@dimen/text_size_button_very_small"
     />
     
 </LinearLayout>

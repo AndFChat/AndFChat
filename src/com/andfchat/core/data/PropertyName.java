@@ -28,4 +28,5 @@ public enum PropertyName {
     LOG_HISTORY,
     LOG_CHANNEL,
     THEME,
+    CHAT_TEXT_SIZE
 }

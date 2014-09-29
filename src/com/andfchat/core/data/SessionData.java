@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
+import com.andfchat.core.util.TextSize;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -171,6 +172,10 @@ public class SessionData {
             else {
                 return R.style.AppTheme;
             }
+        }
+
+        public TextSize getChatTextSize() {
+            return TextSize.valueOf(preferences.getString(PropertyName.CHAT_TEXT_SIZE.name().toLowerCase(), "medium"));
         }
     }
 }

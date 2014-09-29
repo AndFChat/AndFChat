@@ -35,6 +35,7 @@ import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
+import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener;
@@ -49,6 +50,8 @@ public class ChatFragment extends RoboFragment implements ChatroomEventListener,
     protected FlistWebSocketConnection connection;
     @Inject
     protected AndFChatEventManager eventManager;
+    @Inject
+    protected SessionData sessionData;
 
     @InjectView(R.id.chat)
     private ListView chatListView;
@@ -62,11 +65,19 @@ public class ChatFragment extends RoboFragment implements ChatroomEventListener,
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        float textSize = getResources().getDimension(sessionData.getSessionSettings().getChatTextSize().getTextSizeId());
+        chatListData.setTextSize(textSize);
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         { // Chat window setup
-            chatListData = new ChatEntryListAdapter(getActivity(), new ArrayList<ChatEntry>());
+            float textSize = getResources().getDimension(sessionData.getSessionSettings().getChatTextSize().getTextSizeId());
+            chatListData = new ChatEntryListAdapter(getActivity(), textSize);
             chatListView.setAdapter(chatListData);
             // Autoscroll to bottom
             chatListView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_NORMAL);
