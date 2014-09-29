@@ -36,6 +36,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -268,6 +269,19 @@ public class Login extends RoboActivity {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        // Do smaller chat height on displayed keyboard the height is determined by display size.
+        switch (item.getItemId()) {
+        case R.id.action_open_settings:
+            startActivity(new Intent(this, Settings.class));
+            return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

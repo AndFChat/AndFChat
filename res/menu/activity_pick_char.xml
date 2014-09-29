@@ -16,10 +16,10 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/menu_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/menu_settings"/>
+    <item android:id="@+id/action_open_settings"
+     	android:icon="@drawable/ic_settings"
+     	android:title="@string/settings"
+     	android:showAsAction="ifRoom" 
+    />
 
 </menu>
