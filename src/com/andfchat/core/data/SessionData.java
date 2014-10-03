@@ -28,6 +28,7 @@ import android.preference.PreferenceManager;
 import com.andfchat.R;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.util.TextSize;
+import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -47,13 +48,12 @@ public class SessionData {
     private boolean isVisible = false;
     private boolean isInChat = false;
 
-    private SessionSettings sessionSettings;
+    private final SessionSettings sessionSettings;
 
     private final HashMap<Variable, Integer> intVariables = new HashMap<Variable, Integer>();
 
     @Inject
-    public void SessionData(Context context) {
-
+    public SessionData(Context context) {
         sessionSettings = new SessionSettings(context);
     }
 
@@ -176,6 +176,13 @@ public class SessionData {
 
         public TextSize getChatTextSize() {
             return TextSize.valueOf(preferences.getString(PropertyName.CHAT_TEXT_SIZE.name().toLowerCase(), "medium"));
+        }
+
+        public Version getVersion() {
+            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.2.1"));
+        }
+        public void setVersion(String version) {
+            preferences.edit().putString(PropertyName.VERSION.name().toLowerCase(), version).apply();
         }
     }
 }

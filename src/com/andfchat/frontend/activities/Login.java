@@ -57,6 +57,7 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
+import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
@@ -153,8 +154,10 @@ public class Login extends RoboActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         Ln.d("Resume login");
+
+        //Check version
+        checkVersion();
 
         notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
         eventManager.clear();
@@ -167,6 +170,17 @@ public class Login extends RoboActivity {
             chatroomManager.clear();
             charManager.clear();
             eventManager.clear();
+        }
+    }
+
+    private void checkVersion() {
+        Version version = sessionData.getSessionSettings().getVersion();
+
+        if (version.isLowerThan("0.2.2")) {
+            Ln.i("Updating to version 0.2.2");
+
+            historyManager.clearHistory(true);
+            sessionData.getSessionSettings().setVersion("0.2.2");
         }
     }
 

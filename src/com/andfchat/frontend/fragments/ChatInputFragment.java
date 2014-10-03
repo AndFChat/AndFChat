@@ -86,6 +86,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
         if (commands.checkForCommands(inputText.getText().toString()) || activeChat.isSystemChat()) {
             // Reset input
             inputText.setText("");
+            chatroomManager.getActiveChat().setEntry("");
             return;
         }
         else if ((System.currentTimeMillis() - lastMessage > 2000)) {
@@ -103,6 +104,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
 
         // Reset input
         inputText.setText("");
+        chatroomManager.getActiveChat().setEntry("");
     }
 
     public void hideKeyboard() {
