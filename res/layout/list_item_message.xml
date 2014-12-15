@@ -18,15 +18,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/messageItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="3dp">
     
     <ImageView 
         android:id="@+id/itemIcon"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:visibility="gone"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:visibility="gone"
         android:contentDescription="@null"
         />
 
@@ -37,7 +38,6 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/itemIcon"
         android:linksClickable="true"
-        android:padding="5dp"
         android:textColor="?attr/ChatTextColor"
         android:textSize="16sp" />
     
