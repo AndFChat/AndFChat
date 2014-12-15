@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sourcerer.quickaction.ActionItem;
+import net.sourcerer.quickaction.PopUpAlignment;
 import net.sourcerer.quickaction.QuickActionBar;
 import net.sourcerer.quickaction.QuickActionOnClickListener;
 import net.sourcerer.quickaction.QuickActionOnOpenListener;
@@ -38,6 +39,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.Display;
 import android.view.Gravity;
@@ -56,13 +58,15 @@ import android.widget.TextView;
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
+import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.core.data.messages.ChatEntryFactory;
+import com.andfchat.core.data.messages.ChatEntryFactory.AdClickListner;
 import com.andfchat.core.util.SmileyReader;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener;
 import com.andfchat.frontend.events.MessageEventListener;
@@ -80,7 +84,7 @@ import com.andfchat.frontend.util.Exporter;
 import com.andfchat.frontend.util.FlistAlertDialog;
 import com.google.inject.Inject;
 
-public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListener {
+public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListener, AdClickListner {
 
     @Inject
     protected CharacterManager charManager;
@@ -96,6 +100,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     protected NotificationManager notificationManager;
     @Inject
     protected HistoryManager historyManager;
+    @Inject
+    protected ChatEntryFactory entryFactory;
 
 
     @InjectView(R.id.toggleSidebarLeft)
@@ -121,12 +127,12 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     private QuickActionBar actionBar;
 
-    // Saving stuff
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Register AdClickListner
+        entryFactory.setAdClickListner(this);
 
         setTheme(sessionData.getSessionSettings().getTheme());
         setContentView(R.layout.activity_chat_screen);
@@ -153,11 +159,20 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
+
         height = size.y;
         width = size.x;
 
+        AndFChatApplication application = (AndFChatApplication)getApplicationContext();
+        application.setScreenDimension(size);
+
+        setupActionBar();
+
+    }
+
+    private void setupActionBar() {
         actionBar = new QuickActionBar(this);
-        actionBar.setOrientation(QuickActionBar.BOTTOM);
+        actionBar.setAlignment(PopUpAlignment.BOTTOM);
 
         //
         // Show description
@@ -243,6 +258,33 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
                 actionBar.show(actionButton);
             }
         });
+
+        //
+        // Post Ad
+        //
+        ActionItem postAd = new ActionItem(getString(R.string.post_ad_text), getResources().getDrawable(R.drawable.ic_post_ad));
+        postAd.setQuickActionClickListener(new QuickActionOnClickListener() {
+
+            @Override
+            public void onClick(ActionItem item, View view) {
+                inputFragment.sendTextAsAd();
+            }
+        });
+
+        postAd.setQuickActionOnOpenListener(new QuickActionOnOpenListener() {
+
+            @Override
+            public void onOpen(ActionItem item) {
+                Chatroom chat = chatroomManager.getActiveChat();
+                if(chat.isChannel()) {
+                    item.setVisibility(View.VISIBLE);
+                }
+                else {
+                    item.setVisibility(View.GONE);
+                }
+            }
+        });
+        actionBar.addActionItem(postAd);
     }
 
     public void leaveActiveChat() {
@@ -314,7 +356,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
             os.close();
 
-            ChatEntry entry = new ChatEntry("Sucessfully exported to the download dictory, filename: " + filename, charManager.findCharacter(CharacterManager.USER_SYSTEM), ChatEntryType.MESSAGE);
+            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Sucessfully exported to the download dictory, filename: " + filename);
             chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
 
             // Tell the media scanner about the new file so that it is
@@ -330,7 +372,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         } catch (IOException e) {
             Ln.w("ExternalStorage", "Error writing " + file, e);
             // TODO: String!
-            ChatEntry entry = new ChatEntry("Can't write output, download directory doesn't exist!", charManager.findCharacter(CharacterManager.USER_SYSTEM), ChatEntryType.ERROR);
+            ChatEntry entry = entryFactory.getError(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Can't write output, download directory doesn't exist!");
             chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
         }
 
@@ -433,11 +475,26 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         dialog.show();
     }
 
-    private void goBackToCharSelection() {
-        Ln.d("Back to char Selection");
-        finish();
-        super.onBackPressed();
+    @Override
+    public void openAd(Spannable text) {
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View layout = inflater.inflate(R.layout.popup_description, null);
+
+        int height = (int)(this.height * 0.8f);
+        int width = (int)(this.width * 0.8f);
+
+        final PopupWindow descriptionPopup = new FListPopupWindow(layout, width, height);
+        descriptionPopup.showAtLocation(chat.getView(), Gravity.CENTER, 0, 0);
+
+        final TextView descriptionText = (TextView)layout.findViewById(R.id.descriptionText);
+        descriptionText.setText(text);
+        // Enable touching/clicking links in text
+        descriptionText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-
+    private void goBackToCharSelection() {
+        Ln.d("Back to char Selection");
+        super.onBackPressed();
+    }
 }

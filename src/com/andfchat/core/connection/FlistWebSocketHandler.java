@@ -46,26 +46,26 @@ import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.TokenHandler;
 import com.andfchat.core.connection.handler.VariableHandler;
 import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
+import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.core.data.messages.MessageEntry;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
-import de.tavendo.autobahn.WebSocketHandler;
+import de.tavendo.autobahn.WebSocketConnectionHandler;
 
 /**
  * Handles all input send from server, using the ServerToken to decide which TokenHandler should handle the input.
  * @author AndFChat
  */
 @Singleton
-public class FlistWebSocketHandler extends WebSocketHandler {
+public class FlistWebSocketHandler extends WebSocketConnectionHandler {
 
     @Inject
     protected ChatroomManager chatroomManager;
@@ -136,7 +136,7 @@ public class FlistWebSocketHandler extends WebSocketHandler {
         if (!disconnected) {
             if (sessionData.getSessionSettings().useDebugChannel()) {
                 FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_INPUT);
-                ChatEntry entry = new ChatEntry(payload, systemChar, ChatEntryType.MESSAGE);
+                ChatEntry entry = new MessageEntry(systemChar, payload);
                 Chatroom chatroom = chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME);
                 chatroomManager.addMessage(chatroom, entry);
             }

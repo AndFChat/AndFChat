@@ -22,11 +22,12 @@ import roboguice.event.EventManager;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
-import com.andfchat.core.data.ChatEntryType;
+import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.google.inject.Inject;
 
 public class PMUser extends TextCommand {
@@ -35,6 +36,8 @@ public class PMUser extends TextCommand {
     protected EventManager eventManager;
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected ChatEntryFactory entryFactory;
 
     public PMUser() {
         allowedIn = ChatroomType.values();
@@ -53,14 +56,16 @@ public class PMUser extends TextCommand {
     @Override
     public void runCommand(String token, String text) {
         if (text == null || text.length() == 0) {
-            showMessage("PLEASE GIVE A USERNAME AS PARAMETER!", ChatEntryType.ERROR);
+            //TODO: no translation
+            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "PLEASE GIVE A USERNAME AS PARAMETER!");
             return;
         }
 
         FCharacter flistChar = characterManager.findCharacter(text, false);
 
         if (flistChar == null) {
-            showMessage("NO USER WITH NAME '" + text + "' FOUND!", ChatEntryType.ERROR);
+            //TODO: no translation
+            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "NO USER WITH NAME '" + text + "' FOUND!");
         } else {
             Chatroom chatroom;
             if (chatroomManager.hasOpenPrivateConversation(flistChar) == false) {

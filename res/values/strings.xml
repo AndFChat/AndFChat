@@ -49,9 +49,11 @@
     <string name="private_channels">Private Channels</string>
     <string name="leave_channel">Leave</string>
     <string name="export_text">Export text</string>    
+    <string name="post_ad_text">Post Ad</string>    
     <string name="channel_description">Description</string>
     <string name="actions">Actions</string>
     <string name="select_character">Select Character</string>
+    <string name="ad_clickable_advertisment">[Click to see the ad]</string>
     
     <!-- Messages for the chat directly, they will be posted into the chat with a users name at the beginning. Like "XYZ connected." -->
     <string name="message_channel_joined">joined the channel.</string>

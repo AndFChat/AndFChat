@@ -2,8 +2,8 @@ package com.andfchat.frontend.util;
 
 import android.content.Context;
 
-import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.messages.ChatEntry;
 
 public class Exporter {
 

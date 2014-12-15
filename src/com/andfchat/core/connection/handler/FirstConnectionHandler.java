@@ -25,6 +25,7 @@ import org.json.JSONException;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.connection.ServerToken;
+import com.andfchat.frontend.application.AndFChatNotification;
 import com.google.inject.Inject;
 
 /**
@@ -35,6 +36,8 @@ public class FirstConnectionHandler extends TokenHandler {
 
     @Inject
     private FlistWebSocketConnection connection;
+    @Inject
+    private AndFChatNotification notification;
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {

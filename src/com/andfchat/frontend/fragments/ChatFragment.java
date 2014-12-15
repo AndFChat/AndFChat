@@ -32,10 +32,10 @@ import android.widget.ListView;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
-import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener;

@@ -30,9 +30,9 @@ import roboguice.util.Ln;
 import android.content.Context;
 
 import com.andfchat.core.data.Channel;
-import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

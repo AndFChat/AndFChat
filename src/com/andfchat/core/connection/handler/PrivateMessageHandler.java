@@ -24,21 +24,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import roboguice.util.Ln;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.os.Vibrator;
 
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Channel;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
-import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.google.inject.Inject;
 
@@ -53,9 +50,11 @@ public class PrivateMessageHandler extends TokenHandler {
     @Inject
     protected Vibrator vibrator;
     @Inject
-    protected NotificationManager notificationManager;
+    protected AndFChatNotification notification;
 
     private final static int VIBRATING_TIME = 300;
+
+    private int messages = 0;
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
@@ -80,19 +79,23 @@ public class PrivateMessageHandler extends TokenHandler {
             }
         }
 
+        // If led feedback is allowed, do it
         if (sessionData.getSessionSettings().ledFeedback()) {
             if (sessionData.isVisible() == false) {
                 Ln.d("Set led active!");
-                Notification notif = new Notification();
-                notif.ledARGB = 0xFFffffff;
-                notif.flags = Notification.FLAG_SHOW_LIGHTS;
-                notif.ledOnMS = 200;
-                notif.ledOffMS = 200;
-                notificationManager.notify(AndFChatApplication.LED_NOTIFICATION_ID, notif);
+                notification.showLedNotification();
             }
         }
 
-        ChatEntry entry = new ChatEntry(message, characterManager.findCharacter(character), ChatEntryType.MESSAGE);
+        // Update notification
+        if (sessionData.isVisible() == false) {
+            notification.updateNotification(++messages);
+        }
+        else {
+            messages = 0;
+        }
+
+        ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
         chatroomManager.addMessage(chatroom, entry);
     }
 

@@ -26,10 +26,10 @@ import android.content.Context;
 
 import com.andfchat.R;
 import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.commands.Ban;
 import com.andfchat.core.util.commands.Bottle;
 import com.andfchat.core.util.commands.CloseChannelToPublic;
@@ -55,6 +55,8 @@ public class Console {
     protected ChatroomManager chatroomManager;
     @Inject
     protected CharacterManager characterManager;
+    @Inject
+    protected ChatEntryFactory entryFactory;
 
     public List<TextCommand> availableCommands = new ArrayList<TextCommand>();
 
@@ -105,7 +107,7 @@ public class Console {
                         return true;
                     } else {
                         FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-                        ChatEntry chatEntry = new ChatEntry(R.string.error_command_not_allowed, systemChar, ChatEntryType.ERROR);
+                        ChatEntry chatEntry = entryFactory.getError(systemChar, R.string.error_command_not_allowed);
                         chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
                         break;
                     }
@@ -127,7 +129,7 @@ public class Console {
         }
 
         FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-        ChatEntry chatEntry = new ChatEntry(message, systemChar, ChatEntryType.NOTATION_SYSTEM);
+        ChatEntry chatEntry = entryFactory.getNotation(systemChar, message);
         chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
     }
 }

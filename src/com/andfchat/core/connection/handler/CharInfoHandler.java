@@ -27,9 +27,8 @@ import org.json.JSONObject;
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.messages.ChatEntry;
 
 /**
  * Tracks status changes for user (every user online).
@@ -48,16 +47,16 @@ public class CharInfoHandler extends TokenHandler {
             FCharacter flistChar = characterManager.changeStatus(name, status, statusmsg);
 
             if (sessionData.getSessionSettings().showStatusChanges() && flistChar.isImportant()) {
-                ChatEntry chatEntry;
+                ChatEntry entry;
 
                 status = String.valueOf(status.charAt(0)).toUpperCase(Locale.getDefault()) + status.substring(1);
                 if (statusmsg != null && statusmsg.length() > 0) {
-                    chatEntry = new ChatEntry(R.string.message_status_changed_with_message, new Object[]{status, statusmsg}, flistChar, ChatEntryType.NOTATION_STATUS);
+                    entry = entryFactory.getNotation(flistChar, R.string.message_status_changed_with_message, new Object[]{status, statusmsg});
                 } else {
-                    chatEntry = new ChatEntry(R.string.message_status_changed, new Object[]{status}, flistChar, ChatEntryType.NOTATION_STATUS);
+                    entry = entryFactory.getNotation(flistChar, R.string.message_status_changed, new Object[]{status});
                 }
 
-                broadcastSystemInfo(chatEntry, flistChar);
+                broadcastSystemInfo(entry, flistChar);
             }
         }
     }

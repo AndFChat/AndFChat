@@ -27,9 +27,9 @@ import android.preference.PreferenceManager;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
-import com.andfchat.core.util.TextSize;
 import com.andfchat.core.util.Version;
-import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.application.AndFChatNotification;
+import com.andfchat.frontend.util.TextSize;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -40,6 +40,8 @@ public class SessionData {
     protected ChatroomManager chatroomManager;
     @Inject
     protected NotificationManager notificationManager;
+    @Inject
+    protected AndFChatNotification notification;
 
     private String ticket;
     private String account;
@@ -89,7 +91,8 @@ public class SessionData {
     public void setIsVisible(boolean value) {
         isVisible = value;
         if (isVisible) {
-            notificationManager.cancel(AndFChatApplication.LED_NOTIFICATION_ID);
+            notification.cancelLedNotification();
+            notification.cancelNotification();
         }
     }
 
@@ -181,6 +184,7 @@ public class SessionData {
         public Version getVersion() {
             return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.2.1"));
         }
+
         public void setVersion(String version) {
             preferences.edit().putString(PropertyName.VERSION.name().toLowerCase(), version).apply();
         }

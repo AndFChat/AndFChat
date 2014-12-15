@@ -84,9 +84,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
         }
         // Text command like /help / open /close shouldn't be send to the server, console commands too.
         if (commands.checkForCommands(inputText.getText().toString()) || activeChat.isSystemChat()) {
-            // Reset input
-            inputText.setText("");
-            chatroomManager.getActiveChat().setEntry("");
+            cleanInput();
             return;
         }
         else if ((System.currentTimeMillis() - lastMessage > 2000)) {
@@ -103,8 +101,23 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
         }
 
         // Reset input
+        cleanInput();
+    }
+
+    private void cleanInput() {
+        // Reset input
         inputText.setText("");
         chatroomManager.getActiveChat().setEntry("");
+    }
+
+    public void sendTextAsAd() {
+        // Ignore empty messages
+        if (inputText.getText().toString().length() == 0 ) {
+            return;
+        }
+
+        connection.sendAdToChannel(chatroomManager.getActiveChat(), inputText.getText().toString());
+        cleanInput();
     }
 
     public void hideKeyboard() {

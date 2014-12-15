@@ -30,10 +30,9 @@ import roboguice.util.Ln;
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.RelationManager;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.google.inject.Inject;
 
 /**
@@ -82,12 +81,12 @@ public class CharListHandler extends TokenHandler {
             characterManager.addCharacter(fCharacter);
 
             if (fCharacter.isImportant()) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, fCharacter, ChatEntryType.NOTATION_CONNECT);
-                broadcastSystemInfo(chatEntry, fCharacter);
+                ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_connected);
+                broadcastSystemInfo(entry, fCharacter);
             }
             else if (chatroomManager.hasOpenPrivateConversation(fCharacter)) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_connected, fCharacter, ChatEntryType.NOTATION_CONNECT);
-                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), chatEntry);
+                ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_connected);
+                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), entry);
             }
 
         } // Character left
@@ -97,12 +96,12 @@ public class CharListHandler extends TokenHandler {
             FCharacter fCharacter = characterManager.findCharacter(json.getString("character"));
 
             if (fCharacter.isImportant()) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, fCharacter, ChatEntryType.NOTATION_DISCONNECT);
-                broadcastSystemInfo(chatEntry, fCharacter);
+                ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_disconnected);
+                broadcastSystemInfo(entry, fCharacter);
             }
             else if (chatroomManager.hasOpenPrivateConversation(fCharacter)) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_disconnected, fCharacter, ChatEntryType.NOTATION_DISCONNECT);
-                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), chatEntry);
+                ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_disconnected);
+                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), entry);
             }
 
             characterManager.removeCharacter(fCharacter);

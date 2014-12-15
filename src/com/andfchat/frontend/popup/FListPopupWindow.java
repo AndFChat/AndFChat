@@ -24,13 +24,6 @@ import android.widget.PopupWindow;
 
 public class FListPopupWindow extends PopupWindow {
 
-    public enum PopupSize {
-        SMALL,
-        MEDIUM,
-        LARGE,
-        FULL
-    }
-
     public FListPopupWindow(View content, int width, int height) {
         super(content, width, height, true);
 

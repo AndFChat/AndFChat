@@ -26,10 +26,9 @@ import org.json.JSONObject;
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.andfchat.frontend.events.UserEventListener.UserEventType;
 
@@ -64,8 +63,8 @@ public class LeftChannelHandler extends TokenHandler {
         } else {
             FCharacter character = characterManager.findCharacter(name);
             if (sessionData.getSessionSettings().showChannelInfos()) {
-                ChatEntry chatEntry = new ChatEntry(R.string.message_channel_left, character, ChatEntryType.NOTATION_LEFT);
-                chatroomManager.addMessage(chatroom, chatEntry);
+                ChatEntry entry = entryFactory.getNotation(character, R.string.message_channel_left);
+                chatroomManager.addMessage(chatroom, entry);
             }
 
             chatroom.removeCharacter(character);

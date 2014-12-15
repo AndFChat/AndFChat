@@ -25,10 +25,9 @@ import org.json.JSONObject;
 
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.messages.ChatEntry;
 
 /**
  * Adds Dice and Bottle messages to channels.
@@ -49,9 +48,9 @@ public class DiceBottleHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(channelId);
             if (chatroom != null) {
                 // Remove the first name, is already displayed by the ChatEntry.
-                message = message.substring(message.indexOf("[/b]") + "[/b]".length());
-                ChatEntry chatEntry = new ChatEntry(message, owner, ChatEntryType.NOTATION_DICE);
-                chatroomManager.addMessage(chatroom, chatEntry);
+                message = message.substring(message.indexOf("[/user]") + "[/user]".length());
+                ChatEntry entry = entryFactory.getNotation(owner, message);
+                chatroomManager.addMessage(chatroom, entry);
             }
         }
     }

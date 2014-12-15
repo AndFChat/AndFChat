@@ -25,11 +25,12 @@ import org.json.JSONException;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
+import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
@@ -46,6 +47,8 @@ public abstract class TokenHandler {
     protected HistoryManager historyManager;
     @Inject
     protected AndFChatEventManager eventManager;
+    @Inject
+    protected ChatEntryFactory entryFactory;
 
     public abstract void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException;
 

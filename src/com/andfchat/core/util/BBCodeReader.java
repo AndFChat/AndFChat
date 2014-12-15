@@ -256,7 +256,7 @@ public class BBCodeReader {
                 if (link == null) {
                     link = URLUtil.guessUrl(text.subSequence(start, end).toString());
                 }
-
+                Ln.d("Url: " + link);
                 if (link != null && URLUtil.isValidUrl(link)) {
                     text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 }

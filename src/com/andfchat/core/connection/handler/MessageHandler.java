@@ -28,9 +28,8 @@ import roboguice.util.Ln;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.messages.ChatEntry;
 
 /**
  * Handles incoming messages for channel and Broadcasts
@@ -50,7 +49,7 @@ public class MessageHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                ChatEntry entry = new ChatEntry(message, characterManager.findCharacter(character), ChatEntryType.MESSAGE);
+                ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
                 chatroomManager.addMessage(chatroom, entry);
             }
             else {
@@ -59,7 +58,7 @@ public class MessageHandler extends TokenHandler {
         }
         else if(token == ServerToken.BRO) {
             String message = jsonObject.getString("message");
-            ChatEntry entry = new ChatEntry(message, characterManager.findCharacter(CharacterManager.USER_SYSTEM), ChatEntryType.NOTATION_SYSTEM);
+            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(CharacterManager.USER_SYSTEM), message);
             chatroomManager.addBroadcast(entry);
         }
     }

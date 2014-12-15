@@ -28,10 +28,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andfchat.R;
-import com.andfchat.core.data.ChatEntry;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.google.inject.Inject;
 
 public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
@@ -76,40 +77,53 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
             rowView = inflater.inflate(R.layout.list_item_message, null);
         }
 
+        ChatEntry entry = getItem(position);
+
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
-        textView.setText(this.getItem(position).getChatMessage(getContext()));
+        textView.setText(entry.getChatMessage(getContext()));
         // Set text size
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 
+        View backgroundView = rowView.findViewById(R.id.messageItem);
         // Adding the right colour
-        switch (getItem(position).getMessageType()) {
+        switch (entry.getMessageType()) {
         case WARNING:
-            textView.setBackgroundColor(colorWarning);
+            backgroundView.setBackgroundColor(colorWarning);
             break;
         case ERROR:
-            textView.setBackgroundColor(colorAttention);
+            backgroundView.setBackgroundColor(colorAttention);
             break;
         case MESSAGE:
             if (getItem(position).isOwned()) {
-                textView.setBackgroundColor(colorOwned);
+                backgroundView.setBackgroundColor(colorOwned);
             }
             else {
-                textView.setBackgroundColor(colorLine);
+                backgroundView.setBackgroundColor(colorLine);
             }
             break;
         case EMOTE:
-            textView.setBackgroundColor(colorLine);
+            backgroundView.setBackgroundColor(colorLine);
             break;
         case AD:
-            textView.setBackgroundColor(colorSystem);
+
+            backgroundView.setBackgroundColor(colorSystem);
             break;
         default:
-            textView.setBackgroundColor(colorSystem);
+            backgroundView.setBackgroundColor(colorSystem);
             break;
         }
 
         // Follow links to browser
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        ImageView iconImage = (ImageView)rowView.findViewById(R.id.itemIcon);
+        if (entry.getIcon() != null) {
+            iconImage.setVisibility(View.VISIBLE);
+            iconImage.setImageResource(entry.getIcon());
+        }
+        else {
+            iconImage.setVisibility(View.GONE);
+        }
 
         return rowView;
     }

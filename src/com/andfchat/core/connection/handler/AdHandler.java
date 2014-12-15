@@ -25,10 +25,9 @@ import org.json.JSONObject;
 
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.messages.ChatEntry;
 
 /**
  * Displays add messages in channels.
@@ -44,8 +43,8 @@ public class AdHandler extends TokenHandler {
             FCharacter flistChar = characterManager.findCharacter(json.getString("character"));
             String message = json.getString("message");
 
-            ChatEntry chatEntry = new ChatEntry(message, flistChar, ChatEntryType.AD);
-            chatroomManager.addMessage(chatroom, chatEntry);
+            ChatEntry entry = entryFactory.getAd(flistChar, message);
+            chatroomManager.addMessage(chatroom, entry);
         }
     }
 

@@ -24,6 +24,8 @@ import java.util.List;
 
 import android.text.Spannable;
 
+import com.andfchat.core.data.messages.ChatEntry;
+
 public class Chatroom {
 
     public enum ChatroomType {
@@ -98,6 +100,10 @@ public class Chatroom {
 
     public boolean showUserList() {
         return channel.getType().showUserList;
+    }
+
+    public boolean isChannel() {
+        return channel.getType() == ChatroomType.PUBLIC_CHANNEL || channel.getType() == ChatroomType.PRIVATE_CHANNEL;
     }
 
     public boolean hasNewMessage() {
@@ -235,5 +241,4 @@ public class Chatroom {
             return false;
         return true;
     }
-
 }

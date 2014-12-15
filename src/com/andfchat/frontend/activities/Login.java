@@ -149,8 +149,6 @@ public class Login extends RoboActivity {
         return true;
     }
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -181,6 +179,12 @@ public class Login extends RoboActivity {
 
             historyManager.clearHistory(true);
             sessionData.getSessionSettings().setVersion("0.2.2");
+        }
+        if (version.isLowerThan("0.2.3")) {
+            Ln.i("Updating to version 0.2.3");
+
+            historyManager.clearHistory(true);
+            sessionData.getSessionSettings().setVersion("0.2.3");
         }
     }
 

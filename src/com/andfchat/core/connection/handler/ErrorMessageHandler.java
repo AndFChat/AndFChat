@@ -28,9 +28,8 @@ import roboguice.util.Ln;
 import com.andfchat.core.connection.FeedbackListner;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.messages.ChatEntry;
 
 /**
  * Displays error messages send from server at the active chat.
@@ -46,8 +45,8 @@ public class ErrorMessageHandler extends TokenHandler {
             Ln.i("ERROR: " + json.getString("message"));
 
             FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-            ChatEntry chatEntry = new ChatEntry(json.getString("message"), systemChar, ChatEntryType.ERROR);
-            this.addChatEntryToActiveChat(chatEntry);
+            ChatEntry entry = entryFactory.getError(systemChar, json.getString("message"));
+            this.addChatEntryToActiveChat(entry);
         }
     }
 

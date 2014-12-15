@@ -3,9 +3,9 @@ package com.andfchat.frontend.events;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.andfchat.core.data.ChatEntry;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.andfchat.frontend.events.UserEventListener.UserEventType;
 import com.google.inject.Singleton;

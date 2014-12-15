@@ -1,4 +1,4 @@
-package com.andfchat.core.util;
+package com.andfchat.frontend.util;
 
 import com.andfchat.R;
 

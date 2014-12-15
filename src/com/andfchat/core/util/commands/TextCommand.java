@@ -20,11 +20,8 @@ package com.andfchat.core.util.commands;
 
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.ChatEntry;
-import com.andfchat.core.data.ChatEntryType;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FCharacter;
 import com.google.inject.Inject;
 
 public abstract class TextCommand {
@@ -50,11 +47,4 @@ public abstract class TextCommand {
         }
         return false;
     }
-
-    protected void showMessage(String message, ChatEntryType type) {
-        FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-        ChatEntry chatEntry = new ChatEntry(message, systemChar, type);
-        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
-    }
-
 }

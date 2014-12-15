@@ -21,6 +21,7 @@ package com.andfchat.frontend.adapter;
 import java.util.List;
 
 import net.sourcerer.quickaction.ActionItem;
+import net.sourcerer.quickaction.PopUpAlignment;
 import net.sourcerer.quickaction.QuickActionBar;
 import net.sourcerer.quickaction.QuickActionOnClickListener;
 import net.sourcerer.quickaction.QuickActionOnOpenListener;
@@ -80,7 +81,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         RoboGuice.getInjector(context).injectMembers(this);
 
         quickActionBar = new QuickActionBar(context);
-        quickActionBar.setOrientation(QuickActionBar.LEFT);
+        quickActionBar.setAlignment(PopUpAlignment.LEFT);
 
         // Add PM user
         ActionItem pmUser = new ActionItem(context.getResources().getString(R.string.pm_user), context.getResources().getDrawable(R.drawable.ic_pm));
