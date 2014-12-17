@@ -25,6 +25,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 
 import roboguice.util.Ln;
 import android.content.Context;
@@ -33,6 +34,7 @@ import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.core.data.messages.ChatEntry.MessageType;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -94,16 +96,6 @@ public class HistoryManager {
 
     public void saveHistory() {
         if (sessionData.getSessionSettings().useHistory()) {
-
-            if (sessionData.getSessionSettings().logChannel() == false) {
-                HashMap<Channel, List<ChatEntry>> newHistories = new HashMap<Channel, List<ChatEntry>>();
-                for (Channel channel : histories.keySet()) {
-                    if (channel.getType() != ChatroomType.PUBLIC_CHANNEL) {
-                        newHistories.put(channel, histories.get(channel));
-                    }
-                }
-            }
-
             Ln.d("Save history to disk!");
             String filename = sessionData.getCharacterName() + ".hist";
 
@@ -115,20 +107,28 @@ public class HistoryManager {
                 FileOutputStream fos = context.openFileOutput(filename, Context.MODE_PRIVATE);
                 ObjectOutputStream outputStream = new ObjectOutputStream(fos);
 
-                // If public channel shouldn't be saved
-                if (sessionData.getSessionSettings().logChannel() == false) {
-                    HashMap<Channel, List<ChatEntry>> filteredHistories = new HashMap<Channel, List<ChatEntry>>();
-                    for (Channel channel : histories.keySet()) {
-                        if (channel.getType() != ChatroomType.PUBLIC_CHANNEL) {
-                            filteredHistories.put(channel, histories.get(channel));
+                // Filter history, do not save notations
+                HashMap<Channel, List<ChatEntry>> filteredHistories = new HashMap<Channel, List<ChatEntry>>();
+                for (Channel channel : histories.keySet()) {
+                    // Care about the channel filter
+                    if (sessionData.getSessionSettings().logChannel() || channel.getType() != ChatroomType.PUBLIC_CHANNEL) {
+                        List<ChatEntry> channelMessages = new ArrayList<ChatEntry>(histories.get(channel));
+
+                        // Clean up chat history by removing everything than messages and emotes.
+                        ListIterator<ChatEntry> iterator = channelMessages.listIterator();
+                        while (iterator.hasNext()) {
+                            ChatEntry entry = iterator.next();
+                            if (entry.getMessageType() != MessageType.MESSAGE && entry.getMessageType() != MessageType.EMOTE) {
+                                iterator.remove();
+                            }
                         }
+
+                        filteredHistories.put(channel, channelMessages);
                     }
-                    outputStream.writeObject(filteredHistories);
-                }
-                else {
-                    outputStream.writeObject(histories);
                 }
 
+                // Write serialized output
+                outputStream.writeObject(filteredHistories);
                 outputStream.flush();
                 outputStream.close();
                 Ln.d("Saving complete:" + histories.size());

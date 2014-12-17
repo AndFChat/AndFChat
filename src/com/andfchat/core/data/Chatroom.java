@@ -86,6 +86,9 @@ public class Chatroom {
         return channel.getChannelId();
     }
 
+    /**
+     * Maximum entries which are displayed.
+     */
     public int getMaxiumEntries() {
         return channel.getType().maxEntries;
     }
@@ -94,10 +97,16 @@ public class Chatroom {
         return channel.getType() == ChatroomType.PRIVATE_CHAT;
     }
 
+    /**
+     * Chat can be closed by user.
+     */
     public boolean isCloseable() {
         return channel.getType().closeable;
     }
 
+    /**
+     * Chat should the user list be displayed.
+     */
     public boolean showUserList() {
         return channel.getType().showUserList;
     }
@@ -134,18 +143,19 @@ public class Chatroom {
     }
 
     protected void addMessage(ChatEntry entry) {
-        if (chatMessages.size() < channel.getType().maxEntries) {
-            chatMessages.add(entry);
-        } else {
-            chatMessages.remove(0);
-            chatMessages.add(entry);
-        }
+        chatMessages.add(entry);
     }
 
+    /**
+     * Get the text input by user.
+     */
     public String getEntry() {
         return entry;
     }
 
+    /**
+     * Set the text input by user.
+     */
     public void setEntry(String entry) {
         this.entry = entry;
     }
@@ -164,14 +174,12 @@ public class Chatroom {
         return characters;
     }
 
-    public List<ChatEntry> getChatEntries() {
-        return chatMessages;
-    }
-
     public List<ChatEntry> getChatEntriesSince(long time) {
         List<ChatEntry> messages = new ArrayList<ChatEntry>();
 
-        for (int i = chatMessages.size() - 1; i >= 0; i--) {
+        int lastDisplayedMessagePosition = Math.max(0, chatMessages.size() - getMaxiumEntries());
+
+        for (int i = chatMessages.size() - 1; i >= lastDisplayedMessagePosition; i--) {
             if (chatMessages.get(i).getDate().getTime() > time) {
                 messages.add(chatMessages.get(i));
             } else {
@@ -197,8 +205,8 @@ public class Chatroom {
         return chatMessages;
     }
 
-    public void setChatHistory(List<ChatEntry> chatMessages) {
-        this.chatMessages = chatMessages;
+    public void setChatHistory(List<ChatEntry> chatHistory) {
+        chatMessages = chatHistory;
     }
 
     public ChatroomType getChatroomType() {
