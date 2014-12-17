@@ -62,7 +62,10 @@ public abstract class TokenHandler {
         }
 
         if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
-            chatroomManager.addMessage(chatroomManager.getPrivateChatFor(flistChar), chatEntry);
+            // If private conversation is already the active chat, do not post it again.
+            if (chatroomManager.isActiveChat(chatroomManager.getPrivateChatFor(flistChar)) == false) {
+                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(flistChar), chatEntry);
+            }
         }
     }
 
