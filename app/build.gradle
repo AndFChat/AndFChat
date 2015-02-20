@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.andfchat"
+        minSdkVersion 14
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
+        }
+    }
+	
+	packagingOptions {
+		exclude'META-INF/LICENSE'
+		exclude'META-INF/NOTICE'
+		exclude'META-INF/ASL2.0'
+	}
+	
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'org.roboguice:roboguice:3.+'
+    provided 'org.roboguice:roboblender:3.+'
+    compile project(':QuickActionSource')
+}

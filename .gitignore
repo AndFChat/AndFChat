@@ -26,3 +26,16 @@ local.properties
 lint.xml
 lint.xml
 lint.xml
+
+
+# Gradle support
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+
+
+# project libs
+/third_party

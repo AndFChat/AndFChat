@@ -1,0 +1,2 @@
+include ':app', ':QuickActionSource'
+project(':QuickActionSource').projectDir = new File('third_party/QuickActionSource')
