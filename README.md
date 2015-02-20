@@ -34,3 +34,11 @@ Sorry, you are swichting ip adresses. I see no easy way to fix this, despite rec
 ***Why can I only connect with one character at the same time? Will there be any update to fix this?***
 
 Nope, seriously there is not enough space on a phone for one character. Don't see any reason to add multiple connections at the same time.
+
+***How to post Ads?***
+
+There are two ways to post an ad:
+1. Start your post with /ad [text] that will automatically post as ad.
+2. Write your post and don't send it, select Post ad in the action Menu.
+
+
