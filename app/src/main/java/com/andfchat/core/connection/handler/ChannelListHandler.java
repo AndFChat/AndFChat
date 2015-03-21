@@ -26,7 +26,7 @@ import org.json.JSONObject;
 
 import roboguice.util.Ln;
 
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.Chatroom.ChatroomType;
@@ -38,7 +38,7 @@ import com.andfchat.core.data.Chatroom.ChatroomType;
 public class ChannelListHandler extends TokenHandler {
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         if (token == ServerToken.CHA) {
             JSONObject json = new JSONObject(msg);
             JSONArray jsonArray = json.getJSONArray("channels");
@@ -62,8 +62,8 @@ public class ChannelListHandler extends TokenHandler {
             }
 
             // Feedback, private channel list
-            if (feedbackListner != null) {
-                for (FeedbackListner listner : feedbackListner) {
+            if (feedbackListener != null) {
+                for (FeedbackListener listner : feedbackListener) {
                     listner.onResponse(null);
                 }
             }

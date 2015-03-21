@@ -112,4 +112,7 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListe
         return isVisible;
     }
 
+    public void clear() {
+        memberListData.clear();
+    }
 }

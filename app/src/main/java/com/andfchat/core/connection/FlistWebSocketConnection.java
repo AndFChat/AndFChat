@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 import roboguice.util.Ln;
 import android.content.Context;
-import android.content.Intent;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.data.CharStatus;
@@ -37,11 +36,11 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntry;
 import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.data.messages.MessageEntry;
-import com.andfchat.frontend.activities.Login;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
+import com.andfchat.frontend.events.ConnectionEventListener;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -86,6 +85,7 @@ public class FlistWebSocketConnection {
             } else {
                 application.getConnection().connect(SERVER_URL_DEV, handler);
             }
+            eventManager.fire(ConnectionEventListener.ConnectionEventType.CONNECTED);
         } catch (WebSocketException e) {
             e.printStackTrace();
             Ln.e("Exception while connecting");
@@ -125,8 +125,8 @@ public class FlistWebSocketConnection {
     /**
      * Register a feedback called after receiving the ServerToken, the feedback will only be called once than removed.
      */
-    public void registerFeedbackListner(ServerToken serverToken, FeedbackListner feedbackListner) {
-        handler.addFeedbackListner(serverToken, feedbackListner);
+    public void registerFeedbackListner(ServerToken serverToken, FeedbackListener feedbackListener) {
+        handler.addFeedbackListner(serverToken, feedbackListener);
     }
 
     /**
@@ -289,10 +289,6 @@ public class FlistWebSocketConnection {
     }
 
     public void closeConnection(Context context) {
-        closeConnection(context, true);
-    }
-
-    public void closeConnection(Context context, boolean goToLogin) {
         Ln.d("Disconnect!");
 
         if (application.getConnection().isConnected()) {
@@ -304,15 +300,11 @@ public class FlistWebSocketConnection {
         sessionData.clear();
         chatroomManager.clear();
         characterManager.clear();
-        eventManager.clear();
+
+        eventManager.fire(ConnectionEventListener.ConnectionEventType.DISCONNECTED);
 
         notification.cancelLedNotification();
         notification.disconnectNotification();
-
-        if (goToLogin) {
-            Intent intent = new Intent(context, Login.class);
-            context.startActivity(intent);
-        }
     }
 
     public void createPrivateChannel(String channelname) {

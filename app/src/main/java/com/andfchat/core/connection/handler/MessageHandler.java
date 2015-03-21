@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 import roboguice.util.Ln;
 
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
@@ -39,7 +39,7 @@ import com.andfchat.core.data.messages.ChatEntry;
 public class MessageHandler extends TokenHandler {
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         JSONObject jsonObject = new JSONObject(msg);
         if(token == ServerToken.MSG) {
             String character = jsonObject.getString("character");

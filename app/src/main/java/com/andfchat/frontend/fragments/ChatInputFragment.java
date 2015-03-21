@@ -134,6 +134,8 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
     }
 
     public void saveEntry() {
-        chatroomManager.getActiveChat().setEntry(inputText.getEditableText().toString());
+        if (chatroomManager.getActiveChat() != null) {
+            chatroomManager.getActiveChat().setEntry(inputText.getEditableText().toString());
+        }
     }
 }

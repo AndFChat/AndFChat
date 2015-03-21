@@ -95,7 +95,7 @@ public class HistoryManager {
     }
 
     public void saveHistory() {
-        if (sessionData.getSessionSettings().useHistory()) {
+        if (sessionData.getSessionSettings().useHistory() && sessionData.getCharacterName() != null) {
             Ln.d("Save history to disk!");
             String filename = sessionData.getCharacterName() + ".hist";
 

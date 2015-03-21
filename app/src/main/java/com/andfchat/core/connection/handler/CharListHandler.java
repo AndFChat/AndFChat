@@ -28,7 +28,7 @@ import org.json.JSONObject;
 import roboguice.util.Ln;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.RelationManager;
@@ -50,7 +50,7 @@ public class CharListHandler extends TokenHandler {
     private final HashMap<String, FCharacter> flistCharacters = new HashMap<String, FCharacter>();
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         long TIMEOUT = 1000 * 30;
 
         if (token == ServerToken.CON) {

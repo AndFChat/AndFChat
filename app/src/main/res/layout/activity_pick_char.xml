@@ -42,13 +42,5 @@
             android:layout_height="wrap_content">
             <requestFocus />
         </Spinner>
-    
-        <Button
-            android:id="@+id/logInButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:onClick="logIn"
-        />
     </LinearLayout>
 </LinearLayout>

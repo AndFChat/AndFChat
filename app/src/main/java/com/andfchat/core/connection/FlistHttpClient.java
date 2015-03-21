@@ -36,19 +36,19 @@ public class FlistHttpClient {
     private final static String removeBookmarkUri = "http://www.f-list.net/json/api/bookmark-remove.php?account={1}&ticket={2}&name={3}";
 
 
-    public static void logIn(String account, String password, FeedbackListner feedbackListner) {
-        sendMessage(feedbackListner, logInUri, account, password);
+    public static void logIn(String account, String password, FeedbackListener feedbackListener) {
+        sendMessage(feedbackListener, logInUri, account, password);
     }
 
-    public static void addBookmark(String account, String ticket, String name, FeedbackListner feedbackListner) {
-        sendMessage(feedbackListner, addBookmarkUri, account, ticket, name);
+    public static void addBookmark(String account, String ticket, String name, FeedbackListener feedbackListener) {
+        sendMessage(feedbackListener, addBookmarkUri, account, ticket, name);
     }
 
-    public static void removeBookmark(String account, String ticket, String name, FeedbackListner feedbackListner) {
-        sendMessage(feedbackListner, removeBookmarkUri, account, ticket, name);
+    public static void removeBookmark(String account, String ticket, String name, FeedbackListener feedbackListener) {
+        sendMessage(feedbackListener, removeBookmarkUri, account, ticket, name);
     }
 
-    private static void sendMessage(FeedbackListner feedbackListner, String url, String... arguments) {
+    private static void sendMessage(FeedbackListener feedbackListener, String url, String... arguments) {
         for (int i = 1; i < arguments.length + 1; i++) {
             try {
                 url = url.replace("{" + i + "}", URLEncoder.encode(arguments[i - 1], "utf-8"));
@@ -58,7 +58,7 @@ public class FlistHttpClient {
         }
 
         Ln.d("Open url");
-        HttpWebCall webCall = new HttpWebCall(url, feedbackListner);
+        HttpWebCall webCall = new HttpWebCall(url, feedbackListener);
         webCall.execute();
     }
 
@@ -70,11 +70,11 @@ public class FlistHttpClient {
     private static class HttpWebCall extends AsyncTask<Void, Void, Void> {
 
         private final String uri;
-        private final FeedbackListner feedbackListner;
+        private final FeedbackListener feedbackListener;
 
-        public HttpWebCall(String uri, FeedbackListner feedbackListner) {
+        public HttpWebCall(String uri, FeedbackListener feedbackListener) {
             this.uri = uri;
-            this.feedbackListner = feedbackListner;
+            this.feedbackListener = feedbackListener;
         }
 
         @Override
@@ -86,15 +86,15 @@ public class FlistHttpClient {
                 HttpResponse response = client.execute(request);
                 String responseString = convertStreamToString(response.getEntity().getContent());
                 Ln.d("Got Response: " + responseString);
-                if (feedbackListner != null) {
-                    feedbackListner.onResponse(responseString);
+                if (feedbackListener != null) {
+                    feedbackListener.onResponse(responseString);
                 }
 
                 return null;
             } catch (Exception ex) {
                 ex.printStackTrace();
-                if (feedbackListner != null) {
-                    feedbackListner.onError(ex);
+                if (feedbackListener != null) {
+                    feedbackListener.onError(ex);
                 }
             }
             return null;

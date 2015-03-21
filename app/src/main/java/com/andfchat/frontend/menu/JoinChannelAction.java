@@ -41,7 +41,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Channel;
@@ -93,7 +93,7 @@ public class JoinChannelAction {
             @Override
             public void onClick(View v) {
                 adapter.clear();
-                FeedbackListner feedbackListner = new FeedbackListner() {
+                FeedbackListener feedbackListener = new FeedbackListener() {
 
                     @Override
                     public void onResponse(String response) {
@@ -105,7 +105,7 @@ public class JoinChannelAction {
                     public void onError(Exception ex) {}
                 };
 
-                connection.registerFeedbackListner(ServerToken.ORS, feedbackListner);
+                connection.registerFeedbackListner(ServerToken.ORS, feedbackListener);
                 connection.askForPrivateChannel();
             }
         });

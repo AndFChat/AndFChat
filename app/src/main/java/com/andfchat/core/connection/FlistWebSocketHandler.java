@@ -77,7 +77,7 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
     protected HistoryManager historyManager;
 
     private final HashMap<ServerToken, TokenHandler> handlerMap = new HashMap<ServerToken, TokenHandler>();
-    private final Map<ServerToken, List<FeedbackListner>> feedbackListnerMap = new HashMap<ServerToken, List<FeedbackListner>>();
+    private final Map<ServerToken, List<FeedbackListener>> feedbackListnerMap = new HashMap<ServerToken, List<FeedbackListener>>();
 
     private boolean disconnected;
 
@@ -180,12 +180,12 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
     /**
      * Register a feedback called after receiving the ServerToken, the feedback will only be called once than removed.
      */
-    public void addFeedbackListner(ServerToken serverToken, FeedbackListner feedbackListner) {
+    public void addFeedbackListner(ServerToken serverToken, FeedbackListener feedbackListener) {
         if (feedbackListnerMap.containsKey(serverToken)) {
-            feedbackListnerMap.get(serverToken).add(feedbackListner);
+            feedbackListnerMap.get(serverToken).add(feedbackListener);
         } else {
-            List<FeedbackListner> listnerList = new ArrayList<FeedbackListner>();
-            listnerList.add(feedbackListner);
+            List<FeedbackListener> listnerList = new ArrayList<FeedbackListener>();
+            listnerList.add(feedbackListener);
             feedbackListnerMap.put(serverToken, listnerList);
         }
     }

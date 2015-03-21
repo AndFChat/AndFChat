@@ -24,7 +24,7 @@ import roboguice.util.Ln;
 import android.content.Context;
 
 import com.andfchat.core.connection.ClientToken;
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.connection.ServerToken;
 import com.google.inject.Inject;
@@ -47,7 +47,7 @@ public class PingHandler extends TokenHandler {
     private boolean running = false;
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) {
         if (System.currentTimeMillis() - lastPIN > MIN_TIME_BETWEEN_PINGS) {
             connection.sendMessage(ClientToken.PIN);
             lastPIN = System.currentTimeMillis();

@@ -19,6 +19,7 @@
 package com.andfchat.core.data;
 
 import java.util.HashMap;
+import java.util.List;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -46,6 +47,9 @@ public class SessionData {
     private String ticket;
     private String account;
     private String characterName;
+
+    private List<String> charList;
+    private String defaultChar;
 
     private boolean isVisible = false;
     private boolean isInChat = false;
@@ -76,8 +80,28 @@ public class SessionData {
         return ticket;
     }
 
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
+    }
+
     public String getCharacterName() {
         return characterName;
+    }
+
+    public List<String> getCharList() {
+        return charList;
+    }
+
+    public void setCharList(List<String> charList) {
+        this.charList = charList;
+    }
+
+    public String getDefaultChar() {
+        return defaultChar;
+    }
+
+    public void setDefaultChar(String defaultChar) {
+        this.defaultChar = defaultChar;
     }
 
     public boolean isUser(FCharacter character) {
@@ -129,6 +153,8 @@ public class SessionData {
     public void setVariable(Variable variable, int value) {
         intVariables.put(variable, value);
     }
+
+
 
     public class SessionSettings {
         private final SharedPreferences preferences;

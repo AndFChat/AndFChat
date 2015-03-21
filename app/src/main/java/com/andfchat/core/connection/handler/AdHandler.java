@@ -23,7 +23,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
@@ -36,7 +36,7 @@ import com.andfchat.core.data.messages.ChatEntry;
 public class AdHandler extends TokenHandler {
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         if (token == ServerToken.LRP) {
             JSONObject json = new JSONObject(msg);
             Chatroom chatroom = chatroomManager.getChatroom(json.getString("channel"));

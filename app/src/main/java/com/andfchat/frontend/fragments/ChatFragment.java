@@ -118,4 +118,9 @@ public class ChatFragment extends RoboFragment implements ChatroomEventListener,
             }
         }
     }
+
+    public void clear() {
+        chatListData.clear();
+    }
+
 }

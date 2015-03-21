@@ -79,4 +79,8 @@ public class ChannelListFragment extends RoboFragment implements ChatroomEventLi
             }
         });
     }
+
+    public void clear() {
+        chatroomListAdapter.clear();
+    }
 }

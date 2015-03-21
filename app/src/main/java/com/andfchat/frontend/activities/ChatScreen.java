@@ -28,17 +28,22 @@ import net.sourcerer.quickaction.PopUpAlignment;
 import net.sourcerer.quickaction.QuickActionBar;
 import net.sourcerer.quickaction.QuickActionOnClickListener;
 import net.sourcerer.quickaction.QuickActionOnOpenListener;
+
+import roboguice.RoboGuice;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.Display;
@@ -66,9 +71,11 @@ import com.andfchat.core.data.messages.ChatEntry;
 import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.data.messages.ChatEntryFactory.AdClickListner;
 import com.andfchat.core.util.SmileyReader;
+import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener;
+import com.andfchat.frontend.events.ConnectionEventListener;
 import com.andfchat.frontend.events.MessageEventListener;
 import com.andfchat.frontend.events.UserEventListener;
 import com.andfchat.frontend.fragments.ChannelListFragment;
@@ -79,12 +86,14 @@ import com.andfchat.frontend.menu.AboutAction;
 import com.andfchat.frontend.menu.DisconnectAction;
 import com.andfchat.frontend.menu.FriendListAction;
 import com.andfchat.frontend.menu.JoinChannelAction;
+import com.andfchat.frontend.popup.FListCharSelectionPopup;
+import com.andfchat.frontend.popup.FListLoginPopup;
 import com.andfchat.frontend.popup.FListPopupWindow;
 import com.andfchat.frontend.util.Exporter;
 import com.andfchat.frontend.util.FlistAlertDialog;
 import com.google.inject.Inject;
 
-public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListener, AdClickListner {
+public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListener, AdClickListner, ConnectionEventListener {
 
     @Inject
     protected CharacterManager charManager;
@@ -127,6 +136,9 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     private QuickActionBar actionBar;
 
+    private FListLoginPopup loginPopup;
+    private FListCharSelectionPopup charSelectionPopup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +152,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         toggleSidebarRight.setSelected(true);
 
         eventManager.clear();
-        eventManager.register(this);
+        eventManager.register((ChatroomEventListener)this);
+        eventManager.register((ConnectionEventListener)this);
 
         // Fetch fragments
         chat = (ChatFragment)getSupportFragmentManager().findFragmentById(R.id.chatFragment);
@@ -167,7 +180,6 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         application.setScreenDimension(size);
 
         setupActionBar();
-
     }
 
     private void setupActionBar() {
@@ -352,6 +364,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     @Override
     public void onEvent(Chatroom chatroom, ChatroomEventType type) {
         if (type == ChatroomEventType.ACTIVE) {
+            actionButton.setEnabled(true);
+
             if (chatroom.isSystemChat()) {
                 toggleSidebarRight.setVisibility(View.GONE);
             } else {
@@ -413,9 +427,36 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         super.onResume();
         sessionData.setIsVisible(true);
 
+        // Check Version
+        checkVersion();
+
         // Reload chat
         if (chatroomManager.getActiveChat() != null) {
             chatroomManager.setActiveChat(chatroomManager.getActiveChat());
+        }
+        else {
+            actionButton.setEnabled(false);
+        }
+
+        if (!connection.isConnected()) {
+            openLogin();
+        }
+    }
+
+    private void checkVersion() {
+        Version version = sessionData.getSessionSettings().getVersion();
+
+        if (version.isLowerThan("0.2.2")) {
+            Ln.i("Updating to version 0.2.2");
+
+            historyManager.clearHistory(true);
+            sessionData.getSessionSettings().setVersion("0.2.2");
+        }
+        if (version.isLowerThan("0.2.3")) {
+            Ln.i("Updating to version 0.2.3");
+
+            historyManager.clearHistory(true);
+            sessionData.getSessionSettings().setVersion("0.2.3");
         }
     }
 
@@ -423,10 +464,9 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     protected void onStop() {
         super.onStop();
         sessionData.setIsVisible(false);
-        historyManager.saveHistory();
 
-        if (!connection.isConnected()) {
-            finish();
+        if (connection.isConnected()) {
+            historyManager.saveHistory();
         }
     }
 
@@ -498,8 +538,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
             @Override
             public void onYes() {
-                connection.closeConnection(ChatScreen.this, false);
-                goBackToCharSelection();
+                connection.closeConnection(ChatScreen.this);
+                finish();
             }
 
             @Override
@@ -527,8 +567,66 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         descriptionText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private void goBackToCharSelection() {
-        Ln.d("Back to char Selection");
-        super.onBackPressed();
+    public void openLogin() {
+        if (sessionData.getTicket() == null) {
+            if (loginPopup != null) {
+                loginPopup.dismiss();
+            }
+
+            loginPopup = new FListLoginPopup();
+            RoboGuice.injectMembers(this, loginPopup);
+            loginPopup.show(getFragmentManager(), "login_fragment");
+        }
+        else {
+            connection.connect(true);
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (connection.isConnected()) {
+                        openSelection();
+                    }
+                    else {
+                        sessionData.setTicket(null);
+                        openLogin();
+                    }
+                }
+            };
+
+            new Handler(Looper.getMainLooper()).postDelayed(runnable, 1000);
+        }
+    }
+
+    public void openSelection() {
+        if (charSelectionPopup != null) {
+            charSelectionPopup.dismiss();
+        }
+
+        charSelectionPopup = new FListCharSelectionPopup();
+        RoboGuice.injectMembers(this, charSelectionPopup);
+        charSelectionPopup.show(getFragmentManager(), "select_fragment");
+    }
+
+    @Override
+    public void onEvent(ConnectionEventType type) {
+        if (type == ConnectionEventType.CONNECTED) {
+            if (loginPopup != null) {
+                loginPopup.dismiss();
+            }
+
+            openSelection();
+        }
+        else if (type == ConnectionEventType.CHAR_CONNECTED) {
+            if (charSelectionPopup != null) {
+                charSelectionPopup.dismiss();
+            }
+        }
+        else if (type == ConnectionEventType.DISCONNECTED) {
+            Ln.i("Disconnected, clear interface!");
+            channelList.clear();
+            userList.clear();
+            chat.clear();
+            openLogin();
+        }
     }
 }

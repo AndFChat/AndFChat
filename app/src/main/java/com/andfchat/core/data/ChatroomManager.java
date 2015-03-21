@@ -223,8 +223,6 @@ public class ChatroomManager {
         this.chats.clear();
         this.officialChannelSet.clear();
         this.privateChannelSet.clear();
-
-        addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, ChatroomType.CONSOLE), 50000));
     }
 
     public List<Chatroom> getChatRooms() {

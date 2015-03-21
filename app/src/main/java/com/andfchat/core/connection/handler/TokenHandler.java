@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.ChatroomManager;
@@ -50,7 +50,7 @@ public abstract class TokenHandler {
     @Inject
     protected ChatEntryFactory entryFactory;
 
-    public abstract void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException;
+    public abstract void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException;
 
     public abstract ServerToken[] getAcceptableTokens();
 

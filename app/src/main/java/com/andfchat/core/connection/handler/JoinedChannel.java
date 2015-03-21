@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import roboguice.util.Ln;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Channel;
@@ -45,7 +45,7 @@ import com.andfchat.frontend.events.UserEventListener.UserEventType;
 public class JoinedChannel extends TokenHandler {
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         JSONObject data = new JSONObject(msg);
         String channelId = data.getString("channel");
 

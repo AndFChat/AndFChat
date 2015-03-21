@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import roboguice.util.Ln;
 import android.os.Vibrator;
 
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.Channel;
@@ -57,7 +57,7 @@ public class PrivateMessageHandler extends TokenHandler {
     private int messages = 0;
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         JSONObject jsonObject = new JSONObject(msg);
 
         String character = jsonObject.getString("character");

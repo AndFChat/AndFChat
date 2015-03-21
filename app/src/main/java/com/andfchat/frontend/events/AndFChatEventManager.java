@@ -13,44 +13,55 @@ import com.google.inject.Singleton;
 @Singleton
 public class AndFChatEventManager {
 
-    private final List<ChatroomEventListener> chatroomEventListner = new ArrayList<ChatroomEventListener>();
-    private final List<MessageEventListener> messageEventListner = new ArrayList<MessageEventListener>();
-    private final List<UserEventListener> userEventListner = new ArrayList<UserEventListener>();
+    private final List<ChatroomEventListener> chatroomEventListener = new ArrayList<ChatroomEventListener>();
+    private final List<MessageEventListener> messageEventListener = new ArrayList<MessageEventListener>();
+    private final List<UserEventListener> userEventListener = new ArrayList<UserEventListener>();
+    private final List<ConnectionEventListener> connectionEventListener = new ArrayList<>();
 
-    public synchronized void register(ChatroomEventListener listner) {
-        chatroomEventListner.add(listner);
+    public synchronized void register(ChatroomEventListener listener) {
+        chatroomEventListener.add(listener);
     }
 
-    public synchronized void register(MessageEventListener listner) {
-        messageEventListner.add(listner);
+    public synchronized void register(MessageEventListener listener) {
+        messageEventListener.add(listener);
     }
 
-    public synchronized void register(UserEventListener listner) {
-        userEventListner.add(listner);
+    public synchronized void register(ConnectionEventListener listener) {
+        connectionEventListener.add(listener);
+    }
+
+    public synchronized void register(UserEventListener listener) {
+        userEventListener.add(listener);
     }
 
     public synchronized void fire(Chatroom chatroom, ChatroomEventType type) {
-        for (ChatroomEventListener listner : chatroomEventListner) {
-            listner.onEvent(chatroom, type);
+        for (ChatroomEventListener listener : chatroomEventListener) {
+            listener.onEvent(chatroom, type);
         }
     }
 
     public synchronized void fire(ChatEntry entry, Chatroom chatroom) {
-        for (MessageEventListener listner : messageEventListner) {
-            listner.onEvent(entry, chatroom);
+        for (MessageEventListener listener : messageEventListener) {
+            listener.onEvent(entry, chatroom);
         }
     }
 
     public synchronized void fire(FCharacter character, UserEventType type, Chatroom chatroom) {
-        for (UserEventListener listner : userEventListner) {
-            listner.onEvent(character, type, chatroom);
+        for (UserEventListener listener : userEventListener) {
+            listener.onEvent(character, type, chatroom);
+        }
+    }
+
+    public synchronized void fire(ConnectionEventListener.ConnectionEventType type) {
+        for (ConnectionEventListener listener : connectionEventListener) {
+            listener.onEvent(type);
         }
     }
 
     public void clear() {
-        chatroomEventListner.clear();
-        messageEventListner.clear();
-        userEventListner.clear();
+        chatroomEventListener.clear();
+        messageEventListener.clear();
+        userEventListener.clear();
+        connectionEventListener.clear();
     }
-
 }

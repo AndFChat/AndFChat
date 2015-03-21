@@ -24,7 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.messages.ChatEntry;
@@ -32,7 +32,7 @@ import com.andfchat.core.data.messages.ChatEntry;
 public class ChannelInviteHandler extends TokenHandler {
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         if (token == ServerToken.CIU) {
             JSONObject json = new JSONObject(msg);
             String channelId = json.getString("title");

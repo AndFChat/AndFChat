@@ -22,10 +22,14 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.connection.ServerToken;
+import com.andfchat.core.data.Channel;
+import com.andfchat.core.data.Chatroom;
+import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.application.AndFChatNotification;
+import com.andfchat.frontend.events.ConnectionEventListener;
 import com.google.inject.Inject;
 
 /**
@@ -40,7 +44,7 @@ public class FirstConnectionHandler extends TokenHandler {
     private AndFChatNotification notification;
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         String channel = sessionData.getSessionSettings().getInitialChannel();
         if (channel != null) {
             connection.joinChannel(channel);
@@ -48,6 +52,11 @@ public class FirstConnectionHandler extends TokenHandler {
         connection.requestOfficialChannels();
 
         sessionData.setIsInChat(true);
+
+        // Add Console
+        chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, Chatroom.ChatroomType.CONSOLE), 50000));
+
+        eventManager.fire(ConnectionEventListener.ConnectionEventType.CHAR_CONNECTED);
     }
 
     @Override

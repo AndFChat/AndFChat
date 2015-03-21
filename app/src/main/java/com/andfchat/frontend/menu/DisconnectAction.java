@@ -34,7 +34,6 @@ public class DisconnectAction {
             @Override
             public void onYes() {
                 RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection(activity);
-                activity.finish();
             }
 
             @Override

@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 import roboguice.util.Ln;
 
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 
 /**
@@ -54,7 +54,7 @@ public class VariableHandler extends TokenHandler {
     }
 
     @Override
-    public void incomingMessage(ServerToken token, String msg, List<FeedbackListner> feedbackListner) throws JSONException {
+    public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         if (token == ServerToken.VAR) {
             JSONObject data = new JSONObject(msg);
             String variableName = data.getString("variable");
