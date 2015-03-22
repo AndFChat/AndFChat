@@ -54,6 +54,7 @@ public class Chatroom {
     private Spannable description;
 
     private boolean hasNewMessage = false;
+    private List<String> channelMods = new ArrayList<String>();
 
     private String entry;
 
@@ -68,6 +69,14 @@ public class Chatroom {
         this.characters.add(character);
         this.maxTextLength = maxTextLength;
         this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
+    }
+
+    public boolean isChannelMod(FCharacter character) {
+        return channelMods.contains(character.getName());
+    }
+
+    public void setChannelMods(List<String> channelMods) {
+        this.channelMods = channelMods;
     }
 
     public void setDescription(Spannable description) {

@@ -65,11 +65,12 @@
     <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session]</string>
     
     <string name="question_disconnect">Do you really want to log off?</string>
-    <string name="question_back">Do you really want to go back to character selection?</string>
+    <string name="question_back">Do you really want to quit?</string>
     <string name="question_delete_log">Do you really want to delete this log?</string>
     
     <!-- longer text messages -->
-    <string name="error_login">Login failed. Check your username and password.</string>
+    <string name="error_login">Login failed: </string>
+    <string name="error_disconnected_no_connection">Disconnected: Lost connection to server</string>
     <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>      
     
     <string name="text_about">[b]AndFChat[/b] (Version 0.2.2) is developed under the GPL3 licence.
@@ -78,7 +79,6 @@
         \nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub https://github.com/AndFChat/AndFChat/\n
         \n
         [b][color=red]Still looking for help![/color][/b]\n
-        * A native English speaker to rewrite the text\n
         * Artist/designer to improve the interface and add some images.\n
         * Experienced Android developer for UI design, especially scaling questions for different display layouts.\n</string>
     

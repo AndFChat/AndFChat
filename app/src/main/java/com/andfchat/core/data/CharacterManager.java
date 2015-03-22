@@ -32,6 +32,7 @@ public class CharacterManager {
     private RelationManager relationManager;
 
     private final HashMap<String, FCharacter> knownCharacters = new HashMap<String, FCharacter>();
+    private List<String> globalMods = new ArrayList<String>();
 
     private boolean statusChanged = false;
 
@@ -50,8 +51,7 @@ public class CharacterManager {
             if (knownCharacters.containsKey(name) == false) {
                 if (create) {
                     FCharacter character = new FCharacter(name);
-                    relationManager.addRelationsToCharacter(character);
-                    knownCharacters.put(name, character);
+                    addCharacter(character);
                 }
             }
             return knownCharacters.get(name);
@@ -64,6 +64,8 @@ public class CharacterManager {
 
     public void addCharacter(FCharacter character) {
         relationManager.addRelationsToCharacter(character);
+        // Set global mods
+        character.setGlobalOperator(globalMods.contains(character.getName()));
 
         synchronized(this) {
             if (knownCharacters.containsKey(character.getName()) == true) {
@@ -80,6 +82,10 @@ public class CharacterManager {
                 relationManager.addRelationsToCharacter(character);
             }
             knownCharacters.putAll(characterList);
+
+            if (globalMods.size() > 0) {
+                setGlobalMods(globalMods);
+            }
         }
     }
 
@@ -125,5 +131,19 @@ public class CharacterManager {
         }
 
         return importantCharacters;
+    }
+
+    public void setGlobalMods(List<String> globalMods) {
+        this.globalMods = globalMods;
+
+        for (String mod : globalMods) {
+            if (knownCharacters.containsKey(mod)) {
+                knownCharacters.get(mod).setGlobalOperator(true);
+            }
+        }
+    }
+
+    public List<String> getGlobalMods() {
+        return globalMods;
     }
 }

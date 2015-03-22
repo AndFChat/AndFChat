@@ -41,6 +41,7 @@ import com.andfchat.core.connection.handler.FirstConnectionHandler;
 import com.andfchat.core.connection.handler.JoinedChannel;
 import com.andfchat.core.connection.handler.LeftChannelHandler;
 import com.andfchat.core.connection.handler.MessageHandler;
+import com.andfchat.core.connection.handler.ModsHandler;
 import com.andfchat.core.connection.handler.PingHandler;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.TokenHandler;
@@ -103,6 +104,7 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
         availableTokenHandler.add(new AdHandler());
         availableTokenHandler.add(new ChannelInviteHandler());
         availableTokenHandler.add(new VariableHandler());
+        availableTokenHandler.add(new ModsHandler());
 
         Injector injector = RoboGuice.getInjector(context);
 
@@ -171,6 +173,8 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
     @Override
     public void onClose(int code, String reason) {
         Ln.d("Status: Connection closed: " + reason);
+
+        sessionData.setDisconnectReason(reason);
 
         for (TokenHandler handler : handlerMap.values()) {
             handler.closed();

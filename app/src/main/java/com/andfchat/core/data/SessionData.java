@@ -57,6 +57,7 @@ public class SessionData {
     private final SessionSettings sessionSettings;
 
     private final HashMap<Variable, Integer> intVariables = new HashMap<Variable, Integer>();
+    private String disconnectReason;
 
     @Inject
     public SessionData(Context context) {
@@ -154,7 +155,13 @@ public class SessionData {
         intVariables.put(variable, value);
     }
 
+    public void setDisconnectReason(String disconnectReason) {
+        this.disconnectReason = disconnectReason;
+    }
 
+    public String getDisconnectReason() {
+        return this.disconnectReason;
+    }
 
     public class SessionSettings {
         private final SharedPreferences preferences;

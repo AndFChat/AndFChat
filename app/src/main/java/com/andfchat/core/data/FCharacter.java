@@ -34,6 +34,7 @@ public class FCharacter implements Serializable {
 
     private transient CharStatus status = CharStatus.ONLINE;
     private transient String statusMsg = null;
+    private transient boolean isGlobalOperator = false;
 
     public FCharacter(String name) {
         this.name = name;
@@ -61,6 +62,14 @@ public class FCharacter implements Serializable {
         }
 
         Collections.addAll(this.charRelations, charRelations);
+    }
+
+    public void setGlobalOperator(boolean isGlobalOperator) {
+        this.isGlobalOperator = isGlobalOperator;
+    }
+
+    public boolean isGlobalOperator() {
+        return isGlobalOperator;
     }
 
     public CharStatus getStatus() {

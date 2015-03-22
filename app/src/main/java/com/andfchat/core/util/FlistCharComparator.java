@@ -20,10 +20,13 @@ package com.andfchat.core.util;
 
 import java.util.Comparator;
 
+import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 
 
 public class FlistCharComparator implements Comparator<FCharacter> {
+
+    private Chatroom chatroom;
 
     @Override
     public int compare(FCharacter lhs, FCharacter rhs) {
@@ -36,6 +39,20 @@ public class FlistCharComparator implements Comparator<FCharacter> {
             return -1;
         }
 
+        if (chatroom != null) {
+            if (lhs.isGlobalOperator() && !rhs.isGlobalOperator()) {
+                return -1;
+            } else if (!lhs.isGlobalOperator() && rhs.isGlobalOperator()) {
+                return 1;
+            }
+
+            if (chatroom.isChannelMod(lhs) && !chatroom.isChannelMod(rhs)) {
+                return -1;
+            } else if (!chatroom.isChannelMod(lhs) && chatroom.isChannelMod(rhs)) {
+                return 1;
+            }
+        }
+
         //compare bookmared/friend vs not bookmarked/friend
         if (lhs.isImportant() && !rhs.isImportant()) {
             return -1;
@@ -45,16 +62,17 @@ public class FlistCharComparator implements Comparator<FCharacter> {
         }
         else if (lhs.isImportant() && rhs.isImportant()) {
             return lhs.getName().compareTo(rhs.getName());
-        }
-
-        //compare gender
+        } //compare gender
         else if ((compareInt = lhs.getGender().getName().compareTo(rhs.getGender().getName())) != 0) {
             return compareInt;
-        }
-        //compare name
+        } //compare name
         else {
             return lhs.getName().compareTo(rhs.getName());
         }
+    }
+
+    public void setChatroom(Chatroom chatroom) {
+        this.chatroom = chatroom;
     }
 
 }

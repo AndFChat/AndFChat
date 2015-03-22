@@ -26,5 +26,5 @@ package com.andfchat.core.connection;
  */
 public abstract class FeedbackListener {
     public abstract void onResponse(String response);
-    public abstract void onError(Exception ex);
+    public abstract void onError(String message);
 }

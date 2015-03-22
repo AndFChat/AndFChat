@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import roboguice.util.Ln;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.data.CharStatus;
@@ -111,7 +113,7 @@ public class FlistWebSocketConnection {
                 chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), entry);
             }
         } else {
-            Ln.i("Sending message: " + token.name() + " " + data.toString());
+            Ln.d("Sending message: " + token.name() + " " + data.toString());
             application.getConnection().sendTextMessage(token.name() + " " + data.toString());
 
             if (sessionData.getSessionSettings().useDebugChannel()) {
@@ -301,7 +303,15 @@ public class FlistWebSocketConnection {
         chatroomManager.clear();
         characterManager.clear();
 
-        eventManager.fire(ConnectionEventListener.ConnectionEventType.DISCONNECTED);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                eventManager.fire(ConnectionEventListener.ConnectionEventType.DISCONNECTED);
+            }
+        };
+
+        new Handler(Looper.getMainLooper()).postDelayed(runnable, 250);
+
 
         notification.cancelLedNotification();
         notification.disconnectNotification();

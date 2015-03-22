@@ -72,13 +72,14 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
     public MemberListAdapter(final Context context, List<FCharacter> chars) {
         super(context, R.layout.list_item_user, chars);
 
+        RoboGuice.getInjector(context).injectMembers(this);
+
         if (chars.size() > 1) {
+            COMPARATOR.setChatroom(chatroomManager.getActiveChat());
             this.sort(COMPARATOR);
         }
 
         this.chars = chars;
-
-        RoboGuice.getInjector(context).injectMembers(this);
 
         quickActionBar = new QuickActionBar(context);
         quickActionBar.setAlignment(PopUpAlignment.LEFT);
@@ -205,6 +206,15 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
         }
 
+        // Set icon
+        ImageView itemIconOverlay = (ImageView)rowView.findViewById(R.id.itemIconOverlay);
+        if (character.isGlobalOperator() || chatroomManager.getActiveChat().isChannelMod(character)) {
+            itemIconOverlay.setVisibility(View.VISIBLE);
+        }
+        else {
+            itemIconOverlay.setVisibility(View.GONE);
+        }
+
         View userLabel = rowView.findViewById(R.id.userlabel);
 
         userLabel.setOnClickListener(new OnClickListener() {
@@ -233,8 +243,9 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             return;
         }
 
-        boolean added = false;
+        COMPARATOR.setChatroom(chatroomManager.getActiveChat());
 
+        boolean added = false;
         for (int i = 0; i < chars.size(); i++) {
             if (COMPARATOR.compare(chars.get(i), fCharacter) >= 0) {
                 chars.add(i, fCharacter);

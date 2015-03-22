@@ -3,39 +3,18 @@ package com.andfchat.frontend.popup;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListener;
-import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.FlistWebSocketConnection;
-import com.andfchat.core.data.CharRelation;
-import com.andfchat.core.data.CharacterManager;
-import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.google.inject.Inject;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 import roboguice.util.Ln;
 
@@ -60,11 +39,23 @@ public class FListCharSelectionPopup extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        view = inflater.inflate(R.layout.activity_pick_char, null);
+        view = inflater.inflate(R.layout.popup_pick_char, null);
 
         charSelector = (Spinner)view.findViewById(R.id.charField);
         final ArrayAdapter<String> charListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, sessionData.getCharList());
         charSelector.setAdapter(charListAdapter);
+
+        String defaultChar = sessionData.getDefaultChar();
+        if (sessionData.getCharacterName() != null) {
+            defaultChar = sessionData.getCharacterName();
+        }
+
+        for (int i = 0; i < sessionData.getCharList().size(); i++) {
+            if (sessionData.getCharList().get(i).equals(defaultChar)) {
+                charSelector.setSelection(i);
+                break;
+            }
+        }
 
         builder.setView(view);
         builder.setPositiveButton("Login", null);

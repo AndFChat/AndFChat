@@ -364,7 +364,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     @Override
     public void onEvent(Chatroom chatroom, ChatroomEventType type) {
         if (type == ChatroomEventType.ACTIVE) {
-            actionButton.setEnabled(true);
+            actionButton.setVisibility(View.VISIBLE);
 
             if (chatroom.isSystemChat()) {
                 toggleSidebarRight.setVisibility(View.GONE);
@@ -435,7 +435,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             chatroomManager.setActiveChat(chatroomManager.getActiveChat());
         }
         else {
-            actionButton.setEnabled(false);
+            actionButton.setVisibility(View.GONE);
         }
 
         if (!connection.isConnected()) {
@@ -620,12 +620,20 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             if (charSelectionPopup != null) {
                 charSelectionPopup.dismiss();
             }
+
+            sessionData.setDisconnectReason(null);
         }
         else if (type == ConnectionEventType.DISCONNECTED) {
             Ln.i("Disconnected, clear interface!");
+
+            historyManager.saveHistory();
+
             channelList.clear();
             userList.clear();
             chat.clear();
+
+            actionButton.setVisibility(View.GONE);
+
             openLogin();
         }
     }

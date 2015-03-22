@@ -102,7 +102,7 @@ public class JoinChannelAction {
                     }
 
                     @Override
-                    public void onError(Exception ex) {}
+                    public void onError(String errorMsg) {}
                 };
 
                 connection.registerFeedbackListner(ServerToken.ORS, feedbackListener);

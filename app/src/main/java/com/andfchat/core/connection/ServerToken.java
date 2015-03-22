@@ -30,7 +30,8 @@ public enum ServerToken {
     VAR, // Variables the server sends to inform the client about server variables.
 
     // All tokens which have a fitting handler.
-
+    ADL, // Listen all global operator
+    COL, // Listen all operator for a channel.
     BRO, // Incoming admin broadcast. -> MessageHandler
     CDS, // Sends channel description -> ChannelDescriptionHandler
     CHA, // Sends the client a list of all public channels. -> ChannelListHandler

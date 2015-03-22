@@ -3,19 +3,15 @@ package com.andfchat.frontend.popup;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andfchat.R;
@@ -23,12 +19,9 @@ import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.CharRelation;
-import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
-import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.events.AndFChatEventManager;
-import com.andfchat.frontend.events.ConnectionEventListener;
 import com.google.inject.Inject;
 
 import org.json.JSONArray;
@@ -36,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -85,7 +79,7 @@ public class FListLoginPopup extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        view = inflater.inflate(R.layout.activity_login, null);
+        view = inflater.inflate(R.layout.popup_login, null);
 
         account = (EditText)view.findViewById(R.id.accountField);
 
@@ -104,6 +98,15 @@ public class FListLoginPopup extends DialogFragment {
         builder.setPositiveButton("Login", null);
 
         builder.setCancelable(false);
+
+        if (sessionData.getDisconnectReason() != null) {
+            if (sessionData.getDisconnectReason().contains("Host is unresolved")) {
+                errorField.setText(getActivity().getString(R.string.error_disconnected_no_connection));
+            }
+            else {
+                errorField.setText("Disconnected: " + sessionData.getDisconnectReason());
+            }
+        }
 
         return builder.create();
     }
@@ -154,19 +157,15 @@ public class FListLoginPopup extends DialogFragment {
                         }
 
                         @Override
-                        public void onError(Exception ex) {
+                        public void onError(final String errorMsg) {
                             isLoggingIn = false;
 
-                            if (ex == null) {
-                                Ln.i("Can't log in!");
-                            } else {
-                                Ln.i("Can't log in! " + ex.getMessage());
-                            }
+                            Ln.i("Can't log in: " + errorMsg);
 
                             Runnable runnable = new Runnable() {
                                 @Override
                                 public void run() {
-                                    errorField.setText(getActivity().getString(R.string.error_login));
+                                    errorField.setText(getActivity().getString(R.string.error_login) + errorMsg);
                                     button.setEnabled(true);
                                     button.setText("Login");
                                 }
@@ -228,6 +227,7 @@ public class FListLoginPopup extends DialogFragment {
 
                 String defaultCharacter = jsonDocument.getString(JsonTokens.default_character.name());
 
+                Collections.sort(charList);
                 sessionData.setCharList(charList);
                 sessionData.setDefaultChar(defaultCharacter);
 

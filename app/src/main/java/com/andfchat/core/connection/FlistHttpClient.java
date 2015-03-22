@@ -86,17 +86,26 @@ public class FlistHttpClient {
                 HttpResponse response = client.execute(request);
                 String responseString = convertStreamToString(response.getEntity().getContent());
                 Ln.d("Got Response: " + responseString);
+
+                if (responseString.startsWith("{\"error\":\"")) {
+                    int start = responseString.indexOf("\":\"") + "\":\"".length();
+                    int end = responseString.indexOf("\"", start);
+                    String errorMsg = responseString.substring(start, end);
+                    feedbackListener.onError(errorMsg);
+                    return null;
+                }
+
                 if (feedbackListener != null) {
                     feedbackListener.onResponse(responseString);
                 }
 
                 return null;
             } catch (Exception ex) {
-                ex.printStackTrace();
                 if (feedbackListener != null) {
-                    feedbackListener.onError(ex);
+                    feedbackListener.onError(ex.getMessage());
                 }
             }
+
             return null;
         }
     }

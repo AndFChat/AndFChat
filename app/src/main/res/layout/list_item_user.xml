@@ -28,14 +28,29 @@
         android:orientation="horizontal"
         android:paddingTop="2dp"
         android:paddingBottom="2dp">
-    
-        <ImageView 
-            android:layout_height="@dimen/image_size_user_status" 
+
+        <RelativeLayout
             android:layout_width="@dimen/image_size_user_status"
-            android:background="@drawable/icon_blue"
-            android:id="@+id/itemIcon"
-        />
-        
+            android:layout_height="@dimen/image_size_user_status">
+
+            <ImageView
+                android:id="@+id/itemIcon"
+                android:layout_height="@dimen/image_size_user_status"
+                android:layout_width="@dimen/image_size_user_status"
+                android:background="@drawable/icon_blue"
+                />
+
+            <ImageView
+                android:id="@+id/itemIconOverlay"
+                android:layout_height="@dimen/image_size_user_status"
+                android:layout_width="@dimen/image_size_user_status"
+                android:background="@drawable/icon_op"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+
         <TextView 
     	    android:layout_width="wrap_content"
     	    android:layout_height="match_parent"        
