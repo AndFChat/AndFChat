@@ -15,9 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListener;
-import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.FlistWebSocketConnection;
+import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.data.CharRelation;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
@@ -31,9 +30,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import roboguice.util.Ln;
 
 public class FListLoginPopup extends DialogFragment {
@@ -142,30 +145,31 @@ public class FListLoginPopup extends DialogFragment {
                     String account = FListLoginPopup.this.account.getText().toString();
                     String password = FListLoginPopup.this.password.getText().toString();
 
-                    FeedbackListener feedbackListener = new FeedbackListener() {
+                    retrofit.Callback<FlistHttpClient.LoginData> callback = new retrofit.Callback<FlistHttpClient.LoginData>() {
                         @Override
-                        public void onResponse(String response) {
+                        public void success(FlistHttpClient.LoginData loginData, Response response) {
                             isLoggingIn = false;
 
-                            if (parseJson(response) == true) {
+                            if (loginData.getError() == null || loginData.getError().length() == 0) {
                                 Ln.i("Successfully logged in!");
+                                addData(loginData);
                                 // Connect to chat server
                                 connection.connect(true);
                             } else {
-                                onError(null);
+                                Ln.i("Login failed: '" + loginData.getError() + "'");
                             }
                         }
 
                         @Override
-                        public void onError(final String errorMsg) {
+                        public void failure(final RetrofitError error) {
                             isLoggingIn = false;
 
-                            Ln.i("Can't log in: " + errorMsg);
+                            Ln.i("Can't log in: " + error.getMessage());
 
                             Runnable runnable = new Runnable() {
                                 @Override
                                 public void run() {
-                                    errorField.setText(getActivity().getString(R.string.error_login) + errorMsg);
+                                    errorField.setText(getActivity().getString(R.string.error_login) + error.getMessage());
                                     button.setEnabled(true);
                                     button.setText("Login");
                                 }
@@ -175,7 +179,12 @@ public class FListLoginPopup extends DialogFragment {
                         }
                     };
 
-                    FlistHttpClient.logIn(account, password, feedbackListener);
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint("https://www.f-list.net")
+                            .build();
+
+                    FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
+                    httpClient.logIn(account, password, callback);
                 }
             }
         });
@@ -239,6 +248,42 @@ public class FListLoginPopup extends DialogFragment {
         }
 
         return false;
+    }
+
+    private void addData(FlistHttpClient.LoginData loginData) {
+        // Init session
+        sessionData.initSession(loginData.getTicket(), account.getText().toString());
+        // Add bookmarks to the RelationManager
+
+        Set<String> bookmarksList = new HashSet<String>();
+        for (Iterator<FlistHttpClient.LoginData.Bookmark> iterator = loginData.getBookmarks().iterator(); iterator.hasNext(); ) {
+            FlistHttpClient.LoginData.Bookmark bookmark = iterator.next();
+            bookmarksList.add(bookmark.getName());
+        }
+        relationManager.addCharacterToList(CharRelation.BOOKMARKED, bookmarksList);
+        Ln.v("Added " + bookmarksList.size() + " bookmarks.");
+
+        // Add friends to the RelationManager
+        Set<String> friendList = new HashSet<String>();
+        for (Iterator<FlistHttpClient.LoginData.Friend> iterator = loginData.getFriends().iterator(); iterator.hasNext(); ) {
+            FlistHttpClient.LoginData.Friend friend = iterator.next();
+            friendList.add(friend.getFriend());
+        }
+        relationManager.addCharacterToList(CharRelation.FRIEND, friendList);
+        Ln.v("Added " + friendList.size() + " friends.");
+
+        SharedPreferences.Editor prefEditor = preferences.edit();
+        prefEditor.putBoolean(SAVE_ACCOUNT_NAME, rememberAccount.isChecked());
+        if (rememberAccount.isChecked()) {
+            prefEditor.putString(ACCOUNT_NAME, account.getText().toString());
+        } else {
+            prefEditor.remove(ACCOUNT_NAME);
+        }
+        prefEditor.commit();
+
+        Collections.sort(loginData.getCharacters());
+        sessionData.setCharList(loginData.getCharacters());
+        sessionData.setDefaultChar(loginData.getDefaultCharacter());
     }
 }
 

@@ -139,6 +139,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     private FListLoginPopup loginPopup;
     private FListCharSelectionPopup charSelectionPopup;
 
+    private boolean paused = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -425,6 +427,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     @Override
     protected void onResume() {
         super.onResume();
+        paused = false;
         sessionData.setIsVisible(true);
 
         // Check Version
@@ -458,6 +461,12 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             historyManager.clearHistory(true);
             sessionData.getSessionSettings().setVersion("0.2.3");
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        paused = true;
     }
 
     @Override
@@ -568,6 +577,10 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     }
 
     public void openLogin() {
+        if (paused) {
+            return;
+        }
+
         if (sessionData.getTicket() == null) {
             if (loginPopup != null) {
                 loginPopup.dismiss();

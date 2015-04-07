@@ -20,7 +20,7 @@ package com.andfchat.core.connection;
 
 /**
  * Due asynchrony task-managing sometimes (especially with networking stuff) things have to be done in other threads.
- * This is the helper-class for FlistHttpClient to handle the "asynchrony" used for http-posts login/bookmarking.
+ * This is the helper-class for to handle the "asynchron" used for http-posts login/bookmarking.
  *
  * @author AndFChat
  */

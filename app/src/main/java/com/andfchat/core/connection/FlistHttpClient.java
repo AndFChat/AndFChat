@@ -1,112 +1,80 @@
-/*******************************************************************************
- *     This file is part of AndFChat.
- *
- *     AndFChat is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU General Public License as published by
- *     the Free Software Foundation, either version 3 of the License, or
- *     (at your option) any later version.
- *
- *     AndFChat is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
- ******************************************************************************/
-
-
 package com.andfchat.core.connection;
 
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.POST;
+import retrofit.http.Path;
+import retrofit.http.Query;
 
-import roboguice.util.Ln;
-import android.os.AsyncTask;
+/**
+ * Created by AndFChat on 06.04.2015.
+ */
+public interface FlistHttpClient {
 
-public class FlistHttpClient {
+    @FormUrlEncoded
+    @POST("/json/getApiTicket.php")
+    void logIn(@Field("account") String account, @Field("password") String password, retrofit.Callback<LoginData> callback);
 
-    private final static String logInUri = "http://www.f-list.net/json/getApiTicket.php?account={1}&password={2}";
-    private final static String addBookmarkUri = "http://www.f-list.net/json/api/bookmark-add.php?account={1}&ticket={2}&name={3}";
-    private final static String removeBookmarkUri = "http://www.f-list.net/json/api/bookmark-remove.php?account={1}&ticket={2}&name={3}";
+    @POST("/json/api/bookmark-add.php")
+    void addBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name, retrofit.Callback<String> callback);
 
+    @POST("/json/api/bookmark-remove.php")
+    void removeBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name, retrofit.Callback<String> callback);
 
-    public static void logIn(String account, String password, FeedbackListener feedbackListener) {
-        sendMessage(feedbackListener, logInUri, account, password);
-    }
+    public class LoginData {
+        private List<String> characters;
 
-    public static void addBookmark(String account, String ticket, String name, FeedbackListener feedbackListener) {
-        sendMessage(feedbackListener, addBookmarkUri, account, ticket, name);
-    }
+        private String ticket;
+        private String error;
+        private String default_character;
+        private List<Friend> friends;
+        private List<Bookmark> bookmarks;
 
-    public static void removeBookmark(String account, String ticket, String name, FeedbackListener feedbackListener) {
-        sendMessage(feedbackListener, removeBookmarkUri, account, ticket, name);
-    }
+        public List<String> getCharacters() {
+            return characters;
+        }
 
-    private static void sendMessage(FeedbackListener feedbackListener, String url, String... arguments) {
-        for (int i = 1; i < arguments.length + 1; i++) {
-            try {
-                url = url.replace("{" + i + "}", URLEncoder.encode(arguments[i - 1], "utf-8"));
-            } catch (UnsupportedEncodingException e) {
-                Ln.e(e);
+        public String getTicket() {
+            return ticket;
+        }
+
+        public String getError() {
+            return error;
+        }
+
+        public List<Friend> getFriends() {
+            return friends;
+        }
+
+        public List<Bookmark> getBookmarks() {
+            return bookmarks;
+        }
+
+        public String getDefaultCharacter() {
+            return default_character;
+        }
+
+        public class Friend {
+            private String source_name;
+            private String dest_name;
+
+            public String getFriend() {
+                return source_name;
+            }
+
+            public String getCharacter() {
+                return dest_name;
             }
         }
 
-        Ln.d("Open url");
-        HttpWebCall webCall = new HttpWebCall(url, feedbackListener);
-        webCall.execute();
-    }
+        public class Bookmark {
+            private String name;
 
-    private static String convertStreamToString(InputStream is) {
-        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-        return s.hasNext() ? s.next() : "";
-    }
-
-    private static class HttpWebCall extends AsyncTask<Void, Void, Void> {
-
-        private final String uri;
-        private final FeedbackListener feedbackListener;
-
-        public HttpWebCall(String uri, FeedbackListener feedbackListener) {
-            this.uri = uri;
-            this.feedbackListener = feedbackListener;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                DefaultHttpClient client = new DefaultHttpClient();
-                HttpPost request = new HttpPost(uri);
-
-                HttpResponse response = client.execute(request);
-                String responseString = convertStreamToString(response.getEntity().getContent());
-                Ln.d("Got Response: " + responseString);
-
-                if (responseString.startsWith("{\"error\":\"")) {
-                    int start = responseString.indexOf("\":\"") + "\":\"".length();
-                    int end = responseString.indexOf("\"", start);
-                    String errorMsg = responseString.substring(start, end);
-                    feedbackListener.onError(errorMsg);
-                    return null;
-                }
-
-                if (feedbackListener != null) {
-                    feedbackListener.onResponse(responseString);
-                }
-
-                return null;
-            } catch (Exception ex) {
-                if (feedbackListener != null) {
-                    feedbackListener.onError(ex.getMessage());
-                }
+            public String getName() {
+                return name;
             }
-
-            return null;
         }
     }
 }

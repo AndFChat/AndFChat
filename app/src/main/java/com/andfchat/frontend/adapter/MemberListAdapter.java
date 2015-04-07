@@ -25,6 +25,10 @@ import net.sourcerer.quickaction.PopUpAlignment;
 import net.sourcerer.quickaction.QuickActionBar;
 import net.sourcerer.quickaction.QuickActionOnClickListener;
 import net.sourcerer.quickaction.QuickActionOnOpenListener;
+
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import roboguice.RoboGuice;
 import roboguice.util.Ln;
 import android.content.Context;
@@ -114,12 +118,28 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
             @Override
             public void onClick(ActionItem item, View view) {
+
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint("https://www.f-list.net")
+                        .build();
+
+                FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
+
+                // HTTP call need to be a post and post wants a callback, that is not needed -> ignore
+                retrofit.Callback<String> callback = new retrofit.Callback<String>() {
+                    @Override
+                    public void success(String data, Response response) {}
+
+                    @Override
+                    public void failure(final RetrofitError error) {}
+                };
+
                 if (item.isSelected()) {
-                    FlistHttpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), null);
+                    httpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), callback);
                     relationManager.removeFromList(CharRelation.BOOKMARKED, activeCharacter);
                 }
                 else {
-                    FlistHttpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), null);
+                    httpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), callback);
                     relationManager.addOnList(CharRelation.BOOKMARKED, activeCharacter);
                 }
             }

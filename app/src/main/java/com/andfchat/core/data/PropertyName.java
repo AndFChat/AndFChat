@@ -29,5 +29,6 @@ public enum PropertyName {
     LOG_CHANNEL,
     THEME,
     CHAT_TEXT_SIZE,
-    VERSION
+    VERSION,
+    SHOW_AVATAR_PICTURES,
 }

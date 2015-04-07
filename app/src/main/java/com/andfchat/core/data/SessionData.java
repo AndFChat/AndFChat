@@ -173,6 +173,10 @@ public class SessionData {
             return preferences.getBoolean(PropertyName.USE_DEBUG_CHANNEL.name().toLowerCase(), false);
         }
 
+        public boolean showAvatarPictures() {
+            return preferences.getBoolean(PropertyName.SHOW_AVATAR_PICTURES.name().toLowerCase(), true);
+        }
+
         public boolean showStatusChanges() {
             return preferences.getBoolean(PropertyName.SHOW_USER_STATUS_CHANGES.name().toLowerCase(), false);
         }

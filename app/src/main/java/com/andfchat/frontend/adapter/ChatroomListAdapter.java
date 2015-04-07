@@ -21,6 +21,8 @@ package com.andfchat.frontend.adapter;
 import java.util.List;
 
 import roboguice.RoboGuice;
+import roboguice.util.Ln;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.view.LayoutInflater;
@@ -28,17 +30,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
+import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
+import com.squareup.picasso.Picasso;
 
 public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
     @Inject
     private ChatroomManager chatroomManager;
+    @Inject
+    private SessionData sessionData;
 
     private final int activeColor;
     private final int attentionColor;
@@ -94,6 +101,20 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         }
         else {
             rowView.setBackgroundColor(standardColor);
+        }
+
+        ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
+        if (chatroom.isPrivateChat() && sessionData.getSessionSettings().showAvatarPictures()) {
+            String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");
+            String url = "https://static.f-list.net/images/avatar/" + name + ".png";
+            Picasso.with(getContext())
+                    .load(url)
+                    .placeholder(R.drawable.chat_room_icon)
+                    .error(R.drawable.chat_room_icon)
+                    .into(image);
+        }
+        else {
+            image.setImageResource(R.drawable.chat_room_icon);
         }
 
         return rowView;
