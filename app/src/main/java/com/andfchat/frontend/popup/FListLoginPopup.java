@@ -3,6 +3,9 @@ package com.andfchat.frontend.popup;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -74,6 +77,11 @@ public class FListLoginPopup extends DialogFragment {
     private boolean isLoggingIn = false;
 
     private SharedPreferences preferences;
+    private DialogInterface.OnDismissListener dismissListener;
+
+    public void setDismissListener(DialogInterface.OnDismissListener dismissListener) {
+        this.dismissListener = dismissListener;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -102,16 +110,23 @@ public class FListLoginPopup extends DialogFragment {
 
         builder.setCancelable(false);
 
-        if (sessionData.getDisconnectReason() != null) {
-            if (sessionData.getDisconnectReason().contains("Host is unresolved")) {
-                errorField.setText(getActivity().getString(R.string.error_disconnected_no_connection));
-            }
-            else {
-                errorField.setText("Disconnected: " + sessionData.getDisconnectReason());
-            }
-        }
-
         return builder.create();
+    }
+
+    public boolean isShowing() {
+        if (getDialog() == null) {
+            return false;
+        }
+        return getDialog().isShowing();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (sessionData.getDisconnectReason() != null) {
+            setError(sessionData.getDisconnectReason());
+        }
     }
 
     @Override
@@ -142,8 +157,8 @@ public class FListLoginPopup extends DialogFragment {
 
                     new Handler(Looper.getMainLooper()).post(runnable);
 
-                    String account = FListLoginPopup.this.account.getText().toString();
-                    String password = FListLoginPopup.this.password.getText().toString();
+                    String account = FListLoginPopup.this.account.getText().toString().trim();
+                    String password = FListLoginPopup.this.password.getText().toString().trim();
 
                     retrofit.Callback<FlistHttpClient.LoginData> callback = new retrofit.Callback<FlistHttpClient.LoginData>() {
                         @Override
@@ -156,20 +171,21 @@ public class FListLoginPopup extends DialogFragment {
                                 // Connect to chat server
                                 connection.connect(true);
                             } else {
-                                Ln.i("Login failed: '" + loginData.getError() + "'");
+                                onError(loginData.getError());
                             }
                         }
 
                         @Override
                         public void failure(final RetrofitError error) {
                             isLoggingIn = false;
+                            onError(error.getMessage());
+                        }
 
-                            Ln.i("Can't log in: " + error.getMessage());
-
+                        private void onError(final String message) {
                             Runnable runnable = new Runnable() {
                                 @Override
                                 public void run() {
-                                    errorField.setText(getActivity().getString(R.string.error_login) + error.getMessage());
+                                    setError(message);
                                     button.setEnabled(true);
                                     button.setText("Login");
                                 }
@@ -188,66 +204,15 @@ public class FListLoginPopup extends DialogFragment {
                 }
             }
         });
+
+        // Cant close dialog
+        dialog.setCanceledOnTouchOutside(false);
     }
 
-        private boolean parseJson(String jsonText) {
-        try {
-            Ln.v(jsonText);
-            final JSONObject jsonDocument = new JSONObject(jsonText);
-
-            if (jsonDocument.getString(JsonTokens.error.name()).length() != 0) {
-                // TODO: Proper error handling
-                return false;
-            } else {
-                JSONArray chars = jsonDocument.getJSONArray(JsonTokens.characters.name());
-                List<String> charList = new ArrayList<String>();
-                for (int i = 0; i < chars.length(); i++) {
-                    charList.add(chars.getString(i));
-                }
-
-                // Init session
-                sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString());
-                // Add bookmarks to the RelationManager
-                JSONArray bookmarks = jsonDocument.getJSONArray(JsonTokens.bookmarks.name());
-                Set<String> bookmarksList = new HashSet<String>();
-                for (int i = 0; i < bookmarks.length(); i++) {
-                    bookmarksList.add(bookmarks.getJSONObject(i).getString(JsonTokens.name.name()));
-                }
-                relationManager.addCharacterToList(CharRelation.BOOKMARKED, bookmarksList);
-                Ln.v("Added " + bookmarksList.size() + " bookmarks.");
-
-                // Add friends to the RelationManager
-                JSONArray friends = jsonDocument.getJSONArray(JsonTokens.friends.name());
-                Set<String> friendList = new HashSet<String>();
-                for (int i = 0; i < friends.length(); i++) {
-                    friendList.add(friends.getJSONObject(i).getString(JsonTokens.source_name.name()));
-                }
-                relationManager.addCharacterToList(CharRelation.FRIEND, friendList);
-                Ln.v("Added " + friendList.size() + " friends.");
-
-                SharedPreferences.Editor prefEditor = preferences.edit();
-                prefEditor.putBoolean(SAVE_ACCOUNT_NAME, rememberAccount.isChecked());
-                if (rememberAccount.isChecked()) {
-                    prefEditor.putString(ACCOUNT_NAME, account.getText().toString());
-                } else {
-                    prefEditor.remove(ACCOUNT_NAME);
-                }
-                prefEditor.commit();
-
-                String defaultCharacter = jsonDocument.getString(JsonTokens.default_character.name());
-
-                Collections.sort(charList);
-                sessionData.setCharList(charList);
-                sessionData.setDefaultChar(defaultCharacter);
-
-                return true;
-            }
-
-        } catch (JSONException e1) {
-            e1.printStackTrace();
-        }
-
-        return false;
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissListener.onDismiss(dialog);
     }
 
     private void addData(FlistHttpClient.LoginData loginData) {
@@ -284,6 +249,15 @@ public class FListLoginPopup extends DialogFragment {
         Collections.sort(loginData.getCharacters());
         sessionData.setCharList(loginData.getCharacters());
         sessionData.setDefaultChar(loginData.getDefaultCharacter());
+    }
+
+    public void setError(String message) {
+        if (message.contains("Host is unresolved")) {
+            errorField.setText(getActivity().getString(R.string.error_disconnected_no_connection));
+        }
+        else {
+            errorField.setText("Disconnected: " + message);
+        }
     }
 }
 

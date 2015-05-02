@@ -57,6 +57,11 @@ public class FirstConnectionHandler extends TokenHandler {
         chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, Chatroom.ChatroomType.CONSOLE), 50000));
 
         eventManager.fire(ConnectionEventListener.ConnectionEventType.CHAR_CONNECTED);
+
+        // Update notification
+        if (sessionData.isVisible() == false) {
+            notification.updateNotification(0);
+        }
     }
 
     @Override

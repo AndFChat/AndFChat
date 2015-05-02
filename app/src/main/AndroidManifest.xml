@@ -38,23 +38,15 @@
         android:theme="@style/AppTheme" >
         
         <service android:name="com.andfchat.core.connection.AndFChatConnectionService" />
-        
-        <activity
-            android:name="com.andfchat.frontend.activities.Login"
-            android:label="@string/app_name">
-        </activity>
+
         <activity
             android:name="com.andfchat.frontend.activities.ChatScreen"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.andfchat.frontend.activities.PickChar"
-            android:label="@string/app_name">
         </activity>
         <activity
             android:name="com.andfchat.frontend.activities.Settings"

@@ -77,8 +77,14 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
 
     private void sendMessage() {
         Chatroom activeChat = chatroomManager.getActiveChat();
+
+        // Cant send a message without active chat
+        if (activeChat == null) {
+            return;
+        }
+
         // Ignore empty messages
-        if (inputText.getText().toString().length() == 0 ) {
+        if (inputText.getText().toString().length() == 0) {
             return;
         }
         // Text command like /help / open /close shouldn't be send to the server, console commands too.

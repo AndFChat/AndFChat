@@ -45,6 +45,12 @@
         android:icon="@drawable/ic_disconnect"
         android:title="@string/about"
         app:showAsAction="never"
-    />     
+    />
+
+    <item android:id="@+id/action_exit"
+        android:icon="@drawable/ic_cancel"
+        android:title="@string/exit"
+        app:showAsAction="never"
+    />
 
 </menu>

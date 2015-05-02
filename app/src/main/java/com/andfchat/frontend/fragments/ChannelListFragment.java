@@ -71,13 +71,16 @@ public class ChannelListFragment extends RoboFragment implements ChatroomEventLi
 
     @Override
     public void onEvent(Chatroom chatroom, ChatroomEventType type) {
-        getActivity().runOnUiThread(new Runnable() {
+        // Closing the activity resulting in disconnecting may sends a "disconnect" event to not running == null activity.
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
 
-            @Override
-            public void run() {
-                chatroomListAdapter.notifyDataSetChanged();
-            }
-        });
+                @Override
+                public void run() {
+                    chatroomListAdapter.notifyDataSetChanged();
+                }
+            });
+        }
     }
 
     public void clear() {

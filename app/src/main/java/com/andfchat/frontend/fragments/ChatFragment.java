@@ -89,13 +89,15 @@ public class ChatFragment extends RoboFragment implements ChatroomEventListener,
     public void onEvent(final ChatEntry entry, Chatroom chatroom) {
         if (chatroom.equals(chatroomManager.getActiveChat())) {
             synchronized(this) {
-                getActivity().runOnUiThread(new Runnable() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        chatListData.add(entry);
-                    }
-                });
+                        @Override
+                        public void run() {
+                            chatListData.add(entry);
+                        }
+                    });
+                }
             }
         }
     }

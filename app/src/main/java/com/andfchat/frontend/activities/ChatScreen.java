@@ -73,6 +73,7 @@ import com.andfchat.core.data.messages.ChatEntryFactory.AdClickListner;
 import com.andfchat.core.util.SmileyReader;
 import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatApplication;
+import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener;
 import com.andfchat.frontend.events.ConnectionEventListener;
@@ -106,11 +107,12 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     @Inject
     private AndFChatEventManager eventManager;
     @Inject
-    protected NotificationManager notificationManager;
+    protected AndFChatNotification notificationManager;
     @Inject
     protected HistoryManager historyManager;
     @Inject
     protected ChatEntryFactory entryFactory;
+
 
 
     @InjectView(R.id.toggleSidebarLeft)
@@ -140,6 +142,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     private FListCharSelectionPopup charSelectionPopup;
 
     private boolean paused = false;
+    private boolean onBack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +157,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         toggleSidebarRight.setSelected(true);
 
         eventManager.clear();
-        eventManager.register((ChatroomEventListener)this);
-        eventManager.register((ConnectionEventListener)this);
+        eventManager.register((ChatroomEventListener) this);
+        eventManager.register((ConnectionEventListener) this);
 
         // Fetch fragments
         chat = (ChatFragment)getSupportFragmentManager().findFragmentById(R.id.chatFragment);
@@ -170,6 +173,33 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         eventManager.register((UserEventListener)userList);
         eventManager.register(channelList);
         eventManager.register(inputFragment);
+
+        // PopUps
+        loginPopup = new FListLoginPopup();
+        charSelectionPopup = new FListCharSelectionPopup();
+
+        loginPopup.setDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (sessionData.getTicket() == null) {
+                    openLogin();
+                }
+            }
+        });
+
+        charSelectionPopup.setDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (!sessionData.isInChat()) {
+                    connection.closeConnection(ChatScreen.this);
+                    sessionData.setTicket(null);
+                    openLogin();
+                }
+            }
+        });
+
+        RoboGuice.injectMembers(this, charSelectionPopup);
+        RoboGuice.injectMembers(this, loginPopup);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -465,12 +495,20 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     @Override
     protected void onPause() {
+        inputFragment.saveEntry();
+
         super.onPause();
+
+        if (connection.isConnected()) {
+            notificationManager.updateNotification(0);
+        }
+
         paused = true;
     }
 
     @Override
     protected void onStop() {
+        Ln.i("onStop");
         super.onStop();
         sessionData.setIsVisible(false);
 
@@ -481,6 +519,13 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
     @Override
     protected void onDestroy() {
+        Ln.i("onDestroy");
+        if (onBack == false) {
+            Ln.i("Removing notifications");
+            notificationManager.cancelAll();
+        }
+
+        onBack = false;
         super.onDestroy();
     }
 
@@ -512,6 +557,9 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             case R.id.action_about:
                 AboutAction.open(this, chat.getView());
                 return true;
+            case R.id.action_exit:
+                onQuit();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -541,8 +589,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         return ret;
     }
 
-    @Override
-    public void onBackPressed() {
+    public void onQuit() {
         FlistAlertDialog dialog = new FlistAlertDialog(this, getResources().getString(R.string.question_back)) {
 
             @Override
@@ -582,13 +629,9 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         }
 
         if (sessionData.getTicket() == null) {
-            if (loginPopup != null) {
-                loginPopup.dismiss();
+            if (!loginPopup.isShowing()) {
+                loginPopup.show(getFragmentManager(), "login_fragment");
             }
-
-            loginPopup = new FListLoginPopup();
-            RoboGuice.injectMembers(this, loginPopup);
-            loginPopup.show(getFragmentManager(), "login_fragment");
         }
         else {
             connection.connect(true);
@@ -611,26 +654,28 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     }
 
     public void openSelection() {
-        if (charSelectionPopup != null) {
-            charSelectionPopup.dismiss();
+        if (!charSelectionPopup.isShowing()) {
+            charSelectionPopup.show(getFragmentManager(), "select_fragment");
         }
+    }
 
-        charSelectionPopup = new FListCharSelectionPopup();
-        RoboGuice.injectMembers(this, charSelectionPopup);
-        charSelectionPopup.show(getFragmentManager(), "select_fragment");
+    @Override
+    public void onBackPressed() {
+        onBack = true;
+        super.onBackPressed();
     }
 
     @Override
     public void onEvent(ConnectionEventType type) {
         if (type == ConnectionEventType.CONNECTED) {
-            if (loginPopup != null) {
+            if (loginPopup.isShowing()) {
                 loginPopup.dismiss();
             }
 
             openSelection();
         }
         else if (type == ConnectionEventType.CHAR_CONNECTED) {
-            if (charSelectionPopup != null) {
+            if (charSelectionPopup.isShowing()) {
                 charSelectionPopup.dismiss();
             }
 

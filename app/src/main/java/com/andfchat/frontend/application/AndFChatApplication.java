@@ -88,7 +88,9 @@ public class AndFChatApplication extends Application {
     }
 
     public void quitApplication() {
-        unbindService(networkServiceConnection);
+        if (isBinded()) {
+            unbindService(networkServiceConnection);
+        }
     }
 
     public void setScreenDimension(Point size) {

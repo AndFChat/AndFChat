@@ -3,6 +3,9 @@ package com.andfchat.frontend.popup;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +36,11 @@ public class FListCharSelectionPopup extends DialogFragment {
     private View view;
 
     private Spinner charSelector;
+    private DialogInterface.OnDismissListener dismissListener;
+
+    public void setDismissListener(DialogInterface.OnDismissListener dismissListener) {
+        this.dismissListener = dismissListener;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,7 +50,7 @@ public class FListCharSelectionPopup extends DialogFragment {
         view = inflater.inflate(R.layout.popup_pick_char, null);
 
         charSelector = (Spinner)view.findViewById(R.id.charField);
-        final ArrayAdapter<String> charListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, sessionData.getCharList());
+        ArrayAdapter<String> charListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, sessionData.getCharList());
         charSelector.setAdapter(charListAdapter);
 
         String defaultChar = sessionData.getDefaultChar();
@@ -63,6 +71,21 @@ public class FListCharSelectionPopup extends DialogFragment {
         builder.setCancelable(false);
 
         return builder.create();
+    }
+
+    public boolean isShowing() {
+        if (getDialog() == null) {
+            return false;
+        }
+        return getDialog().isShowing();
+    }
+
+    @Override
+    public int show(FragmentTransaction transaction, String tag) {
+        ArrayAdapter<String> charListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, sessionData.getCharList());
+        charSelector.setAdapter(charListAdapter);
+
+        return super.show(transaction, tag);
     }
 
     @Override
@@ -101,6 +124,15 @@ public class FListCharSelectionPopup extends DialogFragment {
                 }
             }
         });
+
+        // Cant close dialog
+        dialog.setCanceledOnTouchOutside(false);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismissListener.onDismiss(dialog);
     }
 }
 
