@@ -6,9 +6,11 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInstaller;
 import android.support.v4.app.NotificationCompat;
 
 import com.andfchat.R;
+import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.activities.ChatScreen;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -20,6 +22,8 @@ public class AndFChatNotification {
 
     @Inject
     private NotificationManager notificationManager;
+    @Inject
+    private SessionData sessionData;
 
     private Context context;
 
@@ -29,20 +33,24 @@ public class AndFChatNotification {
     }
 
     public void updateNotification(int messages) {
-        int icon =  R.drawable.ic_st_connected;
-        String msg = context.getString(R.string.notification_connected);
-        if (messages > 0) {
-            icon = R.drawable.ic_st_attention;
-            msg = String.format(context.getString(R.string.notification_attention), messages);
-        }
+        if (sessionData.getSessionSettings().showNotifications()) {
+            int icon = R.drawable.ic_st_connected;
+            String msg = context.getString(R.string.notification_connected);
+            if (messages > 0) {
+                icon = R.drawable.ic_st_attention;
+                msg = String.format(context.getString(R.string.notification_attention), messages);
+            }
 
-        startNotification(msg, icon);
+            startNotification(msg, icon);
+        }
     }
 
     public void disconnectNotification() {
-        int icon =  R.drawable.ic_st_disconnected;
-        String msg = context.getString(R.string.notification_disconnect);
-        startNotification(msg, icon);
+        if (sessionData.getSessionSettings().showNotifications()) {
+            int icon = R.drawable.ic_st_disconnected;
+            String msg = context.getString(R.string.notification_disconnect);
+            startNotification(msg, icon);
+        }
     }
 
     public void cancelNotification() {

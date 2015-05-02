@@ -54,6 +54,8 @@
     <string name="actions">Actions</string>
     <string name="select_character">Select Character</string>
     <string name="ad_clickable_advertisment">[Click to see the ad]</string>
+    <string name="exit">Quit</string>
+
 
     <string name="notification_connected">Still connected...</string>
     <string name="notification_disconnect">Chat got disconnected</string>
@@ -123,7 +125,9 @@
 
     <string name="title_show_avatar_pictures">Show avatars in the chat list</string>
     <string name="description_show_avatar_pictures">Replaces the standard chat logo for private chats with there avatar pictures.</string>
-    <string name="exit">Quit</string>
+
+    <string name="title_show_notifications">Show notifications</string>
+    <string name="description_show_notifications">Show notifications at the status bar</string>
 
     <string-array name="text_size_translation">
         <item>Very Small</item>

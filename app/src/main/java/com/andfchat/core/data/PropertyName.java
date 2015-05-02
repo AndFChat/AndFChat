@@ -31,4 +31,5 @@ public enum PropertyName {
     CHAT_TEXT_SIZE,
     VERSION,
     SHOW_AVATAR_PICTURES,
+    SHOW_NOTIFICATIONS,
 }

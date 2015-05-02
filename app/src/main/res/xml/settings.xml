@@ -29,6 +29,13 @@
             android:entryValues="@array/Themes"    
             android:defaultValue="AppTheme.Blue"
         />
+
+        <CheckBoxPreference
+            android:key="show_notifications"
+            android:summary="@string/description_show_notifications"
+            android:title="@string/title_show_notifications"
+            android:defaultValue="true"
+            />
         
         <ListPreference 
             android:key="chat_text_size"

@@ -195,11 +195,17 @@ public class SessionData {
         public String getInitialChannel() {
             return preferences.getString(PropertyName.INITIAL_CHANNEL.name().toLowerCase(), null);
         }
+
         public boolean useHistory() {
             return preferences.getBoolean(PropertyName.LOG_HISTORY.name().toLowerCase(), true);
         }
+
         public boolean logChannel() {
             return preferences.getBoolean(PropertyName.LOG_CHANNEL.name().toLowerCase(), true);
+        }
+
+        public boolean showNotifications() {
+            return preferences.getBoolean(PropertyName.SHOW_NOTIFICATIONS.name().toLowerCase(), true);
         }
 
         public int getTheme() {
