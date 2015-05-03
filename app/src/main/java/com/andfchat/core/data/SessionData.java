@@ -60,6 +60,7 @@ public class SessionData {
 
     private final HashMap<Variable, Integer> intVariables = new HashMap<Variable, Integer>();
     private String disconnectReason;
+    private boolean disconnected;
 
     @Inject
     public SessionData(Context context) {

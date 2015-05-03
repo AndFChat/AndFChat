@@ -94,6 +94,10 @@ public class FlistWebSocketConnection {
         }
     }
 
+    public void reconnect() {
+        application.getConnection().reconnect();
+    }
+
     public void sendMessage(ClientToken token) {
         sendMessage(token, null);
     }

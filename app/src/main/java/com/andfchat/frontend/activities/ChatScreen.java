@@ -169,8 +169,8 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         // Register fragments
         eventManager.register((ChatroomEventListener)chat);
         eventManager.register((MessageEventListener)chat);
-        eventManager.register((ChatroomEventListener)userList);
-        eventManager.register((UserEventListener)userList);
+        eventManager.register((ChatroomEventListener) userList);
+        eventManager.register((UserEventListener) userList);
         eventManager.register(channelList);
         eventManager.register(inputFragment);
 
@@ -472,7 +472,12 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         }
 
         if (!connection.isConnected()) {
+            Ln.d("Is not connected, open login");
             openLogin();
+        }
+        else if (sessionData.isInChat() == false) {
+            Ln.d("Is connected, open selection");
+            openSelection();
         }
     }
 
@@ -687,7 +692,12 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             historyManager.saveHistory();
             actionButton.setVisibility(View.GONE);
 
-            openLogin();
+            if (connection.isConnected()) {
+                openSelection();
+            }
+            else {
+                openLogin();
+            }
         }
     }
 }

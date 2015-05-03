@@ -57,6 +57,14 @@ public class FirstConnectionHandler extends TokenHandler {
         if (chatroomManager.getChatRooms().size() == 0) {
             chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, Chatroom.ChatroomType.CONSOLE), 50000));
         }
+        else {
+            for (Chatroom chatroom : chatroomManager.getChatRooms()) {
+                // Join all previous channel but not the main one
+                if (chatroom.isChannel() && chatroom.getId().equals(channel) == false) {
+                    connection.joinChannel(chatroom.getId());
+                }
+            }
+        }
 
         eventManager.fire(ConnectionEventListener.ConnectionEventType.CHAR_CONNECTED);
 
