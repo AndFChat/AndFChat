@@ -685,11 +685,6 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             Ln.i("Disconnected, clear interface!");
 
             historyManager.saveHistory();
-
-            channelList.clear();
-            userList.clear();
-            chat.clear();
-
             actionButton.setVisibility(View.GONE);
 
             openLogin();

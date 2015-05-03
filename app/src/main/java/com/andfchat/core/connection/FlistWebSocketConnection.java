@@ -299,10 +299,6 @@ public class FlistWebSocketConnection {
 
         socketHandler.disconnected();
 
-        sessionData.clear();
-        chatroomManager.clear();
-        characterManager.clear();
-
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -311,9 +307,6 @@ public class FlistWebSocketConnection {
         };
 
         new Handler(Looper.getMainLooper()).postDelayed(runnable, 250);
-
-
-        notification.cancelLedNotification();
         notification.disconnectNotification();
     }
 

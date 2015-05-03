@@ -89,10 +89,7 @@ public class PrivateMessageHandler extends TokenHandler {
 
         // Update notification
         if (sessionData.isVisible() == false) {
-            notification.updateNotification(++messages);
-        }
-        else {
-            messages = 0;
+            notification.updateNotification(sessionData.addMessage());
         }
 
         ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);

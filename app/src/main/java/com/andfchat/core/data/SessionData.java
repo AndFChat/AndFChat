@@ -54,6 +54,8 @@ public class SessionData {
     private boolean isVisible = false;
     private boolean isInChat = false;
 
+    private int messages = 0;
+
     private final SessionSettings sessionSettings;
 
     private final HashMap<Variable, Integer> intVariables = new HashMap<Variable, Integer>();
@@ -116,8 +118,8 @@ public class SessionData {
     public void setIsVisible(boolean value) {
         isVisible = value;
         if (isVisible) {
-            notification.cancelLedNotification();
-            notification.cancelNotification();
+            notification.cancelAll();
+            messages = 0;
         }
     }
 
@@ -161,6 +163,10 @@ public class SessionData {
 
     public String getDisconnectReason() {
         return this.disconnectReason;
+    }
+
+    public int addMessage() {
+        return ++messages;
     }
 
     public class SessionSettings {

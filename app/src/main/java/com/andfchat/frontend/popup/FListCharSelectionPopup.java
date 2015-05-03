@@ -15,6 +15,8 @@ import android.widget.Spinner;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
+import com.andfchat.core.data.CharacterManager;
+import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
 import com.google.inject.Inject;
@@ -32,6 +34,10 @@ public class FListCharSelectionPopup extends DialogFragment {
     protected FlistWebSocketConnection connection;
     @Inject
     protected HistoryManager historyManager;
+    @Inject
+    protected ChatroomManager chatroomManager;
+    @Inject
+    protected CharacterManager characterManager;
 
     private View view;
 
@@ -104,7 +110,15 @@ public class FListCharSelectionPopup extends DialogFragment {
             public void onClick(View v) {
                 String characterName = ((ArrayAdapter<String>)charSelector.getAdapter()).getItem(charSelector.getSelectedItemPosition());
 
-                sessionData.setCharname(characterName);
+                sessionData.clear();
+
+                // Reset data only when new character connects
+                if (sessionData.getCharacterName() == null || sessionData.getCharacterName().equals(characterName) == false) {
+                    chatroomManager.clear();
+                    characterManager.clear();
+
+                    sessionData.setCharname(characterName);
+                }
                 // Websocket is connected?
                 if (connection.isConnected()) {
 
