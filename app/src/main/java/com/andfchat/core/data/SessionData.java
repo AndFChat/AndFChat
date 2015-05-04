@@ -119,7 +119,6 @@ public class SessionData {
     public void setIsVisible(boolean value) {
         isVisible = value;
         if (isVisible) {
-            notification.cancelAll();
             messages = 0;
         }
     }

@@ -33,7 +33,7 @@ public class AndFChatNotification {
     }
 
     public void updateNotification(int messages) {
-        if (sessionData.getSessionSettings().showNotifications() && sessionData.isVisible() == false) {
+        if (sessionData.getSessionSettings().showNotifications()) {
             int icon = R.drawable.ic_st_connected;
             String msg = context.getString(R.string.notification_connected);
             if (messages > 0) {
@@ -46,7 +46,7 @@ public class AndFChatNotification {
     }
 
     public void disconnectNotification() {
-        if (sessionData.getSessionSettings().showNotifications() && sessionData.isVisible() == false) {
+        if (sessionData.getSessionSettings().showNotifications()) {
             int icon = R.drawable.ic_st_disconnected;
             String msg = context.getString(R.string.notification_disconnect);
             startNotification(msg, icon);

@@ -505,6 +505,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         super.onPause();
 
         if (connection.isConnected()) {
+            Ln.d("Show notification");
             notificationManager.updateNotification(0);
         }
 

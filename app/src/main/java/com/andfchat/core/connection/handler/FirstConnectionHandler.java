@@ -69,9 +69,7 @@ public class FirstConnectionHandler extends TokenHandler {
         eventManager.fire(ConnectionEventListener.ConnectionEventType.CHAR_CONNECTED);
 
         // Update notification
-        if (sessionData.isVisible() == false) {
-            notification.updateNotification(0);
-        }
+        notification.updateNotification(0);
     }
 
     @Override
