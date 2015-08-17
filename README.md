@@ -1,19 +1,29 @@
-#AndFChat (3rd part Flist-Client)
+#AndFChat (3rd party F-list chat client)
 Developed for minimum API Level: 14, Android 4.0 (Ice Cream Sandwich) or higher
-Really not the best piece of code. My first time creating a bigger project with Android.
+
+It's a beta! Don't panic!
+
+<img src="http://i.imgur.com/1YuQBME.png" width="350"> <img src="http://i.imgur.com/hjG7grv.png" width="350">
 
 Any help, tips and thanks are welcomed! :)
 
-Contact me for bugreports on Flist: AndFChat
-I prefere german for english, but I'm fine with english too.
+You are welcome to contact either of us on F-list for bug reports:
 
-***AndFChat Beta*** is developed under GPL3 licence.
+[AndFChat](https://www.f-list.net/c/AndFChat/)
 
-It's still a BETA so use with patients!
+[AndFChat UI](https://www.f-list.net/c/andfchat%20ui)
+
+
+
+***AndFChat Beta*** is developed under GPL3 license.
+
+AndFChat is still a BETA, so please be patient!
 
 Still looking for Help!
-* Artist/Designer to improve the interface and add some images.
-* Experienced Android developer for UI-Design especially scaling questions for different display layouts.
+
+* ~~Artist/Designer to improve the interface and add some images.~~
+
+* Experienced Android developer for UI-Design, especially scaling questions for different display layouts.
 
 Dependencies:
 
@@ -26,19 +36,16 @@ autobahn-0.5.2.jar
 - jackson-mapper-asl.1.9.7.jar
 
 ## FAQ
+***Switching from wlan(WiFi) -> mobile internet or mobile internet -> wlan is disconnecting me, help?!***
 
-***Switching from wlan-> mobile internet or mobile internet -> wlan is disconnecting me, help?!***
-
-Sorry, you are swichting ip adresses. I see no easy way to fix this, despite reconnecting with the other IP, but automatic reconnecting is not implemented right now.
+Sorry, you are switching IP addresses. I see no easy way to fix this, despite reconnecting with the other IP, but automatic reconnecting is not implemented right now. 
 
 ***Why can I only connect with one character at the same time? Will there be any update to fix this?***
 
-Nope, seriously there is not enough space on a phone for one character. Don't see any reason to add multiple connections at the same time.
+There is barely enough space on a phone for one character. We currently don't see any reason to complicate this by adding multiple connections at the same time. 
 
-***How to post Ads?***
+***How do I post Ads?***
 
-There are two ways to post an ad:
-1. Start your post with /ad [text] that will automatically post as ad.
+There are two ways to post an ad: 
+1. Start your post with /ad [text] that will automatically post as ad. 
 2. Write your post and don't send it, select Post ad in the action Menu.
-
-
