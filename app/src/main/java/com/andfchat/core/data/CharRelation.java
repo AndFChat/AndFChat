@@ -21,7 +21,7 @@ package com.andfchat.core.data;
 public enum CharRelation {
     BOOKMARKED,
     FRIEND,
-    MARKED_AS_INTERESSTING,
+    MARKED_AS_INTERESTING,
     MARKED_AS_BORING,
     TMP_IGNORE,
     IGNORE

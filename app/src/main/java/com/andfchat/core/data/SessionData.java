@@ -186,8 +186,8 @@ public class SessionData {
         public boolean showStatusChanges() {
             return preferences.getBoolean(PropertyName.SHOW_USER_STATUS_CHANGES.name().toLowerCase(), false);
         }
-        public boolean showChannelInfos() {
-            return preferences.getBoolean(PropertyName.SHOW_CHANNEL_INFOS.name().toLowerCase(), false);
+        public boolean showChannelInfo() {
+            return preferences.getBoolean(PropertyName.SHOW_CHANNEL_INFO.name().toLowerCase(), false);
         }
 
         public boolean vibrationFeedback() {
@@ -215,7 +215,7 @@ public class SessionData {
         }
 
         public int getTheme() {
-            String theme = preferences.getString(PropertyName.THEME.name().toLowerCase(), "AppTheme.Blue");
+            String theme = preferences.getString(PropertyName.THEME.name().toLowerCase(), "AppTheme");
 
             if (theme.equals("AppTheme")) {
                 return R.style.AppTheme;
@@ -233,7 +233,7 @@ public class SessionData {
         }
 
         public Version getVersion() {
-            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.2.1"));
+            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.4.0"));
         }
 
         public void setVersion(String version) {

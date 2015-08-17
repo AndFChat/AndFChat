@@ -45,8 +45,8 @@ public abstract class ChatEntry implements Serializable {
 
     protected boolean isOwned = false;
 
-    protected String delimeterBetweenDateAndName = " ";
-    protected String delimeterBetweenNameAndText = ": ";
+    protected String delimiterBetweenDateAndName = " ";
+    protected String delimiterBetweenNameAndText = ": ";
 
     private transient Spannable spannedText = null;
 
@@ -95,11 +95,11 @@ public abstract class ChatEntry implements Serializable {
             // Time
             SpannableStringBuilder finishedText = new SpannableStringBuilder(dateSpan);
             // Delimiter
-            finishedText.append(delimeterBetweenDateAndName);
+            finishedText.append(delimiterBetweenDateAndName);
             // Name
             finishedText.append(new NameSpannable(owner, getNameColorId(), context.getResources()));
             // Delimiter
-            finishedText.append(delimeterBetweenNameAndText);
+            finishedText.append(delimiterBetweenNameAndText);
             // Message
             finishedText.append(textSpan);
 
@@ -120,7 +120,7 @@ public abstract class ChatEntry implements Serializable {
             dateText = DATE_FORMAT_OLD.format(date);
         }
         Spannable dateSpan = new SpannableString(dateText);
-        dateSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.text_timestomp_color)), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        dateSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.text_timestamp_color)), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         dateSpan.setSpan(new RelativeSizeSpan(0.70f), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         return dateSpan;
@@ -128,8 +128,8 @@ public abstract class ChatEntry implements Serializable {
 
     protected Spannable createText(Context context) {
         String text = getText(context);
-        text = BBCodeReader.modifieUrls(text, "http://");
-        text = BBCodeReader.modifieUrls(text, "https://");
+        text = BBCodeReader.modifyUrls(text, "http://");
+        text = BBCodeReader.modifyUrls(text, "https://");
 
         Spannable textSpan = BBCodeReader.createSpannableWithBBCode(text, context);
         // Replace smiles in text

@@ -14,12 +14,12 @@
       You should have received a copy of the GNU General Public License
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" >
 
     <item android:id="@+id/action_open_settings"
      	android:icon="@drawable/ic_settings"
      	android:title="@string/settings"
-     	android:showAsAction="ifRoom" 
+     	app:showAsAction="ifRoom"
     />
 
 </menu>

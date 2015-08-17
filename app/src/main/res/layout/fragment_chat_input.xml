@@ -27,11 +27,16 @@
             android:layout_height="wrap_content"
             android:hint="@string/chatmessage_hint"
             android:layout_toLeftOf="@+id/sendButton"
+            android:backgroundTint="@color/text_lighting"
+            android:textColorHighlight="@color/text_lighting"
+            android:inputType="textCapSentences"
+
+
         />
 
         <Button
             android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/ic_send"
             android:layout_alignParentRight="true"

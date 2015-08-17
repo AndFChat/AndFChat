@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>    
-    <style name="AppTheme" parent="android:Theme.Holo">
-        <!-- COLORS -->   
+<resources>
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/primary_color</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/background_color</item>
+    </style>
+
+    <style name="AppCompatAlertDialogStyleBlue" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/background_color_blue</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+
+        <!-- COLORS -->
         <item name="BackgroundColor">@color/background_color</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="android:textColorSecondary">@color/secondary_text</item>
+        <item name="colorAccent">@color/primary_color</item>
         <!-- CHAT COLORS -->
         <item name="BackgroundChatEmpty">@color/background_chat_empty</item>
         <item name="BackgroundChatLine">@color/background_chat_line</item>
@@ -19,12 +36,20 @@
         <!-- IMAGES -->
         <item name="ToggleDirectionButton">@drawable/btn_direction_toggle</item>
         <!-- STYLES -->
-        <item name="UserListBackground">@drawable/background_userlist</item>        
+        <item name="UserListBackground">@drawable/background_userlist</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+        <item name="alertDialogStyle">@style/AppCompatAlertDialogStyle</item>
+        <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+        <item name="android:alertDialogStyle">@style/AppCompatAlertDialogStyle</item>
     </style>
     
-    <style name="AppTheme.Blue">
+    <style name="AppTheme.Blue" parent="AppBaseTheme">
         <!-- COLORS -->  
         <item name="BackgroundColor">@color/background_color_blue</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="android:textColorSecondary">@color/secondary_text_blue</item>
+        <item name="colorAccent">@color/primary_color_blue</item>
         <!-- CHAT COLORS -->
         <item name="BackgroundChatEmpty">@color/background_chat_empty_blue</item>
         <item name="BackgroundChatLine">@color/background_chat_line_blue</item>
@@ -39,6 +64,10 @@
         <!-- IMAGES -->
         
         <!-- STYLES -->
-        <item name="UserListBackground">@drawable/background_userlist_blue</item>    
+        <item name="UserListBackground">@drawable/background_userlist_blue</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyleBlue</item>
+        <item name="alertDialogStyle">@style/AppCompatAlertDialogStyleBlue</item>
+        <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyleBlue</item>
+        <item name="android:alertDialogStyle">@style/AppCompatAlertDialogStyleBlue</item>
     </style>
 </resources>

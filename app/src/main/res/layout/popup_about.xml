@@ -15,11 +15,10 @@
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
- 	android:background="@color/gray"
+ 	android:background="@color/popup_background"
     android:padding="2dp">
  	
     <LinearLayout     
@@ -32,7 +31,7 @@
         android:text="@string/about"
         android:textSize="@dimen/text_size_popup_header"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
 		android:paddingLeft="5dp"
@@ -45,7 +44,7 @@
         android:orientation="vertical"
 	    android:layout_width="match_parent"
     	android:layout_height="match_parent"
-        android:background="@color/black">
+        android:background="@color/popup_background">
 
         <TextView 
             android:id="@+id/aboutText"

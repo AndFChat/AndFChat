@@ -27,13 +27,14 @@
             android:summary="@string/description_theme"
             android:entries="@array/themes_translation"
             android:entryValues="@array/Themes"    
-            android:defaultValue="AppTheme.Blue"
+            android:defaultValue="AppTheme"
         />
 
         <CheckBoxPreference
             android:key="show_notifications"
             android:summary="@string/description_show_notifications"
             android:title="@string/title_show_notifications"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
             />
         
@@ -50,6 +51,7 @@
             android:key="show_avatar_pictures"
             android:summary="@string/description_show_avatar_pictures"
             android:title="@string/title_show_avatar_pictures"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
         />
 
@@ -60,21 +62,23 @@
             android:defaultValue="Frontpage"
         />
         
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="log_history"
             android:summary="@string/description_log_history"
-            android:title="@string/title_log_history" 
+            android:title="@string/title_log_history"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
         />
         
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="log_channel"
             android:summary="@string/description_log_channel"
-            android:title="@string/title_log_channel" 
+            android:title="@string/title_log_channel"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
         />
         
-        <Preference 
+        <Preference
             android:key="button"
             android:title="@string/title_delete_history"
             android:summary="@string/description_delete_history"
@@ -85,31 +89,36 @@
         android:title="@string/title_feedback"
         android:key="feedback">
     
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="show_channel_info"
             android:summary="@string/description_show_channel_info"
-            android:title="@string/title_show_channel_info" 
+            android:title="@string/title_show_channel_info"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="false"
         />
         
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="show_user_status_changes"
             android:summary="@string/description_show_user_status_changes"
-            android:title="@string/title_show_user_status_changes" 
+            android:title="@string/title_show_user_status_changes"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
         />
         
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="vibration_feedback"
             android:summary="@string/description_vibration_feedback"
-            android:title="@string/title_vibration_feedback" 
+            android:title="@string/title_vibration_feedback"
+            android:widgetLayout="@layout/preference_switch"
+            android:hapticFeedbackEnabled="true"
             android:defaultValue="true"
         />
         
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="led_feedback"
             android:summary="@string/description_led_feedback"
-            android:title="@string/title_led_feedback" 
+            android:title="@string/title_led_feedback"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
         />                
     </PreferenceCategory>
@@ -118,10 +127,11 @@
         android:title="@string/title_debug"
         android:key="debug">
     
-        <CheckBoxPreference 
+        <CheckBoxPreference
             android:key="use_debug_channel"
             android:summary="@string/description_use_debug_channel"
-            android:title="@string/title_use_debug_channel" 
+            android:title="@string/title_use_debug_channel"
+            android:widgetLayout="@layout/preference_switch"
             android:defaultValue="false"
         />
         

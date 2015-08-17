@@ -1,6 +1,6 @@
 package com.andfchat.frontend.popup;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -84,7 +84,7 @@ public class FListLoginPopup extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public AlertDialog onCreateDialog(Bundle savedInstanceState) {
         preferences = this.getActivity().getPreferences(0);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

@@ -31,7 +31,7 @@ public class CloseChannelToPublic extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /closeroom | THIS WILL CLOSE AN OPENEND PRIVATE ROOM, REMOVING IT FROM THE LIST, AND MAKING FURTHER ENTRY INVIT-ONLY.";
+        return "*  /closeroom | THIS WILL CLOSE AN OPENED PRIVATE ROOM, REMOVING IT FROM THE LIST, AND MAKING FURTHER ENTRY INVITE-ONLY.";
     }
 
     @Override

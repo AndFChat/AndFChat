@@ -108,8 +108,8 @@ public class Login extends RoboActivity {
     private TextView errorField;
     @InjectView(R.id.rememberAccount)
     private CheckBox rememberAccount;
-    @InjectView(R.id.serverSelection)
-    private Spinner serverSelection;
+    //@InjectView(R.id.serverSelection) //id was idr
+    //private Spinner serverSelection;
 
     private SharedPreferences preferences;
 
@@ -117,7 +117,7 @@ public class Login extends RoboActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(sessionData.getSessionSettings().getTheme());
-        setContentView(R.layout.activity_login);
+        //setContentView(R.layout.activity_login);
 
         chatroomManager.addChatroom(new Chatroom(new Channel(AndFChatApplication.DEBUG_CHANNEL_NAME, ChatroomType.CONSOLE), 50000));
 
@@ -134,12 +134,14 @@ public class Login extends RoboActivity {
         list.add(Server.DEV_SERVER.name());
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        serverSelection.setAdapter(dataAdapter);
+        /**
+        // serverSelection.setAdapter(dataAdapter);
         serverSelection.setSelection(0);
 
         if (AndFChatApplication.DEBUGGING_MODE != true) {
             serverSelection.setVisibility(View.GONE);
         }
+        */
     }
 
     @Override
@@ -200,7 +202,7 @@ public class Login extends RoboActivity {
             @Override
             public void onResponse(String response) {
                 if (parseJson(response, intent) == true) {
-                    Ln.i("Succesfully logged in!");
+                    Ln.i("Successfully logged in!");
                     startActivity(intent);
                 } else {
                     this.onError(null);
@@ -224,7 +226,7 @@ public class Login extends RoboActivity {
             }
         };
 
-        FlistHttpClient.logIn(account, password, loginFeedback);
+        //FlistHttpClient.logIn(account, password, loginFeedback);
     }
 
     private boolean parseJson(String jsonText, Intent intent) {
@@ -275,7 +277,7 @@ public class Login extends RoboActivity {
                 prefEditor.commit();
 
 
-                intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 0);
+                //intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 0);
                 intent.putExtra("characters", charList);
                 intent.putExtra("default_char", jsonDocument.getString(JsonTokens.default_character.name()));
 

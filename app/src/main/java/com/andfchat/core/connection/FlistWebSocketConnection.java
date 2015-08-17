@@ -103,7 +103,7 @@ public class FlistWebSocketConnection {
     }
 
     public boolean isConnected() {
-        return application.isBinded() != false && application.getConnection().isConnected();
+        return application.isBound() != false && application.getConnection().isConnected();
     }
 
     public void sendMessage(ClientToken token, JSONObject data) {
@@ -149,7 +149,7 @@ public class FlistWebSocketConnection {
             data.put("character", sessionData.getCharacterName());
             sendMessage(ClientToken.IDN, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while identifying: " + e.getMessage());
+            Ln.w("exception occurred while identifying: " + e.getMessage());
         }
     }
 
@@ -162,7 +162,7 @@ public class FlistWebSocketConnection {
             data.put("channel", channel);
             sendMessage(ClientToken.JCH, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while joining channle: " + e.getMessage());
+            Ln.w("exception occurred while joining channel: " + e.getMessage());
         }
     }
 
@@ -184,7 +184,7 @@ public class FlistWebSocketConnection {
                 data.put("channel", chatroom.getChannel().getChannelId());
                 sendMessage(ClientToken.LCH, data);
             } catch (JSONException e) {
-                Ln.w("exception occured while leaving channle: " + e.getMessage());
+                Ln.w("exception occurred while leaving channel: " + e.getMessage());
             }
         } else {
             // Private chats will just be removed.
@@ -215,7 +215,7 @@ public class FlistWebSocketConnection {
             chatroomManager.addMessage(chatroom, entry);
 
         } catch (JSONException e) {
-            Ln.w("exception occured while sending message: " + e.getMessage());
+            Ln.w("exception occurred while sending message: " + e.getMessage());
         }
     }
 
@@ -233,14 +233,14 @@ public class FlistWebSocketConnection {
             chatroomManager.addMessage(chatroom, entry);
 
         } catch (JSONException e) {
-            Ln.w("exception occured while sending message: " + e.getMessage());
+            Ln.w("exception occurred while sending message: " + e.getMessage());
         }
     }
 
     /**
      * Sends a private message.
      */
-    public void sendPrivatMessage(String recipient, String msg) {
+    public void sendPrivateMessage(String recipient, String msg) {
         JSONObject data = new JSONObject();
         try {
             data.put("recipient", recipient);
@@ -258,7 +258,7 @@ public class FlistWebSocketConnection {
             }
 
         } catch (JSONException e) {
-            Ln.w("exception occured while sending private message: " + e.getMessage());
+            Ln.w("exception occurred while sending private message: " + e.getMessage());
         }
     }
 
@@ -273,20 +273,20 @@ public class FlistWebSocketConnection {
             data.put("character", sessionData.getCharacterName());
             sendMessage(ClientToken.STA, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending private message: " + e.getMessage());
+            Ln.w("exception occurred while sending private message: " + e.getMessage());
         }
     }
 
     /**
      * Asks for character information.
      */
-    public void askForInfos(FCharacter flistChar) {
+    public void askForInfo(FCharacter flistChar) {
         JSONObject data = new JSONObject();
         try {
             data.put("character", flistChar.getName());
             sendMessage(ClientToken.PRO, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending private message: " + e.getMessage());
+            Ln.w("exception occurred while sending private message: " + e.getMessage());
         }
     }
 
@@ -320,7 +320,7 @@ public class FlistWebSocketConnection {
             data.put("channel", channelname);
             sendMessage(ClientToken.CCR, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while creating a private channel: " + e.getMessage());
+            Ln.w("exception occurred while creating a private channel: " + e.getMessage());
         }
     }
 
@@ -331,7 +331,7 @@ public class FlistWebSocketConnection {
             data.put("dice", "bottle");
             sendMessage(ClientToken.RLL, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while botteling: " + e.getMessage());
+            Ln.w("exception occurred while bottling: " + e.getMessage());
         }
     }
 
@@ -347,7 +347,7 @@ public class FlistWebSocketConnection {
             data.put("dice", value);
             sendMessage(ClientToken.RLL, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while botteling: " + e.getMessage());
+            Ln.w("exception occurred while bottling: " + e.getMessage());
         }
     }
 
@@ -358,7 +358,7 @@ public class FlistWebSocketConnection {
             data.put("status", "private");
             sendMessage(ClientToken.RST, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending RST: " + e.getMessage());
+            Ln.w("exception occurred while sending RST: " + e.getMessage());
         }
     }
 
@@ -369,7 +369,7 @@ public class FlistWebSocketConnection {
             data.put("status", "public");
             sendMessage(ClientToken.RST, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending RST: " + e.getMessage());
+            Ln.w("exception occurred while sending RST: " + e.getMessage());
         }
     }
 
@@ -380,7 +380,7 @@ public class FlistWebSocketConnection {
             data.put("character", username);
             sendMessage(ClientToken.CUB, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending CUB: " + e.getMessage());
+            Ln.w("exception occurred while sending CUB: " + e.getMessage());
         }
     }
 
@@ -391,7 +391,7 @@ public class FlistWebSocketConnection {
             data.put("character", username);
             sendMessage(ClientToken.CBU, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending CBU: " + e.getMessage());
+            Ln.w("exception occurred while sending CBU: " + e.getMessage());
         }
     }
 
@@ -402,7 +402,7 @@ public class FlistWebSocketConnection {
             data.put("character", username);
             sendMessage(ClientToken.CKU, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending CKU: " + e.getMessage());
+            Ln.w("exception occurred while sending CKU: " + e.getMessage());
         }
     }
 
@@ -413,7 +413,7 @@ public class FlistWebSocketConnection {
             data.put("character", username);
             sendMessage(ClientToken.CIU, data);
         } catch (JSONException e) {
-            Ln.w("exception occured while sending CIU: " + e.getMessage());
+            Ln.w("exception occurred while sending CIU: " + e.getMessage());
         }
     }
 }

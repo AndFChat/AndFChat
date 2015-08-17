@@ -62,7 +62,7 @@ public class LeftChannelHandler extends TokenHandler {
             }
         } else {
             FCharacter character = characterManager.findCharacter(name);
-            if (sessionData.getSessionSettings().showChannelInfos()) {
+            if (sessionData.getSessionSettings().showChannelInfo()) {
                 ChatEntry entry = entryFactory.getNotation(character, R.string.message_channel_left);
                 chatroomManager.addMessage(chatroom, entry);
             }

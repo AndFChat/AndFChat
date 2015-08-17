@@ -98,7 +98,7 @@ public class Chatroom {
     /**
      * Maximum entries which are displayed.
      */
-    public int getMaxiumEntries() {
+    public int getMaximumEntries() {
         return channel.getType().maxEntries;
     }
 
@@ -186,7 +186,7 @@ public class Chatroom {
     public List<ChatEntry> getChatEntriesSince(long time) {
         List<ChatEntry> messages = new ArrayList<ChatEntry>();
 
-        int lastDisplayedMessagePosition = Math.max(0, chatMessages.size() - getMaxiumEntries());
+        int lastDisplayedMessagePosition = Math.max(0, chatMessages.size() - getMaximumEntries());
 
         for (int i = chatMessages.size() - 1; i >= lastDisplayedMessagePosition; i--) {
             if (chatMessages.get(i).getDate().getTime() > time) {

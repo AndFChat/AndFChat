@@ -54,7 +54,7 @@ public class ChatEntryFactory {
     }
 
     public ChatEntry getAd(FCharacter owner, String text) {
-        AdEntry entry = new AdEntry(owner, text, context.getString(R.string.ad_clickable_advertisment), adClickListner);
+        AdEntry entry = new AdEntry(owner, text, context.getString(R.string.ad_clickable_advertisement), adClickListner);
         entry.setIcon(R.drawable.ic_ad);
         return entry;
     }

@@ -69,7 +69,7 @@ public class CharacterManager {
 
         synchronized(this) {
             if (knownCharacters.containsKey(character.getName()) == true) {
-                knownCharacters.get(character.getName()).setInfos(character);
+                knownCharacters.get(character.getName()).setInfo(character);
             } else {
                 knownCharacters.put(character.getName(), character);
             }

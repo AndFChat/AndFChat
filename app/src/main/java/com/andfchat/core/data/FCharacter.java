@@ -121,7 +121,7 @@ public class FCharacter implements Serializable {
         return gender;
     }
 
-    public void setInfos(FCharacter character) {
+    public void setInfo(FCharacter character) {
         this.gender = character.getGender();
     }
 

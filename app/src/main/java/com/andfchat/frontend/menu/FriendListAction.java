@@ -56,7 +56,7 @@ public class FriendListAction {
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
-        final ListView friendList = (ListView)layout.findViewById(R.id.channlesToJoin);
+        final ListView friendList = (ListView)layout.findViewById(R.id.channelsToJoin);
 
         List<FCharacter> friendsData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getImportantCharacters());
         FriendListAdapter friendListData = new FriendListAdapter(activity, friendsData);

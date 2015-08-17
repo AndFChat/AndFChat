@@ -36,6 +36,7 @@ import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.util.FlistAlertDialog;
 import com.google.inject.Inject;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class Settings extends RoboPreferenceActivity {
 
@@ -52,6 +53,11 @@ public class Settings extends RoboPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
+
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.primary_color_dark));
 
         final ListPreference initialChannelList = (ListPreference)findPreference("initial_channel");
         ArrayList<String> channels = new ArrayList<String>(chatroomManager.getOfficialChannels());

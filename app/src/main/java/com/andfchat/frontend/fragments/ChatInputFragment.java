@@ -94,7 +94,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
         }
         else if ((System.currentTimeMillis() - lastMessage > 2000)) {
             if (activeChat.isPrivateChat()) {
-                connection.sendPrivatMessage(activeChat.getRecipient().getName(), inputText.getText().toString());
+                connection.sendPrivateMessage(activeChat.getRecipient().getName(), inputText.getText().toString());
             } else {
                 connection.sendMessageToChannel(activeChat, inputText.getText().toString());
             }

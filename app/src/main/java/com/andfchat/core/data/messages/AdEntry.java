@@ -27,8 +27,8 @@ public class AdEntry extends ChatEntry {
         this.displayText = displayText;
         this.adClickListner = adClickListner;
 
-        delimeterBetweenDateAndName = " ";
-        delimeterBetweenNameAndText = " ";
+        delimiterBetweenDateAndName = " ";
+        delimiterBetweenNameAndText = " ";
     }
 
     @Override
@@ -39,8 +39,8 @@ public class AdEntry extends ChatEntry {
     @Override
     protected Spannable createText(Context context) {
         String text = getText(context);
-        text = BBCodeReader.modifieUrls(text, "http://");
-        text = BBCodeReader.modifieUrls(text, "https://");
+        text = BBCodeReader.modifyUrls(text, "http://");
+        text = BBCodeReader.modifyUrls(text, "https://");
 
         final Spannable textSpan = SmileyReader.addSmileys(context, BBCodeReader.createSpannableWithBBCode(text, context));
 

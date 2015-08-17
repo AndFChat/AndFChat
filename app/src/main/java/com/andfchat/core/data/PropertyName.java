@@ -19,7 +19,7 @@
 package com.andfchat.core.data;
 
 public enum PropertyName {
-    SHOW_CHANNEL_INFOS,
+    SHOW_CHANNEL_INFO,
     SHOW_USER_STATUS_CHANGES,
     USE_DEBUG_CHANNEL,
     VIBRATION_FEEDBACK,

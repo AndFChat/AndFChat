@@ -42,23 +42,28 @@
     
     <!-- CHATENTRY -->
     <color name="text_annotation_color">#FFFFFF</color>
-    <color name="text_timestomp_color">#BBBBCC</color>
+    <color name="text_timestamp_color">#BBBBCC</color>
     
     <!-- NAMEPLATES -->
-    <color name="name_friend">#87F717</color>
-    <color name="name_bookmark">#87F717</color>
+    <color name="name_bookmark">#80CBC4</color>
+    <color name="name_friend">#26A69A</color>
     
     <!-- THEME -->
     <!-- THEME -->
     <!-- THEME -->
-    
-    <color name="background_color">#000000</color>
-        
+
+    <color name="background_color">#303030</color>
+    <color name="primary_color">#476fab</color>
+    <color name="primary_color_dark">#3f6499</color>
+    <color name="popup_background">#212121</color>
+    <color name="secondary_text">#BEBEBE</color>
+
     <!-- UserList -->
     <color name="selected_user_color">#575757</color>   
     
     <!-- ChatEntry -->
-    <color name="text_chat_color">#FFFFFF</color>    
+    <color name="text_chat_color">#FFFFFF</color>
+    <color name="text_lighting">#476fab</color>
     
     <!-- ChatEntry backgrounds -->
     <color name="background_chat_empty">#0D0D0D</color>
@@ -66,12 +71,12 @@
     <color name="background_chat_line_owned">#262626</color>
     <color name="background_chat_line_system">#0D0D0D</color>
     <color name="background_chat_line_attention">#FF0000</color>
-    <color name="background_chat_warning">#FF0000</color>    
+    <color name="background_chat_warning">#FF0000</color>
     
     <!-- Channel list background -->
     <color name="background_chat_tab">#919191</color>
-    <color name="background_chat_tab_active">#5C7394</color>
-    <color name="background_chat_tab_attention">#FF4444</color>
+    <color name="background_chat_tab_active">#476fab</color>
+    <color name="background_chat_tab_attention">#A34033</color>
     
     <!-- Nameplate colors -->
     <color name="name_annotation">#FFFFFF</color>
@@ -83,9 +88,12 @@
     <!-- THEME.BLUE -->
         
     <color name="background_color_blue">#0b255f</color>
-    
+    <color name="primary_color_blue">#476fab</color>
+    <color name="primary_color_dark_blue">#3f6499</color>
+    <color name="secondary_text_blue">#BEBEBE</color>
+
     <!-- UserList -->
-    <color name="selected_user_color_blue">#043E80</color>   
+    <color name="selected_user_color_blue">#043E80</color>
     
         <!-- ChatEntry backgrounds -->
     <color name="background_chat_empty_blue">#051538</color>
@@ -95,6 +103,6 @@
     
     <!-- Channel list background -->
     <color name="background_chat_tab_blue">#043E80</color>
-    <color name="background_chat_tab_active_blue">#1E90FF</color>
-    <color name="background_chat_tab_attention_blue">#FF4444</color>
+    <color name="background_chat_tab_active_blue">#476fab</color>
+    <color name="background_chat_tab_attention_blue">#ffdd4444</color>
 </resources>

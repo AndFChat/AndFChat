@@ -45,7 +45,7 @@ public enum ServerToken {
     JCH, // Indicates the given user has joined the given channel. This may also be the client's character. -> JoinedChannel
     LCH, // An indicator that the given character has left the channel. This may also be the client's character. -> LeftChannelHandler
     LIS, // Sends an array of all the online characters and their gender, status, and status message. -> CharListHandler
-    LRP, // A roleplay ad is received from a user in a channel. -> AdHandler
+    LRP, // A role play ad is received from a user in a channel. -> AdHandler
     MSG, // A message is received from a user in a channel. -> MessageHandler
     NLN, // A user connected. -> CharListHandler
     ORS, // Gives a list of open private rooms. -> ChannelListHandler

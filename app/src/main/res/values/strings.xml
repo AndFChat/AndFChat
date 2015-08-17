@@ -53,13 +53,13 @@
     <string name="channel_description">Description</string>
     <string name="actions">Actions</string>
     <string name="select_character">Select Character</string>
-    <string name="ad_clickable_advertisment">[Click to see the ad]</string>
+    <string name="ad_clickable_advertisement">[Tap to view the ad]</string>
     <string name="exit">Quit</string>
 
 
-    <string name="notification_connected">Still connected...</string>
-    <string name="notification_disconnect">Chat got disconnected</string>
-    <string name="notification_attention">You got %s new messages.</string>
+    <string name="notification_connected">Connected to F-chat</string>
+    <string name="notification_disconnect">Disconnected from F-Chat</string>
+    <string name="notification_attention">You have %s new messages</string>
     
     <!-- Messages for the chat directly, they will be posted into the chat with a users name at the beginning. Like "XYZ connected." -->
     <string name="message_channel_joined">joined the channel.</string>
@@ -79,55 +79,60 @@
     <string name="error_disconnected_no_connection">Disconnected: Lost connection to server</string>
     <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>      
     
-    <string name="text_about">[b]AndFChat[/b] (Version 0.2.2) is developed under the GPL3 licence.
-        \n\nAndFChat is a [b][color=red]THIRD-PARTY[/color][/b] client for F-list.
-        \n\nIt\'s still a [b][color=red]BETA[/color][/b], so please be patient with it!
-        \nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub https://github.com/AndFChat/AndFChat/\n
+    <string name="text_about">AndFChat (Version 0.4.0) is developed under the GPL3 licence.
+        \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
+        \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub https://github.com/AndFChat/AndFChat/\n
         \n
         [b][color=red]Still looking for help![/color][/b]\n
-        * Artist/designer to improve the interface and add some images.\n
+        <!--* Artist/designer to improve the interface and add some images.\n-->
         * Experienced Android developer for UI design, especially scaling questions for different display layouts.\n</string>
     
     <!-- Displayed after the App crashed -->
-    <string name="crash_toast_text">Sorry! It looks like the app crashed. Please send the crash report via email or send me a note @ AndFChat on F-list</string>
+    <string name="crash_toast_text">Sorry! It looks like the app crashed. Please send a crash report via email or send me a note @ AndFChat on F-list</string>
     
     <!-- Settings translations title + description -->
     <string name="title_feedback">Feedback</string>
     <string name="title_debug">Debug</string>
     <string name="title_general">General</string>
-    
+
+    <string name="hello_world">Hey, you shouldn\'t be seeing this! There\'s no RP in here! D:</string>
+
+    <!-- TODO figure out where this is -->
+    <string name="action_settings">Where the heck does this show up?</string>
+
     <string name="title_initial_channel">Channel on login</string>
     <string name="description_initial_channel">Choose which channel opens upon login</string>
     <string name="title_log_history">Save chat history</string>
-    <string name="description_log_history">Save chat logs to internal storage.  Takes up memory as chat logs get bigger.</string>
+    <string name="description_log_history">Save chat logs to internal storage</string>
     <string name="title_log_channel">Log public channels</string>
     <string name="description_log_channel">Log public channels as well as PMs</string>
     <string name="title_delete_history">Delete your history</string>
     <string name="description_delete_history">Remove all logs from internal storage</string>
     
     <string name="title_show_channel_info">Show channel info</string>
-    <string name="description_show_channel_info">Show channel join/leave notifications.</string>
+    <string name="description_show_channel_info">Show channel join/leave notifications</string>
     <string name="title_show_user_status_changes">Show user status changes</string>
-    <string name="description_show_user_status_changes">Show status notifications for friends/bookmarks.</string>
+    <string name="description_show_user_status_changes">Show status notifications for friends/bookmarks</string>
     <string name="title_vibration_feedback">Vibrate on new messages</string>
     <string name="description_vibration_feedback">New messages trigger vibration</string>
     <string name="title_led_feedback">Notification light on messages</string>
-    <string name="description_led_feedback">New messages trigger white notification light as feedback.</string>
+    <string name="description_led_feedback">New messages trigger white notification light as feedback</string>
     
     <string name="title_use_debug_channel">Show debug information</string>
-    <string name="description_use_debug_channel">Shows the input/output tags in the console.</string>
+    <string name="description_use_debug_channel">Shows the input/output tags in the console</string>
     
-    <string name="title_theme">Select app style</string>
-    <string name="description_theme">Choose between different styles for your app. Selecting a new theme requires restarting the app to work.</string>
+    <string name="title_theme">App style</string>
+    <string name="description_theme">Choose an app theme (Requires restart)</string>
     
     <string name="title_chat_text_size">Font size</string>
-    <string name="description_chat_text_size">Choose the font size the text will appear in chat</string>
+    <string name="description_chat_text_size">Choose the font size for chat</string>
 
     <string name="title_show_avatar_pictures">Show avatars in the chat list</string>
-    <string name="description_show_avatar_pictures">Replaces the standard chat logo for private chats with there avatar pictures.</string>
+    <string name="description_show_avatar_pictures">Shows F-list avatar pictures for private chats.</string>
 
     <string name="title_show_notifications">Show notifications</string>
-    <string name="description_show_notifications">Show notifications at the status bar</string>
+    <string name="description_show_notifications">Show notifications in the status bar</string>
+    <string name="dismiss">Dismiss</string>
 
     <string-array name="text_size_translation">
         <item>Very Small</item>

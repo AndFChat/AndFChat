@@ -15,13 +15,13 @@ public class EmoteEntry extends ChatEntry {
         super(owner, MessageType.EMOTE);
         this.text = text;
 
-        delimeterBetweenDateAndName = " * ";
+        delimiterBetweenDateAndName = " * ";
 
         if (text.charAt(0) == '\'') {
-            delimeterBetweenNameAndText = "";
+            delimiterBetweenNameAndText = "";
         }
         else {
-            delimeterBetweenNameAndText = " ";
+            delimiterBetweenNameAndText = " ";
         }
     }
 

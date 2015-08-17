@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+               
+    <ImageView
+        style="@style/qa_arrow_up"        
+        android:id="@+id/qa_arrow_up"        
+    />
+    
+    <FrameLayout
+        style="@style/qa_frame_top"        
+        android:id="@+id/qa_frame_top"        
+        android:layout_below="@id/qa_arrow_up"
+        android:layout_alignLeft="@+id/qa_scroller"
+        android:layout_alignRight="@+id/qa_scroller"        
+    />
+    
+    <HorizontalScrollView
+        style="@style/qa_scroller"
+        android:id="@+id/qa_scroller"
+        android:layout_below="@id/qa_frame_top">        
+        
+        <LinearLayout
+            style="@style/qa_button_list"
+            android:id="@+id/qa_button_list">
+            
+            <ImageView
+                style="@style/qa_list_finish_left"
+            />
+            
+            <ImageView
+                style="@style/qa_list_finish_right"
+            />
+            
+        </LinearLayout>
+        
+    </HorizontalScrollView>
+
+    <FrameLayout
+        style="@style/qa_frame_bottom"
+        android:id="@+id/qa_frame_bottom"        
+        android:layout_below="@id/qa_scroller"
+        android:layout_alignLeft="@+id/qa_scroller"
+        android:layout_alignRight="@+id/qa_scroller"
+    />
+    
+    <ImageView
+        style="@style/qa_arrow_down"
+        android:id="@+id/qa_arrow_down"
+        android:layout_below="@id/qa_frame_bottom"
+    />
+</RelativeLayout>

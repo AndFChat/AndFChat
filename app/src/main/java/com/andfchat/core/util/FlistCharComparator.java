@@ -53,7 +53,7 @@ public class FlistCharComparator implements Comparator<FCharacter> {
             }
         }
 
-        //compare bookmared/friend vs not bookmarked/friend
+        //compare bookmarked/friend vs not bookmarked/friend
         if (lhs.isImportant() && !rhs.isImportant()) {
             return -1;
         }

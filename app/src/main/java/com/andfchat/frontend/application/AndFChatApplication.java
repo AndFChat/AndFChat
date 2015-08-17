@@ -79,7 +79,7 @@ public class AndFChatApplication extends Application {
         ACRA.init(this);
     }
 
-    public boolean isBinded() {
+    public boolean isBound() {
         return connectionService != null;
     }
 
@@ -88,7 +88,7 @@ public class AndFChatApplication extends Application {
     }
 
     public void quitApplication() {
-        if (isBinded()) {
+        if (isBound()) {
             unbindService(networkServiceConnection);
         }
     }

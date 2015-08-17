@@ -15,7 +15,7 @@ public class NotationEntry extends ChatEntry {
         super(owner, MessageType.NOTATION);
         this.text = text;
 
-        delimeterBetweenNameAndText = " ";
+        delimiterBetweenNameAndText = " ";
     }
 
     @Override

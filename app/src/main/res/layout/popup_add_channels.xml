@@ -15,12 +15,11 @@
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"    
    	android:gravity="center"
-    android:background="@color/gray"
+    android:background="@color/popup_background"
     android:paddingLeft="2dp"
     android:paddingRight="2dp"
     android:paddingBottom="2dp">      
@@ -35,7 +34,7 @@
 	        android:text="@string/channels"
 	        android:textSize="@dimen/text_size_popup_header"
 	        android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
 	    	android:layout_width="match_parent"
 	    	android:layout_height="wrap_content"
 			android:paddingLeft="5dp"
@@ -48,13 +47,13 @@
     	android:orientation="horizontal"
 	    android:layout_width="match_parent"
     	android:layout_height="wrap_content"
-        android:background="@color/black">
+        android:background="@color/popup_background">
     	
 		<Button
 			android:id="@+id/publicChannelButton"
 		    android:layout_width="0px"
 		    android:layout_weight=".5"
-		    android:layout_height="wrap_content"
+		    android:layout_height="40dp"
 		    android:text="@string/public_channels"
             style="?android:attr/borderlessButtonStyle"
         />  
@@ -63,7 +62,7 @@
 			android:id="@+id/privateChannelButton"
 		    android:layout_width="0px"
 		    android:layout_weight=".5"
-		    android:layout_height="wrap_content"
+		    android:layout_height="40dp"
 		    android:text="@string/private_channels"
             style="?android:attr/borderlessButtonStyle"
         /> 		
@@ -74,12 +73,14 @@
         android:orientation="vertical"
 	    android:layout_width="match_parent"
     	android:layout_height="match_parent"
-        android:background="@color/black">
+        android:background="@color/popup_background">
 
         <ListView 	            
-            android:id="@+id/channlesToJoin"
+            android:id="@+id/channelsToJoin"
 	        android:layout_height="wrap_content"
-	        android:layout_width="match_parent"                            >             
+	        android:layout_width="match_parent"
+            android:divider="@color/gray"
+            android:dividerHeight="0px">
         </ListView>
         
     </LinearLayout>

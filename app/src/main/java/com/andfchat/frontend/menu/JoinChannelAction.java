@@ -71,7 +71,7 @@ public class JoinChannelAction {
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
-        final ListView channelList = (ListView)layout.findViewById(R.id.channlesToJoin);
+        final ListView channelList = (ListView)layout.findViewById(R.id.channelsToJoin);
 
         final CheckboxAdapter adapter = new CheckboxAdapter(activity, chatroomManager.getOfficialChannels());
         channelList.setAdapter(adapter);
@@ -119,7 +119,7 @@ public class JoinChannelAction {
         private FlistWebSocketConnection connection;
 
         private List<String> channelNames = new ArrayList<String>();
-        private boolean isPrivat = false;
+        private boolean isPrivate = false;
 
         public CheckboxAdapter(Context context, Set<String> content) {
             super(context, R.layout.list_item_checkbox);
@@ -149,7 +149,7 @@ public class JoinChannelAction {
                 @Override
                 public void onClick(View v) {
                     if (!checkbox.isChecked()) {
-                        if (isPrivat) {
+                        if (isPrivate) {
                             Channel channel = chatroomManager.getPrivateChannelByName(channelName);
                             if (channel != null) {
                                 connection.joinChannel(channel.getChannelId());
@@ -170,7 +170,7 @@ public class JoinChannelAction {
         }
 
         public void setPrivate(boolean isPrivate) {
-            this.isPrivat = isPrivate;
+            this.isPrivate = isPrivate;
         }
 
         public void replaceChannels(Set<String> content) {

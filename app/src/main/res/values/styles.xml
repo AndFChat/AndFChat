@@ -14,6 +14,166 @@
       You should have received a copy of the GNU General Public License
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+      <!-- ButtonStyle - Standard - Light -->
+      <!-- ButtonStyle - Standard - Light -->
+      <!-- ButtonStyle - Standard - Light -->
+
+      <style name="qa_button">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">match_parent</item>
+            <item name="android:minWidth">64dp</item>
+
+            <item name="android:orientation">vertical</item>
+            <item name="android:gravity">center_vertical|center_horizontal</item>
+
+            <item name="android:paddingTop">0dip</item>
+            <item name="android:paddingBottom">0dip</item>
+            <item name="android:paddingLeft">10dip</item>
+            <item name="android:paddingRight">10dip</item>
+
+            <item name="android:clickable">true</item>
+
+            <item name="android:background">@drawable/qa_button</item>
+      </style>
+
+      <style name="qa_button_icon">
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">wrap_content</item>
+      </style>
+
+      <style name="qa_button_title">
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">match_parent</item>
+            <item name="android:gravity">center_vertical|center_horizontal</item>
+            <item name="android:textSize">12sp</item>
+            <item name="android:textColor">#666</item>
+      </style>
+
+      <!-- ButtonStyle - Sticky - Light -->
+      <!-- ButtonStyle - Sticky - Light -->
+      <!-- ButtonStyle - Sticky - Light -->
+
+      <style name="qa_button.check">
+            <item name="android:background">@drawable/qa_button_check</item>
+      </style>
+
+      <!-- ActionBarStyle - Standard - Light -->
+      <!-- ActionBarStyle - Standard - Light -->
+      <!-- ActionBarStyle - Standard - Light -->
+
+      <style name="qa_arrow_up">
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:src">@drawable/qaf_arrow_up</item>
+      </style>
+
+      <style name="qa_arrow_down">
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">0dp</item>
+            <item name="android:src">@drawable/qaf_arrow_down</item>
+      </style>
+
+      <style name="qa_frame_top">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">0dp</item>
+            <item name="android:background">@drawable/qa_frame_top</item>
+      </style>
+
+      <style name="qa_frame_bottom">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">0dp</item>
+            <item name="android:background">@drawable/qaf_frame_bottom</item>
+      </style>
+
+      <style name="qa_scroller">
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:background">@drawable/qaf_slider_background</item>
+
+            <item name="android:fadingEdgeLength">0dip</item>
+            <item name="android:paddingLeft">1dip</item>
+            <item name="android:paddingRight">1dip</item>
+
+            <item name="android:scrollbars">none</item>
+      </style>
+
+      <style name="qa_button_list">
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:paddingTop">4dip</item>
+            <item name="android:paddingBottom">4dip</item>
+            <item name="android:orientation">horizontal</item>
+      </style>
+
+      <style name="qa_list_finish_left">
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:src">@drawable/qaf_finish_left</item>
+      </style>
+
+      <style name="qa_list_finish_right">
+            <item name="android:layout_width">wrap_content</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:src">@drawable/qaf_finish_right</item>
+      </style>
+
+      <!-- ActionBarStyle - Dark -->
+      <!-- ActionBarStyle - Dark -->
+      <!-- ActionBarStyle - Dark -->
+
+
+
+      <!-- Animations -->
+      <!-- Animations -->
+      <!-- Animations -->
+
+      <style name="Animations" />
+
+      <style name="Animations.Right">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_right</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_left</item>
+      </style>
+
+      <style name="Animations.Left">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_left</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_right</item>
+      </style>
+
+      <!-- PopDownMenu -->
+      <style name="Animations.PopDownMenu" />
+
+      <style name="Animations.PopDownMenu.Left">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_topleft_to_bottomright</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_bottomright_to_topleft</item>
+      </style>
+
+      <style name="Animations.PopDownMenu.Right">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_topright_to_bottomleft</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_bottomleft_to_topright</item>
+      </style>
+
+      <style name="Animations.PopDownMenu.Center">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_top</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_bottom</item>
+      </style>
+
+      <!-- PopUpMenu -->
+      <style name="Animations.PopUpMenu" />
+
+      <style name="Animations.PopUpMenu.Left">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_bottomleft_to_topright</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_topright_to_bottomleft</item>
+      </style>
+
+      <style name="Animations.PopUpMenu.Right">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_bottomright_to_topleft</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_topleft_to_bottomright</item>
+      </style>
+
+      <style name="Animations.PopUpMenu.Center">
+            <item name="@android:windowEnterAnimation">@anim/qa_grow_from_bottom</item>
+            <item name="@android:windowExitAnimation">@anim/qa_shrink_from_top</item>
+      </style>
 </resources>

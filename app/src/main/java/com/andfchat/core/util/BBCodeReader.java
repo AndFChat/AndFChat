@@ -89,7 +89,7 @@ public class BBCodeReader {
         }
     }
 
-    private static final String NEW_LINE_DELIMETER = "NEW_LINE_DELIMETER";
+    private static final String NEW_LINE_DELIMITER = "NEW_LINE_DELIMITER";
 
     public static Spannable createSpannableWithBBCode(String text, Context context) {
         // Position in text
@@ -98,12 +98,12 @@ public class BBCodeReader {
         List<Span> spans = new ArrayList<Span>();
 
         // Save new lines
-        text = text.replace("\n", NEW_LINE_DELIMETER);
+        text = text.replace("\n", NEW_LINE_DELIMITER);
 
         // Fixing html escapes
         text =  Html.fromHtml(text).toString();
 
-        text = text.replace(NEW_LINE_DELIMETER, "\n");
+        text = text.replace(NEW_LINE_DELIMITER, "\n");
 
         while (pointer < text.length()) {
             int start = text.indexOf("[", pointer);
@@ -182,7 +182,7 @@ public class BBCodeReader {
         return polishedText;
     }
 
-    public static String modifieUrls(String text, String urlIndicator) {
+    public static String modifyUrls(String text, String urlIndicator) {
         String newText = "";
 
         if (text != null && text.contains(urlIndicator)) {

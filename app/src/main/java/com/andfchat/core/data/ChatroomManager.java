@@ -52,7 +52,7 @@ public class ChatroomManager {
     private final Set<String> officialChannelSet = new HashSet<String>();
     private final Set<Channel> privateChannelSet = new HashSet<Channel>();
 
-    // Adds a chat message to evry channel
+    // Adds a chat message to every channel
     public void addBroadcast(ChatEntry entry) {
         synchronized(this) {
             for (Chatroom chat : chats) {

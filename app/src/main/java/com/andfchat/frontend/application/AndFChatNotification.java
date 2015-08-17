@@ -39,9 +39,10 @@ public class AndFChatNotification {
             if (messages > 0) {
                 icon = R.drawable.ic_st_attention;
                 msg = String.format(context.getString(R.string.notification_attention), messages);
+                startNotification(msg, icon, true);
+            } else {
+                startNotification(msg, icon, false);
             }
-
-            startNotification(msg, icon);
         }
     }
 
@@ -49,7 +50,7 @@ public class AndFChatNotification {
         if (sessionData.getSessionSettings().showNotifications()) {
             int icon = R.drawable.ic_st_disconnected;
             String msg = context.getString(R.string.notification_disconnect);
-            startNotification(msg, icon);
+            startNotification(msg, icon, false);
         }
     }
 
@@ -65,7 +66,7 @@ public class AndFChatNotification {
         notificationManager.cancelAll();
     }
 
-    private void startNotification(String msg, int icon) {
+    private void startNotification(String msg, int icon, boolean messages) {
         android.support.v4.app.TaskStackBuilder stackBuilder = android.support.v4.app.TaskStackBuilder.create(context);
         // Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(ChatScreen.class);
@@ -78,10 +79,19 @@ public class AndFChatNotification {
                 );
 
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context)
+                .setOngoing(true) //TODO Is this desired functionality?
                 .setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(msg)
-                .setContentIntent(resultPendingIntent);
+                .setContentIntent(resultPendingIntent)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setColor(context.getResources().getColor(R.color.primary_color));
+        if(messages) {
+            nBuilder.setPriority(2)
+            .setVibrate(new long[] {1, 1, 1});
+        } else {
+            nBuilder.setPriority(0);
+        }
 
         notificationManager.notify(AndFChatApplication.NOTIFICATION_ID, nBuilder.build());
     }
@@ -90,8 +100,8 @@ public class AndFChatNotification {
         Notification notif = new Notification();
         notif.ledARGB = 0xFFffffff;
         notif.flags = Notification.FLAG_SHOW_LIGHTS;
-        notif.ledOnMS = 200;
-        notif.ledOffMS = 200;
+        notif.ledOnMS = 300;
+        notif.ledOffMS = 300;
         notificationManager.notify(AndFChatApplication.LED_NOTIFICATION_ID, notif);
     }
 }

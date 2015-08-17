@@ -17,6 +17,8 @@
 <resources>
     <dimen name="width_user_sidebar">100dp</dimen>
     <dimen name="width_channel_sidebar">60dp</dimen>
+
+    <dimen name="activity_vertical_margin">0dp</dimen>
     
     <dimen name="image_size_chatroom">50dp</dimen>
     <dimen name="image_size_user_status">20dp</dimen>

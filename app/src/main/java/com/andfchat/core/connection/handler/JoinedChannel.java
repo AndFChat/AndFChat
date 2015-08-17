@@ -56,7 +56,7 @@ public class JoinedChannel extends TokenHandler {
             Chatroom chatroom = getChatroom(channelId, channelName);
             chatroom.addCharacter(character);
 
-            if (sessionData.getSessionSettings().showChannelInfos()) {
+            if (sessionData.getSessionSettings().showChannelInfo()) {
                 ChatEntry entry = entryFactory.getNotation(character, R.string.message_channel_joined);
                 chatroomManager.addMessage(chatroom, entry);
             }

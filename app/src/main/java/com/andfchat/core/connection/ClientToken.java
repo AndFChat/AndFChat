@@ -28,7 +28,7 @@ public enum ClientToken {
     CUB, // Unban
     FKS, // Search for characters fitting the user's selections. Kinks is required, all other parameters are optional.
     IDN, // This command is used to identify with the server.
-    IGN, // A multi-faceted command to handle actions related to the ignore list. The server does not actually handle much of the ignore process, as it is the client's responsibility to block out messages it recieves from the server if that character is on the user's ignore list.
+    IGN, // A multi-faceted command to handle actions related to the ignore list. The server does not actually handle much of the ignore process, as it is the client's responsibility to block out messages it receives from the server if that character is on the user's ignore list.
     JCH, // Send a channel join request.
     LCH, // Request to leave a channel.
     LRP, // Send RP-Ad {channel:'ADH', message:'text'}

@@ -28,7 +28,7 @@
         android:layout_width="@dimen/width_channel_sidebar"
         android:layout_height="match_parent"
         android:layout_above="@+id/chatInputFragment"
-    />
+        tools:layout="@layout/fragment_channels" />
     
     <LinearLayout
         android:id="@+id/chatActionBar"
@@ -47,7 +47,7 @@
         
             <Button
                 android:id="@+id/toggleSidebarLeft"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"            
                 android:onClick="toggleSidebarLeft"
                 android:background="?attr/ToggleDirectionButton"
@@ -56,20 +56,20 @@
             <Button
                 android:id="@+id/actionButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:text="@string/actions"
             />
                                     
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"    
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="right"
                 android:gravity="right">
                     
                 <Button
                     android:id="@+id/toggleSidebarRight"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:onClick="toggleSidebarRight"
                     android:background="?attr/ToggleDirectionButton"
@@ -88,8 +88,8 @@
         android:layout_toRightOf="@+id/channelListFragment"
         android:layout_toLeftOf="@+id/userListFragment"
         android:layout_above="@+id/chatInputFragment"
-        android:layout_below="@+id/chatActionBar"        
-    />
+        android:layout_below="@+id/chatActionBar"
+        tools:layout="@layout/fragment_chat" />
 
    <fragment android:name="com.andfchat.frontend.fragments.UserListFragment"
         android:id="@+id/userListFragment"                
@@ -97,13 +97,13 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_above="@+id/chatInputFragment"
-    />  
+       tools:layout="@layout/fragment_user_list" />
     
     <fragment android:name="com.andfchat.frontend.fragments.ChatInputFragment"
         android:id="@+id/chatInputFragment"                
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-    />  
+        tools:layout="@layout/fragment_chat_input" />
    
 </RelativeLayout>

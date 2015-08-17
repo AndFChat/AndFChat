@@ -78,7 +78,7 @@ public class ChatFragment extends RoboFragment implements ChatroomEventListener,
             float textSize = getResources().getDimension(sessionData.getSessionSettings().getChatTextSize().getTextSizeId());
             chatListData = new ChatEntryListAdapter(getActivity(), textSize);
             chatListView.setAdapter(chatListData);
-            // Autoscroll to bottom
+            // Auto-scroll to bottom
             chatListView.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_NORMAL);
             // Stack chat from bottom to top
             chatListView.setStackFromBottom(true);
@@ -108,7 +108,7 @@ public class ChatFragment extends RoboFragment implements ChatroomEventListener,
             List<ChatEntry> messages = new ArrayList<ChatEntry>();
 
             if (chatroom != null) {
-                messages = chatroom.getLastMessages(chatroom.getMaxiumEntries());
+                messages = chatroom.getLastMessages(chatroom.getMaximumEntries());
             }
 
             // Set messages

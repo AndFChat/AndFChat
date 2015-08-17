@@ -30,6 +30,7 @@ import net.sourcerer.quickaction.QuickActionOnClickListener;
 import net.sourcerer.quickaction.QuickActionOnOpenListener;
 
 import roboguice.RoboGuice;
+import roboguice.activity.RoboActionBarActivity;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
@@ -37,6 +38,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -44,6 +46,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.Display;
@@ -93,8 +96,9 @@ import com.andfchat.frontend.popup.FListPopupWindow;
 import com.andfchat.frontend.util.Exporter;
 import com.andfchat.frontend.util.FlistAlertDialog;
 import com.google.inject.Inject;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-public class ChatScreen extends RoboFragmentActivity implements ChatroomEventListener, AdClickListner, ConnectionEventListener {
+public class ChatScreen extends RoboActionBarActivity implements ChatroomEventListener, AdClickListner, ConnectionEventListener {
 
     @Inject
     protected CharacterManager charManager;
@@ -154,7 +158,12 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         setTheme(sessionData.getSessionSettings().getTheme());
         setContentView(R.layout.activity_chat_screen);
 
-        toggleSidebarRight.setSelected(true);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setTintColor(getResources().getColor(R.color.primary_color_dark));
+
+        toggleSidebarRight.setSelected(false);
 
         eventManager.clear();
         eventManager.register((ChatroomEventListener) this);
@@ -215,14 +224,14 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
     }
 
     private void setupActionBar() {
-        actionBar = new QuickActionBar(this);
+        actionBar = new QuickActionBar(this, R.layout.qa_dialog_custom);
         actionBar.setAlignment(PopUpAlignment.BOTTOM);
 
         //
         // Show description
         //
-        ActionItem showDescprition = new ActionItem(getString(R.string.channel_description), getResources().getDrawable(R.drawable.ic_description));
-        showDescprition.setQuickActionClickListener(new QuickActionOnClickListener() {
+        ActionItem showDescription = new ActionItem(getString(R.string.channel_description), ContextCompat.getDrawable(this, R.drawable.ic_description));
+        showDescription.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
             public void onClick(ActionItem item, View view) {
@@ -230,7 +239,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             }
         });
 
-        showDescprition.setQuickActionOnOpenListener(new QuickActionOnOpenListener() {
+        showDescription.setQuickActionOnOpenListener(new QuickActionOnOpenListener() {
 
             @Override
             public void onOpen(ActionItem item) {
@@ -238,18 +247,17 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
 
                 if (chat.isPrivateChat() || chat.isSystemChat()) {
                     item.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     item.setVisibility(View.VISIBLE);
                 }
             }
         });
-        actionBar.addActionItem(showDescprition);
+        actionBar.addActionItem(showDescription);
 
         //
         // Export active chat
         //
-        ActionItem exportActiveChat = new ActionItem(getString(R.string.export_text), getResources().getDrawable(R.drawable.ic_export));
+        ActionItem exportActiveChat = new ActionItem(getString(R.string.export_text), ContextCompat.getDrawable(this, R.drawable.ic_export));
         exportActiveChat.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
@@ -278,7 +286,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         //
         // Post Ad
         //
-        ActionItem postAd = new ActionItem(getString(R.string.post_ad_text), getResources().getDrawable(R.drawable.ic_post_ad));
+        ActionItem postAd = new ActionItem(getString(R.string.post_ad_text), ContextCompat.getDrawable(this, R.drawable.ic_post_ad));
         postAd.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
@@ -305,7 +313,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         //
         // Post Ad
         //
-        ActionItem showProfile = new ActionItem(getString(R.string.show_profile), getResources().getDrawable(R.drawable.ic_info));
+        ActionItem showProfile = new ActionItem(getString(R.string.show_profile), ContextCompat.getDrawable(this, R.drawable.ic_info)); //was getResources.getDrawable
         showProfile.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
@@ -336,7 +344,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
         //
         // Leave active chat
         //
-        ActionItem leaveActiveChat = new ActionItem(getString(R.string.leave_channel), getResources().getDrawable(R.drawable.ic_leave));
+        ActionItem leaveActiveChat = new ActionItem(getString(R.string.leave_channel), ContextCompat.getDrawable(this, R.drawable.ic_leave));
         leaveActiveChat.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
@@ -432,7 +440,7 @@ public class ChatScreen extends RoboFragmentActivity implements ChatroomEventLis
             os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
             os.close();
 
-            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Sucessfully exported to the download dictory, filename: " + filename);
+            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Successfully exported to the download directory, filename: " + filename);
             chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
 
             // Tell the media scanner about the new file so that it is

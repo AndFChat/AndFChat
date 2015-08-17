@@ -2,6 +2,7 @@
 <resources>    
     <!-- COLORS -->   
     <attr name="BackgroundColor" format="color|reference" />
+    <attr name="ButtonColor" format="color|reference" />
     <!-- CHAT COLORS -->
     <attr name="BackgroundChatEmpty" format="color|reference" />
     <attr name="BackgroundChatLine" format="color|reference" />
