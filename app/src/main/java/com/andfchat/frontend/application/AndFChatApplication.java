@@ -36,6 +36,7 @@ import com.andfchat.core.connection.AndFChatConnectionService.ConnectionServiceB
 
 import de.tavendo.autobahn.WebSocketConnection;
 import roboguice.RoboGuice;
+import roboguice.util.Ln;
 
 @ReportsCrashes(formKey = "", // will not be used
                 mailTo = "githublimon@gmail.com",
@@ -91,6 +92,14 @@ public class AndFChatApplication extends Application {
         if (isBound()) {
             unbindService(networkServiceConnection);
         }
+    }
+
+
+
+    @Override
+    public void onTerminate() {
+        Ln.d("On Terminate");
+        super.onTerminate();
     }
 
     public void setScreenDimension(Point size) {

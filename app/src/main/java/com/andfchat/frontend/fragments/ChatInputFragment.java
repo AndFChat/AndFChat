@@ -131,7 +131,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
 
     @Override
     public void onEvent(Chatroom chatroom, ChatroomEventType type) {
-        if (type == ChatroomEventType.ACTIVE) {
+        if (type == ChatroomEventType.ACTIVE && inputText != null) {
             // Set maximum text length
             inputText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(chatroom.getMaxTextLength())});
             // Set last text

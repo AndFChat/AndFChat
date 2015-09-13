@@ -36,6 +36,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.frontend.activities.ChatScreen;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener;
@@ -105,6 +106,9 @@ public class ChatFragment extends RoboFragment implements ChatroomEventListener,
     @Override
     public void onEvent(Chatroom chatroom, ChatroomEventType type) {
         if (type == ChatroomEventType.ACTIVE) {
+
+            chatListData.setShowAdText(chatroom.getShowAdText());
+
             List<ChatEntry> messages = new ArrayList<ChatEntry>();
 
             if (chatroom != null) {

@@ -66,7 +66,7 @@ public class PrivateMessageHandler extends TokenHandler {
         Chatroom chatroom = chatroomManager.getChatroom(PRIVATE_MESSAGE_TOKEN + character);
         if (chatroom == null) {
             int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
-            chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character), maxTextLength);
+            chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character), maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
             eventManager.fire(chatroom, ChatroomEventType.NEW);
         }
 
@@ -101,10 +101,10 @@ public class PrivateMessageHandler extends TokenHandler {
         return new ServerToken[]{ServerToken.PRI};
     }
 
-    public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FCharacter character, int maxTextLength) {
+    public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FCharacter character, int maxTextLength, boolean showAvatar) {
         String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + character.getName();
 
-        Chatroom chatroom = new Chatroom(new Channel(channelname, character.getName(), ChatroomType.PRIVATE_CHAT), character, maxTextLength);
+        Chatroom chatroom = new Chatroom(new Channel(channelname, character.getName(), ChatroomType.PRIVATE_CHAT), character, maxTextLength, showAvatar);
         chatroomManager.addChatroom(chatroom);
 
         return chatroom;

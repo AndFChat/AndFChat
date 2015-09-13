@@ -14,15 +14,10 @@ public class ChatEntryFactory {
 
     private final Context context;
 
-    private AdClickListner adClickListner;
 
     @Inject
     public ChatEntryFactory(Context context) {
         this.context = context;
-    }
-
-    public void setAdClickListner(AdClickListner adClickListner) {
-        this.adClickListner = adClickListner;
     }
 
     public ChatEntry getMessage(FCharacter owner, String text) {
@@ -54,7 +49,7 @@ public class ChatEntryFactory {
     }
 
     public ChatEntry getAd(FCharacter owner, String text) {
-        AdEntry entry = new AdEntry(owner, text, context.getString(R.string.ad_clickable_advertisement), adClickListner);
+        AdEntry entry = new AdEntry(owner, text, context.getString(R.string.ad_clickable_advertisement));
         entry.setIcon(R.drawable.ic_ad);
         return entry;
     }
@@ -82,7 +77,11 @@ public class ChatEntryFactory {
         return text;
     }
 
-    public interface AdClickListner {
+    public void setShowAdText(boolean value) {
+
+    }
+
+    public interface AdClickListener {
         public void openAd(Spannable text);
     }
 }

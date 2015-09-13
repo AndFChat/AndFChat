@@ -48,7 +48,7 @@ public abstract class ChatEntry implements Serializable {
     protected String delimiterBetweenDateAndName = " ";
     protected String delimiterBetweenNameAndText = ": ";
 
-    private transient Spannable spannedText = null;
+    protected transient Spannable spannedText = null;
 
     public Integer iconId = null;
 
@@ -87,7 +87,7 @@ public abstract class ChatEntry implements Serializable {
         return iconId;
     }
 
-    public final Spannable getChatMessage(Context context) {
+    public Spannable getChatMessage(Context context) {
         if (spannedText == null) {
             Spannable dateSpan = createDateSpannable(context);
             Spannable textSpan = createText(context);

@@ -45,6 +45,9 @@ public class Chatroom {
         }
     }
 
+    private boolean showAdText = false;
+    private boolean showAvatar = true;
+
     private final Channel channel;
     private final int maxTextLength;
 
@@ -64,15 +67,24 @@ public class Chatroom {
         this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
     }
 
-    public Chatroom(Channel channel, FCharacter character, int maxTextLength) {
+    public Chatroom(Channel channel, FCharacter character, int maxTextLength, boolean showAvatar) {
         this.channel = channel;
         this.characters.add(character);
         this.maxTextLength = maxTextLength;
         this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
+        this.showAvatar = showAvatar;
     }
 
     public boolean isChannelMod(FCharacter character) {
         return channelMods.contains(character.getName());
+    }
+
+    public boolean getShowAvatar() {
+        return showAvatar;
+    }
+
+    public void setShowAvatar(boolean value) {
+        this.showAvatar = value;
     }
 
     public void setChannelMods(List<String> channelMods) {
@@ -93,6 +105,14 @@ public class Chatroom {
 
     public String getId() {
         return channel.getChannelId();
+    }
+
+    public boolean getShowAdText() {
+        return showAdText;
+    }
+
+    public void setShowAdText(boolean showAdText) {
+        this.showAdText = showAdText;
     }
 
     /**

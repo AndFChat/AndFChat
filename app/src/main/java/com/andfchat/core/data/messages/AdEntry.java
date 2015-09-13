@@ -3,14 +3,17 @@ package com.andfchat.core.data.messages;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ClickableSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 
 import com.andfchat.core.data.FCharacter;
-import com.andfchat.core.data.messages.ChatEntryFactory.AdClickListner;
+import com.andfchat.core.data.messages.ChatEntryFactory.AdClickListener;
 import com.andfchat.core.util.BBCodeReader;
 import com.andfchat.core.util.SmileyReader;
+import com.andfchat.frontend.util.NameSpannable;
 
 public class AdEntry extends ChatEntry {
 
@@ -19,13 +22,14 @@ public class AdEntry extends ChatEntry {
     private final String text;
     private final String displayText;
 
-    private final transient AdClickListner adClickListner;
+    protected static AdClickListener adClickListener;
 
-    public AdEntry(FCharacter owner, String text, String displayText, AdClickListner adClickListner) {
+    private transient boolean showText = false;
+
+    public AdEntry(FCharacter owner, String text, String displayText) {
         super(owner, MessageType.AD);
         this.text = text;
         this.displayText = displayText;
-        this.adClickListner = adClickListner;
 
         delimiterBetweenDateAndName = " ";
         delimiterBetweenNameAndText = " ";
@@ -36,15 +40,25 @@ public class AdEntry extends ChatEntry {
         return text;
     }
 
-    @Override
-    protected Spannable createText(Context context) {
+    public void setShowText(boolean value) {
+        if( showText != value) {
+            showText = value;
+            spannedText = null;
+        }
+    }
+
+    public static void setAdClickListener(AdClickListener adClickListener) {
+        AdEntry.adClickListener = adClickListener;
+    }
+
+    public Spannable createText(Context context) {
         String text = getText(context);
         text = BBCodeReader.modifyUrls(text, "http://");
         text = BBCodeReader.modifyUrls(text, "https://");
 
         final Spannable textSpan = SmileyReader.addSmileys(context, BBCodeReader.createSpannableWithBBCode(text, context));
 
-        if (adClickListner != null) {
+        if (adClickListener != null && showText == false) {
             // Create display text
             Spannable displayedSpan = new SpannableString(displayText);
 
@@ -52,7 +66,7 @@ public class AdEntry extends ChatEntry {
 
                 @Override
                 public void onClick(View widget) {
-                    adClickListner.openAd(textSpan);
+                adClickListener.openAd(textSpan);
                 }
             };
 
@@ -64,4 +78,5 @@ public class AdEntry extends ChatEntry {
             return textSpan;
         }
     }
+
 }

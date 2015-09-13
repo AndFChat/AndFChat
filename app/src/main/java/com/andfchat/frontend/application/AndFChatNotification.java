@@ -39,9 +39,9 @@ public class AndFChatNotification {
             if (messages > 0) {
                 icon = R.drawable.ic_st_attention;
                 msg = String.format(context.getString(R.string.notification_attention), messages);
-                startNotification(msg, icon, true);
+                startNotification(msg, icon, true, messages);
             } else {
-                startNotification(msg, icon, false);
+                startNotification(msg, icon, false, 0);
             }
         }
     }
@@ -50,12 +50,8 @@ public class AndFChatNotification {
         if (sessionData.getSessionSettings().showNotifications()) {
             int icon = R.drawable.ic_st_disconnected;
             String msg = context.getString(R.string.notification_disconnect);
-            startNotification(msg, icon, false);
+            startNotification(msg, icon, false, 0);
         }
-    }
-
-    public void cancelNotification() {
-        notificationManager.cancel(AndFChatApplication.NOTIFICATION_ID);
     }
 
     public void cancelLedNotification() {
@@ -66,26 +62,28 @@ public class AndFChatNotification {
         notificationManager.cancelAll();
     }
 
-    private void startNotification(String msg, int icon, boolean messages) {
+    private void startNotification(String msg, int icon, boolean messages, int amount) {
         android.support.v4.app.TaskStackBuilder stackBuilder = android.support.v4.app.TaskStackBuilder.create(context);
         // Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(ChatScreen.class);
         // Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(new Intent(context, ChatScreen.class));
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context)
-                .setOngoing(true) //TODO Is this desired functionality?
+                .setOngoing(false) //TODO Is this desired functionality?
                 .setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(msg)
                 .setContentIntent(resultPendingIntent)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setAutoCancel(false)
                 .setColor(context.getResources().getColor(R.color.primary_color));
+
+        if (amount > 0) {
+            nBuilder.setNumber(amount);
+        }
+
         if(messages) {
             nBuilder.setPriority(2)
             .setVibrate(new long[] {1, 1, 1});

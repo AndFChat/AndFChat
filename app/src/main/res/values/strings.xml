@@ -133,6 +133,8 @@
     <string name="title_show_notifications">Show notifications</string>
     <string name="description_show_notifications">Show notifications in the status bar</string>
     <string name="dismiss">Dismiss</string>
+    <string name="show_ads">Show Ads</string>
+    <string name="show_avatar">Show Avatar</string>
 
     <string-array name="text_size_translation">
         <item>Very Small</item>

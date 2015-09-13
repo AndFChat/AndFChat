@@ -39,4 +39,22 @@ public class AndFChatConnectionService extends Service {
         Ln.i(getClass().getSimpleName() + ".onStartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Ln.i("onUnbind!");
+        return super.onUnbind(intent);
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        Ln.i("onTaskRemoved");
+        super.onTaskRemoved(rootIntent);
+    }
+
+    @Override
+    public void onDestroy() {
+        Ln.i("onDestroy!");
+        super.onDestroy();
+    }
 }

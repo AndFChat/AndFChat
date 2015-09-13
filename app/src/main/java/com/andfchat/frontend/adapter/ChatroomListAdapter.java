@@ -104,7 +104,8 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         }
 
         ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
-        if (chatroom.isPrivateChat() && sessionData.getSessionSettings().showAvatarPictures()) {
+        // sessionData.getSessionSettings().showAvatarPictures()
+        if (chatroom.isPrivateChat() && chatroom.getShowAvatar()) {
             String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";
             Picasso.with(getContext())

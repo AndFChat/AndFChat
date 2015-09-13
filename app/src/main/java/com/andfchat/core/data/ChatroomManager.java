@@ -130,6 +130,11 @@ public class ChatroomManager {
     }
 
     public void addMessage(Chatroom chatroom, ChatEntry entry) {
+        if (chatroom == null) {
+            Ln.e("Cant find chatroom, is null");
+            return;
+        }
+
         chatroom.addMessage(entry);
         eventManager.fire(entry, chatroom);
 

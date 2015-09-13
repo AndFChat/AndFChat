@@ -32,8 +32,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.andfchat.R;
+import com.andfchat.core.data.messages.AdEntry;
 import com.andfchat.core.data.messages.ChatEntry;
-import com.google.inject.Inject;
+import com.andfchat.core.data.messages.ChatEntryFactory;
 
 public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
@@ -45,8 +46,14 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
 
     private float textSize;
 
+    private ChatEntryFactory.AdClickListener clickListener;
+
+    private boolean showAdText = false;
+
     public ChatEntryListAdapter(Context context, float textSize) {
         super(context, R.layout.list_item_message, new ArrayList<ChatEntry>());
+
+        this.clickListener = clickListener;
 
         // Load theme colors
         TypedArray styles = context.getTheme().obtainStyledAttributes(new int[]{
@@ -65,6 +72,10 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
         this.textSize = textSize;
 
         styles.recycle();
+    }
+
+    public void setShowAdText(boolean showAdText) {
+        this.showAdText = showAdText;
     }
 
     @Override
@@ -104,13 +115,15 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
             backgroundView.setBackgroundColor(colorLine);
             break;
         case AD:
-
+            ((AdEntry)entry).setShowText(showAdText);
             backgroundView.setBackgroundColor(colorSystem);
             break;
         default:
             backgroundView.setBackgroundColor(colorSystem);
             break;
         }
+
+        textView.setText(entry.getChatMessage(getContext()));
 
         // Follow links to browser
         textView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -125,14 +138,6 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
         }
 
         return rowView;
-    }
-
-    public long getLastMessageTime() {
-        if (this.getCount() > 0) {
-            return this.getItem(this.getCount() - 1).getDate().getTime();
-        } else {
-            return 0;
-        }
     }
 
     public void setTextSize(float textSize) {

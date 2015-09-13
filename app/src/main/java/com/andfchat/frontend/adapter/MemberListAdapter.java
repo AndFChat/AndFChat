@@ -97,7 +97,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 Chatroom chatroom;
                 if (chatroomManager.hasOpenPrivateConversation(activeCharacter) == false) {
                     int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
-                    chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter, maxTextLength);
+                    chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
                 } else {
                     chatroom = chatroomManager.getPrivateChatFor(activeCharacter);
                 }
