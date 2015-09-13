@@ -19,12 +19,6 @@ You are welcome to contact either of us on F-list for bug reports:
 
 AndFChat is still a BETA, so please be patient!
 
-Still looking for Help!
-
-* ~~Artist/Designer to improve the interface and add some images.~~
-
-* Experienced Android developer for UI-Design, especially scaling questions for different display layouts.
-
 Dependencies:
 
 acra-4.5.0
