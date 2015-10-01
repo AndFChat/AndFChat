@@ -71,7 +71,7 @@ public class AndFChatNotification {
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context)
-                .setOngoing(false) //TODO Is this desired functionality?
+                .setOngoing(false)
                 .setSmallIcon(icon)
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(msg)
