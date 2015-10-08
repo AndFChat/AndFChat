@@ -120,7 +120,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             public void onClick(ActionItem item, View view) {
 
                 RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint("https://www.f-list.net")
+                        .setEndpoint("http://www.f-list.net") //was https
                         .build();
 
                 FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
@@ -170,7 +170,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
             @Override
             public void onClick(ActionItem item, View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.f-list.net/c/" + activeCharacter.getName()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.f-list.net/c/" + activeCharacter.getName())); //was https
                 getContext().startActivity(browserIntent);
             }
         });

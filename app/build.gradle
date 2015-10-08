@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 3
-        versionName "0.4.1"
+        versionName "0.4.2"
     }
     buildTypes {
         release {
@@ -46,8 +46,8 @@ dependencies {
     provided 'org.roboguice:roboblender:3.0.1'
     // Image handling
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.4.0'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.5.0'
     // Quick Action Bar
     compile project(':QuickActionSource')
 }
