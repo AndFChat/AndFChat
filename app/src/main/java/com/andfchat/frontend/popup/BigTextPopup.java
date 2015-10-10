@@ -31,9 +31,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import roboguice.util.Ln;
 
 public class BigTextPopup extends DialogFragment {

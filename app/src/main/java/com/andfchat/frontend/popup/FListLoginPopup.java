@@ -25,6 +25,9 @@ import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,9 +40,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Call;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
 import roboguice.util.Ln;
 
 public class FListLoginPopup extends DialogFragment {
@@ -161,9 +164,11 @@ public class FListLoginPopup extends DialogFragment {
                     String password = FListLoginPopup.this.password.getText().toString().trim();
 
                     retrofit.Callback<FlistHttpClient.LoginData> callback = new retrofit.Callback<FlistHttpClient.LoginData>() {
+
                         @Override
-                        public void success(FlistHttpClient.LoginData loginData, Response response) {
+                        public void onResponse(retrofit.Response<FlistHttpClient.LoginData> response, Retrofit retrofit) {
                             isLoggingIn = false;
+                            FlistHttpClient.LoginData loginData = response.body();
 
                             if (loginData.getError() == null || loginData.getError().length() == 0) {
                                 Ln.i("Successfully logged in!");
@@ -176,9 +181,9 @@ public class FListLoginPopup extends DialogFragment {
                         }
 
                         @Override
-                        public void failure(final RetrofitError error) {
+                        public void onFailure(Throwable t) {
                             isLoggingIn = false;
-                            onError(error.getMessage());
+                            onError(t.getMessage());
                         }
 
                         private void onError(final String message) {
@@ -195,12 +200,18 @@ public class FListLoginPopup extends DialogFragment {
                         }
                     };
 
-                    RestAdapter restAdapter = new RestAdapter.Builder()
-                            .setEndpoint("https://www.f-list.net")
+                    OkHttpClient client = new OkHttpClient();
+                    client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+
+                    Retrofit restAdapter = new Retrofit.Builder()
+                            .baseUrl("https://www.f-list.net")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(client)
                             .build();
 
                     FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
-                    httpClient.logIn(account, password, callback);
+                    Call<FlistHttpClient.LoginData> call = httpClient.logIn(account, password);
+                    call.enqueue(callback);
                 }
             }
         });

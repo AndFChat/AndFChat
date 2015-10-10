@@ -18,6 +18,7 @@
 
 package com.andfchat.frontend.adapter;
 
+import java.util.Collections;
 import java.util.List;
 
 import roboguice.RoboGuice;
@@ -38,6 +39,9 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
@@ -108,8 +112,13 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         if (chatroom.isPrivateChat() && chatroom.getShowAvatar()) {
             String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";
-            Picasso.with(getContext())
-                    .load(url)
+
+            OkHttpClient client = new OkHttpClient();
+            client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+
+            Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
+
+            picasso.load(url)
                     .placeholder(R.drawable.chat_room_icon)
                     .error(R.drawable.chat_room_icon)
                     .into(image);
