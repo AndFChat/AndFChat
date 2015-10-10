@@ -110,15 +110,15 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
         // sessionData.getSessionSettings().showAvatarPictures()
         if (chatroom.isPrivateChat() && chatroom.getShowAvatar()) {
-            String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");
+            String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");		
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
             OkHttpClient client = new OkHttpClient();
             client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
             Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
-
-            picasso.load(url)
+            picasso.with(getContext())
+                    .load(url)
                     .placeholder(R.drawable.chat_room_icon)
                     .error(R.drawable.chat_room_icon)
                     .into(image);

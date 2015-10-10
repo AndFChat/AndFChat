@@ -29,13 +29,19 @@ lint.xml
 
 
 # Gradle support
-.gradle
+/.gradle
+/gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/.idea
 .DS_Store
 /build
+gradlew
+gradlew.bat
+
+# Idea
+/*.iml
 
 
 # project libs
 /third_party
+*.iml

@@ -122,7 +122,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
             @Override
             public void onClick(ActionItem item, View view) {
-
+			
                 OkHttpClient client = new OkHttpClient();
                 client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
@@ -184,7 +184,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
             @Override
             public void onClick(ActionItem item, View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.f-list.net/c/" + activeCharacter.getName()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.f-list.net/c/" + activeCharacter.getName())); //was https
                 getContext().startActivity(browserIntent);
             }
         });
