@@ -317,7 +317,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             @Override
             public void onClick(ActionItem item, View view) {
                 Chatroom chat = chatroomManager.getActiveChat();
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.f-list.net/c/" + chat.getCharacters().get(0).getName()));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.f-list.net/c/" + chat.getCharacters().get(0).getName())); //was https
                 startActivity(browserIntent);
             }
         });

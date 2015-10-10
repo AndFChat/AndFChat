@@ -196,7 +196,7 @@ public class FListLoginPopup extends DialogFragment {
                     };
 
                     RestAdapter restAdapter = new RestAdapter.Builder()
-                            .setEndpoint("https://www.f-list.net")
+                            .setEndpoint("http://www.f-list.net") //was https://
                             .build();
 
                     FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);

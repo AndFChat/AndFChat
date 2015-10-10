@@ -54,7 +54,7 @@ public class AdEntry extends ChatEntry {
     public Spannable createText(Context context) {
         String text = getText(context);
         text = BBCodeReader.modifyUrls(text, "http://");
-        text = BBCodeReader.modifyUrls(text, "https://");
+        //text = BBCodeReader.modifyUrls(text, "https://");
 
         final Spannable textSpan = SmileyReader.addSmileys(context, BBCodeReader.createSpannableWithBBCode(text, context));
 
