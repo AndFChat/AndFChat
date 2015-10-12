@@ -19,17 +19,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/BackgroundColor"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ChatScreen">
     
        <EditText
             android:id="@+id/chatMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxHeight="150dp"
             android:hint="@string/chatmessage_hint"
             android:layout_toLeftOf="@+id/sendButton"
             android:backgroundTint="@color/text_lighting"
             android:textColorHighlight="@color/text_lighting"
-            android:inputType="textCapSentences"
+            android:inputType="textCapSentences|textMultiLine|textAutoCorrect"
 
 
         />

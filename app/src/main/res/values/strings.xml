@@ -39,7 +39,7 @@
     <string name="close">Close</string>
     <string name="chatmessage_hint">Enter message</string>
     <string name="send_message">Send</string>
-    <string name="friendlist">Friends</string>
+    <string name="friendlist">Friends &amp; Bookmarks</string>
     <string name="hide">Hide</string>
     <string name="show">Show</string>
     <string name="arrows_left">&lt;&lt;</string>
@@ -47,6 +47,8 @@
     <string name="channels">Channels</string>
     <string name="public_channels">Public Channels</string>
     <string name="private_channels">Private Channels</string>
+    <string name="friends_selector">Friends</string>
+    <string name="bookmarks_selector">Bookmarks</string>
     <string name="leave_channel">Leave</string>
     <string name="export_text">Export text</string>    
     <string name="post_ad_text">Post Ad</string>    
