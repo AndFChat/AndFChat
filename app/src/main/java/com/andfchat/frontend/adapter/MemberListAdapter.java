@@ -18,6 +18,7 @@
 
 package com.andfchat.frontend.adapter;
 
+import java.util.Collections;
 import java.util.List;
 
 import net.sourcerer.quickaction.ActionItem;
@@ -26,9 +27,10 @@ import net.sourcerer.quickaction.QuickActionBar;
 import net.sourcerer.quickaction.QuickActionOnClickListener;
 import net.sourcerer.quickaction.QuickActionOnOpenListener;
 
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit.Call;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
 import roboguice.RoboGuice;
 import roboguice.util.Ln;
 import android.content.Context;
@@ -56,6 +58,8 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
 
 public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
@@ -118,9 +122,13 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
             @Override
             public void onClick(ActionItem item, View view) {
+			
+                OkHttpClient client = new OkHttpClient();
+                client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint("http://www.f-list.net") //was https
+                Retrofit restAdapter = new Retrofit.Builder()
+                        .baseUrl("https://www.f-list.net")
+                        .client(client)
                         .build();
 
                 FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
@@ -128,18 +136,24 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 // HTTP call need to be a post and post wants a callback, that is not needed -> ignore
                 retrofit.Callback<String> callback = new retrofit.Callback<String>() {
                     @Override
-                    public void success(String data, Response response) {}
+                    public void onResponse(Response<String> response, Retrofit retrofit) {
+
+                    }
 
                     @Override
-                    public void failure(final RetrofitError error) {}
+                    public void onFailure(Throwable t) {
+
+                    }
                 };
 
                 if (item.isSelected()) {
-                    httpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), callback);
+                    Call<String> call = httpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
+                    call.enqueue(callback);
                     relationManager.removeFromList(CharRelation.BOOKMARKED, activeCharacter);
                 }
                 else {
-                    httpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName(), callback);
+                    Call<String> call = httpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
+                    call.enqueue(callback);
                     relationManager.addOnList(CharRelation.BOOKMARKED, activeCharacter);
                 }
             }

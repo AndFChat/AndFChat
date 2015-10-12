@@ -18,6 +18,7 @@
 
 package com.andfchat.frontend.adapter;
 
+import java.util.Collections;
 import java.util.List;
 
 import roboguice.RoboGuice;
@@ -38,6 +39,9 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
@@ -46,6 +50,8 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
     private ChatroomManager chatroomManager;
     @Inject
     private SessionData sessionData;
+
+    Picasso picasso;
 
     private final int activeColor;
     private final int attentionColor;
@@ -66,6 +72,11 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         attentionColor = colorArray.getColor(2, 0);
 
         colorArray.recycle();
+
+        OkHttpClient client = new OkHttpClient();
+        client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+
+        picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
     }
 
     @Override
@@ -107,9 +118,9 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         // sessionData.getSessionSettings().showAvatarPictures()
         if (chatroom.isPrivateChat() && chatroom.getShowAvatar()) {
             String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");
-            String url = "http://static.f-list.net/images/avatar/" + name + ".png";
-            Picasso.with(getContext())
-                    .load(url)
+            String url = "https://static.f-list.net/images/avatar/" + name + ".png";
+
+            picasso.load(url)
                     .placeholder(R.drawable.chat_room_icon)
                     .error(R.drawable.chat_room_icon)
                     .into(image);

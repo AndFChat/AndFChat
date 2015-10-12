@@ -2,6 +2,7 @@ package com.andfchat.core.connection;
 
 import java.util.List;
 
+import retrofit.Call;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
@@ -15,13 +16,13 @@ public interface FlistHttpClient {
 
     @FormUrlEncoded
     @POST("/json/getApiTicket.php")
-    void logIn(@Field("account") String account, @Field("password") String password, retrofit.Callback<LoginData> callback);
+    Call<LoginData> logIn(@Field("account") String account, @Field("password") String password);
 
     @POST("/json/api/bookmark-add.php")
-    void addBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name, retrofit.Callback<String> callback);
+    Call<String> addBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name);
 
     @POST("/json/api/bookmark-remove.php")
-    void removeBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name, retrofit.Callback<String> callback);
+    Call<String> removeBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name);
 
     public class LoginData {
         private List<String> characters;

@@ -1,2 +1,4 @@
 /build
-app.iml
+
+./app.iml
+./manifest-merger-release-report.txt
