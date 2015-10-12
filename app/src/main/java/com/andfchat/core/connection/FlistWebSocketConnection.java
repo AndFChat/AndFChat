@@ -23,6 +23,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.tavendo.autobahn.WebSocketOptions;
 import roboguice.util.Ln;
 import android.content.Context;
 import android.os.Handler;
@@ -82,10 +83,13 @@ public class FlistWebSocketConnection {
 
     public void connect(boolean onLive) {
         try {
+            WebSocketOptions options = new WebSocketOptions();
+
+            options.setMaxFramePayloadSize(256000);
             if (onLive) {
-                application.getConnection().connect(SERVER_URL_LIVE, handler);
+                application.getConnection().connect(SERVER_URL_LIVE, handler, options);
             } else {
-                application.getConnection().connect(SERVER_URL_DEV, handler);
+                application.getConnection().connect(SERVER_URL_DEV, handler, options);
             }
             eventManager.fire(ConnectionEventListener.ConnectionEventType.CONNECTED);
         } catch (WebSocketException e) {
