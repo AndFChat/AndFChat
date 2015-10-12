@@ -18,6 +18,7 @@
 
 package com.andfchat.frontend.adapter;
 
+import java.util.Collections;
 import java.util.List;
 
 import roboguice.RoboGuice;
@@ -41,6 +42,10 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 
 public class FriendListAdapter extends ArrayAdapter<FCharacter> {
 
@@ -101,6 +106,18 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
             default:
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
         }
+
+        OkHttpClient client = new OkHttpClient();
+        client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+        Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
+        ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
+        String name = character.getName().toLowerCase().replace(" ", "%20");
+        String url = "https://static.f-list.net/images/avatar/" + name + ".png";
+
+        picasso.load(url)
+                .placeholder(R.drawable.chat_room_icon)
+                .error(R.drawable.chat_room_icon)
+                .into(image);
 
         // Set button
         Button pmButton = (Button)rowView.findViewById(R.id.pmButton);
