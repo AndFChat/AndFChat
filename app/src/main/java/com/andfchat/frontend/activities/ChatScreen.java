@@ -407,7 +407,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         // Leave active chatFragment
         // TODO Convert to being long-press action, rather than QuickActionBar item
         //
-        final CheckActionItem showProfilePic = new CheckActionItem(getString(R.string.show_avatar), ContextCompat.getDrawable(this, R.drawable.ic_show_friends));
+        final CheckActionItem showProfilePic = new CheckActionItem(getString(R.string.show_avatar), ContextCompat.getDrawable(this, R.drawable.avatar));
         showProfilePic.setQuickActionClickListener(new QuickActionOnClickListener() {
 
             @Override
