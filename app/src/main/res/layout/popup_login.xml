@@ -69,6 +69,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="@android:style/TextAppearance.Medium"
             android:inputType="textPassword"
+            android:imeOptions="actionDone"
         />
 
         <CheckBox 

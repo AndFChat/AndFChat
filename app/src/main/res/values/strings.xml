@@ -39,7 +39,7 @@
     <string name="close">Close</string>
     <string name="chatmessage_hint">Enter message</string>
     <string name="send_message">Send</string>
-    <string name="friendlist">Friends</string>
+    <string name="friendlist">Friends &amp; Bookmarks</string>
     <string name="hide">Hide</string>
     <string name="show">Show</string>
     <string name="arrows_left">&lt;&lt;</string>
@@ -47,6 +47,8 @@
     <string name="channels">Channels</string>
     <string name="public_channels">Public Channels</string>
     <string name="private_channels">Private Channels</string>
+    <string name="friends_selector">Friends</string>
+    <string name="bookmarks_selector">Bookmarks</string>
     <string name="leave_channel">Leave</string>
     <string name="export_text">Export text</string>    
     <string name="post_ad_text">Post Ad</string>    
@@ -79,7 +81,7 @@
     <string name="error_disconnected_no_connection">Disconnected: Lost connection to server</string>
     <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>      
     
-    <string name="text_about">AndFChat (Version 0.4.2) is developed under the GPL3 licence.
+    <string name="text_about">AndFChat is developed under the GPL3 licence.
         \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
         \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub https://github.com/AndFChat/AndFChat/\n
         \n

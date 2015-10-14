@@ -40,8 +40,36 @@
 			android:paddingRight="5dp"
 	        />
     
-    </LinearLayout>       
-    
+    </LinearLayout>
+
+    <!--
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/popup_background">
+
+        <Button
+            android:id="@+id/friendsButton"
+            android:layout_width="0px"
+            android:layout_weight=".5"
+            android:layout_height="40dp"
+            android:text="@string/friends_selector"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+        <Button
+            android:id="@+id/bookmarksButton"
+            android:layout_width="0px"
+            android:layout_weight=".5"
+            android:layout_height="40dp"
+            android:text="@string/bookmarks_selector"
+            style="?android:attr/borderlessButtonStyle"
+            />
+
+    </LinearLayout>
+    -->
+
     <LinearLayout     
         android:orientation="vertical"
 	    android:layout_width="match_parent"
