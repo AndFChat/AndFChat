@@ -7,6 +7,9 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInstaller;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.NotificationCompat;
 
 import com.andfchat.R;
@@ -70,6 +73,10 @@ public class AndFChatNotification {
         stackBuilder.addNextIntent(new Intent(context, ChatScreen.class));
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender()
+                        .setHintHideIcon(true)
+                        .setBackground(BitmapFactory.decodeResource(context.getResources(), (R.drawable.wearable_background)));
+
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(context)
                 .setOngoing(false)
                 .setSmallIcon(icon)
@@ -78,6 +85,7 @@ public class AndFChatNotification {
                 .setContentIntent(resultPendingIntent)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setAutoCancel(false)
+                .extend(wearableExtender)
                 .setColor(context.getResources().getColor(R.color.primary_color));
 
         if (amount > 0) {

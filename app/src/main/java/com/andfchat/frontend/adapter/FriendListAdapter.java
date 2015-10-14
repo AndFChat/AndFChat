@@ -70,6 +70,10 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         RoboGuice.getInjector(context).injectMembers(this);
     }
 
+    OkHttpClient client = new OkHttpClient();
+    Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
+    ImageView image;
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final FCharacter character = this.getItem(position);
@@ -107,10 +111,9 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
         }
 
-        OkHttpClient client = new OkHttpClient();
+
         client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
-        Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
-        ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
+        image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
         String name = character.getName().toLowerCase().replace(" ", "%20");
         String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
