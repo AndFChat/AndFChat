@@ -121,11 +121,23 @@ public class CharacterManager {
         return flistChar;
     }
 
-    public List<FCharacter> getImportantCharacters() {
+    public List<FCharacter> getFriendCharacters() { //TODO Figure out how/if this is sorted.
         List<FCharacter> importantCharacters = new ArrayList<FCharacter>();
 
         for (FCharacter character : knownCharacters.values()) {
-            if (character.isImportant()) {
+            if (character.isFriend()) {
+                importantCharacters.add(character);
+            }
+        }
+
+        return importantCharacters;
+    }
+
+    public List<FCharacter> getBookmarkedCharacters() { //TODO Figure out how/if this is sorted.
+        List<FCharacter> importantCharacters = new ArrayList<FCharacter>();
+
+        for (FCharacter character : knownCharacters.values()) {
+            if (character.isBookmarked()) {
                 importantCharacters.add(character);
             }
         }
