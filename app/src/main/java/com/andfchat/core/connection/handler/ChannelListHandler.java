@@ -63,8 +63,8 @@ public class ChannelListHandler extends TokenHandler {
 
             // Feedback, private channel list
             if (feedbackListener != null) {
-                for (FeedbackListener listner : feedbackListener) {
-                    listner.onResponse(null);
+                for (FeedbackListener listener : feedbackListener) {
+                    listener.onResponse(null);
                 }
             }
         }

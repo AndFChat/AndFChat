@@ -78,7 +78,7 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
     protected HistoryManager historyManager;
 
     private final HashMap<ServerToken, TokenHandler> handlerMap = new HashMap<ServerToken, TokenHandler>();
-    private final Map<ServerToken, List<FeedbackListener>> feedbackListnerMap = new HashMap<ServerToken, List<FeedbackListener>>();
+    private final Map<ServerToken, List<FeedbackListener>> feedbackListenerMap = new HashMap<ServerToken, List<FeedbackListener>>();
 
     private boolean disconnected;
 
@@ -119,7 +119,7 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
             }
         }
 
-        Ln.d("Initialized TokenHandler, tokens, listend to: " + handlerMap.keySet().toString());
+        Ln.d("Initialized TokenHandler, tokens, listend to: " + handlerMap.keySet().toString()); //listened?
     }
 
     @Override
@@ -155,11 +155,11 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
             if (handlerMap.containsKey(token)) {
                 try {
                     // If the message has message, give them to handler without token.
-                    // FeedbackListner will only be called once and removed.
+                    // FeedbackListener will only be called once and removed.
                     if (payload.length() > 3) {
-                        handlerMap.get(token).incomingMessage(token, payload.substring(4), feedbackListnerMap.remove(token));
+                        handlerMap.get(token).incomingMessage(token, payload.substring(4), feedbackListenerMap.remove(token));
                     } else {
-                        handlerMap.get(token).incomingMessage(token, "", feedbackListnerMap.remove(token));
+                        handlerMap.get(token).incomingMessage(token, "", feedbackListenerMap.remove(token));
                     }
                 } catch (JSONException ex) {
                     Ln.e("Can't parse json: " + payload);
@@ -184,13 +184,13 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
     /**
      * Register a feedback called after receiving the ServerToken, the feedback will only be called once than removed.
      */
-    public void addFeedbackListner(ServerToken serverToken, FeedbackListener feedbackListener) {
-        if (feedbackListnerMap.containsKey(serverToken)) {
-            feedbackListnerMap.get(serverToken).add(feedbackListener);
+    public void addFeedbackListener(ServerToken serverToken, FeedbackListener feedbackListener) {
+        if (feedbackListenerMap.containsKey(serverToken)) {
+            feedbackListenerMap.get(serverToken).add(feedbackListener);
         } else {
-            List<FeedbackListener> listnerList = new ArrayList<FeedbackListener>();
-            listnerList.add(feedbackListener);
-            feedbackListnerMap.put(serverToken, listnerList);
+            List<FeedbackListener> listenerList = new ArrayList<FeedbackListener>();
+            listenerList.add(feedbackListener);
+            feedbackListenerMap.put(serverToken, listenerList);
         }
     }
 

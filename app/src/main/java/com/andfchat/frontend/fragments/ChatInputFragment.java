@@ -21,6 +21,7 @@ package com.andfchat.frontend.fragments;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,7 +103,8 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
             lastMessage = System.currentTimeMillis();
         }
         else {
-            //TODO: Show error message (input to fast).
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "Sonic, you're going too fast!", Snackbar.LENGTH_LONG)
+                    .show();
         }
 
         // Reset input

@@ -40,6 +40,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:22.2.0'
     // HTTP-Client
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'

@@ -26,6 +26,7 @@
         android:layout_width="@dimen/image_size_user_status"
         android:background="@drawable/icon_blue"            
         android:id="@+id/itemIcon"
+        android:contentDescription="User status"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
     />

@@ -102,10 +102,10 @@ public class JoinChannelAction {
                     }
 
                     @Override
-                    public void onError(String errorMsg) {}
+                    public void onError(Exception ex) {}
                 };
 
-                connection.registerFeedbackListner(ServerToken.ORS, feedbackListener);
+                connection.registerFeedbackListener(ServerToken.ORS, feedbackListener);
                 connection.askForPrivateChannel();
             }
         });

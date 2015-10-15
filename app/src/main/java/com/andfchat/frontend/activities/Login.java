@@ -45,7 +45,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListner;
+import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.Channel;
@@ -197,7 +197,7 @@ public class Login extends RoboActivity {
         final Intent intent = new Intent(getBaseContext(), PickChar.class);
 
 
-        FeedbackListner loginFeedback = new FeedbackListner() {
+        FeedbackListener loginFeedback = new FeedbackListener() {
 
             @Override
             public void onResponse(String response) {
