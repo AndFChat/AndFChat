@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">AndFChat</string>
+	<string name="about">Über</string>
+	<string name="account">Konto</string>
+	<string name="actions">Aktionen</string>
+	<string name="ad_clickable_advertisement">[Zum Anzeigen hier drücken]</string>
+	<string name="bookmark_user">+Lesezeichen</string>
+	<string name="channel_description">Beschreibung</string>
+	<string name="channels">Channels</string>
+	<string name="chatmessage_hint">Nachricht eingeben</string>
+	<string name="close">Schließen</string>
+	<string name="crash_toast_text">Sorry! Offenbar ist die App abgestürzt. Bitte sende einen Absturzbericht per E-Mail oder sende mir eine Nachricht auf F-list.</string>
+	<string name="description_chat_text_size">Textgröße für Chat</string>
+	<string name="description_delete_history">Alle Logs löschen</string>
+	<string name="description_initial_channel">Channel, der nach der Anmeldung geöffnet wird</string>
+	<string name="description_led_feedback">Benachrichtigungslicht für neue Nachrichten</string>
+	<string name="description_log_channel">Logs auch für öffentliche Channels erstellen</string>
+	<string name="description_log_history">Chat-Logs speichern</string>
+	<string name="description_show_avatar_pictures">Profilbilder bei privaten Chats anzeigen</string>
+	<string name="description_show_channel_info">Channelbeitritts- und -verlassensnachrichten anzeigen</string>
+	<string name="description_show_notifications">Benachrichtigungen in der Statusleiste anzeigen</string>
+	<string name="description_show_user_status_changes">Benachrichtigungen für Statusänderungen von Freunden und Lesezeichen</string>
+	<string name="description_theme">App-Design auswählen (Neustart erforderlich)</string>
+	<string name="description_vibration_feedback">Vibration bei neuen Nachrichten</string>
+	<string name="dismiss">Okay</string>
+	<string name="error_command_not_allowed">Dieser Befehl ist hier nicht erlaubt.</string>
+	<string name="error_disconnected_no_connection">Verbindung zum Server verloren</string>
+	<string name="error_login">Anmeldung fehlgeschlagen:</string>
+	<string name="exit">Beenden</string>
+	<string name="bookmarks_selector">Lesezeichen</string>
+	<string name="export_text">Exportieren</string>
+	<string name="friendlist">Freunde &amp; Lesezeichen</string>
+	<string name="friends_selector">Freunde</string>
+	<string name="hide">Verstecken</string>
+	<string name="leave_channel">Verlassen</string>
+	<string name="login">Anmelden</string>
+	<string name="logout">Abmelden</string>
+	<string name="menu_settings">Einstellungen</string>
+	<string name="message_channel_joined">%s ist dem Channel beigetreten.</string>
+	<string name="message_channel_left">%s hat den Channel verlassen.</string>
+	<string name="message_connected">%s hat sich angemeldet.</string>
+	<string name="message_disconnected">%s hat sich abgemeldet.</string>
+	<string name="message_invite_to_channel">%1$s hat dich eingeladen, [session=%2$s]%3$s[/session] beizutreten.</string>
+	<string name="message_status_changed">%1$s ist jetzt %2$s.</string>
+	<string name="message_status_changed_with_message">%1$s ist jetzt %2$s. [%3$s]</string>
+	<string name="no">Nein</string>
+	<plurals name="notification_attention">
+		<item quantity="one">Du hast %d neue Nachricht.</item>
+		<item quantity="other">Du hast %d neue Nachrichten.</item>
+	</plurals>
+	<string name="notification_connected">Mit F-Chat verbunden</string>
+	<string name="notification_disconnect">Von F-Chat getrennt</string>
+	<string name="password">Passwort</string>
+	<string name="pm_user">Private Nachricht schreiben</string>
+	<string name="post_ad_text">Ad senden</string>
+	<string name="private_channels">Private Channels</string>
+	<string name="public_channels">Öffentliche Channels</string>
+	<string name="question_back">Wirklich beenden?</string>
+	<string name="question_delete_log">Dieses Log wirklich löschen?</string>
+	<string name="question_disconnect">Wirklich abmelden?</string>
+	<string name="remember_account">Konto merken</string>
+	<string name="select_character">Charakter auswählen</string>
+	<string name="send_message">Senden</string>
+	<string name="settings">Einstellungen</string>
+	<string name="show">Anzeigen</string>
+	<string name="show_ads">Ads anzeigen</string>
+	<string name="show_avatar">Profilbild anzeigen</string>
+	<string name="show_details">Details anzeigen</string>
+	<string name="show_profile">Profil</string>
+	<string name="text_about">AndFChat wird unter der GPL3-Lizenz entwickelt.
+        \n\nAndFChat ist ein [color=red]third-party[/color]-Client für F-List, und noch in der [color=red]Beta[/color], also bitte Geduld!
+        \n\nBugs kannst du per Note an AndFChat senden (ich weiß, dass manche Tags noch nicht funktionieren), oder direkt eine Issue bei GitHub anlegen https://github.com/AndFChat/AndFChat/\n
+        \n
+        [b][color=red]Hilfe gesucht![/color][/b]\n
+		<!--* Artist/designer to improve the interface and add some images.\n-->
+		* Ein erfahrener Android-Entwickler für UI-Design, besonders für Fragen zu Scaling und unterschiedlichen Display-Layouts.\n</string>
+	<string name="title_chat_text_size">Schriftgröße</string>
+	<string name="title_delete_history">Logs löschen</string>
+	<string name="title_feedback">Feedback geben</string>
+	<string name="title_general">Allgemein</string>
+	<string name="title_initial_channel">Channel nach der Anmeldung</string>
+	<string name="title_led_feedback">Benachrichtigungslicht</string>
+	<string name="title_log_channel">Öffentliche Channels loggen</string>
+	<string name="title_log_history">Chatlogs speichern</string>
+	<string name="title_show_avatar_pictures">Avatare in der Liste anzeigen</string>
+	<string name="title_show_channel_info">Channelinfo anzeigen</string>
+	<string name="title_show_notifications">Benachrichtigungen anzeigen</string>
+	<string name="title_show_user_status_changes">Statusänderungen anzeigen</string>
+	<string name="title_theme">Design</string>
+	<string name="title_use_debug_channel"></string>
+	<string name="title_vibration_feedback">Bei neuen Nachrichten vibrieren</string>
+	<string name="unbookmark_user">-Lesezeichen</string>
+	<string name="yes">Ja</string>
+</resources>
