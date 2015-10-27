@@ -29,10 +29,13 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.andfchat.R;
+import com.andfchat.core.connection.FeedbackListener;
+import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.frontend.adapter.FriendListAdapter;
@@ -56,10 +59,33 @@ public class FriendListAction {
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
-        final ListView friendList = (ListView)layout.findViewById(R.id.channelsToJoin);
+        final ListView shownList = (ListView)layout.findViewById(R.id.channelsToJoin);
 
-        List<FCharacter> friendsData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getImportantCharacters());
-        FriendListAdapter friendListData = new FriendListAdapter(activity, friendsData);
-        friendList.setAdapter(friendListData);
+        final List<FCharacter> trashData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getFriendCharacters()); //Have to use this.
+        final List<FCharacter> friendsData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getFriendCharacters());
+        final List<FCharacter> bookmarksData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getBookmarkedCharacters());
+
+        final FriendListAdapter adapter = new FriendListAdapter(activity, trashData); //trashData must be used, otherwise whichever list is initially used breaks.
+        shownList.setAdapter(adapter);
+
+        Button showFriends = (Button)layout.findViewById(R.id.friendsButton);
+        showFriends.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                adapter.clear();
+                adapter.addAll(friendsData);
+            }
+        });
+
+        Button showBookmarks = (Button)layout.findViewById(R.id.bookmarksButton);
+        showBookmarks.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                adapter.clear();
+                adapter.addAll(bookmarksData);
+            }
+        });
     }
 }

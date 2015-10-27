@@ -135,8 +135,8 @@ public class FlistWebSocketConnection {
     /**
      * Register a feedback called after receiving the ServerToken, the feedback will only be called once than removed.
      */
-    public void registerFeedbackListner(ServerToken serverToken, FeedbackListener feedbackListener) {
-        handler.addFeedbackListner(serverToken, feedbackListener);
+    public void registerFeedbackListener(ServerToken serverToken, FeedbackListener feedbackListener) {
+        handler.addFeedbackListener(serverToken, feedbackListener);
     }
 
     /**

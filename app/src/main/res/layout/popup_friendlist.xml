@@ -42,7 +42,6 @@
     
     </LinearLayout>
 
-    <!--
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -68,7 +67,6 @@
             />
 
     </LinearLayout>
-    -->
 
     <LinearLayout     
         android:orientation="vertical"

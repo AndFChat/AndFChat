@@ -25,7 +25,8 @@
     <ImageView
         android:id="@+id/ChatroomImage" 
 	    android:layout_width="@dimen/image_size_chatroom"
-	    android:layout_height="@dimen/image_size_chatroom"  
+	    android:layout_height="@dimen/image_size_chatroom"
+        android:contentDescription="Avatar"
 	    android:src="@drawable/chat_room_icon"
 	    android:gravity="center"
     />

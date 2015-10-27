@@ -37,6 +37,7 @@
                 android:id="@+id/itemIcon"
                 android:layout_height="@dimen/image_size_user_status"
                 android:layout_width="@dimen/image_size_user_status"
+                android:contentDescription="User status"
                 android:background="@drawable/icon_blue"
                 />
 
@@ -45,6 +46,7 @@
                 android:layout_height="@dimen/image_size_user_status"
                 android:layout_width="@dimen/image_size_user_status"
                 android:background="@drawable/icon_op"
+                android:contentDescription="Op Status"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 />
