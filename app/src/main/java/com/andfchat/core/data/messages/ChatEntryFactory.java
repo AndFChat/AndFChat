@@ -3,11 +3,14 @@ package com.andfchat.core.data.messages;
 
 import android.content.Context;
 import android.text.Spannable;
+import android.util.Log;
 
 import com.andfchat.R;
 import com.andfchat.core.data.FCharacter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import java.util.MissingFormatArgumentException;
 
 @Singleton
 public class ChatEntryFactory {
@@ -68,10 +71,22 @@ public class ChatEntryFactory {
         return entry;
     }
 
+    public ChatEntry getStatusInfo(FCharacter owner) {
+        ChatEntry entry = new NotationEntry(owner, context.getString(R.string.status) + " " + owner.getStatusMsg());
+        entry.setIcon(R.drawable.ic_info_dark);
+        return entry;
+    }
+
     private String getText(int stringId, Object[] textParts) {
         String text = context.getString(stringId);
         if (textParts != null) {
-            text = String.format(text,  textParts);
+            try {
+                text = String.format(text, textParts);
+            }
+            catch (MissingFormatArgumentException exception) {
+                Log.e(this.getClass().getSimpleName(), "Tried to format text: " + text);
+                exception.printStackTrace();
+            }
         }
 
         return text;

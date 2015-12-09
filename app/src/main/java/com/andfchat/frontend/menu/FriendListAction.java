@@ -34,10 +34,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FeedbackListener;
-import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.adapter.FriendListAdapter;
 import com.andfchat.frontend.popup.FListPopupWindow;
 
@@ -59,33 +58,52 @@ public class FriendListAction {
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
-        final ListView shownList = (ListView)layout.findViewById(R.id.channelsToJoin);
+        final ListView shownList = (ListView)layout.findViewById(R.id.userlist);
 
-        final List<FCharacter> trashData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getFriendCharacters()); //Have to use this.
+        boolean separateFriends = RoboGuice.getInjector(activity).getInstance(SessionData.class).getSessionSettings().separateFriends();
+
         final List<FCharacter> friendsData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getFriendCharacters());
         final List<FCharacter> bookmarksData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getBookmarkedCharacters());
 
-        final FriendListAdapter adapter = new FriendListAdapter(activity, trashData); //trashData must be used, otherwise whichever list is initially used breaks.
+        final FriendListAdapter adapter = new FriendListAdapter(activity, new ArrayList<FCharacter>());
         shownList.setAdapter(adapter);
 
-        Button showFriends = (Button)layout.findViewById(R.id.friendsButton);
-        showFriends.setOnClickListener(new View.OnClickListener() {
+        if (separateFriends == true) {
+            Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
+            showFriends.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                adapter.clear();
-                adapter.addAll(friendsData);
+                @Override
+                public void onClick(View v) {
+                    adapter.clear();
+                    adapter.addAll(friendsData);
+                }
+            });
+
+            Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
+            showBookmarks.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    adapter.clear();
+                    adapter.addAll(bookmarksData);
+                }
+            });
+
+            // Set friends active first
+            adapter.addAll(friendsData);
+        }
+        else {
+            adapter.addAll(friendsData);
+            // Add all bookmarks not allready added (friends can be bookmarked too)
+            for (FCharacter character : bookmarksData) {
+                if (character.isFriend() == false) {
+                    adapter.add(character);
+                }
             }
-        });
-
-        Button showBookmarks = (Button)layout.findViewById(R.id.bookmarksButton);
-        showBookmarks.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                adapter.clear();
-                adapter.addAll(bookmarksData);
-            }
-        });
+            Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
+            showFriends.setVisibility(View.GONE);
+            Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
+            showBookmarks.setVisibility(View.GONE);
+        }
     }
 }

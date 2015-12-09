@@ -214,6 +214,10 @@ public class SessionData {
             return preferences.getBoolean(PropertyName.SHOW_NOTIFICATIONS.name().toLowerCase(), true);
         }
 
+        public boolean separateFriends() {
+            return preferences.getBoolean(PropertyName.SEPARATE_FRIENDS.name().toLowerCase(), true);
+        }
+
         public int getTheme() {
             String theme = preferences.getString(PropertyName.THEME.name().toLowerCase(), "AppTheme");
 

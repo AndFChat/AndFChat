@@ -35,6 +35,9 @@ import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.core.data.messages.ChatEntryFactory;
+import com.andfchat.core.data.messages.MessageEntry;
+import com.andfchat.core.data.messages.NotationEntry;
 import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.google.inject.Inject;
@@ -66,7 +69,13 @@ public class PrivateMessageHandler extends TokenHandler {
         Chatroom chatroom = chatroomManager.getChatroom(PRIVATE_MESSAGE_TOKEN + character);
         if (chatroom == null) {
             int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
-            chatroom = openPrivateChat(chatroomManager, characterManager.findCharacter(character), maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
+            FCharacter friend = characterManager.findCharacter(character);
+            chatroom = openPrivateChat(chatroomManager, friend, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
+
+            if (friend.getStatusMsg() != null && friend.getStatusMsg().length() > 0) {
+                chatroomManager.addMessage(chatroom, entryFactory.getStatusInfo(friend));
+            }
+
             eventManager.fire(chatroom, ChatroomEventType.NEW);
         }
 
