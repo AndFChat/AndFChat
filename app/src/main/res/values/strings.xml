@@ -137,6 +137,9 @@
     <string name="dismiss">Dismiss</string>
     <string name="show_ads">Show Ads</string>
     <string name="show_avatar">Show Avatar</string>
+    <string name="description_separate_friends">Separate friends and bookmarks in the friend list?</string>
+    <string name="title_separate_friends">Separate Friends and Bookmarks</string>
+    <string name="status">Status Message</string>
 
     <string-array name="text_size_translation">
         <item>Very Small</item>

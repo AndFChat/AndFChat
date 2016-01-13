@@ -76,7 +76,7 @@
         android:background="@color/popup_background">
 
         <ListView 	            
-            android:id="@+id/channelsToJoin"
+            android:id="@+id/channelToJoin"
 	        android:layout_height="wrap_content"
 	        android:layout_width="match_parent"
             android:divider="@color/gray"

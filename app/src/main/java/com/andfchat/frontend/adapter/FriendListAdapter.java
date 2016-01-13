@@ -39,6 +39,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
@@ -51,12 +52,19 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
 
     private final static FlistCharComparator COMPARATOR = new FlistCharComparator();
 
+    private static Picasso picasso = null;
+
     @Inject
     private ChatroomManager chatroomManager;
     @Inject
     private SessionData sessionData;
+    @Inject
+    private ChatEntryFactory entryFactory;
 
     private final List<FCharacter> chars;
+    private OkHttpClient client = new OkHttpClient();
+
+    ImageView image;
 
     public FriendListAdapter(final Context context, List<FCharacter> chars) {
         super(context, R.layout.list_item_friend, chars);
@@ -68,11 +76,11 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         this.chars = chars;
 
         RoboGuice.getInjector(context).injectMembers(this);
-    }
 
-    OkHttpClient client = new OkHttpClient();
-    Picasso picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
-    ImageView image;
+        if (picasso == null)  {
+            picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
+        }
+    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -132,6 +140,10 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
                 if (chatroomManager.hasOpenPrivateConversation(character) == false) {
                     int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
                     chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, character, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
+
+                    if (character.getStatusMsg() != null && character.getStatusMsg().length() > 0) {
+                        chatroomManager.addMessage(chatroom, entryFactory.getStatusInfo(character));
+                    }
                 } else {
                     chatroom = chatroomManager.getPrivateChatFor(character);
                 }

@@ -32,4 +32,5 @@ public enum PropertyName {
     VERSION,
     SHOW_AVATAR_PICTURES,
     SHOW_NOTIFICATIONS,
+    SEPARATE_FRIENDS,
 }

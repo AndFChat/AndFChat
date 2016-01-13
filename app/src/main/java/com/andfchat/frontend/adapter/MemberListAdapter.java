@@ -55,6 +55,7 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
@@ -71,6 +72,8 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
     private SessionData sessionData;
     @Inject
     private RelationManager relationManager;
+    @Inject
+    private ChatEntryFactory entryFactory;
 
     private final List<FCharacter> chars;
     private final QuickActionBar quickActionBar;
@@ -102,6 +105,11 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 if (chatroomManager.hasOpenPrivateConversation(activeCharacter) == false) {
                     int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
                     chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
+
+                    if (activeCharacter.getStatusMsg() != null && activeCharacter.getStatusMsg().length() > 0) {
+                        chatroomManager.addMessage(chatroom, entryFactory.getStatusInfo(activeCharacter));
+                    }
+
                 } else {
                     chatroom = chatroomManager.getPrivateChatFor(activeCharacter);
                 }

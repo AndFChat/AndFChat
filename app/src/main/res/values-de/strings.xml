@@ -37,22 +37,22 @@
 	<string name="login">Anmelden</string>
 	<string name="logout">Abmelden</string>
 	<string name="menu_settings">Einstellungen</string>
-	<string name="message_channel_joined">%s ist dem Channel beigetreten.</string>
-	<string name="message_channel_left">%s hat den Channel verlassen.</string>
-	<string name="message_connected">%s hat sich angemeldet.</string>
-	<string name="message_disconnected">%s hat sich abgemeldet.</string>
-	<string name="message_invite_to_channel">%1$s hat dich eingeladen, [session=%2$s]%3$s[/session] beizutreten.</string>
-	<string name="message_status_changed">%1$s ist jetzt %2$s.</string>
-	<string name="message_status_changed_with_message">%1$s ist jetzt %2$s. [%3$s]</string>
+	<string name="message_channel_joined">ist dem Channel beigetreten.</string>
+	<string name="message_channel_left">hat den Channel verlassen.</string>
+	<string name="message_connected">hat sich angemeldet.</string>
+	<string name="message_disconnected">hat sich abgemeldet.</string>
+	<string name="message_invite_to_channel">hat dich eingeladen, [session=%1$s]%2$s[/session] beizutreten.</string>
+	<string name="message_status_changed">ist jetzt %1$s.</string>
+	<string name="message_status_changed_with_message">ist jetzt %1$s. [%2$s]</string>
 	<string name="no">Nein</string>
 	<plurals name="notification_attention">
-		<item quantity="one">Du hast %d neue Nachricht.</item>
+		<item quantity="one">Du hast eine neue Nachricht.</item>
 		<item quantity="other">Du hast %d neue Nachrichten.</item>
 	</plurals>
 	<string name="notification_connected">Mit F-Chat verbunden</string>
 	<string name="notification_disconnect">Von F-Chat getrennt</string>
 	<string name="password">Passwort</string>
-	<string name="pm_user">Private Nachricht schreiben</string>
+	<string name="pm_user">anschreiben</string>
 	<string name="post_ad_text">Ad senden</string>
 	<string name="private_channels">Private Channels</string>
 	<string name="public_channels">Öffentliche Channels</string>
@@ -92,4 +92,7 @@
 	<string name="title_vibration_feedback">Bei neuen Nachrichten vibrieren</string>
 	<string name="unbookmark_user">-Lesezeichen</string>
 	<string name="yes">Ja</string>
+	<string name="description_separate_friends">Freunde und Lesezeichen getrennt anzeigen?</string>
+	<string name="title_separate_friends">Getrennte Freunde und Lesezeichen</string>
+	<string name="status">Status Nachricht</string>
 </resources>

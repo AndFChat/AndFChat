@@ -71,7 +71,7 @@ public class JoinChannelAction {
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 
-        final ListView channelList = (ListView)layout.findViewById(R.id.channelsToJoin);
+        final ListView channelList = (ListView)layout.findViewById(R.id.channelToJoin);
 
         final CheckboxAdapter adapter = new CheckboxAdapter(activity, chatroomManager.getOfficialChannels());
         channelList.setAdapter(adapter);
