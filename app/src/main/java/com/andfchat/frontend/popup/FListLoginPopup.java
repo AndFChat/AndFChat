@@ -25,9 +25,9 @@ import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Protocol;
-import com.squareup.okhttp.Response;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+import okhttp3.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,9 +40,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import retrofit.Call;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
 import roboguice.util.Ln;
 
 public class FListLoginPopup extends DialogFragment {
@@ -163,10 +163,10 @@ public class FListLoginPopup extends DialogFragment {
                     String account = FListLoginPopup.this.account.getText().toString().trim();
                     String password = FListLoginPopup.this.password.getText().toString().trim();
 
-                    retrofit.Callback<FlistHttpClient.LoginData> callback = new retrofit.Callback<FlistHttpClient.LoginData>() {
+                    retrofit2.Callback<FlistHttpClient.LoginData> callback = new retrofit2.Callback<FlistHttpClient.LoginData>() {
 
                         @Override
-                        public void onResponse(retrofit.Response<FlistHttpClient.LoginData> response, Retrofit retrofit) {
+                        public void onResponse(retrofit2.Response<FlistHttpClient.LoginData> response) {
                             isLoggingIn = false;
                             FlistHttpClient.LoginData loginData = response.body();
 
@@ -201,7 +201,7 @@ public class FListLoginPopup extends DialogFragment {
                     };
 
                     OkHttpClient client = new OkHttpClient();
-                    client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+                    //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
                     Retrofit restAdapter = new Retrofit.Builder()
                             .baseUrl("https://www.f-list.net")
