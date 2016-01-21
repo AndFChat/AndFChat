@@ -255,7 +255,7 @@ public class FListLoginPopup extends DialogFragment {
         } else {
             prefEditor.remove(ACCOUNT_NAME);
         }
-        prefEditor.commit();
+        prefEditor.apply();
 
         Collections.sort(loginData.getCharacters());
         sessionData.setCharList(loginData.getCharacters());

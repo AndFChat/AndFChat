@@ -23,10 +23,11 @@ import com.andfchat.R;
 public enum Gender {
     MALE("Male", R.color.name_male),
     FEMALE("Female", R.color.name_female),
-    CUNT_BOY("Cunt-boy", R.color.name_cunt_boy),
-    SHEMALE("Shemale", R.color.name_shemale),
-    HERM("Herm", R.color.name_herm),
     TRANSGENDER("Transgender", R.color.name_transgender),
+    HERM("Herm", R.color.name_herm),
+    SHEMALE("Shemale", R.color.name_shemale),
+    MALE_HERM("Male-Herm", R.color.name_male_herm),
+    CUNT_BOY("Cunt-boy", R.color.name_cunt_boy),
     UNKNOWN("", R.color.name_unknown);
 
     private String name;
