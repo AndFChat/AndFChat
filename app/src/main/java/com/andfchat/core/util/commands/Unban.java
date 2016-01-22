@@ -35,7 +35,7 @@ public class Unban extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /unban [USER] | PERMIT A PREVIOUSLY BANNED CHARACTER TO ENTER THE OPEN PRIVATE ROOM, AGAIN.";
+        return "*  /unban [user] | Permit a previously banned character to enter the room again.";
     }
 
     @Override

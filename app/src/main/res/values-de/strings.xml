@@ -70,10 +70,10 @@
 	<string name="show_profile">Profil</string>
 	<string name="text_about">AndFChat wird unter der GPL3-Lizenz entwickelt.
         \n\nAndFChat ist ein [color=red]third-party[/color]-Client für F-List, und noch in der [color=red]Beta[/color], also bitte Geduld!
-        \n\nBugs kannst du per Note an AndFChat senden (ich weiß, dass manche Tags noch nicht funktionieren), oder direkt eine Issue bei GitHub anlegen https://github.com/AndFChat/AndFChat/\n
+        \n\nBugs kannst du per Note an AndFChat senden (ich weiß, dass manche Tags noch nicht funktionieren), oder direkt eine Issue bei GitHub anlegen [url]https://github.com/AndFChat/AndFChat/[/url]\n
         \n
         [b][color=red]Hilfe gesucht![/color][/b]\n
-		<!--* Artist/designer to improve the interface and add some images.\n-->
+
 		* Ein erfahrener Android-Entwickler für UI-Design, besonders für Fragen zu Scaling und unterschiedlichen Display-Layouts.\n</string>
 	<string name="title_chat_text_size">Schriftgröße</string>
 	<string name="title_delete_history">Logs löschen</string>

@@ -45,7 +45,7 @@ public class PMUser extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /priv [USER] | THIS OPENS A PRIVATE MESSAGE SESSION WITH ANOTHER CHARACTER. /ROLL AND /BOTTLE DO NOT WORK IN PRIVATE MESSAGES.";
+        return "*  /priv [user] | This opens a private message session with another character. /roll and /bottle do NOT work in private messages.";
     }
 
     @Override
@@ -57,7 +57,7 @@ public class PMUser extends TextCommand {
     public void runCommand(String token, String text) {
         if (text == null || text.length() == 0) {
             //TODO: no translation
-            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "PLEASE GIVE A USERNAME AS PARAMETER!");
+            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "Please give a username as a parameter");
             return;
         }
 
@@ -65,7 +65,7 @@ public class PMUser extends TextCommand {
 
         if (flistChar == null) {
             //TODO: no translation
-            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "NO USER WITH NAME '" + text + "' FOUND!");
+            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "No user with name '" + text + "' found.");
         } else {
             Chatroom chatroom;
             if (chatroomManager.hasOpenPrivateConversation(flistChar) == false) {

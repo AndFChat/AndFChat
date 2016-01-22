@@ -244,6 +244,12 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             case AWAY:
                 itemIcon.setBackgroundResource(R.drawable.icon_grey);
                 break;
+            case IDLE:
+                itemIcon.setBackgroundResource(R.drawable.icon_grey2);
+                break;
+            case CROWN:
+                itemIcon.setBackgroundResource(R.drawable.icon_gold);
+                break;
             default:
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
         }

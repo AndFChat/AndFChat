@@ -30,12 +30,12 @@ public class Dice extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /dice | THIS COMMAND ROLLS A NUMBER OF DICE, ALL WITH THE SAME NUMBER OF SIDES. FOR INSTANCE, BOB WANTS TO ROLL TWO DICE WITH SIX SIDES, BECAUSE HE'S PLAYING CRAPS. HE'D TYPE: /ROLL 2D6";
+        return "*  /roll [*d*] | This command rolls a number of dice, all with the same number of sides. If Bob wanted to roll two dice with six sides each, he'd type: /roll 2d6";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/dice");
+        return token.equals("/roll");
     }
 
     @Override
