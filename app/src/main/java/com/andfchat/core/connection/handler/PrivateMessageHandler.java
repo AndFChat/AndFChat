@@ -88,14 +88,6 @@ public class PrivateMessageHandler extends TokenHandler {
             }
         }
 
-        // If led feedback is allowed, do it
-        if (sessionData.getSessionSettings().ledFeedback()) {
-            if (sessionData.isVisible() == false) {
-                Ln.d("Set led active!");
-                notification.showLedNotification();
-            }
-        }
-
         // Update notification
         if (sessionData.isVisible() == false) {
             notification.updateNotification(sessionData.addMessage());
