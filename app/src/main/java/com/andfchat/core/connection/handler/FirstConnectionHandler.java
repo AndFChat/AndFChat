@@ -45,7 +45,7 @@ public class FirstConnectionHandler extends TokenHandler {
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
-        String channel = sessionData.getSessionSettings().getInitialChannel();
+        String channel = sessionData.getSessionSettings().getInitialChannel(); //TODO Turn this into an Array for multiple initial channels.
         if (channel != null) {
             connection.joinChannel(channel);
         }

@@ -237,7 +237,7 @@ public class SessionData {
         }
 
         public Version getVersion() {
-            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.4.0"));
+            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.5.0"));
         }
 
         public void setVersion(String version) {

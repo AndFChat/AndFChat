@@ -18,28 +18,32 @@
 
 package com.andfchat.core.util.commands;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.FCharacter;
 
+public class Unignore extends TextCommand{
 
-
-public class Dice extends TextCommand {
-
-    public Dice() {
-        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
+    public Unignore() {
+        allowedIn = Chatroom.ChatroomType.values();
     }
 
     @Override
     public String getDescription() {
-        return "*  /roll [#d##] | This command rolls a number of dice, all with the same number of sides. If Bob wanted to roll two dice with six sides each, he'd type: /roll 2d6";
+        return "*  /ignore [name] | Reverses the /ignore command, to allow communication again.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/roll");
+        return token.equals("/unignore");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        connection.dice(chatroomManager.getActiveChat(), text.trim());
+        if (text != null) {
+            FCharacter flistChar = characterManager.findCharacter(text.trim(), false);
+            if (flistChar != null){
+                connection.unignore(flistChar.getName());
+            }
+        }
     }
 }
