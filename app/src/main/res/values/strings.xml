@@ -99,7 +99,6 @@
 
     <string name="hello_world">Hey, you shouldn\'t be seeing this! There\'s no RP in here! D:</string>
 
-    <!-- TODO figure out where this is -->
     <string name="action_settings">Where the heck does this show up?</string>
 
     <string name="title_initial_channel">Channel on login</string>

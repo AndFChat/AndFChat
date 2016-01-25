@@ -50,7 +50,11 @@ public class DiceBottleHandler extends TokenHandler {
             if(!channelId.isEmpty() && recipient.isEmpty()) {
                 chatroom = chatroomManager.getChatroom(channelId);
             } else {
-                chatroom = chatroomManager.getPrivateChatFor(character);
+                if (character.equals(sessionData.getCharacterName())) {
+                    chatroom = chatroomManager.getPrivateChatFor(recipient);
+                } else {
+                    chatroom = chatroomManager.getPrivateChatFor(character);
+                }
             }
 
             if (chatroom != null) {

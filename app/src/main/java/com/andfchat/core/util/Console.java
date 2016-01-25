@@ -36,6 +36,7 @@ import com.andfchat.core.util.commands.CloseChannelToPublic;
 import com.andfchat.core.util.commands.CloseChatroom;
 import com.andfchat.core.util.commands.CreateChannel;
 import com.andfchat.core.util.commands.Dice;
+import com.andfchat.core.util.commands.Ignore;
 import com.andfchat.core.util.commands.InviteToChannel;
 import com.andfchat.core.util.commands.Kick;
 import com.andfchat.core.util.commands.OpenChannelToPublic;
@@ -44,6 +45,7 @@ import com.andfchat.core.util.commands.SendAd;
 import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.TextCommand;
 import com.andfchat.core.util.commands.Unban;
+import com.andfchat.core.util.commands.Unignore;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -77,6 +79,10 @@ public class Console {
         availableCommands.add(new Kick());
         availableCommands.add(new Ban());
         availableCommands.add(new Unban());
+
+        //Ignore commands TODO Activate once functional
+        //availableCommands.add(new Ignore());
+        //availableCommands.add(new Unignore());
 
         Injector injector = RoboGuice.getInjector(context);
         for (TextCommand command : availableCommands) {

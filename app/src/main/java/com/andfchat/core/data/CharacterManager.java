@@ -121,7 +121,7 @@ public class CharacterManager {
         return flistChar;
     }
 
-    public List<FCharacter> getFriendCharacters() { //TODO Figure out how/if this is sorted.
+    public List<FCharacter> getFriendCharacters() {
         List<FCharacter> importantCharacters = new ArrayList<FCharacter>();
 
         for (FCharacter character : knownCharacters.values()) {
@@ -133,7 +133,7 @@ public class CharacterManager {
         return importantCharacters;
     }
 
-    public List<FCharacter> getBookmarkedCharacters() { //TODO Figure out how/if this is sorted.
+    public List<FCharacter> getBookmarkedCharacters() {
         List<FCharacter> importantCharacters = new ArrayList<FCharacter>();
 
         for (FCharacter character : knownCharacters.values()) {
