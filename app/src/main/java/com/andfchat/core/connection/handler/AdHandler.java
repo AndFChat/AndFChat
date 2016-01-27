@@ -30,7 +30,7 @@ import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.messages.ChatEntry;
 
 /**
- * Displays add messages in channels.
+ * Displays ad messages in channels.
  * @author AndFChat
  */
 public class AdHandler extends TokenHandler {

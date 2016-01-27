@@ -87,7 +87,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
         if (chars.size() > 1) {
             COMPARATOR.setChatroom(chatroomManager.getActiveChat());
-            this.sort(COMPARATOR);
+            sortList();
         }
 
         this.chars = chars;
@@ -281,6 +281,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         if (position == 1) {
             Ln.d("Redrawn");
         }
+        sortList();
 
         return rowView;
     }
@@ -305,8 +306,13 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         if (!added) {
             chars.add(fCharacter);
         }
+        sortList();
 
         notifyDataSetChanged();
+    }
+
+    public void sortList(){
+        this.sort(COMPARATOR);
     }
 
 }

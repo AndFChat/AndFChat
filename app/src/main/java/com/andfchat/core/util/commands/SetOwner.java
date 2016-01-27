@@ -21,28 +21,29 @@ package com.andfchat.core.util.commands;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 
-public class Unignore extends TextCommand{
+public class SetOwner extends TextCommand {
 
-    public Unignore() {
-        allowedIn = Chatroom.ChatroomType.values();
+    public SetOwner() {
+        allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
     }
 
     @Override
     public String getDescription() {
-        return "*  /unignore [name] | Reverses the /ignore command, to allow communication once again.";
+        return "*  /setowner [character] | This sets the owner of the current room to the designated character.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/unignore");
+        return token.equals("/setowner");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        if (text != null) {
+        Chatroom chatroom = chatroomManager.getActiveChat();
+        if (chatroom != null && text != null) {
             FCharacter flistChar = characterManager.findCharacter(text.trim(), false);
-            if (flistChar != null){
-                connection.unignore(flistChar.getName());
+            if (flistChar != null) {
+                connection.setOwner(chatroom, flistChar.getName());
             }
         }
     }

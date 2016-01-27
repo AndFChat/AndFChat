@@ -21,20 +21,20 @@ package com.andfchat.core.util.commands;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 
-public class Unignore extends TextCommand{
+public class Timeout extends TextCommand {
 
-    public Unignore() {
-        allowedIn = Chatroom.ChatroomType.values();
+    public Timeout() {
+        allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
     }
 
     @Override
     public String getDescription() {
-        return "*  /unignore [name] | Reverses the /ignore command, to allow communication once again.";
+        return "*  /timeout [user] | Temporarily bans a character from the room for 30 minutes.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/unignore");
+        return token.equals("/timeout");
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Unignore extends TextCommand{
         if (text != null) {
             FCharacter flistChar = characterManager.findCharacter(text.trim(), false);
             if (flistChar != null){
-                connection.unignore(flistChar.getName());
+                connection.timeout(flistChar.getName(), chatroomManager.getActiveChat());
             }
         }
     }

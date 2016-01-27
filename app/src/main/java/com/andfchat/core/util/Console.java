@@ -44,9 +44,12 @@ import com.andfchat.core.util.commands.OpenChannelToPublic;
 import com.andfchat.core.util.commands.PMUser;
 import com.andfchat.core.util.commands.Promote;
 import com.andfchat.core.util.commands.SendAd;
+import com.andfchat.core.util.commands.SetDescription;
 import com.andfchat.core.util.commands.SetMode;
+import com.andfchat.core.util.commands.SetOwner;
 import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.TextCommand;
+import com.andfchat.core.util.commands.Timeout;
 import com.andfchat.core.util.commands.Unban;
 import com.andfchat.core.util.commands.Unignore;
 import com.andfchat.core.util.commands.Uptime;
@@ -87,6 +90,9 @@ public class Console {
         availableCommands.add(new SetMode());
         availableCommands.add(new Promote());
         availableCommands.add(new Demote());
+        availableCommands.add(new SetOwner());
+        availableCommands.add(new SetDescription());
+        availableCommands.add(new Timeout());
 
         //Ignore commands
         availableCommands.add(new Ignore());

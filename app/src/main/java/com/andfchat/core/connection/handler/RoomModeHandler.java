@@ -32,6 +32,10 @@ import java.util.List;
 
 import roboguice.util.Ln;
 
+/**
+ * Sets room modes for official and unofficial channels.
+ * @author AndFChat-Pandora
+ */
 public class RoomModeHandler extends TokenHandler {
 
     @Override

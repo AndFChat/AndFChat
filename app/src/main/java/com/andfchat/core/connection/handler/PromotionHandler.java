@@ -31,6 +31,10 @@ import java.util.List;
 
 import roboguice.util.Ln;
 
+/**
+ * Recognizes promotion in official and unofficial channels.
+ * @author AndFChat-Pandora
+ */
 public class PromotionHandler extends TokenHandler {
 
     @Override

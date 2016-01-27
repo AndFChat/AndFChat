@@ -19,31 +19,28 @@
 package com.andfchat.core.util.commands;
 
 import com.andfchat.core.data.Chatroom;
-import com.andfchat.core.data.FCharacter;
 
-public class Unignore extends TextCommand{
+public class SetDescription extends TextCommand {
 
-    public Unignore() {
-        allowedIn = Chatroom.ChatroomType.values();
+    public SetDescription() {
+        allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
     }
 
     @Override
     public String getDescription() {
-        return "*  /unignore [name] | Reverses the /ignore command, to allow communication once again.";
+        return "*  /setdescription [text] | This sets the current room's description to the given text.";
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/unignore");
+        return token.equals("/setdescription");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        if (text != null) {
-            FCharacter flistChar = characterManager.findCharacter(text.trim(), false);
-            if (flistChar != null){
-                connection.unignore(flistChar.getName());
-            }
+        Chatroom chatroom = chatroomManager.getActiveChat();
+        if (chatroom != null && text != null) {
+            connection.setDescription(chatroom, text.trim());
         }
     }
 }
