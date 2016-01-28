@@ -45,7 +45,7 @@ public class PromotionHandler extends TokenHandler {
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
-        if (token == ServerToken.COA) {
+        if(token == ServerToken.CSO) {
             JSONObject json = new JSONObject(msg);
             String channel = json.getString("channel");
             String character = json.getString("character");
@@ -53,7 +53,21 @@ public class PromotionHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), context.getString(R.string.handler_message_promoted) + chatroom.getName() + ".");
+                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_new_owner, new Object[]{chatroom.getName()});
+                this.addChatEntryToActiveChat(entry);
+            }
+            else {
+                Ln.e("Promotion is for a unknown channel: " + channel);
+            }
+        } else if (token == ServerToken.COA) {
+            JSONObject json = new JSONObject(msg);
+            String channel = json.getString("channel");
+            String character = json.getString("character");
+
+            Chatroom chatroom = chatroomManager.getChatroom(channel);
+
+            if (chatroom != null) {
+                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_promoted, new Object[]{chatroom.getName()});
                 this.addChatEntryToActiveChat(entry);
             }
             else {
@@ -64,6 +78,6 @@ public class PromotionHandler extends TokenHandler {
 
     @Override
     public ServerToken[] getAcceptableTokens() {
-        return new ServerToken[] {ServerToken.COA};
+        return new ServerToken[] {ServerToken.COA, ServerToken.CSO};
     }
 }

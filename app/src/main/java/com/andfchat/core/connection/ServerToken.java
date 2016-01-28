@@ -37,6 +37,7 @@ public enum ServerToken {
     COL, // Listen all operator for a channel.
     CON, // After connecting and identifying you will receive a CON command, giving the number of connected users to the network. -> CharListHandler
     COR, // Demotes a user from a channel operator to a normal user. -> DemotionHandler
+    CSO, // Sets the owner of a room to a new character. -> PromotionHandler
     CTU, // Temporarily bans a character from a channel. -> TimeoutHandler
     ERR, // Indicates that the given error has occurred. -> ErrorMessageHandler
     FLN, // Sent by the server to inform the client a given character went offline. -> CharListHandler
