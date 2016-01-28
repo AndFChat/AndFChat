@@ -19,6 +19,7 @@
 package com.andfchat.core.connection.handler;
 
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
@@ -48,7 +49,7 @@ public class RoomModeHandler extends TokenHandler {
              Chatroom chatroom = chatroomManager.getChatroom(channel);
 
              if (chatroom != null) {
-                 ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "Channel now showing: " + mode);
+                 ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.handler_message_room_mode + mode);
                  chatroomManager.addMessage(chatroom, entry);
              }
              else {

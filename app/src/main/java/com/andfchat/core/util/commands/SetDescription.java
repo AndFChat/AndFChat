@@ -18,7 +18,11 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
+import com.google.inject.Inject;
 
 public class SetDescription extends TextCommand {
 
@@ -26,9 +30,12 @@ public class SetDescription extends TextCommand {
         allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /setdescription [text] | This sets the current room's description to the given text.";
+        return "*  /setdescription " + context.getString(R.string.command_description_setdescription);
     }
 
     @Override

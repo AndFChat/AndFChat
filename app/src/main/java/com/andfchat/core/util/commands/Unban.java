@@ -18,6 +18,9 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
@@ -32,10 +35,12 @@ public class Unban extends TextCommand {
 
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /unban [user] | Permit a previously banned character to enter the room again.";
+        return "*  /unban " + context.getString(R.string.command_description_unban);
     }
 
     @Override
