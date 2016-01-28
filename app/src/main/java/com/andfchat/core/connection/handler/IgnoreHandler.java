@@ -25,6 +25,7 @@ import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharRelation;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.messages.ChatEntry;
 import com.google.inject.Inject;
@@ -62,20 +63,31 @@ public class IgnoreHandler extends TokenHandler {
                 String[] splitCharacters = characters.split(",");
 
                 // Add ignores to the RelationManager
-                Set<String> ignoresList = new HashSet<String>();
+                //Set<String> ignoresList = new HashSet<String>();
                 for(int i=0; i< splitCharacters.length; i++) {
-                    ignoresList.add(splitCharacters[i].trim());
+                    FCharacter flistChar = characterManager.findCharacter(splitCharacters[i].trim(), false);
+                    if(flistChar != null) {
+                        flistChar.setIgnored(true);
+                    }
                 }
-                relationManager.addCharacterToList(CharRelation.IGNORE, ignoresList);
-                Ln.v("Added " + ignoresList.size() + " ignores.");
+                //relationManager.addCharacterToList(CharRelation.IGNORE, ignoresList);
+                Ln.v("Added " + splitCharacters.length + " ignores.");
             } else if (action.equals("add")) {
                 //Added character to ignore list
                 ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_ignored);
+                FCharacter flistChar = characterManager.findCharacter(character.trim(), false);
+                if(flistChar != null) {
+                    flistChar.setIgnored(true);
+                }
                 this.addChatEntryToActiveChat(entry);
                 Ln.v("Added " + character + " to the ignore list.");
             } else if (action.equals("delete")) {
                 //Removed character from ignore list
                 ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_unignored);
+                FCharacter flistChar = characterManager.findCharacter(character.trim(), false);
+                if(flistChar != null) {
+                    flistChar.setIgnored(true);
+                }
                 this.addChatEntryToActiveChat(entry);
                 Ln.v("Removed " + character + " from the ignore list.");
             } else {

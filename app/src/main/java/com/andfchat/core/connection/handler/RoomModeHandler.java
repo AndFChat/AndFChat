@@ -19,12 +19,15 @@
 package com.andfchat.core.connection.handler;
 
 
+import android.content.Context;
+
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.messages.ChatEntry;
+import com.google.inject.Inject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +42,9 @@ import roboguice.util.Ln;
  */
 public class RoomModeHandler extends TokenHandler {
 
+    @Inject
+    protected Context context;
+
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
          if (token == ServerToken.RMO) {
@@ -49,7 +55,7 @@ public class RoomModeHandler extends TokenHandler {
              Chatroom chatroom = chatroomManager.getChatroom(channel);
 
              if (chatroom != null) {
-                 ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.handler_message_room_mode + mode);
+                 ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(CharacterManager.USER_SYSTEM), context.getString(R.string.handler_message_room_mode) + mode);
                  chatroomManager.addMessage(chatroom, entry);
              }
              else {

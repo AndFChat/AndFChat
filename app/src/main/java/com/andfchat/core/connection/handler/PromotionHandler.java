@@ -18,11 +18,14 @@
 
 package com.andfchat.core.connection.handler;
 
+import android.content.Context;
+
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.messages.ChatEntry;
+import com.google.inject.Inject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +40,9 @@ import roboguice.util.Ln;
  */
 public class PromotionHandler extends TokenHandler {
 
+    @Inject
+    protected Context context;
+
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         if (token == ServerToken.COA) {
@@ -47,7 +53,7 @@ public class PromotionHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_promoted + chatroom.getName() + ".");
+                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), context.getString(R.string.handler_message_promoted) + chatroom.getName() + ".");
                 this.addChatEntryToActiveChat(entry);
             }
             else {

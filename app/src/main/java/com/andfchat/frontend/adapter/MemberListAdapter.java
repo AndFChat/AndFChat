@@ -137,6 +137,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 Retrofit restAdapter = new Retrofit.Builder()
                         .baseUrl("https://www.f-list.net")
                         .client(client)
+                        .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
                 FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
@@ -150,17 +151,19 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
                     @Override
                     public void onFailure(Throwable t) {
-
+                        Ln.v("Bookmarking failed!");
                     }
                 };
 
                 if (item.isSelected()) {
                     Call<String> call = httpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
+                    Ln.i("Removing " + activeCharacter.getName() + " from bookmarks" );
                     call.enqueue(callback);
                     relationManager.removeFromList(CharRelation.BOOKMARKED, activeCharacter);
                 }
                 else {
                     Call<String> call = httpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
+                    Ln.i("Adding " + activeCharacter.getName() + " to bookmarks" );
                     call.enqueue(callback);
                     relationManager.addOnList(CharRelation.BOOKMARKED, activeCharacter);
                 }
