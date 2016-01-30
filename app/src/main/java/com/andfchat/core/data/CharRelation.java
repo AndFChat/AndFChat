@@ -24,5 +24,5 @@ public enum CharRelation {
     MARKED_AS_INTERESTING,
     MARKED_AS_BORING,
     TMP_IGNORE,
-    IGNORE,
+    IGNORE
 }

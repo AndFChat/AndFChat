@@ -49,10 +49,8 @@ public class MessageHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                if(!characterManager.findCharacter(character).isIgnored()) {
-                    ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
-                    chatroomManager.addMessage(chatroom, entry);
-                }
+                ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
+                chatroomManager.addMessage(chatroom, entry);
             }
             else {
                 Ln.e("Incoming message is for a unknown channel: " + channel);

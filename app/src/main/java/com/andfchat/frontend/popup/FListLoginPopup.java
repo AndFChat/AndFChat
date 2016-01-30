@@ -65,7 +65,6 @@ public class FListLoginPopup extends DialogFragment {
         ticket,
         friends,
         bookmarks,
-        ignores,
         error,
         source_name,
         name
@@ -148,7 +147,7 @@ public class FListLoginPopup extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                if (isLoggingIn == false) {
+                if(isLoggingIn==false) {
                     isLoggingIn = true;
 
                     Runnable runnable = new Runnable() {
@@ -248,17 +247,6 @@ public class FListLoginPopup extends DialogFragment {
         }
         relationManager.addCharacterToList(CharRelation.FRIEND, friendList);
         Ln.v("Added " + friendList.size() + " friends.");
-
-        // Add ignores to the RelationManager TODO Get ignores to actually work.
-        Set<String> ignoresList = new HashSet<String>();
-        if(loginData.getIgnores() != null) {
-            for (Iterator<FlistHttpClient.LoginData.Ignored> iterator = loginData.getIgnores().iterator(); iterator.hasNext(); ) {
-                FlistHttpClient.LoginData.Ignored ignored = iterator.next();
-                ignoresList.add(ignored.getName());
-            }
-        }
-        relationManager.addCharacterToList(CharRelation.IGNORE, ignoresList);
-        Ln.v("Added " + ignoresList.size() + " ignores.");
 
         SharedPreferences.Editor prefEditor = preferences.edit();
         prefEditor.putBoolean(SAVE_ACCOUNT_NAME, rememberAccount.isChecked());
