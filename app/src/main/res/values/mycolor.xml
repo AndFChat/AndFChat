@@ -34,10 +34,11 @@
     <!-- GENDERS -->
     <color name="name_male">#6699FF</color>
     <color name="name_female">#FF6699</color>
-    <color name="name_shemale">#CC66FF</color>
-    <color name="name_herm">#9B30FF</color>
-    <color name="name_cunt_boy">#00CC66</color>
     <color name="name_transgender">#EE8822</color>
+    <color name="name_herm">#9B30FF</color>
+    <color name="name_shemale">#CC66FF</color>
+    <color name="name_male_herm">#007FFF</color>
+    <color name="name_cunt_boy">#00CC66</color>
     <color name="name_unknown">#FFFFBB</color>    
     
     <!-- CHATENTRY -->
