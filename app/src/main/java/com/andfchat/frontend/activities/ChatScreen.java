@@ -516,7 +516,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
             os.close();
 
-            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.exported,  new Object[]{filename});
+            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.exported + filename);
             chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
 
             // Tell the media scanner about the new file so that it is

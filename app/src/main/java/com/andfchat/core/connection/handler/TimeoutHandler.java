@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Chatroom;
@@ -50,10 +49,10 @@ public class TimeoutHandler extends TokenHandler {
 
             if (chatroom != null) {
                 if (character.equals(sessionData.getCharacterName())) {
-                    ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(operator), R.string.handler_message_timeout_you, new Object[]{chatroom.getName(), length});
+                    ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(operator), " has banned you from " + chatroom.getName() + " for " + length + "minutes.");
                     this.addChatEntryToActiveChat(entry);
                 } else if (chatroom.isChannelMod(characterManager.findCharacter(sessionData.getCharacterName()))) {
-                    ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_timeout_mod, new Object[]{chatroom.getName(), length, characterManager.findCharacter(operator)});
+                    ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), " has been banned from " + chatroom.getName() + " for " + length + "minutes.");
                     this.addChatEntryToActiveChat(entry);
                 }
             }

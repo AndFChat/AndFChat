@@ -53,7 +53,7 @@ public class DemotionHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_demoted, new Object[]{chatroom.getName()});
+                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), context.getString(R.string.handler_message_demoted) + chatroom.getName() + ".");
                 this.addChatEntryToActiveChat(entry);
             }
             else {

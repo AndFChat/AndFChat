@@ -18,7 +18,6 @@
 
 package com.andfchat.core.connection.handler;
 
-import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharacterManager;
@@ -46,7 +45,7 @@ public class UptimeHandler extends TokenHandler {
 
 
 
-            ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.handler_message_uptime,  new Object[]{startstring, users, maxusers});
+            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "Server started " + startstring + "\n Currently " + users + " users. Max of " + maxusers + " users.");
             this.addChatEntryToActiveChat(entry);
         }
     }

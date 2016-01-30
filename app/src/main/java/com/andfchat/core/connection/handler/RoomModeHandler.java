@@ -55,7 +55,7 @@ public class RoomModeHandler extends TokenHandler {
              Chatroom chatroom = chatroomManager.getChatroom(channel);
 
              if (chatroom != null) {
-                 ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.handler_message_room_mode, new Object[]{mode});
+                 ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(CharacterManager.USER_SYSTEM), context.getString(R.string.handler_message_room_mode) + mode);
                  chatroomManager.addMessage(chatroom, entry);
              }
              else {
