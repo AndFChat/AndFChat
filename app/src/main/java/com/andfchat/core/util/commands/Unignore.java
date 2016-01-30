@@ -29,7 +29,7 @@ public class Unignore extends TextCommand{
 
     @Override
     public String getDescription() {
-        return "*  /unignore [name] | Reverses the /ignore command, to allow communication once again.";
+        return "*  /ignore [name] | Reverses the /ignore command, to allow communication again.";
     }
 
     @Override

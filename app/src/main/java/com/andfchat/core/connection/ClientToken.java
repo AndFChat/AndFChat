@@ -21,15 +21,12 @@ package com.andfchat.core.connection;
 public enum ClientToken {
     CBU, // Ban
     CCR, // Create a private, invite-only channel.
-    CDS, // Sets the description of the room.
     CHA, // Request a list of all public channels.
     CIU, // Invite User to channel.
     CKU, // Kick
     COA, // Request a character be promoted to channel op (moderator)
     COL, // Requests the list of channel ops (channel moderators).
     COR, // Demotes a channel op (moderator) to a normal user.
-    CSO, // Changes the channel owner to a specified character.
-    CTU, // Give a user a timeout for a designated number of minutes.
     CUB, // Unban
     FKS, // Search for characters fitting the user's selections. Kinks is required, all other parameters are optional.
     IDN, // This command is used to identify with the server.

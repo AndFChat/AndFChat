@@ -30,10 +30,6 @@ import java.util.List;
 
 import roboguice.util.Ln;
 
-/**
- * Recognizes demotion in official and unofficial channels.
- * @author AndFChat-Pandora
- */
 public class DemotionHandler extends TokenHandler {
 
     @Override

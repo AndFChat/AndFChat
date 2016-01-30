@@ -407,18 +407,6 @@ public class FlistWebSocketConnection {
         }
     }
 
-    public void timeout(String username, Chatroom chatroom) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put("channel", chatroom.getId());
-            data.put("character", username);
-            data.put("length", 30);
-            sendMessage(ClientToken.CTU, data);
-        } catch (JSONException e) {
-            Ln.w("exception occurred while sending CTU: " + e.getMessage());
-        }
-    }
-
     public void kick(String username, Chatroom chatroom) {
         JSONObject data = new JSONObject();
         try {
@@ -494,28 +482,6 @@ public class FlistWebSocketConnection {
             sendMessage(ClientToken.COR, data);
         } catch (JSONException e) {
             Ln.w("exception occurred while sending COR: " + e.getMessage());
-        }
-    }
-
-    public void setOwner(Chatroom chatroom, String character) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put("channel", chatroom.getId());
-            data.put("character", character);
-            sendMessage(ClientToken.CSO, data);
-        } catch (JSONException e) {
-            Ln.w("exception occurred while sending CSO: " + e.getMessage());
-        }
-    }
-
-    public void setDescription(Chatroom chatroom, String text) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put("channel", chatroom.getId());
-            data.put("description", text);
-            sendMessage(ClientToken.CDS, data);
-        } catch (JSONException e) {
-            Ln.w("exception occurred while sending CDS: " + e.getMessage());
         }
     }
 

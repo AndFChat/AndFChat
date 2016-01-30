@@ -40,10 +40,6 @@ import java.util.Set;
 
 import roboguice.util.Ln;
 
-/**
- * Handles server feedback for ignoring a character or characters.
- * @author AndFChat-Pandora
- */
 public class IgnoreHandler extends TokenHandler {
 
     @Inject

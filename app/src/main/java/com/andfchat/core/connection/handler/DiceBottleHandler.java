@@ -30,7 +30,7 @@ import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.messages.ChatEntry;
 
 /**
- * Adds Dice and Bottle messages to channels and private messages.
+ * Adds Dice and Bottle messages to channels.
  * @author AndFChat
  */
 public class DiceBottleHandler extends TokenHandler {
