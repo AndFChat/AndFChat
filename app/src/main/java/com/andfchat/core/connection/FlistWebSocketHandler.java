@@ -35,6 +35,7 @@ import com.andfchat.core.connection.handler.ChannelInviteHandler;
 import com.andfchat.core.connection.handler.ChannelListHandler;
 import com.andfchat.core.connection.handler.CharInfoHandler;
 import com.andfchat.core.connection.handler.CharListHandler;
+import com.andfchat.core.connection.handler.DemotionHandler;
 import com.andfchat.core.connection.handler.DiceBottleHandler;
 import com.andfchat.core.connection.handler.ErrorMessageHandler;
 import com.andfchat.core.connection.handler.FirstConnectionHandler;
@@ -47,6 +48,7 @@ import com.andfchat.core.connection.handler.PingHandler;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.PromotionHandler;
 import com.andfchat.core.connection.handler.RoomModeHandler;
+import com.andfchat.core.connection.handler.TimeoutHandler;
 import com.andfchat.core.connection.handler.TokenHandler;
 import com.andfchat.core.connection.handler.UptimeHandler;
 import com.andfchat.core.connection.handler.VariableHandler;
@@ -113,6 +115,8 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
         availableTokenHandler.add(new RoomModeHandler());
         availableTokenHandler.add(new PromotionHandler());
         availableTokenHandler.add(new UptimeHandler());
+        availableTokenHandler.add(new DemotionHandler());
+        availableTokenHandler.add(new TimeoutHandler());
 
         Injector injector = RoboGuice.getInjector(context);
 

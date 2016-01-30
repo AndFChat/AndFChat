@@ -18,57 +18,52 @@
 
 package com.andfchat.core.connection.handler;
 
-import java.util.List;
+import com.andfchat.core.connection.FeedbackListener;
+import com.andfchat.core.connection.ServerToken;
+import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.messages.ChatEntry;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.andfchat.core.connection.FeedbackListener;
-import com.andfchat.core.connection.ServerToken;
-import com.andfchat.core.data.Chatroom;
-import com.andfchat.core.data.FCharacter;
-import com.andfchat.core.data.messages.ChatEntry;
+import java.util.List;
+
+import roboguice.util.Ln;
 
 /**
- * Adds Dice and Bottle messages to channels and private messages.
- * @author AndFChat
+ * Handles notifications for timeouts in official and unofficial channels.
+ * @author AndFChat-Pandora
  */
-public class DiceBottleHandler extends TokenHandler {
+public class TimeoutHandler extends TokenHandler {
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
-        if (token == ServerToken.RLL) {
+        if (token == ServerToken.CTU) {
             JSONObject json = new JSONObject(msg);
-            String channelId = json.optString("channel");
-            String recipient = json.optString("recipient");
-            String message = json.getString("message");
+            String channel = json.getString("channel");
             String character = json.getString("character");
+            String operator = json.getString("operator");
+            String length = json.getString("length");
 
-            FCharacter owner = characterManager.findCharacter(character);
-
-            Chatroom chatroom;
-            if(!channelId.isEmpty() && recipient.isEmpty()) {
-                chatroom = chatroomManager.getChatroom(channelId);
-            } else {
-                if (character.equals(sessionData.getCharacterName())) {
-                    chatroom = chatroomManager.getPrivateChatFor(recipient);
-                } else {
-                    chatroom = chatroomManager.getPrivateChatFor(character);
-                }
-            }
+            Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                // Remove the first name, is already displayed by the ChatEntry.
-                message = message.substring(message.indexOf("[/user]") + "[/user]".length());
-                ChatEntry entry = entryFactory.getNotation(owner, message);
-                chatroomManager.addMessage(chatroom, entry);
+                if (character.equals(sessionData.getCharacterName())) {
+                    ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(operator), " has banned you from " + chatroom.getName() + " for " + length + "minutes.");
+                    this.addChatEntryToActiveChat(entry);
+                } else if (chatroom.isChannelMod(characterManager.findCharacter(sessionData.getCharacterName()))) {
+                    ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), " has been banned from " + chatroom.getName() + " for " + length + "minutes.");
+                    this.addChatEntryToActiveChat(entry);
+                }
+            }
+            else {
+                Ln.e("Timeout is for a unknown channel: " + channel);
             }
         }
     }
 
     @Override
     public ServerToken[] getAcceptableTokens() {
-        return new ServerToken[] {ServerToken.RLL};
+        return new ServerToken[] {ServerToken.CTU};
     }
-
 }

@@ -28,6 +28,10 @@ import org.json.JSONObject;
 
 import java.util.List;
 
+/**
+ * Displays server feedback for uptime requests.
+ * @author AndFChat-Pandora
+ */
 public class UptimeHandler extends TokenHandler {
 
     @Override
