@@ -81,8 +81,8 @@ public class Console {
         availableCommands.add(new Unban());
 
         //Ignore commands TODO Activate once functional
-        availableCommands.add(new Ignore());
-        availableCommands.add(new Unignore());
+        //availableCommands.add(new Ignore());
+        //availableCommands.add(new Unignore());
 
         Injector injector = RoboGuice.getInjector(context);
         for (TextCommand command : availableCommands) {
