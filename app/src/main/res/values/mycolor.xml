@@ -126,7 +126,7 @@
     <color name="background_chat_line_system_light">#90A4AE</color>
 
     <!-- Channel list background -->
-    <color name="background_chat_tab_light">#043E80</color>
-    <color name="background_chat_tab_active_light">#476fab</color>
-    <color name="background_chat_tab_attention_light">#ffdd4444</color>
+    <color name="background_chat_tab_light">#036F97</color>
+    <color name="background_chat_tab_active_light">#038C8D</color>
+    <color name="background_chat_tab_attention_light">#ff8D1C12</color>
 </resources>

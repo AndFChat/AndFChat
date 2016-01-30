@@ -196,9 +196,9 @@
     
     <!-- Themes -->  
     <string-array name="themes_translation">
-        <item>Black</item>
-        <item>Blue</item>
-        <item>Light</item>
+        <item>Slate</item>
+        <item>Cobalt</item>
+        <item>Ice</item>
     </string-array>
     
 </resources>
