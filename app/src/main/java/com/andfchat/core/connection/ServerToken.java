@@ -26,6 +26,7 @@ public enum ServerToken {
     RTB, // Real-time bridge. Indicates the user received a note or message, right at the very moment this is received.
     SYS, // An informative auto generated message from the server. This is also the way the server responds to some commands, such as RST, CIU, CBL, COL, and CUB. The server will sometimes send this in concert with a response command, such as with COA and COR.
     TPN, // A user informs you of his typing status.
+    UPT, // Informs the client of the server's self-tracked online time, and a few other bits of information
     VAR, // Variables the server sends to inform the client about server variables.
 
     // All tokens which have a fitting handler.
@@ -37,7 +38,6 @@ public enum ServerToken {
     CIU, // Invites a user to a channel. -> ChannelInviteHandler
     COA, // Promotes a user to channel operator -> PromotionHandler
     CON, // After connecting and identifying you will receive a CON command, giving the number of connected users to the network. -> CharListHandler
-    COR, // Demotes a user from a channel operator to a normal user -> DemotionHandler
     ERR, // Indicates that the given error has occurred. -> ErrorMessageHandler
     FLN, // Sent by the server to inform the client a given character went offline. -> CharListHandler
     FRL, // Initial friends list. -> FriendListHandler
@@ -55,5 +55,4 @@ public enum ServerToken {
     RLL, // Rolls dice or spins the bottle. -> DiceBottleHandler
     RMO, // Change room mode to accept chats, ads, or both. ->RoomModeHandler
     STA, // A user changed their status -> CharInfoHandler
-    UPT, // Informs the client of the server's self-tracked online time, and a few other bits of information -> UptimeHandle
 }
