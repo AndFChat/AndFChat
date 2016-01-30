@@ -274,7 +274,7 @@ public class Login extends RoboActivity {
                 } else {
                     prefEditor.remove(ACCOUNT_NAME);
                 }
-                prefEditor.apply();
+                prefEditor.commit();
 
 
                 //intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 0);
