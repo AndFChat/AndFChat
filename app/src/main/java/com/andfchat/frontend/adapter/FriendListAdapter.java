@@ -43,10 +43,8 @@ import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
-import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
-
-import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
@@ -80,9 +78,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         RoboGuice.getInjector(context).injectMembers(this);
 
         if (picasso == null)  {
-            picasso = new Picasso.Builder(getContext())
-                    .downloader(new OkHttp3Downloader(client))
-                    .build();
+            picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
         }
     }
 
@@ -124,7 +120,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         }
 
 
-        //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+        client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
         image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
         String name = character.getName().toLowerCase().replace(" ", "%20");
         String url = "https://static.f-list.net/images/avatar/" + name + ".png";

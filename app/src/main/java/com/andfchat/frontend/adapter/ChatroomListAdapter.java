@@ -39,10 +39,8 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
-import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
-
-import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Protocol;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
@@ -76,11 +74,9 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         colorArray.recycle();
 
         OkHttpClient client = new OkHttpClient();
-        //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+        client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
-        picasso = new Picasso.Builder(getContext())
-                .downloader(new OkHttp3Downloader(client))
-                .build();
+        picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
     }
 
     @Override
