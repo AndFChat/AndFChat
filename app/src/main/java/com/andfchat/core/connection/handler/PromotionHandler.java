@@ -38,13 +38,11 @@ public class PromotionHandler extends TokenHandler {
         if (token == ServerToken.COA) {
             JSONObject json = new JSONObject(msg);
             String channel = json.getString("channel");
-            String character = json.getString("character");
+            String mode = json.getString("character");
 
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), " has been promoted in " + chatroom.getName() + ".");
-                this.addChatEntryToActiveChat(entry);
             }
             else {
                 Ln.e("Promotion is for a unknown channel: " + channel);
