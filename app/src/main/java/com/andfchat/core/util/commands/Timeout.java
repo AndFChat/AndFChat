@@ -18,8 +18,12 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
+import com.google.inject.Inject;
 
 public class Timeout extends TextCommand {
 
@@ -27,9 +31,12 @@ public class Timeout extends TextCommand {
         allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /timeout [user] | Temporarily bans a character from the room for 30 minutes.";
+        return "*  /timeout " + context.getString(R.string.command_description_timeout);
     }
 
     @Override

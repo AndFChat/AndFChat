@@ -18,8 +18,12 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
+import com.google.inject.Inject;
 
 public class Promote extends TextCommand {
 
@@ -27,10 +31,14 @@ public class Promote extends TextCommand {
         allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /cop [character] | Adds a moderator/chan-op to the private room. [character] is the character to promote.";
+        return "*  /cop " + context.getString(R.string.command_description_cop);
     }
+
 
     @Override
     public boolean fitToCommand(String token) {

@@ -18,8 +18,11 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
 import roboguice.event.EventManager;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.CharacterManager;
@@ -38,6 +41,8 @@ public class PMUser extends TextCommand {
     protected SessionData sessionData;
     @Inject
     protected ChatEntryFactory entryFactory;
+    @Inject
+    protected Context context;
 
     public PMUser() {
         allowedIn = ChatroomType.values();
@@ -45,7 +50,7 @@ public class PMUser extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /priv [user] | This opens a private message session with another character.";
+        return "*  /priv " + context.getString(R.string.command_description_priv);
     }
 
     @Override

@@ -63,6 +63,8 @@ public class Console {
     @Inject
     protected ChatroomManager chatroomManager;
     @Inject
+    protected Context context;
+    @Inject
     protected CharacterManager characterManager;
     @Inject
     protected ChatEntryFactory entryFactory;
@@ -142,7 +144,8 @@ public class Console {
     }
 
     private void showHelp() {
-        String message = "Help menu shows all usable commands:";
+
+        String message = context.getString(R.string.command_help_menu);
 
         for (TextCommand command : availableCommands) {
             message += "\n" + command.getDescription();

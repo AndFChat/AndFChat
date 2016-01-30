@@ -18,6 +18,9 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
@@ -32,10 +35,12 @@ public class InviteToChannel extends TextCommand {
 
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /invite [user] | Usually used for closed private rooms, this will invite another character to the room, giving them permission to enter. This command is effective for the room in which it is typed, provided your current character is a Chan-Op or Room Owner.";
+        return "*  /invite [user] " + context.getString(R.string.command_description_invite);
     }
 
     @Override

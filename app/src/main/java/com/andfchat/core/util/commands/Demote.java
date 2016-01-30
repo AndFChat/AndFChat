@@ -18,8 +18,12 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
+import com.google.inject.Inject;
 
 public class Demote extends TextCommand{
 
@@ -27,9 +31,12 @@ public class Demote extends TextCommand{
         allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /cdeop [character] | Removes a moderator/chan-op from the private room. [character] is the character to demote.";
+        return "*  /cdeop " + context.getString(R.string.command_description_cdeop);
     }
 
     @Override

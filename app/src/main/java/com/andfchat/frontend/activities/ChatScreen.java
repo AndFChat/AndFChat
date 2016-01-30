@@ -516,7 +516,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
             os.close();
 
-            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Successfully exported to the download directory, filename: " + filename);
+            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.exported + filename);
             chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
 
             // Tell the media scanner about the new file so that it is
@@ -532,7 +532,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         } catch (IOException e) {
             Ln.w("ExternalStorage", "Error writing " + file, e);
             // TODO: String!
-            ChatEntry entry = entryFactory.getError(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Can't write output, download directory doesn't exist!");
+            ChatEntry entry = entryFactory.getError(charManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.export_failed);
             chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
         }
 

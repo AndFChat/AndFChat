@@ -18,6 +18,7 @@
 
 package com.andfchat.core.connection.handler;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Chatroom;
@@ -46,7 +47,7 @@ public class DemotionHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
-                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), " has been demoted in " + chatroom.getName() + ".");
+                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_demoted + chatroom.getName() + ".");
                 this.addChatEntryToActiveChat(entry);
             }
             else {
