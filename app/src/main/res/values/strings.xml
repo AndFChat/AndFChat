@@ -71,7 +71,7 @@
     <string name="message_disconnected">logged off.</string>
     <string name="message_status_changed">is now %1$s.</string>
     <string name="message_status_changed_with_message">is now %1$s. [%2$s]</string>
-    <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session]</string>
+    <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session].</string>
     
     <string name="question_disconnect">Do you really want to log off?</string>
     <string name="question_back">Do you really want to quit?</string>
@@ -167,15 +167,22 @@
     <string name="command_description_unignore">[name] | Reverses the /ignore command, to allow communication once again.</string>
     <string name="command_description_uptime">| Reports how long the server has been running.</string>
 
-    <string name="exported">Successfully exported to the download directory, filename: </string>
+    <string name="exported">Successfully exported to the download directory, filename: %1$s</string>
     <string name="export_failed">Can\'t write output, download directory doesn\'t exist!</string>
     <string name="command_help_menu">Help menu shows all usable commands: </string>
 
-    <string name="handler_message_promoted"> has been promoted in </string>
-    <string name="handler_message_demoted"> has been demoted in </string>
-    <string name="handler_message_ignored"> has been ignored.</string>
-    <string name="handler_message_unignored"> has been unignored.</string>
-    <string name="handler_message_room_mode">Channel now showing: </string>
+    <string name="handler_message_promoted">has been promoted in %1$s.</string>
+    <string name="handler_message_new_owner">has been made the owner of %1$s.</string>
+    <string name="handler_message_demoted">has been demoted in %1$s.</string>
+    <string name="handler_message_ignored">has been ignored.</string>
+    <string name="handler_message_unignored">has been unignored.</string>
+    <string name="handler_message_room_mode">Channel now showing: %1$s</string>
+    <string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes.</string>
+    <string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s.</string>
+    <string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users. Max of %3$s users."</string>
+
+    <string name="error_name_not_found">No user with name \'%1$s\' found.</string>
+    <string name="error_no_name_given">Please give a username as a parameter.</string>
 
 
     <string-array name="text_size_translation">

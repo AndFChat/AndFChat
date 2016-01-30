@@ -30,6 +30,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.google.inject.Inject;
 
@@ -61,16 +62,16 @@ public class PMUser extends TextCommand {
     @Override
     public void runCommand(String token, String text) {
         if (text == null || text.length() == 0) {
-            //TODO: no translation
-            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "Please give a username as a parameter");
+            ChatEntry entry = entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.error_no_name_given);
+            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
             return;
         }
 
         FCharacter flistChar = characterManager.findCharacter(text, false);
 
         if (flistChar == null) {
-            //TODO: no translation
-            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "No user with name '" + text + "' found.");
+            ChatEntry entry = entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.error_name_not_found, new Object[]{text});
+            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
         } else {
             Chatroom chatroom;
             if (chatroomManager.hasOpenPrivateConversation(flistChar) == false) {
