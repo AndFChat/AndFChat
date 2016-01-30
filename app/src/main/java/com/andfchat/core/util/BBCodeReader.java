@@ -236,6 +236,10 @@ public class BBCodeReader {
 
         @Inject
         private ChatroomManager chatroomManager;
+        @Inject
+        private SessionData sessionData;
+
+        int maxTextLength = sessionData.getIntVariable(VariableHandler.Variable.priv_max);
 
         public Span(int start, BBCodeType type, String token) {
             this.start = start;
@@ -290,13 +294,15 @@ public class BBCodeReader {
                 String roomId  = text.subSequence(start, end).toString();
                 text.setSpan(RoboGuice.injectMembers(context, new OpenChatroomSpan(roomId)), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             }
-            else if (bbCodeType == BBCodeType.USER) {
-                String link = "http://f-list.net/c/" + text.subSequence(start, end).toString();
+            else if (bbCodeType == BBCodeType.USER) { //TODO Figure out if this works, at all. 
+                // Get User id
+                String character  = text.subSequence(start, end).toString();
+                //text.setSpan(RoboGuice.injectMembers(context, new OpenChatroomSpan(userId)), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 
-                Ln.d("Url: " + link);
-                if (link != null && URLUtil.isValidUrl(link)) {
-                    text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                }
+                String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + character;
+
+                Chatroom chatroom = new Chatroom(new Channel(channelname, character, Chatroom.ChatroomType.PRIVATE_CHAT), new FCharacter(character), maxTextLength, true);
+                chatroomManager.addChatroom(chatroom);
             }
             else {
                 text.setSpan(bbCodeType.spannableType, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
