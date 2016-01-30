@@ -72,7 +72,7 @@ public class FListCharSelectionPopup extends DialogFragment {
         }
 
         builder.setView(view);
-        builder.setPositiveButton(R.string.login, null);
+        builder.setPositiveButton("Login", null);
 
         builder.setCancelable(false);
 
@@ -126,7 +126,7 @@ public class FListCharSelectionPopup extends DialogFragment {
                         @Override
                         public void run() {
                             button.setEnabled(false);
-                            button.setText(R.string.connecting);
+                            button.setText("Connecting... please wait!");
                         }
                     };
 

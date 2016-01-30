@@ -18,11 +18,8 @@
 
 package com.andfchat.core.util.commands;
 
-import android.content.Context;
-
-import com.andfchat.R;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.google.inject.Inject;
+
 
 
 public class Dice extends TextCommand {
@@ -31,12 +28,9 @@ public class Dice extends TextCommand {
         allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
     }
 
-    @Inject
-    protected Context context;
-
     @Override
     public String getDescription() {
-        return "*  /roll [#d##] " + context.getString(R.string.command_description_roll);
+        return "*  /roll [#d##] | This command rolls a number of dice, all with the same number of sides. If Bob wanted to roll two dice with six sides each, he'd type: /roll 2d6";
     }
 
     @Override

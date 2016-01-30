@@ -21,12 +21,14 @@ package com.andfchat.core.connection.handler;
 import android.content.Context;
 import android.text.Spannable;
 
-import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.CharRelation;
+import com.andfchat.core.data.CharacterManager;
+import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.messages.ChatEntry;
+import com.andfchat.core.util.BBCodeReader;
 import com.google.inject.Inject;
 
 import org.json.JSONException;
@@ -70,12 +72,12 @@ public class IgnoreHandler extends TokenHandler {
                 Ln.v("Added " + ignoresList.size() + " ignores.");
             } else if (action.equals("add")) {
                 //Added character to ignore list
-                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_ignored);
+                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), " has been ignored.");
                 this.addChatEntryToActiveChat(entry);
                 Ln.v("Added " + character + " to the ignore list.");
             } else if (action.equals("delete")) {
                 //Removed character from ignore list
-                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), R.string.handler_message_unignored);
+                ChatEntry entry = entryFactory.getNotation(characterManager.findCharacter(character), " has been unignored.");
                 this.addChatEntryToActiveChat(entry);
                 Ln.v("Removed " + character + " from the ignore list.");
             } else {

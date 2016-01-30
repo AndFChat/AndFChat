@@ -20,7 +20,6 @@ package com.andfchat.core.data;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -203,8 +202,8 @@ public class SessionData {
             return preferences.getBoolean(PropertyName.LED_FEEDBACK.name().toLowerCase(), false);
         }
 
-        public Set<String> getInitialChannel() {
-            return preferences.getStringSet(PropertyName.INITIAL_CHANNELS.name().toLowerCase(), null);
+        public String getInitialChannel() {
+            return preferences.getString(PropertyName.INITIAL_CHANNEL.name().toLowerCase(), null);
         }
 
         public boolean useHistory() {

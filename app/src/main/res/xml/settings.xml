@@ -63,10 +63,11 @@
             android:defaultValue="true"
             />
 
-        <MultiSelectListPreference
-            android:key="initial_channels"
+        <ListPreference
+            android:key="initial_channel"
             android:summary="@string/description_initial_channel"
             android:title="@string/title_initial_channel"
+            android:defaultValue="Frontpage"
         />
         
         <CheckBoxPreference

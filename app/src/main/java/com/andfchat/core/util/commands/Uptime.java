@@ -18,11 +18,7 @@
 
 package com.andfchat.core.util.commands;
 
-import android.content.Context;
-
-import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
-import com.google.inject.Inject;
 
 public class Uptime extends TextCommand {
 
@@ -30,12 +26,9 @@ public class Uptime extends TextCommand {
         allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.CONSOLE};
     }
 
-    @Inject
-    protected Context context;
-
     @Override
     public String getDescription() {
-        return "*  /uptime " + context.getString(R.string.command_description_uptime);
+        return "*  /uptime | Reports how long the server has been running.";
     }
 
     @Override

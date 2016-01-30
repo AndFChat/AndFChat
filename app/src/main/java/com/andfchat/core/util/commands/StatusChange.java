@@ -18,12 +18,8 @@
 
 package com.andfchat.core.util.commands;
 
-import android.content.Context;
-
-import com.andfchat.R;
 import com.andfchat.core.data.CharStatus;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.google.inject.Inject;
 
 public class StatusChange extends TextCommand {
 
@@ -31,12 +27,9 @@ public class StatusChange extends TextCommand {
         allowedIn = ChatroomType.values();
     }
 
-    @Inject
-    protected Context context;
-
     @Override
     public String getDescription() {
-        return "*  /[status] " + context.getString(R.string.command_description_status);
+        return "*  /[status] + [optional text] | Statuses are: online, looking, away, busy, dnd";
     }
 
     @Override

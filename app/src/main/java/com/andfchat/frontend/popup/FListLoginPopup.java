@@ -110,7 +110,7 @@ public class FListLoginPopup extends DialogFragment {
         }
 
         builder.setView(view);
-        builder.setPositiveButton(R.string.login, null);
+        builder.setPositiveButton("Login", null);
 
         builder.setCancelable(false);
 
@@ -155,7 +155,7 @@ public class FListLoginPopup extends DialogFragment {
                         @Override
                         public void run() {
                             button.setEnabled(false);
-                            button.setText(R.string.connecting);
+                            button.setText("Connecting... please wait!");
                         }
                     };
 
@@ -193,7 +193,7 @@ public class FListLoginPopup extends DialogFragment {
                                 public void run() {
                                     setError(message);
                                     button.setEnabled(true);
-                                    button.setText(R.string.login);
+                                    button.setText("Login");
                                 }
                             };
 
@@ -265,10 +265,10 @@ public class FListLoginPopup extends DialogFragment {
 
     public void setError(String message) {
         if (message.contains("Host is unresolved")) {
-            errorField.setText(getActivity().getString(R.string.error_disconnected) + getActivity().getString(R.string.error_disconnected_no_connection));
+            errorField.setText(getActivity().getString(R.string.error_disconnected_no_connection));
         }
         else {
-            errorField.setText(getActivity().getString(R.string.error_disconnected) + message);
+            errorField.setText("Disconnected: " + message);
         }
     }
 }

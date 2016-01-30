@@ -18,11 +18,8 @@
 
 package com.andfchat.core.util.commands;
 
-import android.content.Context;
-
-import com.andfchat.R;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.google.inject.Inject;
+
 
 
 public class Bottle extends TextCommand {
@@ -31,12 +28,9 @@ public class Bottle extends TextCommand {
         allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
     }
 
-    @Inject
-    protected Context context;
-
     @Override
     public String getDescription() {
-        return "*  /bottle " + context.getString(R.string.command_description_bottle);
+        return "*  /bottle | Selects one person in the room, purportedly by spinning a bottle. If Bob were to type /bottle, he might see: Bob spins the bottle: Hexxy";
     }
 
     @Override

@@ -18,9 +18,6 @@
 
 package com.andfchat.core.util.commands;
 
-import android.content.Context;
-
-import com.andfchat.R;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
@@ -35,12 +32,10 @@ public class Kick extends TextCommand {
 
     @Inject
     protected SessionData sessionData;
-    @Inject
-    protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /kick " + context.getString(R.string.command_description_kick);
+        return "*  /kick [user] | Removes the character from the private room. If it is an open private room, it does not prevent them from re-entering.";
     }
 
     @Override

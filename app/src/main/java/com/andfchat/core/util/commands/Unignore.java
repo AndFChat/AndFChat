@@ -18,12 +18,8 @@
 
 package com.andfchat.core.util.commands;
 
-import android.content.Context;
-
-import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
-import com.google.inject.Inject;
 
 public class Unignore extends TextCommand{
 
@@ -31,12 +27,9 @@ public class Unignore extends TextCommand{
         allowedIn = Chatroom.ChatroomType.values();
     }
 
-    @Inject
-    protected Context context;
-
     @Override
     public String getDescription() {
-        return "*  /unignore " + context.getString(R.string.command_description_unignore);
+        return "*  /unignore [name] | Reverses the /ignore command, to allow communication once again.";
     }
 
     @Override

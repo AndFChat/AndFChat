@@ -18,10 +18,8 @@
 
 package com.andfchat.core.util.commands;
 
-import android.content.Context;
-
-import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
@@ -33,12 +31,10 @@ public class SetMode extends TextCommand {
 
     @Inject
     protected SessionData sessionData;
-    @Inject
-    protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /setmode " + context.getString(R.string.command_description_setmode);
+        return "*  /setmode [mode] | This determines the type of content that can be sent in a private room. [mode] can be 'ads', 'chat', or 'both' (Default: both)";
     }
 
     @Override
