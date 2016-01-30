@@ -23,6 +23,10 @@ import com.andfchat.core.data.FCharacter;
 
 public class Promote extends TextCommand {
 
+    public Promote() {
+        allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL, Chatroom.ChatroomType.PUBLIC_CHANNEL};
+    }
+
     @Override
     public String getDescription() {
         return "*  /cop [character] | Adds a moderator/chan-op to the private room. [character] is the character to promote.";

@@ -82,7 +82,7 @@ public class Console {
         availableCommands.add(new Ban());
         availableCommands.add(new Unban());
         availableCommands.add(new SetMode());
-        //availableCommands.add(new Promote()); //TODO Add when completed.
+        availableCommands.add(new Promote());
 
         //Ignore commands
         availableCommands.add(new Ignore());
