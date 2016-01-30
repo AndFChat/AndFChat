@@ -106,4 +106,27 @@
     <color name="background_chat_tab_blue">#043E80</color>
     <color name="background_chat_tab_active_blue">#476fab</color>
     <color name="background_chat_tab_attention_blue">#ffdd4444</color>
+
+    <!-- THEME.LIGHT -->
+    <!-- THEME.LIGHT -->
+    <!-- THEME.LIGHT -->
+
+    <color name="background_color_light">#B0BEC5</color>
+    <color name="primary_color_light">#476fab</color>
+    <color name="primary_color_dark_light">#3f6499</color>
+    <color name="secondary_text_light">#CFD8DC</color>
+
+    <!-- UserList -->
+    <color name="selected_user_color_light">#37474F</color>
+
+    <!-- ChatEntry backgrounds -->
+    <color name="background_chat_empty_light">#90A4AE</color>
+    <color name="background_chat_line_light">#78909C</color>
+    <color name="background_chat_line_owned_light">#607D8B</color>
+    <color name="background_chat_line_system_light">#90A4AE</color>
+
+    <!-- Channel list background -->
+    <color name="background_chat_tab_light">#043E80</color>
+    <color name="background_chat_tab_active_light">#476fab</color>
+    <color name="background_chat_tab_attention_light">#ffdd4444</color>
 </resources>

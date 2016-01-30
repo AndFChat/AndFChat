@@ -24,6 +24,7 @@
     <string-array name="Themes">
         <item>AppTheme</item>
         <item>AppTheme.Blue</item>
+        <item>AppTheme.Light</item>
     </string-array>
     
     <string-array name="TextSize">
