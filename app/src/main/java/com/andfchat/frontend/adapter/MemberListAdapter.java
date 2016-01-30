@@ -36,9 +36,6 @@ import roboguice.util.Ln;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -60,7 +57,6 @@ import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.FlistCharComparator;
-import com.andfchat.frontend.popup.FListLoginPopup;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
@@ -146,47 +142,30 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
                 FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
 
-
-                retrofit2.Callback<FlistHttpClient.LoginData> ticketgetterremove = new retrofit2.Callback<FlistHttpClient.LoginData>() {
+                // HTTP call need to be a post and post wants a callback, that is not needed -> ignore
+                retrofit2.Callback<String> callback = new retrofit2.Callback<String>() {
                     @Override
-                    public void onResponse(retrofit2.Response<FlistHttpClient.LoginData> response) {
-                        FlistHttpClient.LoginData loginData = response.body();
-                        Ln.i("Successfully got a ticket: " + loginData.getTicket());
-                        sessionData.setTicket(loginData.getTicket());
-                        removeBookmark();
+                    public void onResponse(Response<String> response) {
+
                     }
 
                     @Override
                     public void onFailure(Throwable t) {
-                        Ln.i("Problem with getting ticket: " + t.getMessage());
+                        Ln.v("Bookmarking failed!");
                     }
                 };
-
-                retrofit2.Callback<FlistHttpClient.LoginData> ticketgetteradd = new retrofit2.Callback<FlistHttpClient.LoginData>() {
-                    @Override
-                    public void onResponse(retrofit2.Response<FlistHttpClient.LoginData> response) {
-                        FlistHttpClient.LoginData loginData = response.body();
-                        Ln.i("Successfully got a ticket: " + loginData.getTicket());
-                        sessionData.setTicket(loginData.getTicket());
-                        addBookmark();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Ln.i("Problem with getting ticket: " + t.getMessage());
-                    }
-                };
-
-
 
                 if (item.isSelected()) {
-                    Call<FlistHttpClient.LoginData> relog = httpClient.logIn(sessionData.getAccount(), sessionData.getPassword());
-                    relog.enqueue(ticketgetterremove);
-
+                    Call<String> call = httpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
+                    Ln.i("Removing " + activeCharacter.getName() + " from bookmarks" );
+                    call.enqueue(callback);
+                    relationManager.removeFromList(CharRelation.BOOKMARKED, activeCharacter);
                 }
                 else {
-                    Call<FlistHttpClient.LoginData> relog = httpClient.logIn(sessionData.getAccount(), sessionData.getPassword());
-                    relog.enqueue(ticketgetteradd);
+                    Call<String> call = httpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
+                    Ln.i("Adding " + activeCharacter.getName() + " to bookmarks" );
+                    call.enqueue(callback);
+                    relationManager.addOnList(CharRelation.BOOKMARKED, activeCharacter);
                 }
             }
         });
@@ -333,82 +312,6 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         sortList();
 
         notifyDataSetChanged();
-    }
-
-    public void removeBookmark() {
-        OkHttpClient client = new OkHttpClient();
-        //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
-
-        Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl("https://www.f-list.net")
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
-
-        // HTTP call need to be a post and post wants a callback, that is not needed -> ignore
-        retrofit2.Callback<Object> callback = new retrofit2.Callback<Object>() {
-            @Override
-            public void onResponse(Response<Object> response) {
-                if (response.body() != null) {
-                    relationManager.removeFromList(CharRelation.BOOKMARKED, activeCharacter);
-                    sortList();
-                } else {
-                    onError("null response.");
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                onError(t.getMessage());
-            }
-
-            private void onError(final String message) {
-                Ln.i("Bookmarking failed: " + message);
-            }
-        };
-        Call<Object> call = httpClient.removeBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
-        Ln.i("Removing " + activeCharacter.getName() + " from bookmarks");
-        call.enqueue(callback);
-    }
-
-    public void addBookmark() {
-        OkHttpClient client = new OkHttpClient();
-        //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
-
-        Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl("https://www.f-list.net")
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
-
-        // HTTP call need to be a post and post wants a callback, that is not needed -> ignore
-        retrofit2.Callback<Object> callback = new retrofit2.Callback<Object>() {
-            @Override
-            public void onResponse(Response<Object> response) {
-                if (response.body() != null) {
-                    relationManager.addOnList(CharRelation.BOOKMARKED, activeCharacter);
-                    sortList();
-                } else {
-                    onError("null response.");
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                onError(t.getMessage());
-            }
-
-            private void onError(final String message) {
-                Ln.i("Bookmarking failed: " + message);
-            }
-        };
-        Call<Object> call = httpClient.addBookmark(sessionData.getAccount(), sessionData.getTicket(), activeCharacter.getName());
-        Ln.i("Adding " + activeCharacter.getName() + " to bookmarks");
-        call.enqueue(callback);
     }
 
     public void sortList(){

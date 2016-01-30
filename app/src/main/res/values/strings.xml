@@ -81,13 +81,7 @@
     <string name="error_login">Login failed: </string>
     <string name="error_disconnected">Disconnected: </string>
     <string name="error_disconnected_no_connection">Lost connection to server</string>
-    <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>
-    <string name="error_name_not_found">No user with name \'%1$s\' found.</string>
-    <string name="error_no_name_given">Please give a username as a parameter.</string>
-
-    <string name="exported">Successfully exported to the download directory, filename: %1$s</string>
-    <string name="export_failed">Can\'t write output, download directory doesn\'t exist!</string>
-    <string name="command_help_menu">Help menu shows all usable commands: </string>
+    <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>      
     
     <string name="text_about">AndFChat is developed under the GPL3 licence.
         \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
@@ -98,7 +92,7 @@
         * Experienced Android developer for UI design, especially scaling questions for different display layouts.\n</string>
     
     <!-- Displayed after the App crashed -->
-    <string name="crash_toast_text">Sorry! Please us send a crash report via F-list note to BOTH AndFChat UI and AndFChat, or via email to githublimon@gmail.com</string>
+    <string name="crash_toast_text">Sorry! It looks like the app crashed. Please send a crash report via email or send us each a note @ AndFChat and AndFChat UI on F-list</string>
     
     <!-- Settings translations title + description -->
     <string name="title_feedback">Feedback</string>
@@ -150,7 +144,6 @@
     <string name="title_separate_friends">Separate Friends and Bookmarks</string>
     <string name="status">Status Message</string>
 
-    <!-- Descriptions of /commands -->
     <string name="command_description_ban">[user] | Removes the character from the current room and prevents them from re-entering. You can\'t ban a character who is not currently online and in the room.</string>
     <string name="command_description_bottle">| Selects one person in the room, purportedly by spinning a bottle. If Bob were to type /bottle, he might see: Bob spins the bottle: Hexxy</string>
     <string name="command_description_closeroom">| This will close the current opened private room, removing it from the list and making further entry invite-only.</string>
@@ -174,7 +167,10 @@
     <string name="command_description_unignore">[name] | Reverses the /ignore command, to allow communication once again.</string>
     <string name="command_description_uptime">| Reports how long the server has been running.</string>
 
-    <!-- Messages displayed by handlers -->
+    <string name="exported">Successfully exported to the download directory, filename: %1$s</string>
+    <string name="export_failed">Can\'t write output, download directory doesn\'t exist!</string>
+    <string name="command_help_menu">Help menu shows all usable commands: </string>
+
     <string name="handler_message_promoted">has been promoted in %1$s.</string>
     <string name="handler_message_new_owner">has been made the owner of %1$s.</string>
     <string name="handler_message_demoted">has been demoted in %1$s.</string>
@@ -184,6 +180,9 @@
     <string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes.</string>
     <string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s.</string>
     <string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users. Max of %3$s users."</string>
+
+    <string name="error_name_not_found">No user with name \'%1$s\' found.</string>
+    <string name="error_no_name_given">Please give a username as a parameter.</string>
 
 
     <string-array name="text_size_translation">

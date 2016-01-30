@@ -28,19 +28,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.util.TextSize;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Retrofit;
-import roboguice.util.Ln;
 
 @Singleton
 public class SessionData {
@@ -55,7 +48,6 @@ public class SessionData {
     private String ticket;
     private String account;
     private String characterName;
-    private String password;
 
     private List<String> charList;
     private String defaultChar;
@@ -76,10 +68,9 @@ public class SessionData {
         sessionSettings = new SessionSettings(context);
     }
 
-    public void initSession(String ticket, String account, String password) {
+    public void initSession(String ticket, String account) {
         this.ticket = ticket;
         this.account = account;
-        this.password = password;
     }
 
     public void setCharname(String name) {
@@ -88,10 +79,6 @@ public class SessionData {
 
     public String getAccount() {
         return account;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public String getTicket() {

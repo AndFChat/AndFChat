@@ -229,7 +229,7 @@ public class FListLoginPopup extends DialogFragment {
 
     private void addData(FlistHttpClient.LoginData loginData) {
         // Init session
-        sessionData.initSession(loginData.getTicket(), account.getText().toString(), password.getText().toString());
+        sessionData.initSession(loginData.getTicket(), account.getText().toString());
         // Add bookmarks to the RelationManager
 
         Set<String> bookmarksList = new HashSet<String>();

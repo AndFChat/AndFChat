@@ -19,10 +19,10 @@ public interface FlistHttpClient {
     Call<LoginData> logIn(@Field("account") String account, @Field("password") String password);
 
     @POST("/json/api/bookmark-add.php")
-    Call<Object> addBookmark(@Query("account") String account, @Query("ticket") String ticket, @Query("name") String name);
+    Call<String> addBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name);
 
     @POST("/json/api/bookmark-remove.php")
-    Call<Object> removeBookmark(@Query("account") String account, @Query("ticket") String ticket, @Query("name") String name);
+    Call<String> removeBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name);
 
     public class LoginData {
         private List<String> characters;
