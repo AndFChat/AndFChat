@@ -27,10 +27,10 @@ import net.sourcerer.quickaction.QuickActionBar;
 import net.sourcerer.quickaction.QuickActionOnClickListener;
 import net.sourcerer.quickaction.QuickActionOnOpenListener;
 
-import retrofit.Call;
-import retrofit.GsonConverterFactory;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import roboguice.RoboGuice;
 import roboguice.util.Ln;
 import android.content.Context;
@@ -59,8 +59,8 @@ import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Protocol;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
 
 public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
@@ -132,7 +132,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             public void onClick(ActionItem item, View view) {
 			
                 OkHttpClient client = new OkHttpClient();
-                client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+                //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
                 Retrofit restAdapter = new Retrofit.Builder()
                         .baseUrl("https://www.f-list.net")
@@ -142,9 +142,9 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
                 FlistHttpClient httpClient = restAdapter.create(FlistHttpClient.class);
 
                 // HTTP call need to be a post and post wants a callback, that is not needed -> ignore
-                retrofit.Callback<String> callback = new retrofit.Callback<String>() {
+                retrofit2.Callback<String> callback = new retrofit2.Callback<String>() {
                     @Override
-                    public void onResponse(Response<String> response, Retrofit retrofit) {
+                    public void onResponse(Response<String> response) {
 
                     }
 
