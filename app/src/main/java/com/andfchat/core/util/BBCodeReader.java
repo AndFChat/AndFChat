@@ -43,7 +43,16 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.webkit.URLUtil;
 
+import com.andfchat.core.connection.handler.PrivateMessageHandler;
+import com.andfchat.core.connection.handler.VariableHandler;
+import com.andfchat.core.data.Channel;
+import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.ChatroomManager;
+import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.SessionData;
+import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.util.OpenChatroomSpan;
+import com.google.inject.Inject;
 
 public class BBCodeReader {
 
@@ -55,7 +64,11 @@ public class BBCodeReader {
         SUPERSCRIPT("sup", new SuperscriptSpan(), new SimpleTextMatcher()),
         SUBSCRIPT("sub", new SubscriptSpan(), new SimpleTextMatcher()),
         COLOR("color", null, new VariableTextMatcher()),
+        //UNPARSED("noparse", , ), TODO noparse
+        //ICON("icon", , ), TODO icon
+        //EICON("eicon", , ), TODO eicon
         LINK("url", null, new VariableTextMatcher()),
+        USER("user", new UnderlineSpan(), new SimpleTextMatcher()),
         PRIVATE_CHANNEL("session", null, new VariableTextMatcher()),
         PUBLIC_CHANNEL("channel", null, new SimpleTextMatcher());
 
@@ -221,6 +234,13 @@ public class BBCodeReader {
         private String key = null;
         private String replacement = null;
 
+        @Inject
+        private ChatroomManager chatroomManager;
+        @Inject
+        private SessionData sessionData;
+
+        int maxTextLength = sessionData.getIntVariable(VariableHandler.Variable.priv_max);
+
         public Span(int start, BBCodeType type, String token) {
             this.start = start;
             this.bbCodeType = type;
@@ -273,6 +293,16 @@ public class BBCodeReader {
                 // Get Channel id
                 String roomId  = text.subSequence(start, end).toString();
                 text.setSpan(RoboGuice.injectMembers(context, new OpenChatroomSpan(roomId)), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            }
+            else if (bbCodeType == BBCodeType.USER) { //TODO Figure out if this works, at all. 
+                // Get User id
+                String character  = text.subSequence(start, end).toString();
+                //text.setSpan(RoboGuice.injectMembers(context, new OpenChatroomSpan(userId)), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+
+                String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + character;
+
+                Chatroom chatroom = new Chatroom(new Channel(channelname, character, Chatroom.ChatroomType.PRIVATE_CHAT), new FCharacter(character), maxTextLength, true);
+                chatroomManager.addChatroom(chatroom);
             }
             else {
                 text.setSpan(bbCodeType.spannableType, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);

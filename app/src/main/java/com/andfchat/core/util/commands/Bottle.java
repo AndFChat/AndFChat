@@ -30,7 +30,7 @@ public class Bottle extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /bottle | SELECTS ONE PERSON IN THE ROOM, PURPORTEDLY BY SPINNING A BOTTLE. IF BOB WERE TO TYPE /BOTTLE , HE MIGHT SEE: BOB SPINS THE BOTTLE: HEXXY";
+        return "*  /bottle | Selects one person in the room, purportedly by spinning a bottle. If Bob were to type /bottle, he might see: Bob spins the bottle: Hexxy";
     }
 
     @Override

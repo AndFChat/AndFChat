@@ -35,7 +35,7 @@ public class InviteToChannel extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /invite [USER] | USUALLY USED FOR CLOSED PRIVATE ROOMS, THIS WILL INVITE ANOTHER CHARACTER TO THE ROOM, ESSENTIALLY GIVING THEM PERMISSION TO ENTER IT. DESPITE DOCUMENTATION TO THE CONTRARY, ELSEWHERE, THIS COMMAND WILL BE EFFECTIVE FOR THE ROOM IN WHICH IT IS TYPED (PROVIDED YOUR CURRENT CHARACTER IS A CHAN-OP OR ROOM OWNER), AND NOT JUST THE MOST RECENT ROOM YOU CREATED.";
+        return "*  /invite [user] | Usually used for closed private rooms, this will invite another character to the room, giving them permission to enter. This command is effective for the room in which it is typed, provided your current character is a Chan-Op or Room Owner.";
     }
 
     @Override

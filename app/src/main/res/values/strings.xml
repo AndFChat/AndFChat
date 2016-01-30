@@ -83,7 +83,7 @@
     
     <string name="text_about">AndFChat is developed under the GPL3 licence.
         \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
-        \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub https://github.com/AndFChat/AndFChat/\n
+        \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
         \n
         [b][color=red]Still looking for help![/color][/b]\n
         <!--* Artist/designer to improve the interface and add some images.\n-->

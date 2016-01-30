@@ -122,7 +122,7 @@ public class Console {
     }
 
     private void showHelp() {
-        String message = "Help menu shows all usable command:";
+        String message = "Help menu shows all usable commands:";
 
         for (TextCommand command : availableCommands) {
             message += "\n" + command.getDescription();
