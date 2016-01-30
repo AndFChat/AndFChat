@@ -12,12 +12,6 @@
         <item name="android:background">@color/background_color_blue</item>
     </style>
 
-    <style name="AppCompatAlertDialogStyleLight" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:background">@color/background_color_light</item>
-    </style>
-
     <style name="AppTheme" parent="AppBaseTheme">
 
         <!-- COLORS -->
@@ -75,33 +69,5 @@
         <item name="alertDialogStyle">@style/AppCompatAlertDialogStyleBlue</item>
         <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyleBlue</item>
         <item name="android:alertDialogStyle">@style/AppCompatAlertDialogStyleBlue</item>
-    </style>
-
-    <style name="AppTheme.Light" parent="AppBaseTheme">
-        <!-- COLORS -->
-        <item name="BackgroundColor">@color/background_color_light</item>
-        <item name="colorPrimary">@color/primary_color</item>
-        <item name="colorPrimaryDark">@color/primary_color_dark</item>
-        <item name="android:textColorSecondary">@color/secondary_text_light</item>
-        <item name="colorAccent">@color/primary_color_light</item>
-        <!-- CHAT COLORS -->
-        <item name="BackgroundChatEmpty">@color/background_chat_empty_light</item>
-        <item name="BackgroundChatLine">@color/background_chat_line_light</item>
-        <item name="BackgroundChatLineSelf">@color/background_chat_line_owned_light</item>
-        <item name="BackgroundChatSystem">@color/background_chat_line_system_light</item>
-        <!-- CHANNEL TABS COLORS -->
-        <item name="BackgroundChatTab">@color/background_chat_tab_light</item>
-        <item name="BackgroundChatTabActive">@color/background_chat_tab_active_light</item>
-        <item name="BackgroundChatTabAttention">@color/background_chat_tab_attention_light</item>
-        <!-- TEXT COLORS -->
-
-        <!-- IMAGES -->
-
-        <!-- STYLES -->
-        <item name="UserListBackground">@drawable/background_userlist_light</item>
-        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyleLight</item>
-        <item name="alertDialogStyle">@style/AppCompatAlertDialogStyleLight</item>
-        <item name="android:alertDialogTheme">@style/AppCompatAlertDialogStyleLight</item>
-        <item name="android:alertDialogStyle">@style/AppCompatAlertDialogStyleLight</item>
     </style>
 </resources>

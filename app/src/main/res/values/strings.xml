@@ -153,7 +153,6 @@
     <string-array name="themes_translation">
         <item>Black</item>
         <item>Blue</item>
-        <item>Light</item>
     </string-array>
     
 </resources>

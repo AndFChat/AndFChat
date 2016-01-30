@@ -227,9 +227,6 @@ public class SessionData {
             else if (theme.equals("AppTheme.Blue")) {
                 return R.style.AppTheme_Blue;
             }
-            else if (theme.equals("AppTheme.Light")) {
-                return R.style.AppTheme_Light;
-            }
             else {
                 return R.style.AppTheme;
             }
