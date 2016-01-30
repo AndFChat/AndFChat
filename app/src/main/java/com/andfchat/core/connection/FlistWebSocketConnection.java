@@ -473,4 +473,19 @@ public class FlistWebSocketConnection {
             Ln.w("exception occurred while sending COA: " + e.getMessage());
         }
     }
+
+    public void demote(Chatroom chatroom, String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", character);
+            sendMessage(ClientToken.COR, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending COR: " + e.getMessage());
+        }
+    }
+
+    public void uptime() {
+        sendMessage(ClientToken.UPT);
+    }
 }

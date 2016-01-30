@@ -35,6 +35,7 @@ import com.andfchat.core.util.commands.Bottle;
 import com.andfchat.core.util.commands.CloseChannelToPublic;
 import com.andfchat.core.util.commands.CloseChatroom;
 import com.andfchat.core.util.commands.CreateChannel;
+import com.andfchat.core.util.commands.Demote;
 import com.andfchat.core.util.commands.Dice;
 import com.andfchat.core.util.commands.Ignore;
 import com.andfchat.core.util.commands.InviteToChannel;
@@ -48,6 +49,7 @@ import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.TextCommand;
 import com.andfchat.core.util.commands.Unban;
 import com.andfchat.core.util.commands.Unignore;
+import com.andfchat.core.util.commands.Uptime;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -72,6 +74,7 @@ public class Console {
         availableCommands.add(new PMUser());
         availableCommands.add(new CloseChatroom());
         availableCommands.add(new SendAd());
+        availableCommands.add(new Uptime());
 
         // Channel OP commands
         availableCommands.add(new CreateChannel());
@@ -83,6 +86,7 @@ public class Console {
         availableCommands.add(new Unban());
         availableCommands.add(new SetMode());
         availableCommands.add(new Promote());
+        availableCommands.add(new Demote());
 
         //Ignore commands
         availableCommands.add(new Ignore());
