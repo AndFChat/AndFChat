@@ -30,7 +30,7 @@ public class CreateChannel extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /makeroom [name] | Open a new private room named [name].";
+        return "*  /makeroom [name] | OPEN A NEW PRIVATE ROOM NAMED [name].";
     }
 
     @Override

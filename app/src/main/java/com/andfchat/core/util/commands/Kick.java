@@ -35,7 +35,7 @@ public class Kick extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /kick [user] | Removes the character from the private room. If it is an open private room, it does not prevent them from re-entering.";
+        return "*  /kick [USER] | REMOVES CHARACTER FROM THE PRIVATE ROOM, BUT IF IT IS AN OPEN PRIVATE ROOM, DOES NOT PREVENT THEM FROM RE-ENTERING.";
     }
 
     @Override

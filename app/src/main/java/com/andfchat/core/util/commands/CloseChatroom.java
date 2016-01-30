@@ -30,7 +30,7 @@ public class CloseChatroom extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /close | Leaves the current channel.";
+        return "*  /close | LEAVES THE CHANNEL IT IS TYPED IN.";
     }
 
     @Override

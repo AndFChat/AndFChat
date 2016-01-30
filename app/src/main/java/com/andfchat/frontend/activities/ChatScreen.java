@@ -450,12 +450,10 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         }
     }
 
-    //TODO Convert to edge swipe
     public void toggleSidebarRight(View v) {
         toggleSidebarRight.setSelected(userList.toggleVisibility());
     }
 
-    //TODO Convert to edge swipe
     public void toggleSidebarLeft(View v) {
         toggleSidebarLeft.setSelected(!channelList.toggleVisibility());
     }

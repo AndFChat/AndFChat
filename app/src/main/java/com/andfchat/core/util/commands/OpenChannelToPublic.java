@@ -31,7 +31,7 @@ public class OpenChannelToPublic extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /openroom | This will make a private room open, adding it to the list of private rooms, and allowing anyone to join.";
+        return "*  /openroom | THIS WILL MAKE A PRIVATE ROOM OPEN, ADDING IT TO THE LIST OF PRIVATE ROOMS, AND ALLOWING ANYONE TO JOIN.";
     }
 
     @Override

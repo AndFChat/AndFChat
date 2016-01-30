@@ -30,7 +30,7 @@ public class SendAd extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /ad | Posts an ad to the channel.";
+        return "*  /ad | POSTS A AD TO THE CHANNEL";
     }
 
     @Override

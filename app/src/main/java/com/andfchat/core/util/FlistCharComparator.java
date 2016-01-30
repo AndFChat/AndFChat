@@ -20,7 +20,6 @@ package com.andfchat.core.util;
 
 import java.util.Comparator;
 
-import com.andfchat.core.data.CharStatus;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 
@@ -61,22 +60,12 @@ public class FlistCharComparator implements Comparator<FCharacter> {
         else if (!lhs.isImportant() && rhs.isImportant()) {
             return 1;
         }
-        /*else if (lhs.isImportant() && rhs.isImportant()) {
+        else if (lhs.isImportant() && rhs.isImportant()) {
             return lhs.getName().compareTo(rhs.getName());
-        }*/
-
-        //compare status
-        if (lhs.getStatus().equals(CharStatus.LOOKING) && !rhs.getStatus().equals(CharStatus.LOOKING)) {
-            return -1;
-        } else if (!lhs.getStatus().equals(CharStatus.LOOKING) && rhs.getStatus().equals(CharStatus.LOOKING)) {
-            return 1;
-        } else if (!lhs.getStatus().equals(CharStatus.DND) && rhs.getStatus().equals(CharStatus.DND)) {
-            return -1;
-        } else if (lhs.getStatus().equals(CharStatus.DND) && !rhs.getStatus().equals(CharStatus.DND)) {
-            return 1;
-        }
-
-        //compare name
+        } //compare gender
+        else if ((compareInt = lhs.getGender().getName().compareTo(rhs.getGender().getName())) != 0) {
+            return compareInt;
+        } //compare name
         else {
             return lhs.getName().compareTo(rhs.getName());
         }

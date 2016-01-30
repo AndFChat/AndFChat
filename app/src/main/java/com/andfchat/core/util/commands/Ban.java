@@ -35,7 +35,7 @@ public class Ban extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /ban [user] | Removes the character from the rom the room and prevents them from re-entering. Bans last only until the room is re-created. You cannot ban a character who is not currently online and in the room.";
+        return "*  /ban [USER] | REMOVES CHARACTER FROM THE PRIVATE ROOM AND PREVENTS THEM FROM RE-ENTERING. BANS LAST ONLY AS LONG AS THE CURRENT ITERATION OF THE ROOM, SO IF THE ROOM IS RE-CREATED, THE BAN LIST WILL BE GONE. YOU CAN NOT BAN A CHARACTER WHO IS NOT CURRENTLY ONLINE AND IN THE ROOM.";
     }
 
     @Override
