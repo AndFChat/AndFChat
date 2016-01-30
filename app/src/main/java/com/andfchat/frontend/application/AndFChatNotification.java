@@ -96,12 +96,8 @@ public class AndFChatNotification {
         Notification notif;
         if(messages) {
             nBuilder.setPriority(2)
-            .setVibrate(new long[]{1, 1, 1});
-            // If audio is allowed, do it on new messages!
-            if (sessionData.getSessionSettings().audioFeedback()) {
-                nBuilder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.tone));
-            }
-
+            .setVibrate(new long[]{1, 1, 1})
+            .setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.tone));
             notif = nBuilder.build();
 
             // If led feedback is allowed, do it
