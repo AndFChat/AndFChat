@@ -25,7 +25,7 @@ import com.andfchat.core.data.Chatroom.ChatroomType;
 public class Bottle extends TextCommand {
 
     public Bottle() {
-        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
     }
 
     @Override

@@ -331,7 +331,11 @@ public class FlistWebSocketConnection {
     public void bottle(Chatroom activeChat) {
         JSONObject data = new JSONObject();
         try {
-            data.put("channel", activeChat.getId());
+            if(activeChat.isPrivateChat()) {
+                data.put("recipient", activeChat.getName());
+            } else {
+                data.put("channel", activeChat.getId());
+            }
             data.put("dice", "bottle");
             sendMessage(ClientToken.RLL, data);
         } catch (JSONException e) {
@@ -342,7 +346,11 @@ public class FlistWebSocketConnection {
     public void dice(Chatroom activeChat, String value) {
         JSONObject data = new JSONObject();
         try {
-            data.put("channel", activeChat.getId());
+            if(activeChat.isPrivateChat()) {
+                data.put("recipient", activeChat.getName());
+            } else {
+                data.put("channel", activeChat.getId());
+            }
 
             if (value == null || value.length() == 0) {
                 value = "1d10";
@@ -351,7 +359,7 @@ public class FlistWebSocketConnection {
             data.put("dice", value);
             sendMessage(ClientToken.RLL, data);
         } catch (JSONException e) {
-            Ln.w("exception occurred while bottling: " + e.getMessage());
+            Ln.w("exception occurred while rolling: " + e.getMessage());
         }
     }
 
@@ -418,6 +426,29 @@ public class FlistWebSocketConnection {
             sendMessage(ClientToken.CIU, data);
         } catch (JSONException e) {
             Ln.w("exception occurred while sending CIU: " + e.getMessage());
+        }
+    }
+
+    public void ignore(String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "add");
+            data.put("character", character);
+            sendMessage(ClientToken.IGN);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending IGN: " + e.getMessage());
+        }
+
+    }
+
+    public void unignore(String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "delete");
+            data.put("character", character);
+            sendMessage(ClientToken.IGN);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending IGN: " + e.getMessage());
         }
     }
 }

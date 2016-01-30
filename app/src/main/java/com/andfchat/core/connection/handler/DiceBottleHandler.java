@@ -39,13 +39,20 @@ public class DiceBottleHandler extends TokenHandler {
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         if (token == ServerToken.RLL) {
             JSONObject json = new JSONObject(msg);
-            String channelId = json.getString("channel");
+            String channelId = json.optString("channel");
+            String recipient = json.optString("recipient");
             String message = json.getString("message");
             String character = json.getString("character");
 
             FCharacter owner = characterManager.findCharacter(character);
 
-            Chatroom chatroom = chatroomManager.getChatroom(channelId);
+            Chatroom chatroom;
+            if(!channelId.isEmpty() && recipient.isEmpty()) {
+                chatroom = chatroomManager.getChatroom(channelId);
+            } else {
+                chatroom = chatroomManager.getPrivateChatFor(character);
+            }
+
             if (chatroom != null) {
                 // Remove the first name, is already displayed by the ChatEntry.
                 message = message.substring(message.indexOf("[/user]") + "[/user]".length());

@@ -29,7 +29,7 @@ public class StatusChange extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /[status] + [optional text] | Options are: online, looking, away, busy, dnd";
+        return "*  /[status] + [optional text] | Statuses are: online, looking, away, busy, dnd";
     }
 
     @Override
