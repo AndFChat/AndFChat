@@ -55,8 +55,8 @@ public abstract class TokenHandler {
     public abstract ServerToken[] getAcceptableTokens();
 
     protected void broadcastSystemInfo(ChatEntry chatEntry, FCharacter flistChar) {
-        //chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry); //This gets extremely annoying, especially if you have lots of bookmarks or friends.
-        // Add broadcast message also to the console.
+        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
+        // Add broadcasted message also to the console.
         if (!chatroomManager.getActiveChat().isSystemChat()) {
             chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), chatEntry);
         }

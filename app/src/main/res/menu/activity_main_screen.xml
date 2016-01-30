@@ -32,13 +32,13 @@
     <item android:id="@+id/action_open_settings"
      	android:icon="@drawable/ic_settings"
      	android:title="@string/settings"
-        app:showAsAction="never"
+        app:showAsAction="ifRoom"
     />
     
     <item android:id="@+id/action_disconnect"
      	android:icon="@drawable/ic_disconnect"
      	android:title="@string/logout"
-        app:showAsAction="never"
+        app:showAsAction="ifRoom"
     />
             
     <item android:id="@+id/action_about"

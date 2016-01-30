@@ -105,7 +105,7 @@
     <!-- Channel list background -->
     <color name="background_chat_tab_blue">#043E80</color>
     <color name="background_chat_tab_active_blue">#476fab</color>
-    <color name="background_chat_tab_attention_blue">#dd4444</color>
+    <color name="background_chat_tab_attention_blue">#ffdd4444</color>
 
     <!-- THEME.LIGHT -->
     <!-- THEME.LIGHT -->
@@ -128,5 +128,5 @@
     <!-- Channel list background -->
     <color name="background_chat_tab_light">#036F97</color>
     <color name="background_chat_tab_active_light">#038C8D</color>
-    <color name="background_chat_tab_attention_light">#8D1C12</color>
+    <color name="background_chat_tab_attention_light">#ff8D1C12</color>
 </resources>
