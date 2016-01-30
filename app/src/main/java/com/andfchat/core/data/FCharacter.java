@@ -117,6 +117,8 @@ public class FCharacter implements Serializable {
         return (isBookmarked() || isFriend());
     }
 
+    public boolean isIgnored() { return charRelations.contains(CharRelation.IGNORE); }
+
     public Gender getGender() {
         return gender;
     }

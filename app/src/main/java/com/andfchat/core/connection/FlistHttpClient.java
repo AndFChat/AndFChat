@@ -32,6 +32,7 @@ public interface FlistHttpClient {
         private String default_character;
         private List<Friend> friends;
         private List<Bookmark> bookmarks;
+        private List<Ignored> ignores;
 
         public List<String> getCharacters() {
             return characters;
@@ -53,6 +54,10 @@ public interface FlistHttpClient {
             return bookmarks;
         }
 
+        public List<Ignored> getIgnores() {
+            return ignores;
+        }
+
         public String getDefaultCharacter() {
             return default_character;
         }
@@ -71,6 +76,14 @@ public interface FlistHttpClient {
         }
 
         public class Bookmark {
+            private String name;
+
+            public String getName() {
+                return name;
+            }
+        }
+
+        public class Ignored {
             private String name;
 
             public String getName() {
