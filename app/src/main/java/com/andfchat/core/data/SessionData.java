@@ -194,6 +194,10 @@ public class SessionData {
             return preferences.getBoolean(PropertyName.VIBRATION_FEEDBACK.name().toLowerCase(), false);
         }
 
+        public boolean audioFeedback() {
+            return preferences.getBoolean(PropertyName.AUDIO_FEEDBACK.name().toLowerCase(), false);
+        }
+
         public boolean ledFeedback() {
             return preferences.getBoolean(PropertyName.LED_FEEDBACK.name().toLowerCase(), false);
         }

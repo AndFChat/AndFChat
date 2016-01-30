@@ -112,7 +112,15 @@
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
         />
-        
+
+        <CheckBoxPreference
+            android:key="audio_feedback"
+            android:summary="@string/description_audio_feedback"
+            android:title="@string/title_audio_feedback"
+            android:widgetLayout="@layout/preference_switch"
+            android:defaultValue="true"
+            />
+
         <CheckBoxPreference
             android:key="vibration_feedback"
             android:summary="@string/description_vibration_feedback"
