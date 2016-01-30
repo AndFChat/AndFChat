@@ -166,16 +166,6 @@ public class ChatroomManager {
         return null;
     }
 
-    public Chatroom getPrivateChatFor(String flistChar) {
-        for (Chatroom chat : chats) {
-            if (chat.getRecipient() != null && chat.getRecipient().getName().equals(flistChar)) {
-                return chat;
-            }
-        }
-
-        return null;
-    }
-
     public void removeFlistCharFromChat(FCharacter character) {
         for (Chatroom chatroom : chats) {
             if (!chatroom.isPrivateChat() && chatroom.getCharacters().contains(character)) {

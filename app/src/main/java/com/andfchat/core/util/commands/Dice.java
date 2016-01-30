@@ -25,12 +25,12 @@ import com.andfchat.core.data.Chatroom.ChatroomType;
 public class Dice extends TextCommand {
 
     public Dice() {
-        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
 
     @Override
     public String getDescription() {
-        return "*  /roll [#d##] | This command rolls a number of dice, all with the same number of sides. If Bob wanted to roll two dice with six sides each, he'd type: /roll 2d6";
+        return "*  /roll [*d*] | This command rolls a number of dice, all with the same number of sides. If Bob wanted to roll two dice with six sides each, he'd type: /roll 2d6";
     }
 
     @Override
