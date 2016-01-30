@@ -451,26 +451,4 @@ public class FlistWebSocketConnection {
             Ln.w("exception occurred while sending IGN: " + e.getMessage());
         }
     }
-
-    public void setMode(Chatroom chatroom, String value) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put("channel", chatroom.getId());
-            data.put("mode", value);
-            sendMessage(ClientToken.RMO, data);
-        } catch (JSONException e) {
-            Ln.w("exception occurred while sending RMO: " + e.getMessage());
-        }
-    }
-
-    public void promote(Chatroom chatroom, String character) {
-        JSONObject data = new JSONObject();
-        try {
-            data.put("channel", chatroom.getId());
-            data.put("character", character);
-            sendMessage(ClientToken.COA, data);
-        } catch (JSONException e) {
-            Ln.w("exception occurred while sending COA: " + e.getMessage());
-        }
-    }
 }

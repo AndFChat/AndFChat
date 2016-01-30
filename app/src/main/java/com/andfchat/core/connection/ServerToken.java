@@ -36,7 +36,6 @@ public enum ServerToken {
     CDS, // Sends channel description -> ChannelDescriptionHandler
     CHA, // Sends the client a list of all public channels. -> ChannelListHandler
     CIU, // Invites a user to a channel. -> ChannelInviteHandler
-    COA, // Promotes a user to channel operator -> PromotionHandler
     CON, // After connecting and identifying you will receive a CON command, giving the number of connected users to the network. -> CharListHandler
     ERR, // Indicates that the given error has occurred. -> ErrorMessageHandler
     FLN, // Sent by the server to inform the client a given character went offline. -> CharListHandler
@@ -53,6 +52,5 @@ public enum ServerToken {
     PIN, // Ping command from the server, requiring a response, to keep the connection alive. -> PingHandler
     PRI, // A private message is received from another user. -> PrivateMessageHandler
     RLL, // Rolls dice or spins the bottle. -> DiceBottleHandler
-    RMO, // Change room mode to accept chats, ads, or both. ->RoomModeHandler
     STA, // A user changed their status -> CharInfoHandler
 }

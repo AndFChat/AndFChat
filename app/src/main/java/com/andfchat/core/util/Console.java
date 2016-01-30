@@ -41,9 +41,7 @@ import com.andfchat.core.util.commands.InviteToChannel;
 import com.andfchat.core.util.commands.Kick;
 import com.andfchat.core.util.commands.OpenChannelToPublic;
 import com.andfchat.core.util.commands.PMUser;
-import com.andfchat.core.util.commands.Promote;
 import com.andfchat.core.util.commands.SendAd;
-import com.andfchat.core.util.commands.SetMode;
 import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.TextCommand;
 import com.andfchat.core.util.commands.Unban;
@@ -81,10 +79,8 @@ public class Console {
         availableCommands.add(new Kick());
         availableCommands.add(new Ban());
         availableCommands.add(new Unban());
-        availableCommands.add(new SetMode());
-        //availableCommands.add(new Promote()); //TODO Add when completed.
 
-        //Ignore commands
+        //Ignore commands TODO Activate once functional
         availableCommands.add(new Ignore());
         availableCommands.add(new Unignore());
 

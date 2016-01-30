@@ -24,7 +24,6 @@ public enum ClientToken {
     CHA, // Request a list of all public channels.
     CIU, // Invite User to channel.
     CKU, // Kick
-    COA, // Request a character be promoted to channel op (moderator)
     COL, // Requests the list of channel ops (channel moderators).
     CUB, // Unban
     FKS, // Search for characters fitting the user's selections. Kinks is required, all other parameters are optional.
@@ -39,7 +38,6 @@ public enum ClientToken {
     PRI, // Sends a private message to another user.
     PRO, // Requests some of the profile tags on a character, such as Top/Bottom position and Language Preference.
     RLL, // Roll dice or spin the bottle.
-    RMO, // Change room mode to accept chats, ads, or both.
     RST, // Sets a private room's status to closed or open. (private, public)
     STA, // Request a new status be set for your character.
     TPN, // User x is typing/stopped typing/has entered text" for private messages.
