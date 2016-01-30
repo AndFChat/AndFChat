@@ -434,7 +434,7 @@ public class FlistWebSocketConnection {
         try {
             data.put("action", "add");
             data.put("character", character);
-            sendMessage(ClientToken.IGN, data);
+            sendMessage(ClientToken.IGN);
         } catch (JSONException e) {
             Ln.w("exception occurred while sending IGN: " + e.getMessage());
         }
@@ -446,7 +446,7 @@ public class FlistWebSocketConnection {
         try {
             data.put("action", "delete");
             data.put("character", character);
-            sendMessage(ClientToken.IGN, data);
+            sendMessage(ClientToken.IGN);
         } catch (JSONException e) {
             Ln.w("exception occurred while sending IGN: " + e.getMessage());
         }
