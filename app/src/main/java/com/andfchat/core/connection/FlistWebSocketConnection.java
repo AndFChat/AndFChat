@@ -28,6 +28,8 @@ import roboguice.util.Ln;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Html;
+import android.text.SpannableString;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.data.CharStatus;
@@ -72,6 +74,8 @@ public class FlistWebSocketConnection {
     private AndFChatNotification notification;
     @Inject
     private ChatEntryFactory entryFactory;
+    @Inject
+    private Context context;
 
     private final AndFChatApplication application;
 
@@ -214,8 +218,12 @@ public class FlistWebSocketConnection {
             data.put("character", sessionData.getCharacterName());
             data.put("message", msg);
             sendMessage(ClientToken.MSG, data);
-
-            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), msg);
+            msg =  Html.toHtml(new SpannableString(msg.trim())).toString().trim();
+            String[] firstcut = msg.split(">", 2);
+            int i = firstcut[1].lastIndexOf("<");
+            String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
+            Ln.i(secondcut[0]);
+            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
             chatroomManager.addMessage(chatroom, entry);
 
         } catch (JSONException e) {
@@ -232,8 +240,12 @@ public class FlistWebSocketConnection {
             data.put("channel", chatroom.getId());
             data.put("message", adMessage);
             sendMessage(ClientToken.LRP, data);
-
-            ChatEntry entry = entryFactory.getAd(characterManager.findCharacter(sessionData.getCharacterName()), adMessage);
+            adMessage =  Html.toHtml(new SpannableString(adMessage.trim())).toString().trim();
+            String[] firstcut = adMessage.split(">", 2);
+            int i = firstcut[1].lastIndexOf("<");
+            String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
+            Ln.i(secondcut[0]);
+            ChatEntry entry = entryFactory.getAd(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
             chatroomManager.addMessage(chatroom, entry);
 
         } catch (JSONException e) {
@@ -254,7 +266,12 @@ public class FlistWebSocketConnection {
             String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + recipient;
             Chatroom chatroom = chatroomManager.getChatroom(channelname);
             if (chatroom != null) {
-                ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), msg);
+                msg =  Html.toHtml(new SpannableString(msg.trim())).toString().trim();
+                String[] firstcut = msg.split(">", 2);
+                int i = firstcut[1].lastIndexOf("<");
+                String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
+                Ln.i(secondcut[0]);
+                ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
                 chatroomManager.addMessage(chatroom, entry);
             }
             else {

@@ -26,14 +26,14 @@ public class ChatEntryFactory {
     public ChatEntry getMessage(FCharacter owner, String text) {
         if (text.startsWith("/me")) {
             text = text.substring(3);
-            return new EmoteEntry(owner, text);
+            return new EmoteEntry(owner, text.trim());
         }
         else if (text.startsWith("/warn ")) {
             text = text.substring(6);
-            return new WarningEntry(owner, text);
+            return new WarningEntry(owner, text.trim());
         }
         else {
-            return new MessageEntry(owner, text);
+            return new MessageEntry(owner, text.trim());
         }
     }
 

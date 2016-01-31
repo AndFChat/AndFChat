@@ -106,7 +106,7 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         });
 
         TextView title = (TextView)rowView.findViewById(R.id.ChatroomName);
-        title.setText("#" + chatroom.getName());
+        title.setText(chatroom.getName()); //# was unneeded.
 
         if (chatroomManager.isActiveChat(chatroom)) {
             rowView.setBackgroundColor(activeColor);
