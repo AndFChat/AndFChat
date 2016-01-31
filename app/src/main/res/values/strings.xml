@@ -86,6 +86,8 @@
     <string name="error_no_name_given">Please give a username as a parameter.</string>
 
     <string name="exported">Successfully exported to the download directory, filename: %1$s</string>
+    <string name="export_perm_granted">You can now export logs.</string>
+    <string name="export_perm_denied">Log exporting will not work without storage permissions.</string>
     <string name="export_failed">Can\'t write output, download directory doesn\'t exist!</string>
     <string name="command_help_menu">Help menu shows all usable commands: </string>
     
