@@ -18,9 +18,12 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-
+import com.google.inject.Inject;
 
 
 public class CloseChannelToPublic extends TextCommand {
@@ -29,9 +32,12 @@ public class CloseChannelToPublic extends TextCommand {
         allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /closeroom | THIS WILL CLOSE AN OPENED PRIVATE ROOM, REMOVING IT FROM THE LIST, AND MAKING FURTHER ENTRY INVITE-ONLY.";
+        return "*  /closeroom " + context.getString(R.string.command_description_closeroom);
     }
 
     @Override

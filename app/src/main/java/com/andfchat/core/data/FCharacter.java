@@ -36,6 +36,8 @@ public class FCharacter implements Serializable {
     private transient String statusMsg = null;
     private transient boolean isGlobalOperator = false;
 
+    private boolean doIgnore = false;
+
     public FCharacter(String name) {
         this.name = name;
     }
@@ -116,6 +118,12 @@ public class FCharacter implements Serializable {
     public boolean isImportant() {
         return (isBookmarked() || isFriend());
     }
+
+    public void setIgnored(boolean ignore) {
+        doIgnore = ignore;
+    }
+
+    public boolean isIgnored() { return doIgnore; }
 
     public Gender getGender() {
         return gender;

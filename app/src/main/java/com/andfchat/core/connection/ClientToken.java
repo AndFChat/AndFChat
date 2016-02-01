@@ -21,10 +21,15 @@ package com.andfchat.core.connection;
 public enum ClientToken {
     CBU, // Ban
     CCR, // Create a private, invite-only channel.
+    CDS, // Sets the description of the room.
     CHA, // Request a list of all public channels.
     CIU, // Invite User to channel.
     CKU, // Kick
+    COA, // Request a character be promoted to channel op (moderator)
     COL, // Requests the list of channel ops (channel moderators).
+    COR, // Demotes a channel op (moderator) to a normal user.
+    CSO, // Changes the channel owner to a specified character.
+    CTU, // Give a user a timeout for a designated number of minutes.
     CUB, // Unban
     FKS, // Search for characters fitting the user's selections. Kinks is required, all other parameters are optional.
     IDN, // This command is used to identify with the server.
@@ -38,8 +43,10 @@ public enum ClientToken {
     PRI, // Sends a private message to another user.
     PRO, // Requests some of the profile tags on a character, such as Top/Bottom position and Language Preference.
     RLL, // Roll dice or spin the bottle.
+    RMO, // Change room mode to accept chats, ads, or both.
     RST, // Sets a private room's status to closed or open. (private, public)
     STA, // Request a new status be set for your character.
     TPN, // User x is typing/stopped typing/has entered text" for private messages.
+    UPT, // Request info about how long the server has been running, and some stats about usage.
     WHS, // The client can send \x00WSH\xff to skip websocket negotiation. A little convenience thing for third party desktop chat clients.
 }

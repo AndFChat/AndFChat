@@ -35,15 +35,24 @@ import com.andfchat.core.util.commands.Bottle;
 import com.andfchat.core.util.commands.CloseChannelToPublic;
 import com.andfchat.core.util.commands.CloseChatroom;
 import com.andfchat.core.util.commands.CreateChannel;
+import com.andfchat.core.util.commands.Demote;
 import com.andfchat.core.util.commands.Dice;
+import com.andfchat.core.util.commands.Ignore;
 import com.andfchat.core.util.commands.InviteToChannel;
 import com.andfchat.core.util.commands.Kick;
 import com.andfchat.core.util.commands.OpenChannelToPublic;
 import com.andfchat.core.util.commands.PMUser;
+import com.andfchat.core.util.commands.Promote;
 import com.andfchat.core.util.commands.SendAd;
+import com.andfchat.core.util.commands.SetDescription;
+import com.andfchat.core.util.commands.SetMode;
+import com.andfchat.core.util.commands.SetOwner;
 import com.andfchat.core.util.commands.StatusChange;
 import com.andfchat.core.util.commands.TextCommand;
+import com.andfchat.core.util.commands.Timeout;
 import com.andfchat.core.util.commands.Unban;
+import com.andfchat.core.util.commands.Unignore;
+import com.andfchat.core.util.commands.Uptime;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -53,6 +62,8 @@ public class Console {
 
     @Inject
     protected ChatroomManager chatroomManager;
+    @Inject
+    protected Context context;
     @Inject
     protected CharacterManager characterManager;
     @Inject
@@ -68,6 +79,7 @@ public class Console {
         availableCommands.add(new PMUser());
         availableCommands.add(new CloseChatroom());
         availableCommands.add(new SendAd());
+        availableCommands.add(new Uptime());
 
         // Channel OP commands
         availableCommands.add(new CreateChannel());
@@ -77,6 +89,16 @@ public class Console {
         availableCommands.add(new Kick());
         availableCommands.add(new Ban());
         availableCommands.add(new Unban());
+        availableCommands.add(new SetMode());
+        availableCommands.add(new Promote());
+        availableCommands.add(new Demote());
+        availableCommands.add(new SetOwner());
+        availableCommands.add(new SetDescription());
+        availableCommands.add(new Timeout());
+
+        //Ignore commands
+        availableCommands.add(new Ignore());
+        availableCommands.add(new Unignore());
 
         Injector injector = RoboGuice.getInjector(context);
         for (TextCommand command : availableCommands) {
@@ -122,7 +144,8 @@ public class Console {
     }
 
     private void showHelp() {
-        String message = "Help menu shows all usable command:";
+
+        String message = context.getString(R.string.command_help_menu);
 
         for (TextCommand command : availableCommands) {
             message += "\n" + command.getDescription();

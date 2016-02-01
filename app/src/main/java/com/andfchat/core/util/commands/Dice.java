@@ -18,24 +18,30 @@
 
 package com.andfchat.core.util.commands;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
+import android.content.Context;
 
+import com.andfchat.R;
+import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.google.inject.Inject;
 
 
 public class Dice extends TextCommand {
 
     public Dice() {
-        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
+        allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL, ChatroomType.PRIVATE_CHAT};
     }
+
+    @Inject
+    protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /dice | THIS COMMAND ROLLS A NUMBER OF DICE, ALL WITH THE SAME NUMBER OF SIDES. FOR INSTANCE, BOB WANTS TO ROLL TWO DICE WITH SIX SIDES, BECAUSE HE'S PLAYING CRAPS. HE'D TYPE: /ROLL 2D6";
+        return "*  /roll [#d##] " + context.getString(R.string.command_description_roll);
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/dice");
+        return token.equals("/roll");
     }
 
     @Override

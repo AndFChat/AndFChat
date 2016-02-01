@@ -35,9 +35,11 @@ import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
@@ -45,6 +47,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
@@ -115,6 +119,8 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     protected HistoryManager historyManager;
     @Inject
     protected ChatEntryFactory entryFactory;
+    @Inject
+    protected Context context;
 
 
 
@@ -140,6 +146,8 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     // Display height
     private int height;
     private int width;
+
+    static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
 
     private QuickActionBar actionBar;
 
@@ -222,6 +230,23 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         setupActionBar();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Snackbar.make(this.findViewById(android.R.id.content), R.string.export_perm_granted, Snackbar.LENGTH_LONG).show();
+
+                } else {
+                    Snackbar.make(this.findViewById(android.R.id.content), R.string.export_perm_denied, Snackbar.LENGTH_LONG).show();
+                }
+                return;
+            }
+        }
+    }
+
     private void setupActionBar() {
         actionBar = new QuickActionBar(this, R.layout.qa_dialog_custom);
         actionBar.setAlignment(PopUpAlignment.BOTTOM);
@@ -278,7 +303,11 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         actionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionBar.show(actionButton);
+                Chatroom chat = chatroomManager.getActiveChat();
+
+                if (!chat.isSystemChat()) {
+                    actionBar.show(actionButton);
+                }
             }
         });
 
@@ -450,10 +479,12 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         }
     }
 
+    //TODO Convert to edge swipe
     public void toggleSidebarRight(View v) {
         toggleSidebarRight.setSelected(userList.toggleVisibility());
     }
 
+    //TODO Convert to edge swipe
     public void toggleSidebarLeft(View v) {
         toggleSidebarLeft.setSelected(!channelList.toggleVisibility());
     }
@@ -503,35 +534,40 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     public void exportChat() {
-        String filename =  "FListLog-" + chatroomManager.getActiveChat().getName() + "-" + System.currentTimeMillis() + ".txt";
-        File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(path, filename);
+        int permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        try {
-            path.mkdirs();
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+        } else {
+            String filename = "FListLog-" + chatroomManager.getActiveChat().getName() + "-" + System.currentTimeMillis() + ".txt";
+            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File file = new File(path, filename);
 
-            OutputStream os = new FileOutputStream(file);
-            os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
-            os.close();
+            try {
+                path.mkdirs();
 
-            ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Successfully exported to the download directory, filename: " + filename);
-            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
+                OutputStream os = new FileOutputStream(file);
+                os.write(Exporter.exportText(this, chatroomManager.getActiveChat()));
+                os.close();
 
-            // Tell the media scanner about the new file so that it is
-            // immediately available to the user.
-            MediaScannerConnection.scanFile(this,
-                    new String[] { file.toString() }, null,
-                    new MediaScannerConnection.OnScanCompletedListener() {
-                @Override
-                public void onScanCompleted(String path, Uri uri) {
+                ChatEntry entry = entryFactory.getNotation(charManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.exported, new Object[]{filename});
+                chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
 
-                }
-            });
-        } catch (IOException e) {
-            Ln.w("ExternalStorage", "Error writing " + file, e);
-            // TODO: String!
-            ChatEntry entry = entryFactory.getError(charManager.findCharacter(CharacterManager.USER_SYSTEM), "Can't write output, download directory doesn't exist!");
-            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
+                // Tell the media scanner about the new file so that it is
+                // immediately available to the user.
+                MediaScannerConnection.scanFile(this,
+                        new String[]{file.toString()}, null,
+                        new MediaScannerConnection.OnScanCompletedListener() {
+                            @Override
+                            public void onScanCompleted(String path, Uri uri) {
+
+                            }
+                        });
+            } catch (IOException e) {
+                Ln.w("ExternalStorage", "Error writing " + file, e);
+                ChatEntry entry = entryFactory.getError(charManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.export_failed);
+                chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
+            }
         }
 
     }
@@ -586,6 +622,10 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         if (version.isLowerThan("0.4.0")) {
             Ln.i("Updating to version 0.4.0");
             sessionData.getSessionSettings().setVersion("0.4.0");
+        }
+        if (version.isLowerThan("0.5.0")) {
+            Ln.i("Updating to version 0.5.0");
+            sessionData.getSessionSettings().setVersion("0.5.0");
         }
     }
 

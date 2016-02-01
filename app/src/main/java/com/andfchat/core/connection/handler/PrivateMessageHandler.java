@@ -66,43 +66,40 @@ public class PrivateMessageHandler extends TokenHandler {
         String character = jsonObject.getString("character");
         String message = jsonObject.getString("message");
 
-        Chatroom chatroom = chatroomManager.getChatroom(PRIVATE_MESSAGE_TOKEN + character);
-        if (chatroom == null) {
-            int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
-            FCharacter friend = characterManager.findCharacter(character);
-            chatroom = openPrivateChat(chatroomManager, friend, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
+        if (!characterManager.findCharacter(character).isIgnored()) {
 
-            if (friend.getStatusMsg() != null && friend.getStatusMsg().length() > 0) {
-                chatroomManager.addMessage(chatroom, entryFactory.getStatusInfo(friend));
+            Chatroom chatroom = chatroomManager.getChatroom(PRIVATE_MESSAGE_TOKEN + character);
+            if (chatroom == null) {
+                int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
+                FCharacter friend = characterManager.findCharacter(character);
+                chatroom = openPrivateChat(chatroomManager, friend, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
+
+                if (friend.getStatusMsg() != null && friend.getStatusMsg().length() > 0) {
+                    chatroomManager.addMessage(chatroom, entryFactory.getStatusInfo(friend));
+                }
+
+                eventManager.fire(chatroom, ChatroomEventType.NEW);
             }
 
-            eventManager.fire(chatroom, ChatroomEventType.NEW);
-        }
-
-        // If vibration is allowed, do it on new messages!
-        if (sessionData.getSessionSettings().vibrationFeedback()) {
-            // Vibrate if the active channel is not the same as the "messaged" one or the app is not visible and the chatroom isn't already set to "hasNewMessage".
-            if ((chatroomManager.getActiveChat().equals(chatroom) == false || sessionData.isVisible() == false) && chatroom.hasNewMessage() == false) {
-                Ln.d("New Message Vibration on!");
-                vibrator.vibrate(VIBRATING_TIME);
+            // If vibration is allowed, do it on new messages!
+            if (sessionData.getSessionSettings().vibrationFeedback()) {
+                // Vibrate if the active channel is not the same as the "messaged" one or the app is not visible and the chatroom isn't already set to "hasNewMessage".
+                if ((chatroomManager.getActiveChat().equals(chatroom) == false || sessionData.isVisible() == false) && chatroom.hasNewMessage() == false) {
+                    Ln.d("New Message Vibration on!");
+                    vibrator.vibrate(VIBRATING_TIME);
+                }
             }
-        }
 
-        // If led feedback is allowed, do it
-        if (sessionData.getSessionSettings().ledFeedback()) {
+            // Update notification
             if (sessionData.isVisible() == false) {
-                Ln.d("Set led active!");
-                notification.showLedNotification();
+                notification.updateNotification(sessionData.addMessage());
             }
-        }
 
-        // Update notification
-        if (sessionData.isVisible() == false) {
-            notification.updateNotification(sessionData.addMessage());
+            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
+            chatroomManager.addMessage(chatroom, entry);
+        } else {
+            Ln.d("Blocked a private message from an ignored character.");
         }
-
-        ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
-        chatroomManager.addMessage(chatroom, entry);
     }
 
     @Override
@@ -111,11 +108,14 @@ public class PrivateMessageHandler extends TokenHandler {
     }
 
     public static Chatroom openPrivateChat(ChatroomManager chatroomManager, FCharacter character, int maxTextLength, boolean showAvatar) {
-        String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + character.getName();
+        if (!character.isIgnored()) {
+            String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + character.getName();
 
-        Chatroom chatroom = new Chatroom(new Channel(channelname, character.getName(), ChatroomType.PRIVATE_CHAT), character, maxTextLength, showAvatar);
-        chatroomManager.addChatroom(chatroom);
+            Chatroom chatroom = new Chatroom(new Channel(channelname, character.getName(), ChatroomType.PRIVATE_CHAT), character, maxTextLength, showAvatar);
+            chatroomManager.addChatroom(chatroom);
 
-        return chatroom;
+            return chatroom;
+        }
+        return null;
     }
 }

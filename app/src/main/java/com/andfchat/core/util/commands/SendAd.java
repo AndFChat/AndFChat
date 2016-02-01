@@ -18,8 +18,11 @@
 
 package com.andfchat.core.util.commands;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
+import android.content.Context;
 
+import com.andfchat.R;
+import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.google.inject.Inject;
 
 
 public class SendAd extends TextCommand {
@@ -28,9 +31,12 @@ public class SendAd extends TextCommand {
         allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /ad | POSTS A AD TO THE CHANNEL";
+        return "*  /ad " + context.getString(R.string.command_description_ad);
     }
 
     @Override

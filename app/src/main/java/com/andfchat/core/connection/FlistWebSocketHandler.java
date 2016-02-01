@@ -35,16 +35,22 @@ import com.andfchat.core.connection.handler.ChannelInviteHandler;
 import com.andfchat.core.connection.handler.ChannelListHandler;
 import com.andfchat.core.connection.handler.CharInfoHandler;
 import com.andfchat.core.connection.handler.CharListHandler;
+import com.andfchat.core.connection.handler.DemotionHandler;
 import com.andfchat.core.connection.handler.DiceBottleHandler;
 import com.andfchat.core.connection.handler.ErrorMessageHandler;
 import com.andfchat.core.connection.handler.FirstConnectionHandler;
+import com.andfchat.core.connection.handler.IgnoreHandler;
 import com.andfchat.core.connection.handler.JoinedChannel;
 import com.andfchat.core.connection.handler.LeftChannelHandler;
 import com.andfchat.core.connection.handler.MessageHandler;
 import com.andfchat.core.connection.handler.ModsHandler;
 import com.andfchat.core.connection.handler.PingHandler;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
+import com.andfchat.core.connection.handler.PromotionHandler;
+import com.andfchat.core.connection.handler.RoomModeHandler;
+import com.andfchat.core.connection.handler.TimeoutHandler;
 import com.andfchat.core.connection.handler.TokenHandler;
+import com.andfchat.core.connection.handler.UptimeHandler;
 import com.andfchat.core.connection.handler.VariableHandler;
 import com.andfchat.core.data.CharacterManager;
 import com.andfchat.core.data.Chatroom;
@@ -105,6 +111,12 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
         availableTokenHandler.add(new ChannelInviteHandler());
         availableTokenHandler.add(new VariableHandler());
         availableTokenHandler.add(new ModsHandler());
+        availableTokenHandler.add(new IgnoreHandler());
+        availableTokenHandler.add(new RoomModeHandler());
+        availableTokenHandler.add(new PromotionHandler());
+        availableTokenHandler.add(new UptimeHandler());
+        availableTokenHandler.add(new DemotionHandler());
+        availableTokenHandler.add(new TimeoutHandler());
 
         Injector injector = RoboGuice.getInjector(context);
 

@@ -2,12 +2,12 @@ package com.andfchat.core.connection;
 
 import java.util.List;
 
-import retrofit.Call;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by AndFChat on 06.04.2015.
@@ -19,10 +19,10 @@ public interface FlistHttpClient {
     Call<LoginData> logIn(@Field("account") String account, @Field("password") String password);
 
     @POST("/json/api/bookmark-add.php")
-    Call<String> addBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name);
+    Call<Object> addBookmark(@Query("account") String account, @Query("ticket") String ticket, @Query("name") String name);
 
     @POST("/json/api/bookmark-remove.php")
-    Call<String> removeBookmark(@Query("account") String account, @Query("password") String password, @Query("name") String name);
+    Call<Object> removeBookmark(@Query("account") String account, @Query("ticket") String ticket, @Query("name") String name);
 
     public class LoginData {
         private List<String> characters;
@@ -32,6 +32,7 @@ public interface FlistHttpClient {
         private String default_character;
         private List<Friend> friends;
         private List<Bookmark> bookmarks;
+        private List<Ignored> ignores;
 
         public List<String> getCharacters() {
             return characters;
@@ -53,6 +54,10 @@ public interface FlistHttpClient {
             return bookmarks;
         }
 
+        public List<Ignored> getIgnores() {
+            return ignores;
+        }
+
         public String getDefaultCharacter() {
             return default_character;
         }
@@ -71,6 +76,14 @@ public interface FlistHttpClient {
         }
 
         public class Bookmark {
+            private String name;
+
+            public String getName() {
+                return name;
+            }
+        }
+
+        public class Ignored {
             private String name;
 
             public String getName() {

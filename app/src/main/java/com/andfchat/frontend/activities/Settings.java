@@ -26,6 +26,7 @@ import roboguice.util.Ln;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.preference.ListPreference;
+import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 
@@ -59,14 +60,14 @@ public class Settings extends RoboPreferenceActivity {
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setTintColor(getResources().getColor(R.color.primary_color_dark));
 
-        final ListPreference initialChannelList = (ListPreference)findPreference("initial_channel");
+        final MultiSelectListPreference initialChannelList = (MultiSelectListPreference)findPreference("initial_channels");
         ArrayList<String> channels = new ArrayList<String>(chatroomManager.getOfficialChannels());
         Collections.sort(channels);
 
         initialChannelList.setEntries(channels.toArray(new String[channels.size()]));
         initialChannelList.setEntryValues(channels.toArray(new String[channels.size()]));
 
-        initialChannelList.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        /*initialChannelList.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 String title = getString(R.string.title_initial_channel);
@@ -75,12 +76,14 @@ public class Settings extends RoboPreferenceActivity {
                 initialChannelList.setTitle(title);
                 return true;
             }
-        });
+        });*/
 
-        initialChannelList.setValue(sessionData.getSessionSettings().getInitialChannel());
+        if(sessionData.getSessionSettings().getInitialChannel() != null) {
+            initialChannelList.setValues(sessionData.getSessionSettings().getInitialChannel());
+        }
 
         String title = getString(R.string.title_initial_channel);
-        title += ": " + sessionData.getSessionSettings().getInitialChannel();
+        //title += ": " + sessionData.getSessionSettings().getInitialChannel();
         initialChannelList.setTitle(title);
 
         final ListPreference textSizeList = (ListPreference)findPreference("chat_text_size");

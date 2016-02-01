@@ -33,7 +33,7 @@ import com.andfchat.core.util.BBCodeReader;
 import com.google.inject.Inject;
 
 /**
- * Sets and changes channel-description for official and unofficial channel.
+ * Sets and changes channel-description for official and unofficial channels.
  * @author AndFChat
  */
 public class ChannelDescriptionHandler extends TokenHandler {

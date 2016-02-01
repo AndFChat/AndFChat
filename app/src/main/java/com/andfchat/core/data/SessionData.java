@@ -20,6 +20,7 @@ package com.andfchat.core.data;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import android.app.NotificationManager;
 import android.content.Context;
@@ -27,12 +28,19 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.andfchat.R;
+import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.util.TextSize;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
+import roboguice.util.Ln;
 
 @Singleton
 public class SessionData {
@@ -47,6 +55,7 @@ public class SessionData {
     private String ticket;
     private String account;
     private String characterName;
+    private String password;
 
     private List<String> charList;
     private String defaultChar;
@@ -67,9 +76,10 @@ public class SessionData {
         sessionSettings = new SessionSettings(context);
     }
 
-    public void initSession(String ticket, String account) {
+    public void initSession(String ticket, String account, String password) {
         this.ticket = ticket;
         this.account = account;
+        this.password = password;
     }
 
     public void setCharname(String name) {
@@ -78,6 +88,10 @@ public class SessionData {
 
     public String getAccount() {
         return account;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getTicket() {
@@ -194,12 +208,16 @@ public class SessionData {
             return preferences.getBoolean(PropertyName.VIBRATION_FEEDBACK.name().toLowerCase(), false);
         }
 
+        public boolean audioFeedback() {
+            return preferences.getBoolean(PropertyName.AUDIO_FEEDBACK.name().toLowerCase(), false);
+        }
+
         public boolean ledFeedback() {
             return preferences.getBoolean(PropertyName.LED_FEEDBACK.name().toLowerCase(), false);
         }
 
-        public String getInitialChannel() {
-            return preferences.getString(PropertyName.INITIAL_CHANNEL.name().toLowerCase(), null);
+        public Set<String> getInitialChannel() {
+            return preferences.getStringSet(PropertyName.INITIAL_CHANNELS.name().toLowerCase(), null);
         }
 
         public boolean useHistory() {
@@ -227,6 +245,9 @@ public class SessionData {
             else if (theme.equals("AppTheme.Blue")) {
                 return R.style.AppTheme_Blue;
             }
+            else if (theme.equals("AppTheme.Light")) {
+                return R.style.AppTheme_Light;
+            }
             else {
                 return R.style.AppTheme;
             }
@@ -237,7 +258,7 @@ public class SessionData {
         }
 
         public Version getVersion() {
-            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.4.0"));
+            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.5.0"));
         }
 
         public void setVersion(String version) {

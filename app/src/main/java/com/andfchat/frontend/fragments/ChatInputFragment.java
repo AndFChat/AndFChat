@@ -103,8 +103,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
             lastMessage = System.currentTimeMillis();
         }
         else {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "Sonic, you're going too fast!", Snackbar.LENGTH_LONG)
-                    .show();
+            Snackbar.make(getActivity().findViewById(android.R.id.content), "Sonic, you're going too fast!", Snackbar.LENGTH_LONG).show();
         }
 
         // Reset input

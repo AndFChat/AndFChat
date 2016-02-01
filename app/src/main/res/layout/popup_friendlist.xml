@@ -79,6 +79,7 @@
 	        android:layout_height="match_parent"
 	        android:layout_width="match_parent"
             android:divider="@color/gray"
+            android:fastScrollEnabled="true"
             android:dividerHeight="0px">
         </ListView>
         

@@ -18,8 +18,11 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
 import roboguice.event.EventManager;
 
+import com.andfchat.R;
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.data.CharacterManager;
@@ -27,6 +30,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
+import com.andfchat.core.data.messages.ChatEntry;
 import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.google.inject.Inject;
 
@@ -38,6 +42,8 @@ public class PMUser extends TextCommand {
     protected SessionData sessionData;
     @Inject
     protected ChatEntryFactory entryFactory;
+    @Inject
+    protected Context context;
 
     public PMUser() {
         allowedIn = ChatroomType.values();
@@ -45,7 +51,7 @@ public class PMUser extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /priv [USER] | THIS OPENS A PRIVATE MESSAGE SESSION WITH ANOTHER CHARACTER. /ROLL AND /BOTTLE DO NOT WORK IN PRIVATE MESSAGES.";
+        return "*  /priv " + context.getString(R.string.command_description_priv);
     }
 
     @Override
@@ -56,16 +62,16 @@ public class PMUser extends TextCommand {
     @Override
     public void runCommand(String token, String text) {
         if (text == null || text.length() == 0) {
-            //TODO: no translation
-            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "PLEASE GIVE A USERNAME AS PARAMETER!");
+            ChatEntry entry = entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.error_no_name_given);
+            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
             return;
         }
 
         FCharacter flistChar = characterManager.findCharacter(text, false);
 
         if (flistChar == null) {
-            //TODO: no translation
-            entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), "NO USER WITH NAME '" + text + "' FOUND!");
+            ChatEntry entry = entryFactory.getError(characterManager.findCharacter(CharacterManager.USER_SYSTEM), R.string.error_name_not_found, new Object[]{text});
+            chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
         } else {
             Chatroom chatroom;
             if (chatroomManager.hasOpenPrivateConversation(flistChar) == false) {

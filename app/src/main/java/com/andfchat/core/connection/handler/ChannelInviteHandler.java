@@ -42,7 +42,7 @@ public class ChannelInviteHandler extends TokenHandler {
             FCharacter flistChar = characterManager.findCharacter(username, false);
             if (flistChar != null) {
                 ChatEntry entry = entryFactory.getNotation(flistChar, R.string.message_invite_to_channel, new Object[]{channelId, channelName});
-                broadcastSystemInfo(entry, flistChar);
+                broadcastInviteInfo(entry, flistChar);
             }
 
         }

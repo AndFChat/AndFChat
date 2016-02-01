@@ -129,7 +129,7 @@ public abstract class ChatEntry implements Serializable {
     protected Spannable createText(Context context) {
         String text = getText(context);
         text = BBCodeReader.modifyUrls(text, "http://");
-        //text = BBCodeReader.modifyUrls(text, "https://");
+        text = BBCodeReader.modifyUrls(text, "https://");
 
         Spannable textSpan = BBCodeReader.createSpannableWithBBCode(text, context);
         // Replace smiles in text

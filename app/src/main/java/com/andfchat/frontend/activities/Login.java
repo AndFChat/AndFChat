@@ -78,6 +78,7 @@ public class Login extends RoboActivity {
         ticket,
         friends,
         bookmarks,
+        ignores,
         error,
         source_name,
         name
@@ -248,7 +249,7 @@ public class Login extends RoboActivity {
                 }
 
                 // Init session
-                sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString());
+                sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString(), password.toString());
                 // Add bookmarks to the RelationManager
                 JSONArray bookmarks = jsonDocument.getJSONArray(JsonTokens.bookmarks.name());
                 Set<String> bookmarksList = new HashSet<String>();
@@ -267,6 +268,15 @@ public class Login extends RoboActivity {
                 relationManager.addCharacterToList(CharRelation.FRIEND, friendList);
                 Ln.v("Added " + friendList.size() + " friends.");
 
+                // Add ignores to the RelationManager
+                JSONArray ignores = jsonDocument.getJSONArray(JsonTokens.ignores.name());
+                Set<String> ignoresList = new HashSet<String>();
+                for (int i = 0; i < ignores.length(); i++) {
+                    ignoresList.add(ignores.getJSONObject(i).getString(JsonTokens.name.name()));
+                }
+                relationManager.addCharacterToList(CharRelation.IGNORE, ignoresList);
+                Ln.v("Added " + ignoresList.size() + " ignores.");
+
                 Editor prefEditor = preferences.edit();
                 prefEditor.putBoolean(SAVE_ACCOUNT_NAME, rememberAccount.isChecked());
                 if (rememberAccount.isChecked()) {
@@ -274,7 +284,7 @@ public class Login extends RoboActivity {
                 } else {
                     prefEditor.remove(ACCOUNT_NAME);
                 }
-                prefEditor.commit();
+                prefEditor.apply();
 
 
                 //intent.putExtra("isLive", serverSelection.getSelectedItemPosition() == 0);

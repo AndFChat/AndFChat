@@ -28,6 +28,8 @@ import roboguice.util.Ln;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Html;
+import android.text.SpannableString;
 
 import com.andfchat.core.connection.handler.PrivateMessageHandler;
 import com.andfchat.core.data.CharStatus;
@@ -72,6 +74,8 @@ public class FlistWebSocketConnection {
     private AndFChatNotification notification;
     @Inject
     private ChatEntryFactory entryFactory;
+    @Inject
+    private Context context;
 
     private final AndFChatApplication application;
 
@@ -214,8 +218,12 @@ public class FlistWebSocketConnection {
             data.put("character", sessionData.getCharacterName());
             data.put("message", msg);
             sendMessage(ClientToken.MSG, data);
-
-            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), msg);
+            msg =  Html.toHtml(new SpannableString(msg.trim())).toString().trim();
+            String[] firstcut = msg.split(">", 2);
+            int i = firstcut[1].lastIndexOf("<");
+            String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
+            Ln.i(secondcut[0]);
+            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
             chatroomManager.addMessage(chatroom, entry);
 
         } catch (JSONException e) {
@@ -232,8 +240,12 @@ public class FlistWebSocketConnection {
             data.put("channel", chatroom.getId());
             data.put("message", adMessage);
             sendMessage(ClientToken.LRP, data);
-
-            ChatEntry entry = entryFactory.getAd(characterManager.findCharacter(sessionData.getCharacterName()), adMessage);
+            adMessage =  Html.toHtml(new SpannableString(adMessage.trim())).toString().trim();
+            String[] firstcut = adMessage.split(">", 2);
+            int i = firstcut[1].lastIndexOf("<");
+            String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
+            Ln.i(secondcut[0]);
+            ChatEntry entry = entryFactory.getAd(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
             chatroomManager.addMessage(chatroom, entry);
 
         } catch (JSONException e) {
@@ -254,7 +266,12 @@ public class FlistWebSocketConnection {
             String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + recipient;
             Chatroom chatroom = chatroomManager.getChatroom(channelname);
             if (chatroom != null) {
-                ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), msg);
+                msg =  Html.toHtml(new SpannableString(msg.trim())).toString().trim();
+                String[] firstcut = msg.split(">", 2);
+                int i = firstcut[1].lastIndexOf("<");
+                String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
+                Ln.i(secondcut[0]);
+                ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
                 chatroomManager.addMessage(chatroom, entry);
             }
             else {
@@ -331,7 +348,11 @@ public class FlistWebSocketConnection {
     public void bottle(Chatroom activeChat) {
         JSONObject data = new JSONObject();
         try {
-            data.put("channel", activeChat.getId());
+            if(activeChat.isPrivateChat()) {
+                data.put("recipient", activeChat.getName());
+            } else {
+                data.put("channel", activeChat.getId());
+            }
             data.put("dice", "bottle");
             sendMessage(ClientToken.RLL, data);
         } catch (JSONException e) {
@@ -342,7 +363,11 @@ public class FlistWebSocketConnection {
     public void dice(Chatroom activeChat, String value) {
         JSONObject data = new JSONObject();
         try {
-            data.put("channel", activeChat.getId());
+            if(activeChat.isPrivateChat()) {
+                data.put("recipient", activeChat.getName());
+            } else {
+                data.put("channel", activeChat.getId());
+            }
 
             if (value == null || value.length() == 0) {
                 value = "1d10";
@@ -351,7 +376,7 @@ public class FlistWebSocketConnection {
             data.put("dice", value);
             sendMessage(ClientToken.RLL, data);
         } catch (JSONException e) {
-            Ln.w("exception occurred while bottling: " + e.getMessage());
+            Ln.w("exception occurred while rolling: " + e.getMessage());
         }
     }
 
@@ -399,6 +424,18 @@ public class FlistWebSocketConnection {
         }
     }
 
+    public void timeout(String username, Chatroom chatroom) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", username);
+            data.put("length", 30);
+            sendMessage(ClientToken.CTU, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending CTU: " + e.getMessage());
+        }
+    }
+
     public void kick(String username, Chatroom chatroom) {
         JSONObject data = new JSONObject();
         try {
@@ -419,5 +456,87 @@ public class FlistWebSocketConnection {
         } catch (JSONException e) {
             Ln.w("exception occurred while sending CIU: " + e.getMessage());
         }
+    }
+
+    public void ignore(String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "add");
+            data.put("character", character);
+            sendMessage(ClientToken.IGN, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending IGN: " + e.getMessage());
+        }
+
+    }
+
+    public void unignore(String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("action", "delete");
+            data.put("character", character);
+            sendMessage(ClientToken.IGN, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending IGN: " + e.getMessage());
+        }
+    }
+
+    public void setMode(Chatroom chatroom, String value) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("mode", value);
+            sendMessage(ClientToken.RMO, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending RMO: " + e.getMessage());
+        }
+    }
+
+    public void promote(Chatroom chatroom, String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", character);
+            sendMessage(ClientToken.COA, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending COA: " + e.getMessage());
+        }
+    }
+
+    public void demote(Chatroom chatroom, String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", character);
+            sendMessage(ClientToken.COR, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending COR: " + e.getMessage());
+        }
+    }
+
+    public void setOwner(Chatroom chatroom, String character) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("character", character);
+            sendMessage(ClientToken.CSO, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending CSO: " + e.getMessage());
+        }
+    }
+
+    public void setDescription(Chatroom chatroom, String text) {
+        JSONObject data = new JSONObject();
+        try {
+            data.put("channel", chatroom.getId());
+            data.put("description", text);
+            sendMessage(ClientToken.CDS, data);
+        } catch (JSONException e) {
+            Ln.w("exception occurred while sending CDS: " + e.getMessage());
+        }
+    }
+
+    public void uptime() {
+        sendMessage(ClientToken.UPT);
     }
 }

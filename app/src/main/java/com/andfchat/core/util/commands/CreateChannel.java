@@ -18,8 +18,11 @@
 
 package com.andfchat.core.util.commands;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
+import android.content.Context;
 
+import com.andfchat.R;
+import com.andfchat.core.data.Chatroom.ChatroomType;
+import com.google.inject.Inject;
 
 
 public class CreateChannel extends TextCommand {
@@ -28,9 +31,12 @@ public class CreateChannel extends TextCommand {
         allowedIn = ChatroomType.values();
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /makeroom [name] | OPEN A NEW PRIVATE ROOM NAMED [name].";
+        return "*  /makeroom " + context.getString(R.string.command_description_makeroom);
     }
 
     @Override

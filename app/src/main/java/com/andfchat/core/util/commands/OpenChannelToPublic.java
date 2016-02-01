@@ -18,9 +18,12 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-
+import com.google.inject.Inject;
 
 
 public class OpenChannelToPublic extends TextCommand {
@@ -29,9 +32,12 @@ public class OpenChannelToPublic extends TextCommand {
         allowedIn = new ChatroomType[]{ChatroomType.PRIVATE_CHANNEL, ChatroomType.PUBLIC_CHANNEL};
     }
 
+    @Inject
+    protected Context context;
+
     @Override
     public String getDescription() {
-        return "*  /openroom | THIS WILL MAKE A PRIVATE ROOM OPEN, ADDING IT TO THE LIST OF PRIVATE ROOMS, AND ALLOWING ANYONE TO JOIN.";
+        return "*  /openroom " + context.getString(R.string.command_description_openroom);
     }
 
     @Override

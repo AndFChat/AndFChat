@@ -10,6 +10,7 @@ import android.content.pm.PackageInstaller;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import com.andfchat.R;
@@ -92,22 +93,29 @@ public class AndFChatNotification {
             nBuilder.setNumber(amount);
         }
 
+        Notification notif;
         if(messages) {
             nBuilder.setPriority(2)
-            .setVibrate(new long[] {1, 1, 1});
+            .setVibrate(new long[]{1, 1, 1});
+            // If audio is allowed, do it on new messages!
+            if (sessionData.getSessionSettings().audioFeedback()) {
+                nBuilder.setSound(Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.tone));
+            }
+
+            notif = nBuilder.build();
+
+            // If led feedback is allowed, do it
+            if (sessionData.getSessionSettings().ledFeedback()) {
+                notif.ledARGB = 0xFFffffff;
+                notif.flags = Notification.FLAG_SHOW_LIGHTS;
+                notif.ledOnMS = 300;
+                notif.ledOffMS = 300;
+            }
         } else {
             nBuilder.setPriority(0);
+            notif = nBuilder.build();
         }
 
-        notificationManager.notify(AndFChatApplication.NOTIFICATION_ID, nBuilder.build());
-    }
-
-    public void showLedNotification() {
-        Notification notif = new Notification();
-        notif.ledARGB = 0xFFffffff;
-        notif.flags = Notification.FLAG_SHOW_LIGHTS;
-        notif.ledOnMS = 300;
-        notif.ledOffMS = 300;
-        notificationManager.notify(AndFChatApplication.LED_NOTIFICATION_ID, notif);
+        notificationManager.notify(AndFChatApplication.NOTIFICATION_ID, notif);
     }
 }

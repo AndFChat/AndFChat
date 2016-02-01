@@ -26,6 +26,7 @@ import roboguice.util.Ln;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,8 +40,10 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Protocol;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+
+import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
@@ -74,9 +77,11 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         colorArray.recycle();
 
         OkHttpClient client = new OkHttpClient();
-        client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+        //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
-        picasso = new Picasso.Builder(getContext()).downloader(new OkHttpDownloader(client)).build();
+        picasso = new Picasso.Builder(getContext())
+                .downloader(new OkHttp3Downloader(client))
+                .build();
     }
 
     @Override
@@ -102,16 +107,19 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         });
 
         TextView title = (TextView)rowView.findViewById(R.id.ChatroomName);
-        title.setText("#" + chatroom.getName());
+        title.setText(chatroom.getName()); //# was unneeded.
 
         if (chatroomManager.isActiveChat(chatroom)) {
             rowView.setBackgroundColor(activeColor);
+            title.setSelected(true);
         }
         else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
             rowView.setBackgroundColor(attentionColor);
+            title.setSelected(false);
         }
         else {
             rowView.setBackgroundColor(standardColor);
+            title.setSelected(false);
         }
 
         ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);

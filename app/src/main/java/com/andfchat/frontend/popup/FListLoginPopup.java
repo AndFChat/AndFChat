@@ -25,9 +25,9 @@ import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Protocol;
-import com.squareup.okhttp.Response;
+import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+import okhttp3.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,9 +40,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import retrofit.Call;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Retrofit;
 import roboguice.util.Ln;
 
 public class FListLoginPopup extends DialogFragment {
@@ -65,6 +65,7 @@ public class FListLoginPopup extends DialogFragment {
         ticket,
         friends,
         bookmarks,
+        ignores,
         error,
         source_name,
         name
@@ -109,7 +110,7 @@ public class FListLoginPopup extends DialogFragment {
         }
 
         builder.setView(view);
-        builder.setPositiveButton("Login", null);
+        builder.setPositiveButton(R.string.login, null);
 
         builder.setCancelable(false);
 
@@ -147,14 +148,14 @@ public class FListLoginPopup extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                if(isLoggingIn==false) {
+                if (isLoggingIn == false) {
                     isLoggingIn = true;
 
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
                             button.setEnabled(false);
-                            button.setText("Connecting... please wait!");
+                            button.setText(R.string.connecting);
                         }
                     };
 
@@ -163,10 +164,10 @@ public class FListLoginPopup extends DialogFragment {
                     String account = FListLoginPopup.this.account.getText().toString().trim();
                     String password = FListLoginPopup.this.password.getText().toString().trim();
 
-                    retrofit.Callback<FlistHttpClient.LoginData> callback = new retrofit.Callback<FlistHttpClient.LoginData>() {
+                    retrofit2.Callback<FlistHttpClient.LoginData> callback = new retrofit2.Callback<FlistHttpClient.LoginData>() {
 
                         @Override
-                        public void onResponse(retrofit.Response<FlistHttpClient.LoginData> response, Retrofit retrofit) {
+                        public void onResponse(retrofit2.Response<FlistHttpClient.LoginData> response) {
                             isLoggingIn = false;
                             FlistHttpClient.LoginData loginData = response.body();
 
@@ -192,7 +193,7 @@ public class FListLoginPopup extends DialogFragment {
                                 public void run() {
                                     setError(message);
                                     button.setEnabled(true);
-                                    button.setText("Login");
+                                    button.setText(R.string.login);
                                 }
                             };
 
@@ -201,7 +202,7 @@ public class FListLoginPopup extends DialogFragment {
                     };
 
                     OkHttpClient client = new OkHttpClient();
-                    client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
+                    //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
                     Retrofit restAdapter = new Retrofit.Builder()
                             .baseUrl("https://www.f-list.net")
@@ -228,7 +229,7 @@ public class FListLoginPopup extends DialogFragment {
 
     private void addData(FlistHttpClient.LoginData loginData) {
         // Init session
-        sessionData.initSession(loginData.getTicket(), account.getText().toString());
+        sessionData.initSession(loginData.getTicket(), account.getText().toString(), password.getText().toString());
         // Add bookmarks to the RelationManager
 
         Set<String> bookmarksList = new HashSet<String>();
@@ -255,7 +256,7 @@ public class FListLoginPopup extends DialogFragment {
         } else {
             prefEditor.remove(ACCOUNT_NAME);
         }
-        prefEditor.commit();
+        prefEditor.apply();
 
         Collections.sort(loginData.getCharacters());
         sessionData.setCharList(loginData.getCharacters());
@@ -264,10 +265,10 @@ public class FListLoginPopup extends DialogFragment {
 
     public void setError(String message) {
         if (message.contains("Host is unresolved")) {
-            errorField.setText(getActivity().getString(R.string.error_disconnected_no_connection));
+            errorField.setText(getActivity().getString(R.string.error_disconnected) + getActivity().getString(R.string.error_disconnected_no_connection));
         }
         else {
-            errorField.setText("Disconnected: " + message);
+            errorField.setText(getActivity().getString(R.string.error_disconnected) + message);
         }
     }
 }

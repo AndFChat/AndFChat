@@ -18,6 +18,9 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.Context;
+
+import com.andfchat.R;
 import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
@@ -32,10 +35,12 @@ public class Ban extends TextCommand {
 
     @Inject
     protected SessionData sessionData;
+    @Inject
+    protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /ban [USER] | REMOVES CHARACTER FROM THE PRIVATE ROOM AND PREVENTS THEM FROM RE-ENTERING. BANS LAST ONLY AS LONG AS THE CURRENT ITERATION OF THE ROOM, SO IF THE ROOM IS RE-CREATED, THE BAN LIST WILL BE GONE. YOU CAN NOT BAN A CHARACTER WHO IS NOT CURRENTLY ONLINE AND IN THE ROOM.";
+        return "*  /ban " + context.getString(R.string.command_description_ban);
     }
 
     @Override

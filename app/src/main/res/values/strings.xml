@@ -27,6 +27,7 @@
     <string name="account">Account</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="connecting">Connecting...</string>
     <string name="remember_account">Remember Account</string>
     <string name="logout">Logout</string>
     <string name="about">About</string>    
@@ -70,7 +71,7 @@
     <string name="message_disconnected">logged off.</string>
     <string name="message_status_changed">is now %1$s.</string>
     <string name="message_status_changed_with_message">is now %1$s. [%2$s]</string>
-    <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session]</string>
+    <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session].</string>
     
     <string name="question_disconnect">Do you really want to log off?</string>
     <string name="question_back">Do you really want to quit?</string>
@@ -78,19 +79,28 @@
     
     <!-- longer text messages -->
     <string name="error_login">Login failed: </string>
-    <string name="error_disconnected_no_connection">Disconnected: Lost connection to server</string>
-    <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>      
+    <string name="error_disconnected">Disconnected: </string>
+    <string name="error_disconnected_no_connection">Lost connection to server</string>
+    <string name="error_command_not_allowed">This command isn\'t allowed in the active environment.</string>
+    <string name="error_name_not_found">No user with name \'%1$s\' found.</string>
+    <string name="error_no_name_given">Please give a username as a parameter.</string>
+
+    <string name="exported">Successfully exported to the download directory, filename: %1$s</string>
+    <string name="export_perm_granted">You can now export logs.</string>
+    <string name="export_perm_denied">Log exporting will not work without storage permissions.</string>
+    <string name="export_failed">Can\'t write output, download directory doesn\'t exist!</string>
+    <string name="command_help_menu">Help menu shows all usable commands: </string>
     
     <string name="text_about">AndFChat is developed under the GPL3 licence.
         \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
-        \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub https://github.com/AndFChat/AndFChat/\n
+        \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
         \n
         [b][color=red]Still looking for help![/color][/b]\n
         <!--* Artist/designer to improve the interface and add some images.\n-->
         * Experienced Android developer for UI design, especially scaling questions for different display layouts.\n</string>
     
     <!-- Displayed after the App crashed -->
-    <string name="crash_toast_text">Sorry! It looks like the app crashed. Please send a crash report via email or send me a note @ AndFChat on F-list</string>
+    <string name="crash_toast_text">Sorry! Please us send a crash report via F-list note to BOTH AndFChat UI and AndFChat, or via email to githublimon@gmail.com</string>
     
     <!-- Settings translations title + description -->
     <string name="title_feedback">Feedback</string>
@@ -99,11 +109,10 @@
 
     <string name="hello_world">Hey, you shouldn\'t be seeing this! There\'s no RP in here! D:</string>
 
-    <!-- TODO figure out where this is -->
-    <string name="action_settings">Where the heck does this show up?</string>
+    <string name="action_settings">If you see this, send a note to AndFChat UI</string>
 
-    <string name="title_initial_channel">Channel on login</string>
-    <string name="description_initial_channel">Choose which channel opens upon login</string>
+    <string name="title_initial_channel">Channels on login</string>
+    <string name="description_initial_channel">Choose which channels open upon login</string>
     <string name="title_log_history">Save chat history</string>
     <string name="description_log_history">Save chat logs to internal storage</string>
     <string name="title_log_channel">Log public channels</string>
@@ -117,8 +126,10 @@
     <string name="description_show_user_status_changes">Show status notifications for friends/bookmarks</string>
     <string name="title_vibration_feedback">Vibrate on new messages</string>
     <string name="description_vibration_feedback">New messages trigger vibration</string>
-    <string name="title_led_feedback">Notification light on messages</string>
-    <string name="description_led_feedback">New messages trigger white notification light as feedback</string>
+    <string name="title_audio_feedback">Audio on new messages</string>
+    <string name="description_audio_feedback">New messages trigger audio</string>
+    <string name="title_led_feedback">Notification light on new messages</string>
+    <string name="description_led_feedback">New messages trigger white notification light</string>
     
     <string name="title_use_debug_channel">Show debug information</string>
     <string name="description_use_debug_channel">Shows the input/output tags in the console</string>
@@ -139,7 +150,43 @@
     <string name="show_avatar">Show Avatar</string>
     <string name="description_separate_friends">Separate friends and bookmarks in the friend list?</string>
     <string name="title_separate_friends">Separate Friends and Bookmarks</string>
-    <string name="status">Status Message</string>
+    <string name="status">Status:</string>
+
+    <!-- Descriptions of /commands -->
+    <string name="command_description_ban">[user] | Removes the character from the current room and prevents them from re-entering. You can\'t ban a character who is not currently online and in the room.</string>
+    <string name="command_description_bottle">| Selects one person in the room, purportedly by spinning a bottle. If Bob were to type /bottle, he might see: Bob spins the bottle: Hexxy</string>
+    <string name="command_description_closeroom">| This will close the current opened private room, removing it from the list and making further entry invite-only.</string>
+    <string name="command_description_close">| Leaves the current channel.</string>
+    <string name="command_description_makeroom">[name] | Open a new private room named [name].</string>
+    <string name="command_description_cdeop">[character] | Removes a moderator/chan-op from the current private room. [character] is the character to demote.</string>
+    <string name="command_description_roll">| This command rolls a number of dice. If Bob wanted to roll two dice with six sides each, he\'d type: /roll 2d6</string>
+    <string name="command_description_ignore">| This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
+    <string name="command_description_invite">| Invites another character to the current room, giving them permission to enter. Your current character must be a Chan-Op or Room Owner.</string>
+    <string name="command_description_kick">[user] | Removes the character from the current private room. If it is an open private room, it does not prevent them from re-entering.</string>
+    <string name="command_description_openroom">| This will make the current private room open, adding it to the list of private rooms, and allowing anyone to join.</string>
+    <string name="command_description_priv">[user] | This opens a private message session with another character.</string>
+    <string name="command_description_cop">[character] | Adds a moderator/chan-op to the current private room. [character] is the character to be promoted.</string>
+    <string name="command_description_ad">| Posts an ad to the channel.</string>
+    <string name="command_description_setdescription">[text] | This sets the current room\'s description to the given text.</string>
+    <string name="command_description_setmode">[mode] | This determines the type of content that can be sent in the current private room. [mode] can be \'ads\', \'chat\', or \'both\' (Default: both)</string>
+    <string name="command_description_setowner">[character] | This sets the owner of the current room to the designated character.</string>
+    <string name="command_description_status">+ [optional text] | Statuses are: online, looking, away, busy, dnd</string>
+    <string name="command_description_timeout">[user] | Temporarily bans a character from the room for 30 minutes.</string>
+    <string name="command_description_unban">[user] | Permit a previously banned character to enter the current room again.</string>
+    <string name="command_description_unignore">[name] | Reverses the /ignore command, to allow communication once again.</string>
+    <string name="command_description_uptime">| Reports how long the server has been running.</string>
+
+    <!-- Messages displayed by handlers -->
+    <string name="handler_message_promoted">has been promoted in %1$s.</string>
+    <string name="handler_message_new_owner">has been made the owner of %1$s.</string>
+    <string name="handler_message_demoted">has been demoted in %1$s.</string>
+    <string name="handler_message_ignored">has been ignored.</string>
+    <string name="handler_message_unignored">has been unignored.</string>
+    <string name="handler_message_room_mode">Channel now showing: %1$s</string>
+    <string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes.</string>
+    <string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s.</string>
+    <string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users. Max of %3$s users."</string>
+
 
     <string-array name="text_size_translation">
         <item>Very Small</item>
@@ -151,8 +198,9 @@
     
     <!-- Themes -->  
     <string-array name="themes_translation">
-        <item>Black</item>
-        <item>Blue</item>
+        <item>Slate</item>
+        <item>Cobalt</item>
+        <item>Ice</item>
     </string-array>
     
 </resources>

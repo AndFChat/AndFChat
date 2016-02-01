@@ -18,7 +18,10 @@
 
 package com.andfchat.core.connection.handler;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONException;
 
@@ -45,9 +48,14 @@ public class FirstConnectionHandler extends TokenHandler {
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
-        String channel = sessionData.getSessionSettings().getInitialChannel();
-        if (channel != null) {
-            connection.joinChannel(channel);
+        Set<String> channels = sessionData.getSessionSettings().getInitialChannel();
+        if (channels != null) {
+            Object[] channelObjArray = channels.toArray();
+            String[] channelArray = Arrays.copyOf(channelObjArray, channelObjArray.length, String[].class);
+            for (int i=0; i<channelArray.length; i++) {
+                connection.joinChannel(channelArray[i]);
+            }
+
         }
         connection.requestOfficialChannels();
 
@@ -60,7 +68,7 @@ public class FirstConnectionHandler extends TokenHandler {
         else {
             for (Chatroom chatroom : chatroomManager.getChatRooms()) {
                 // Join all previous channel but not the main one
-                if (chatroom.isChannel() && chatroom.getId().equals(channel) == false) {
+                if (chatroom.isChannel() && chatroom.getId().equals(channels) == false) {
                     connection.joinChannel(chatroom.getId());
                 }
             }
