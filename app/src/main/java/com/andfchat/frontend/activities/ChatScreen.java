@@ -303,7 +303,11 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         actionButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                actionBar.show(actionButton);
+                Chatroom chat = chatroomManager.getActiveChat();
+
+                if (!chat.isSystemChat()) {
+                    actionBar.show(actionButton);
+                }
             }
         });
 
