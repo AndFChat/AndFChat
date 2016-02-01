@@ -18,12 +18,16 @@
 
 package com.andfchat.core.data;
 
+import android.text.Html;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import roboguice.util.Ln;
 
 @Singleton
 public class CharacterManager {
@@ -115,6 +119,9 @@ public class CharacterManager {
     public FCharacter changeStatus(String name, String status, String statusmsg) {
         statusChanged = true;
 
+        Ln.i("Status msg: " + statusmsg);
+        statusmsg = Html.fromHtml(statusmsg).toString();
+        Ln.i("Status msg: " + statusmsg);
         FCharacter flistChar = findCharacter(name);
         flistChar.setStatus(status, statusmsg);
 

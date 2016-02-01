@@ -42,7 +42,7 @@ public class AndFChatNotification {
             String msg = context.getString(R.string.notification_connected);
             if (messages > 0) {
                 icon = R.drawable.ic_st_attention;
-                msg = String.format(context.getString(R.string.notification_attention), messages);
+                msg = String.format(context.getResources().getQuantityString(R.plurals.notification_attention, messages));
                 startNotification(msg, icon, true, messages);
             } else {
                 startNotification(msg, icon, false, 0);

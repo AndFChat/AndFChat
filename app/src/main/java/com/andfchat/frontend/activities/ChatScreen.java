@@ -50,6 +50,7 @@ import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.Display;
@@ -522,7 +523,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             }
 
             if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
-                setChannelTitle(chatroom.getName() + " - " + chatroom.getRecipient().getStatusMsg());
+                setChannelTitle(/*chatroom.getName() + " - " + */Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString());
             } else {
                 setChannelTitle(chatroom.getName());
             }
