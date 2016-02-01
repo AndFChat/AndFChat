@@ -26,6 +26,7 @@ import roboguice.util.Ln;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -110,12 +111,15 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
 
         if (chatroomManager.isActiveChat(chatroom)) {
             rowView.setBackgroundColor(activeColor);
+            title.setSelected(true);
         }
         else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
             rowView.setBackgroundColor(attentionColor);
+            title.setSelected(false);
         }
         else {
             rowView.setBackgroundColor(standardColor);
+            title.setSelected(false);
         }
 
         ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);

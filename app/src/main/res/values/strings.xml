@@ -150,7 +150,7 @@
     <string name="show_avatar">Show Avatar</string>
     <string name="description_separate_friends">Separate friends and bookmarks in the friend list?</string>
     <string name="title_separate_friends">Separate Friends and Bookmarks</string>
-    <string name="status">Status Message</string>
+    <string name="status">Status:</string>
 
     <!-- Descriptions of /commands -->
     <string name="command_description_ban">[user] | Removes the character from the current room and prevents them from re-entering. You can\'t ban a character who is not currently online and in the room.</string>
