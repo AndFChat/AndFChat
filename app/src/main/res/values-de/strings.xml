@@ -57,7 +57,7 @@
 	<string name="actions">Aktionen</string>
 	<string name="select_character">Charakter Auswählen</string>
 	<string name="ad_clickable_advertisement">[Zum Anzeigen hier drücken]</string>
-	<string name="exit">Beenden</string>
+	<string name="exit">Beenden</string> <!-- Should this be 'Verlassen'? -->
 
 
 	<string name="notification_connected">Mit F-Chat verbunden</string>
@@ -134,7 +134,7 @@
 	<string name="title_led_feedback">Benachrichtigungslicht</string>
 	<string name="description_led_feedback">Signallicht für neue Nachrichten</string>
 
-	<string name="title_use_debug_channel">Show debug information</string>
+	<string name="title_use_debug_channel">Zeigen Debug Angaben</string>
 	<string name="description_use_debug_channel">Shows the input/output tags in the console</string>
 
 	<string name="title_theme">App style</string>

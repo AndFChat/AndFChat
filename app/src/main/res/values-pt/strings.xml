@@ -92,27 +92,27 @@
     <string name="export_perm_granted">Podes agora exportar os logs</string>
     <string name="export_perm_denied">Exportar os logs não irá resultar sem a permissão de armazenamento</string>
     <string name="export_failed">Nao pode escrever output, directoria de download não existe</string>
-    <string name="command_help_menu">Menu de ajuda , mostra todos os comandos: </string>
+    <string name="command_help_menu">Menu de ajuda, mostra todos os comandos:</string>
     
     <string name="text_about">AndFChat foi criado sobre a licensa GPLv3 
-        \n\nAndFChat é uma aplicação de  [color=red]terceira parte[/color] para o f-list,e ainda está em [color=red]beta[/color],então por favor seja paciente com o cliente!
+        \n\nAndFChat é uma aplicação de [color=red]terceira parte[/color] para o f-list, e ainda está em [color=red]beta[/color], então por favor seja paciente com o cliente!
         \n\nFound bugs encontrados podem ser enviados via note para o AndFChat (Sim, alguns tags ainda não estão completos) ou diretamente sobre problemas para GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
         \n
         [b][color=red]Ainda a procura de ajuda![/color][/b]\n
         <!--* Artist/designer to improve the interface and add some images.\n-->
-        * Programador de android experiente para design de UI, especialmente para scaling para  displays de layouts diferentes.\n</string>
+        * Programador de android experiente para design de UI, especialmente para scaling para displays de layouts diferentes.\n</string>
 
     <!-- Displayed after the App crashed -->
-    <string name="crash_toast_text">Desculpe! Por favor mande-nos uma crash report via F-list note para ambos  AndFChat UI e AndFChat, ou via email para githublimon@gmail.com</string>
+    <string name="crash_toast_text">Desculpe! Por favor mande-nos uma crash report via F-list note para ambos AndFChat UI e AndFChat, ou via email para githublimon@gmail.com</string>
 
     <!-- Settings translations title + description -->
     <string name="title_feedback">Feedback</string>
     <string name="title_debug">Debug</string>
     <string name="title_general">General</string>
 
-    <string name="hello_world">Hey! Não devias estar a ver isto!Não existe nenhuma rp aqui!</string>
+    <string name="hello_world">Hey! Não devias estar a ver isto! Não existe nenhuma rp aqui!</string>
 
-    <string name="action_settings">Se vires isto , manda uma note para AndFChat UI.</string>
+    <string name="action_settings">Se vires isto, manda uma note para AndFChat UI</string>
 
     <string name="title_initial_channel">Canais no login</string>
     <string name="description_initial_channel">Escolha que canais abrir ao conectar-se</string>
@@ -135,7 +135,7 @@
     <string name="description_led_feedback">New messages trigger white notification light</string>
 
     <string name="title_use_debug_channel">Mostrar informação de debug</string>
-    <string name="description_use_debug_channel">Mostrar o input/output de tags na  consola</string>
+    <string name="description_use_debug_channel">Mostrar o input/output de tags na consola</string>
 
     <string name="title_theme">Estilo da App </string>
     <string name="description_theme">Escolha um tema (Requere restart)</string>
@@ -157,25 +157,25 @@
 
     <!-- Descriptions of /commands -->
     <string name="command_description_ban">[user] | Bane uma personagem de um room e prevente a re-entrada. Não podes dar ban numa personagem que não esteja no room e/ou online.</string>
-    <string name="command_description_bottle">| Seleciona uma personagem no room , rodando a garrafa. Exemplo: Se o Bob rodar a garrafa, ele pode ver: Bob roda a garrafa:Hexxy</string>
-    <string name="command_description_closeroom">| Isto irá fechar o quarto privado, removendo-o da lista  e  fazendo com que uma nova entrada seja apenas por convite. </string>
-    <string name="command_description_close">| Deixa o canal..</string>
+    <string name="command_description_bottle">| Seleciona uma personagem no room, rodando a garrafa. Exemplo: Se o Bob rodar a garrafa, ele pode ver: Bob roda a garrafa:Hexxy</string>
+    <string name="command_description_closeroom">| Isto irá fechar o quarto privado, removendo-o da lista e fazendo com que uma nova entrada seja apenas por convite. </string>
+    <string name="command_description_close">| Deixa o canal.</string>
     <string name="command_description_makeroom">[name] | Abre um novo quarto privado [name].</string>
-    <string name="command_description_cdeop">[character] | Remove um moderator/chan-op do quarto privado  currente  [character] é a personagem a despromover</string>
-    <string name="command_description_roll">| Este comando rola um dado.Se o Bob quiser rolar dois dados com 6 lados cada ele ira escrever: /roll 2d6</string>
+    <string name="command_description_cdeop">[character] | Remove um moderator/chan-op do quarto privado currente [character] é a personagem a despromover.</string>
+    <string name="command_description_roll">| Este comando rola um dado. Se o Bob quiser rolar dois dados com 6 lados cada ele ira escrever: /roll 2d6</string>
     <string name="command_description_ignore">| Isto ira prevenir qualquer comunicação no f-chat da tua conta(todas as personagens) e essa personagem.</string>
     <string name="command_description_invite">| Convida uma personagem para o canal currente, dando-lhes permissão para entrar. A personagem que estejas a usar para fazer o convite tem de ser o dono do canal ou um moderador do canal.</string>
-    <string name="command_description_kick">[user] | Remove a personagem do canal privado currente.Se for um canal privado aberto, não prevente que a pessoa volta a re-entrar.</string>
-    <string name="command_description_openroom">| Isto irá fazer com que o canal privado currente seja aberto ao publico,adicionando-o a lista de canais privados e permitindo a qualquer pessoa que se junte</string>
+    <string name="command_description_kick">[user] | Remove a personagem do canal privado currente. Se for um canal privado aberto, não prevente que a pessoa volta a re-entrar.</string>
+    <string name="command_description_openroom">| Isto irá fazer com que o canal privado currente seja aberto ao publico, adicionando-o a lista de canais privados e permitindo a qualquer pessoa que se junte.</string>
     <string name="command_description_priv">[user] | Isto abre uma mensagem privada com outra personagem.</string>
-    <string name="command_description_cop">[character] | Adiciona um moderator/chan-op ao canal privado currente, [character] é o nome da personagem a ser promovida</string>
-    <string name="command_description_ad">| Publica um anuncio no canal</string>
+    <string name="command_description_cop">[character] | Adiciona um moderator/chan-op ao canal privado currente, [character] é o nome da personagem a ser promovida.</string>
+    <string name="command_description_ad">| Publica um anuncio no canal.</string>
     <string name="command_description_setdescription">[text] | Isto muda a descrição do quarto currente.</string>
     <string name="command_description_setmode">[mode] | Isto determina o tipo de mensagems que pode ser enviado no canal. [mode] pode ser \'ads\', \'chat\', or \'both\' (Default: both)</string>
     <string name="command_description_setowner">[character] | Coloca a personagem selecionado como a dono/a do canal.</string>
-    <string name="command_description_status">+ [optional text] | Os status disponiveis para utilização são:: online, looking, away, busy, dnd</string>
-    <string name="command_description_timeout">[user] | Temporariamente bane uma personagem do canal por 30 minutos </string>
-    <string name="command_description_unban">[user] |Permite a uma personagem previamente banida,a voltar a re-entrar no canal</string>
+    <string name="command_description_status">+ [optional text] | Os status disponiveis para utilização são: online, looking, away, busy, dnd</string>
+    <string name="command_description_timeout">[user] | Temporariamente bane uma personagem do canal por 30 minutos.</string>
+    <string name="command_description_unban">[user] |Permite a uma personagem previamente banida, a voltar a re-entrar no canal.</string>
     <string name="command_description_unignore">[name] | Reverte o comando /ignore e permite comunicação com a personagem outravez.</string>
     <string name="command_description_uptime">| Mostra a quanto tempo o servidor esta a correr.</string>
 
@@ -186,9 +186,9 @@
     <string name="handler_message_ignored">foi ignorando/a</string>
     <string name="handler_message_unignored">já não está a ser ignorado/a</string>
     <string name="handler_message_room_mode">Canal a mostrar agora: %1$s</string>
-    <string name="handler_message_timeout_you">baniu-te de  %1$s por %2$s minutos</string>
+    <string name="handler_message_timeout_you">baniu-te de %1$s por %2$s minutos</string>
     <string name="handler_message_timeout_mod">foi banido %1$s por %2$s minutos por %3$s</string>
-    <string name="handler_message_uptime">O servidor começou: %1$s\n Currentemente: %2$s utilizadores - Maximo de usuários  %3$s"</string>
+    <string name="handler_message_uptime">O servidor começou: %1$s\n Currentemente: %2$s utilizadores - Maximo de usuários: %3$s</string>
 
 
     <string-array name="text_size_translation">

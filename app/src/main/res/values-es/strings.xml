@@ -19,190 +19,189 @@
 
     <!-- Simple stuff for buttons, title etc. -->
     <string name="app_name">AndFChat</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_settings">Configuracion</string>
 
-    <string name="yes">Yes</string>
+    <string name="yes">Si</string>
     <string name="no">No</string>
 
-    <string name="account">Account</string>
-    <string name="password">Password</string>
-    <string name="login">Log In</string>
-    <string name="connecting">Connecting…</string>
-    <string name="remember_account">Remember Account</string>
-    <string name="logout">Log Out</string>
-    <string name="about">About</string>
-    <string name="settings">Settings</string>
-    <string name="bookmark_user">+Bookmark</string>
-    <string name="unbookmark_user">-Bookmark</string>
-    <string name="show_details">Open Details</string>
-    <string name="show_profile">Profile</string>
-    <string name="pm_user">Open PM</string>
-    <string name="close">Close</string>
-    <string name="chatmessage_hint">Write a message</string>
-    <string name="send_message">Send</string>
-    <string name="friendlist">Friends &amp; Bookmarks</string>
-    <string name="hide">Hide</string>
-    <string name="show">Show</string>
+    <string name="account">Cuenta</string>
+    <string name="password">Contraseña</string>
+    <string name="login">iniciar session</string>
+    <string name="connecting">Conectando…</string>
+    <string name="remember_account">Recordar cuenta</string>
+    <string name="logout">cerrar session</string>
+    <string name="about">Acerca de</string>
+    <string name="settings">Configuracion</string>
+    <string name="bookmark_user">+Marcador</string>
+    <string name="unbookmark_user">-Marcador</string>
+    <string name="show_details">Abrir detalles</string>
+    <string name="show_profile">Perfil</string>
+    <string name="pm_user">Abrir MP</string>
+    <string name="close">Cerrar</string>
+    <string name="chatmessage_hint">Escribe un mensaje</string>
+    <string name="send_message">Enviar</string>
+    <string name="friendlist">Amigos &amp; Marcadores</string>
+    <string name="hide">Ocultar</string>
+    <string name="show">Mostrar</string>
     <string name="arrows_left">&lt;&lt;</string>
     <string name="arrows_right">&gt;&gt;</string>
-    <string name="channels">Channels</string>
-    <string name="public_channels">Public Channels</string>
-    <string name="private_channels">Private Channels</string>
-    <string name="friends_selector">Friends</string>
-    <string name="bookmarks_selector">Bookmarks</string>
-    <string name="leave_channel">Leave</string>
-    <string name="export_text">Export</string>
-    <string name="post_ad_text">Post Ad</string>
-    <string name="channel_description">Description</string>
-    <string name="actions">Actions</string>
-    <string name="select_character">Select Character</string>
-    <string name="ad_clickable_advertisement">[Tap to view the ad]</string>
-    <string name="exit">Quit</string>
+    <string name="channels">Canales</string>
+    <string name="public_channels">Canales publicos</string>
+    <string name="private_channels">Canales privados</string>
+    <string name="friends_selector">Amigos</string>
+    <string name="bookmarks_selector">Marcadores</string>
+    <string name="leave_channel">Salir</string>
+    <string name="export_text">Exportar</string>
+    <string name="post_ad_text">Publicar</string>
+    <string name="channel_description">Descripcion</string>
+    <string name="actions">Acciones</string>
+    <string name="select_character">Selecionar personaje</string>
+    <string name="ad_clickable_advertisement">[Toca para ver la publicacion]</string>
+    <string name="exit">Salir</string>
 
 
-    <string name="notification_connected">Connected to F-chat</string>
-    <string name="notification_disconnect">Disconnected from F-Chat</string>
+    <string name="notification_connected">Conectado a F-chat</string>
+    <string name="notification_disconnect">Desconectado de F-Chat</string>
     <plurals name="notification_attention">
-        <item quantity="one">You have %d new message</item>
-        <item quantity="other">You have %d new messages</item>
+        <item quantity="one">Tu tienes un %d Nuevo mensaje</item>
+        <item quantity="other">Tu tienes %d Nuevos mensajes</item>
     </plurals>
 
     <!-- Messages for the chat directly, they will be posted into the chat with a users name at the beginning. Like "XYZ connected." -->
-    <string name="message_channel_joined">joined the channel</string>
-    <string name="message_channel_left">left the channel</string>
-    <string name="message_connected">logged on</string>
-    <string name="message_disconnected">logged off</string>
-    <string name="message_status_changed">is now %1$s</string>
-    <string name="message_status_changed_with_message">is now %1$s [%2$s]</string>
-    <string name="message_invite_to_channel">has invited you to join [session=%1$s]%2$s[/session]</string>
+    <string name="message_channel_joined">Se ha unido al canal</string>
+    <string name="message_channel_left">Se ha ido del canal</string>
+    <string name="message_connected">Se connecto</string>
+    <string name="message_disconnected">Se desconecto</string>
+    <string name="message_status_changed">Es ahora %1$s</string>
+    <string name="message_status_changed_with_message">Es ahora %1$s [%2$s]</string>
+    <string name="message_invite_to_channel">Te ha invitado  </string>
 
-    <string name="question_disconnect">Do you really want to log off?</string>
-    <string name="question_back">Do you really want to quit?</string>
+    <string name="question_disconnect">Realmente quieres desconectarte?</string>
+    <string name="question_back">Realmente quieres regresar?</string>
     <string name="question_delete_log">Do you really want to delete this log?</string>
 
     <!-- longer text messages -->
-    <string name="error_login">Login failed: </string>
-    <string name="error_disconnected">Disconnected: </string>
-    <string name="error_disconnected_no_connection">Lost connection to server</string>
-    <string name="error_command_not_allowed">This command isn\'t allowed here</string>
-    <string name="error_name_not_found">No user with name \'%1$s\' found</string>
-    <string name="error_no_name_given">Please give a username as a parameter</string>
+    <string name="error_login">Session fallo: </string>
+    <string name="error_disconnected">Desconexion: </string>
+    <string name="error_disconnected_no_connection">Se perdio la conexion con el servidor</string>
+    <string name="error_command_not_allowed">Este comando no esta permitido aqui</string>
+    <string name="error_name_not_found">No se ha encontrado el usuario \'%1$s\'</string>
+    <string name="error_no_name_given">Por favor da un nombre como parametro</string>
 
-    <string name="exported">Successfully exported to the download directory, filename: %1$s</string>
-    <string name="export_perm_granted">You can now export logs</string>
-    <string name="export_perm_denied">Log exporting will not work without storage permissions</string>
-    <string name="export_failed">Can\'t write output, download directory doesn\'t exist</string>
-    <string name="command_help_menu">Help menu shows all usable commands: </string>
-    
-    <string name="text_about">AndFChat is developed under the GPLv3 licence.
-        \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
-        \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
+    <string name="exported">Se ha exportado con exito, nombre de archivo: %1$s</string>
+    <string name="export_perm_granted">Ahora puedes exportar archivos</string>
+    <string name="export_perm_denied">Exportacion de archivos no funcionara sin permisos</string>
+    <string name="export_failed">No se puede exportar! no existe el directorio!</string>
+    <string name="command_help_menu">El menu de ayuda muestra todos los comandos:</string>
+
+    <string name="text_about">AndFChat fue desarollado con la licencia GPLv3.
+        \n\nAndFChat es un cliente de Terceros , y todavia esta en beta, por favor, se paciente!
+        \n\nErrores encontrados pueden ser enviados por AndFChat (si, algunos tipos no estan registrados) o directamente como problemas a GitHub github.com\n
         \n
-        [b][color=red]Still looking for help![/color][/b]\n
-        <!--* Artist/designer to improve the interface and add some images.\n-->
-        * Experienced Android developer for UI design, especially scaling questions for different display layouts.\n</string>
+        Aun buscamos ayuda!\n
+        <!--* Artista/diseñador para mejorar la interfaz y añadir imagenes.\n-->
+        * Desarrollador experimentado de android para diseñar el UI, especialmente preguntas escalantes para differentes dispocisiones de muestra.\n</string>
 
     <!-- Displayed after the App crashed -->
-    <string name="crash_toast_text">Sorry! Please send a crash report via F-list note to BOTH AndFChat UI and AndFChat, or via email to githublimon@gmail.com</string>
+    <string name="crash_toast_text">Disculpas! por favor mandanos un reporte de crash atravez de nota F-list a AMBOS AndFChat UI y AndFChat, o via email a githublimon@gmail.com</string>
 
     <!-- Settings translations title + description -->
-    <string name="title_feedback">Feedback</string>
+    <string name="title_feedback">Suggerencias/comentarios</string>
     <string name="title_debug">Debug</string>
     <string name="title_general">General</string>
 
-    <string name="hello_world">Hey, you shouldn\'t be seeing this! There\'s no RP in here! D:</string>
+    <string name="hello_world">oye! no deberias ver esto! aqui no hay RP! D:</string>
 
-    <string name="action_settings">If you see this, send a note to AndFChat UI</string>
+    <string name="action_settings">Si ves esto, manda una nota a AndFChat UI</string>
 
-    <string name="title_initial_channel">Channels on login</string>
-    <string name="description_initial_channel">Choose which channels open upon login</string>
-    <string name="title_log_history">Save chat history</string>
-    <string name="description_log_history">Save chat logs to internal storage</string>
-    <string name="title_log_channel">Log public channels</string>
-    <string name="description_log_channel">Log public channels as well as PMs</string>
-    <string name="title_delete_history">Delete your history</string>
-    <string name="description_delete_history">Remove all logs from internal storage</string>
+    <string name="title_initial_channel">Canales al iniciar session</string>
+    <string name="description_initial_channel">Escoge que canales abir al iniciar session</string>
+    <string name="title_log_history">Guardar historial</string>
+    <string name="description_log_history">Guardar archivos de chat al la memoria interna </string>
+    <string name="title_log_channel">Archivar canales publicos</string>
+    <string name="description_log_channel">Archivar canales publicos asi como MP</string>
+    <string name="title_delete_history">Eliminar historial</string>
+    <string name="description_delete_history">Remover archivos de la memoria interna</string>
 
-    <string name="title_show_channel_info">Show channel info</string>
-    <string name="description_show_channel_info">Show channel join/leave notifications</string>
-    <string name="title_show_user_status_changes">Show user status changes</string>
-    <string name="description_show_user_status_changes">Show status notifications for friends/bookmarks</string>
-    <string name="title_vibration_feedback">Vibrate on new messages</string>
-    <string name="description_vibration_feedback">New messages trigger vibration</string>
-    <string name="title_audio_feedback">Audio on new messages</string>
-    <string name="description_audio_feedback">New messages trigger audio</string>
-    <string name="title_led_feedback">Notification light on new messages</string>
-    <string name="description_led_feedback">New messages trigger white notification light</string>
+    <string name="title_show_channel_info">Mostrar informacion del canal</string>
+    <string name="description_show_channel_info">Mostrar noticiaciones de entrada/salida del canal</string>
+    <string name="title_show_user_status_changes">Mostrar notificaciones de estado de usuarios</string>
+    <string name="description_show_user_status_changes">Mostrar notificaciones de estado para amigos/marcadores</string>
+    <string name="title_vibration_feedback">Vibrar con mensajes nuevos</string>
+    <string name="description_vibration_feedback">Nuevos mensajes activan vibracion</string>
+    <string name="title_audio_feedback">Audio con nuevos mensajes</string>
+    <string name="description_audio_feedback">Nuevos mensajes activan audio</string>
+    <string name="title_led_feedback">Luz de notificacion con nuevos mensajes</string>
+    <string name="description_led_feedback">Nuevos mensajes activan la luz de notificacion</string>
 
-    <string name="title_use_debug_channel">Show debug information</string>
-    <string name="description_use_debug_channel">Shows the input/output tags in the console</string>
+    <string name="title_use_debug_channel">mostrar informacion de debug</string>
+    <string name="description_use_debug_channel">Muestra las etiquetas de ingreso/egreso en la consola</string>
 
-    <string name="title_theme">App style</string>
-    <string name="description_theme">Choose an app theme (Requires restart)</string>
+    <string name="title_theme">Estilo de applicacion</string>
+    <string name="description_theme">Escoge un tema de applicacion (Requiere reinicio)</string>
 
-    <string name="title_chat_text_size">Font size</string>
-    <string name="description_chat_text_size">Choose the font size for chat</string>
+    <string name="title_chat_text_size">Tamaño de fuente</string>
+    <string name="description_chat_text_size">Escoge el tamaño de fuente para el chat</string>
 
-    <string name="title_show_avatar_pictures">Show avatars in the chat list</string>
-    <string name="description_show_avatar_pictures">Shows F-list avatar pictures for private chats</string>
+    <string name="title_show_avatar_pictures">Mostrar avatares en la lista de chat</string>
+    <string name="description_show_avatar_pictures">Muestra las imagenes avatar F-list para chats privados</string>
 
-    <string name="title_show_notifications">Show notifications</string>
-    <string name="description_show_notifications">Show notifications in the status bar</string>
-    <string name="dismiss">Dismiss</string>
-    <string name="show_ads">Show Ads</string>
-    <string name="show_avatar">Show Avatar</string>
-    <string name="description_separate_friends">Separate friends and bookmarks in the friend list?</string>
-    <string name="title_separate_friends">Separate Friends and Bookmarks</string>
-    <string name="status">Status:</string>
+    <string name="title_show_notifications">Mostrar notificaciones</string>
+    <string name="description_show_notifications">Muestra notificaciones en la barra de estado</string>
+    <string name="dismiss">Despedir</string>
+    <string name="show_ads">Mostrar publicacion</string>
+    <string name="show_avatar">Mostrar Avatar</string>
+    <string name="description_separate_friends">Separar marcadores y amigos en la lista de amigos?</string>
+    <string name="title_separate_friends">Separa marcadores y amigos</string>
+    <string name="status">Estado:</string>
 
     <!-- Descriptions of /commands -->
-    <string name="command_description_ban">[user] | Removes the character from the current room and prevents them from re-entering. You can\'t ban a character who is not currently online and in the room.</string>
-    <string name="command_description_bottle">| Selects one person in the room, purportedly by spinning a bottle. If Bob were to type /bottle, he might see: Bob spins the bottle: Hexxy</string>
-    <string name="command_description_closeroom">| This will close the current opened private room, removing it from the list and making further entry invite-only.</string>
-    <string name="command_description_close">| Leaves the current channel.</string>
-    <string name="command_description_makeroom">[name] | Open a new private room named [name].</string>
-    <string name="command_description_cdeop">[character] | Removes a moderator/chan-op from the current private room. [character] is the character to demote.</string>
-    <string name="command_description_roll">| This command rolls a number of dice. If Bob wanted to roll two dice with six sides each, he\'d type: /roll 2d6</string>
-    <string name="command_description_ignore">| This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
-    <string name="command_description_invite">| Invites another character to the current room, giving them permission to enter. Your current character must be a Chan-Op or Room Owner.</string>
-    <string name="command_description_kick">[user] | Removes the character from the current private room. If it is an open private room, it does not prevent them from re-entering.</string>
-    <string name="command_description_openroom">| This will make the current private room open, adding it to the list of private rooms, and allowing anyone to join.</string>
-    <string name="command_description_priv">[user] | This opens a private message session with another character.</string>
-    <string name="command_description_cop">[character] | Adds a moderator/chan-op to the current private room. [character] is the character to be promoted.</string>
-    <string name="command_description_ad">| Posts an ad to the channel.</string>
-    <string name="command_description_setdescription">[text] | This sets the current room\'s description to the given text.</string>
-    <string name="command_description_setmode">[mode] | This determines the type of content that can be sent in the current private room. [mode] can be \'ads\', \'chat\', or \'both\' (Default: both)</string>
-    <string name="command_description_setowner">[character] | This sets the owner of the current room to the designated character.</string>
-    <string name="command_description_status">+ [optional text] | Statuses are: online, looking, away, busy, dnd</string>
-    <string name="command_description_timeout">[user] | Temporarily bans a character from the room for 30 minutes.</string>
-    <string name="command_description_unban">[user] | Permit a previously banned character to enter the current room again.</string>
-    <string name="command_description_unignore">[name] | Reverses the /ignore command, to allow communication once again.</string>
-    <string name="command_description_uptime">| Reports how long the server has been running.</string>
+    <string name="command_description_ban">[user] | Remueve el personaje de la conversacion actual y previene que vuelvan a entrar, No puedes excluir un personaje que no este en linea y actualmente en la conversacion.</string>
+    <string name="command_description_bottle">| Selecciona una persona en la conversacion, girando una botella. si Bob escribiera /bottle, el veria: Bob Gira la botella: Hexxy</string>
+    <string name="command_description_closeroom">| Esto cerrara la conversacion privada actualmente abierta, quitandola de la lista y haciendo futuras entradas posibles solo por invitacion.</string>
+    <string name="command_description_close">| Sale del canal actual.</string>
+    <string name="command_description_makeroom">[name] | Abre una nueva conversacion privada llamada [name].</string>
+    <string name="command_description_cdeop">[character] | Remueve un moderador/chan-op de la actual conversacion privada. [character] es el personaje que sera degradado.</string>
+    <string name="command_description_roll">| Este comando tira un numero de dados. si Bob quisiera tirar dos dados con seis lados, escribiria: /roll 2d6</string>
+    <string name="command_description_ignore">| Esto prohibira futura comunicacion en F-Chat entre tu cuenta (todos los personajes) y ese personake.</string>
+    <string name="command_description_invite">| invita otro personaje a la conversacion actual, dando permiso para entrar. Tu personaje actual debe ser un Chan-Op o el dueño de conversacion.</string>
+    <string name="command_description_kick">[user] | Remueve al personaje de la actual conversacion privada. Si esta es abierta, no previene que vuelvan a entrar.</string>
+    <string name="command_description_openroom">| Esto hara publica la actual conversacion privada, añadiendola a la lista de conversaciones privadas, permitiendo a qualquiera la entrada.</string>
+    <string name="command_description_priv">[user] | Esto abrira una session de mensajes privados con otro personaje.</string>
+    <string name="command_description_cop">[character] | añade un moderador/chan-op a la conversacion privada actual. [character] es el personaje que sera promovido.</string>
+    <string name="command_description_ad">| Envia una publicacion a el canal.</string>
+    <string name="command_description_setdescription">[text] | Esto pone la descripcion de la conversacion actual a el texto proporcionado.</string>
+    <string name="command_description_setmode">[mode] | Esto determina el tipo de contenido que puede ser enviado en la conversacion privada actual. [mode] puede ser \'ads\', \'chat\', or \'both\' (Por defecto: both)</string>
+    <string name="command_description_setowner">[character] | Esto da propiedad de la conversacion privada actual al personaje designado.</string>
+    <string name="command_description_status">+ [optional text] | los estados son: online, looking, away, busy, dnd</string>
+    <string name="command_description_timeout">[user] | Temporalmente excluye a un personaje de la conversacion durante 30 minutos.</string>
+    <string name="command_description_unban">[user] | Permite que un personaje previamente excluido pueda unirse a la conversacion nuevamente.</string>
+    <string name="command_description_unignore">[name] | Revierte el comando /ignore , para permitir comunicacion nuevamente.</string>
+    <string name="command_description_uptime">| Reporta cuanto tiempo ha estado activo el servidor.</string>
 
     <!-- Messages displayed by handlers -->
-    <string name="handler_message_promoted">has been promoted in %1$s</string>
-    <string name="handler_message_new_owner">has been made the owner of %1$s</string>
-    <string name="handler_message_demoted">has been demoted in %1$s</string>
-    <string name="handler_message_ignored">has been ignored</string>
-    <string name="handler_message_unignored">has been unignored</string>
-    <string name="handler_message_room_mode">Channel now showing: %1$s</string>
-    <string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes</string>
-    <string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s</string>
-    <string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users - Max of %3$s users</string>
+    <string name="handler_message_promoted">ha sido promovido en %1$s</string>
+    <string name="handler_message_new_owner"> ahora tiene propiedad de %1$s</string>
+    <string name="handler_message_demoted">ha sido degradado en %1$s</string>
+    <string name="handler_message_unignored">ya no es ignorado</string>
+    <string name="handler_message_room_mode">el canal ahora muestra: %1$s</string>
+    <string name="handler_message_timeout_you">te ha excluido de %1$s durante %2$s minutos</string>
+    <string name="handler_message_timeout_mod">ha sido excluido de %1$s durante %2$s minutos por %3$s</string>
+    <string name="handler_message_uptime">El servidor inicio: %1$s\n actualmente %2$s usuarios - maximo de %3$s usuarios</string>
 
 
     <string-array name="text_size_translation">
-        <item>Very Small</item>
-        <item>Small</item>
-        <item>Medium</item>
-        <item>Big</item>
+        <item>Muy pequeño</item>
+        <item>Pequeño</item>
+        <item>Mediano</item>
+        <item>Grande</item>
     </string-array>
 
     <!-- Themes -->
     <string-array name="themes_translation">
-        <item>Slate</item>
-        <item>Cobalt</item>
-        <item>Ice</item>
+        <item>Pizarra</item>
+        <item>Cobalto</item>
+        <item>Hielo</item>
     </string-array>
 
 </resources>

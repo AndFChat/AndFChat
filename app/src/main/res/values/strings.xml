@@ -129,8 +129,8 @@
     <string name="description_show_user_status_changes">Show status notifications for friends/bookmarks</string>
     <string name="title_vibration_feedback">Vibrate on new messages</string>
     <string name="description_vibration_feedback">New messages trigger vibration</string>
-    <string name="title_audio_feedback">Audio on new messages</string>
-    <string name="description_audio_feedback">New messages trigger audio</string>
+    <string name="title_audio_feedback">Tone on new messages</string>
+    <string name="description_audio_feedback">New messages trigger notification audio</string>
     <string name="title_led_feedback">Notification light on new messages</string>
     <string name="description_led_feedback">New messages trigger white notification light</string>
     
