@@ -100,6 +100,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(new NameSpannable(character, null, getContext().getResources()));
+        textView.setSelected(true);
 
         // Set icon
         ImageView itemIcon = (ImageView)rowView.findViewById(R.id.itemIcon);

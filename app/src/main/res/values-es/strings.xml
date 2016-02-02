@@ -191,10 +191,10 @@
 
 
     <string-array name="text_size_translation">
-        <item>Muy pequeño</item>
         <item>Pequeño</item>
-        <item>Mediano</item>
+        <item>Normal</item>
         <item>Grande</item>
+        <item>Enorme</item>
     </string-array>
 
     <!-- Themes -->

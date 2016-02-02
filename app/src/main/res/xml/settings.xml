@@ -38,14 +38,14 @@
             android:defaultValue="true"
             />
         
-        <ListPreference 
+        <!-- <ListPreference
             android:key="chat_text_size"
             android:title="@string/title_chat_text_size"
             android:summary="@string/description_chat_text_size"
             android:entries="@array/text_size_translation"
             android:entryValues="@array/TextSize"
             android:defaultValue="medium"
-        />
+        /> -->
 
         <CheckBoxPreference
             android:key="show_avatar_pictures"

@@ -118,10 +118,7 @@ public class CharacterManager {
 
     public FCharacter changeStatus(String name, String status, String statusmsg) {
         statusChanged = true;
-
-        Ln.i("Status msg: " + statusmsg);
         statusmsg = Html.fromHtml(statusmsg).toString();
-        Ln.i("Status msg: " + statusmsg);
         FCharacter flistChar = findCharacter(name);
         flistChar.setStatus(status, statusmsg);
 
