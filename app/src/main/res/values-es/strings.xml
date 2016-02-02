@@ -103,7 +103,7 @@
         * Experienced Android developer for UI design, especially scaling questions for different display layouts.\n</string>
 
     <!-- Displayed after the App crashed -->
-    <string name="crash_toast_text">Sorry! Please us send a crash report via F-list note to BOTH AndFChat UI and AndFChat, or via email to githublimon@gmail.com</string>
+    <string name="crash_toast_text">Sorry! Please send a crash report via F-list note to BOTH AndFChat UI and AndFChat, or via email to githublimon@gmail.com</string>
 
     <!-- Settings translations title + description -->
     <string name="title_feedback">Feedback</string>
