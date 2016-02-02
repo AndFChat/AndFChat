@@ -63,7 +63,7 @@
     <string name="notification_connected">Connected to F-chat</string>
     <string name="notification_disconnect">Disconnected from F-Chat</string>
     <plurals name="notification_attention">
-        <item quantity="one">You have one new message</item>
+        <item quantity="one">You have %d new message</item>
         <item quantity="other">You have %d new messages</item>
     </plurals>
     
