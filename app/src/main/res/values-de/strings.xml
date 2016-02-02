@@ -27,7 +27,7 @@
 	<string name="account">Konto</string>
 	<string name="password">Passwort</string>
 	<string name="login">Anmelden</string>
-	<string name="connecting">Connecting...</string>
+	<string name="connecting">Verbinden…</string>
 	<string name="remember_account">Konto merken</string>
 	<string name="logout">Abmelden</string>
 	<string name="about">Über</string>
