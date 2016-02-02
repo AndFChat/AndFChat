@@ -180,15 +180,15 @@
 	<string name="command_description_uptime">| Reports how long the server has been running.</string>
 
 	<!-- Messages displayed by handlers -->
-	<string name="handler_message_promoted">has been promoted in %1$s.</string>
-	<string name="handler_message_new_owner">has been made the owner of %1$s.</string>
-	<string name="handler_message_demoted">has been demoted in %1$s.</string>
-	<string name="handler_message_ignored">has been ignored.</string>
-	<string name="handler_message_unignored">has been unignored.</string>
+	<string name="handler_message_promoted">has been promoted in %1$s</string>
+	<string name="handler_message_new_owner">has been made the owner of %1$s</string>
+	<string name="handler_message_demoted">has been demoted in %1$s</string>
+	<string name="handler_message_ignored">has been ignored</string>
+	<string name="handler_message_unignored">has been unignored</string>
 	<string name="handler_message_room_mode">Channel now showing: %1$s</string>
-	<string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes.</string>
-	<string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s.</string>
-	<string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users. Max of %3$s users."</string>
+	<string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes</string>
+	<string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s</string>
+	<string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users - Max of %3$s users</string>
 
 
 	<string-array name="text_size_translation">

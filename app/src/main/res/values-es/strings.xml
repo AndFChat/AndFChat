@@ -188,7 +188,7 @@
     <string name="handler_message_room_mode">Channel now showing: %1$s</string>
     <string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes</string>
     <string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s</string>
-    <string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users - Max of %3$s users"</string>
+    <string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users - Max of %3$s users</string>
 
 
     <string-array name="text_size_translation">
