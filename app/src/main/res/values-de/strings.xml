@@ -82,16 +82,16 @@
 
 	<!-- longer text messages -->
 	<string name="error_login">Anmeldung fehlgeschlagen: </string>
-	<string name="error_disconnected">Disconnected: </string>
-	<string name="error_disconnected_no_connection">Verbindung zum Server verloren</string>
+	<string name="error_disconnected">Verbindungsabbruch: </string>
+	<string name="error_disconnected_no_connection">Verbindung zum Server unterbrochen</string>
 	<string name="error_command_not_allowed">Dieser Befehl ist hier nicht erlaubt</string>
-	<string name="error_name_not_found">No user with name \'%1$s\' found.</string>
-	<string name="error_no_name_given">Please give a username as a parameter.</string>
+	<string name="error_name_not_found">Kein Nutzer mit \'%1$s\' gefunden</string> //Niemand namens \'%1$s\' gefunden
+	<string name="error_no_name_given">Bitte Nutzernamen als Parameter wählen</string>
 
-	<string name="exported">Successfully exported to the download directory, filename: %1$s</string>
-	<string name="export_perm_granted">You can now export logs.</string>
-	<string name="export_perm_denied">Log exporting will not work without storage permissions.</string>
-	<string name="export_failed">Can\'t write output, download directory doesn\'t exist!</string>
+	<string name="exported">Erfolgreich zum Downloadverzeichnis exportiert, Dateiname: %1$s</string>
+	<string name="export_perm_granted">Exportieren von Protokollen jetzt möglich</string>
+	<string name="export_perm_denied">Protokollexport nur mit Speicherberechtigung möglich</string>
+	<string name="export_failed">Kein Ergebnis, Downloadverzeichnis existiert nicht</string>
 	<string name="command_help_menu">Help menu shows all usable commands: </string>
     
     <string name="text_about">AndFChat wird unter der GPLv3-Lizenz entwickelt.
