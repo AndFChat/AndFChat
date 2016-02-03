@@ -185,7 +185,7 @@
     <string name="handler_message_demoted">foi despromovido/a de %1$s</string>
     <string name="handler_message_ignored">foi ignorando/a</string>
     <string name="handler_message_unignored">já não está a ser ignorado/a</string>
-    <string name="handler_message_room_mode">Canal a mostrar agora: %1$s</string>
+    <string name="handler_message_room_mode">Canal a mostrar agora %1$s</string>
     <string name="handler_message_timeout_you">baniu-te de %1$s por %2$s minutos</string>
     <string name="handler_message_timeout_mod">foi banido %1$s por %2$s minutos por %3$s</string>
     <string name="handler_message_uptime">O servidor começou: %1$s\n Currentemente: %2$s utilizadores - Maximo de usuários: %3$s</string>

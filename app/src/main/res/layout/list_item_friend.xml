@@ -50,6 +50,7 @@
         android:id="@+id/pmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="7dp"
         android:text="@string/pm_user"
         android:layout_alignParentRight="true"
     />

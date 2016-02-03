@@ -19,22 +19,22 @@
 
     <!-- Simple stuff for buttons, title etc. -->
     <string name="app_name">AndFChat</string>
-    <string name="menu_settings">Configuracion</string>
+    <string name="menu_settings">Configuración</string>
 
     <string name="yes">Si</string>
     <string name="no">No</string>
 
     <string name="account">Cuenta</string>
     <string name="password">Contraseña</string>
-    <string name="login">iniciar session</string>
+    <string name="login">Iniciar Sesión</string>
     <string name="connecting">Conectando…</string>
-    <string name="remember_account">Recordar cuenta</string>
-    <string name="logout">cerrar session</string>
+    <string name="remember_account">Recordar Cuenta</string>
+    <string name="logout">Cerrar Sesión</string>
     <string name="about">Acerca de</string>
-    <string name="settings">Configuracion</string>
+    <string name="settings">Configuración</string>
     <string name="bookmark_user">+Marcador</string>
     <string name="unbookmark_user">-Marcador</string>
-    <string name="show_details">Abrir detalles</string>
+    <string name="show_details">Abrir Detalles</string>
     <string name="show_profile">Perfil</string>
     <string name="pm_user">Abrir MP</string>
     <string name="close">Cerrar</string>
@@ -46,17 +46,17 @@
     <string name="arrows_left">&lt;&lt;</string>
     <string name="arrows_right">&gt;&gt;</string>
     <string name="channels">Canales</string>
-    <string name="public_channels">Canales publicos</string>
+    <string name="public_channels">Canales públicos</string>
     <string name="private_channels">Canales privados</string>
     <string name="friends_selector">Amigos</string>
     <string name="bookmarks_selector">Marcadores</string>
     <string name="leave_channel">Salir</string>
     <string name="export_text">Exportar</string>
     <string name="post_ad_text">Publicar</string>
-    <string name="channel_description">Descripcion</string>
+    <string name="channel_description">Descripción</string>
     <string name="actions">Acciones</string>
     <string name="select_character">Selecionar personaje</string>
-    <string name="ad_clickable_advertisement">[Toca para ver la publicacion]</string>
+    <string name="ad_clickable_advertisement">[Toca para ver la publicación]</string>
     <string name="exit">Salir</string>
 
 
@@ -81,14 +81,14 @@
     <string name="question_delete_log">Do you really want to delete this log?</string>
 
     <!-- longer text messages -->
-    <string name="error_login">Session fallo: </string>
+    <string name="error_login">Sesión fallo: </string>
     <string name="error_disconnected">Desconexion: </string>
     <string name="error_disconnected_no_connection">Se perdio la conexion con el servidor</string>
-    <string name="error_command_not_allowed">Este comando no esta permitido aqui</string>
+    <string name="error_command_not_allowed">Este comando no esta permitido aquí</string>
     <string name="error_name_not_found">No se ha encontrado el usuario \'%1$s\'</string>
     <string name="error_no_name_given">Por favor da un nombre como parametro</string>
 
-    <string name="exported">Se ha exportado con exito, nombre de archivo: %1$s</string>
+    <string name="exported">Se ha exportado con éxito, nombre de archivo: %1$s</string>
     <string name="export_perm_granted">Ahora puedes exportar archivos</string>
     <string name="export_perm_denied">Exportacion de archivos no funcionara sin permisos</string>
     <string name="export_failed">No se puede exportar! no existe el directorio!</string>
@@ -96,7 +96,7 @@
 
     <string name="text_about">AndFChat fue desarollado con la licencia GPLv3.
         \n\nAndFChat es un cliente de Terceros , y todavia esta en beta, por favor, se paciente!
-        \n\nErrores encontrados pueden ser enviados por AndFChat (si, algunos tipos no estan registrados) o directamente como problemas a GitHub github.com\n
+        \n\nErrores encontrados pueden ser enviados por AndFChat (si, algunos tipos no están registrados) o directamente como problemas a GitHub github.com\n
         \n
         Aun buscamos ayuda!\n
         <!--* Artista/diseñador para mejorar la interfaz y añadir imagenes.\n-->
@@ -110,16 +110,16 @@
     <string name="title_debug">Debug</string>
     <string name="title_general">General</string>
 
-    <string name="hello_world">oye! no deberias ver esto! aqui no hay RP! D:</string>
+    <string name="hello_world">Pye! No deberias ver esto! Aquí no hay RP! D:</string>
 
     <string name="action_settings">Si ves esto, manda una nota a AndFChat UI</string>
 
-    <string name="title_initial_channel">Canales al iniciar session</string>
-    <string name="description_initial_channel">Escoge que canales abir al iniciar session</string>
+    <string name="title_initial_channel">Canales al iniciar sesión</string>
+    <string name="description_initial_channel">Escoge que canales abir al iniciar sesión</string>
     <string name="title_log_history">Guardar historial</string>
     <string name="description_log_history">Guardar archivos de chat al la memoria interna </string>
-    <string name="title_log_channel">Archivar canales publicos</string>
-    <string name="description_log_channel">Archivar canales publicos asi como MP</string>
+    <string name="title_log_channel">Archivar canales publicós</string>
+    <string name="description_log_channel">Archivar canales publicós así como MP</string>
     <string name="title_delete_history">Eliminar historial</string>
     <string name="description_delete_history">Remover archivos de la memoria interna</string>
 
@@ -144,19 +144,19 @@
     <string name="description_chat_text_size">Escoge el tamaño de fuente para el chat</string>
 
     <string name="title_show_avatar_pictures">Mostrar avatares en la lista de chat</string>
-    <string name="description_show_avatar_pictures">Muestra las imagenes avatar F-list para chats privados</string>
+    <string name="description_show_avatar_pictures">Muestra las imágenes avatar F-list para chats privados</string>
 
     <string name="title_show_notifications">Mostrar notificaciones</string>
     <string name="description_show_notifications">Muestra notificaciones en la barra de estado</string>
     <string name="dismiss">Despedir</string>
-    <string name="show_ads">Mostrar publicacion</string>
+    <string name="show_ads">Mostrar publicación</string>
     <string name="show_avatar">Mostrar Avatar</string>
     <string name="description_separate_friends">Separar marcadores y amigos en la lista de amigos?</string>
     <string name="title_separate_friends">Separa marcadores y amigos</string>
     <string name="status">Estado:</string>
 
     <!-- Descriptions of /commands -->
-    <string name="command_description_ban">[user] | Remueve el personaje de la conversacion actual y previene que vuelvan a entrar, No puedes excluir un personaje que no este en linea y actualmente en la conversacion.</string>
+    <string name="command_description_ban">[user] | Remueve el personaje de la conversacion actual y previene que vuelvan a entrar, No puedes excluir un personaje que no este en línea y actualmente en la conversacion.</string>
     <string name="command_description_bottle">| Selecciona una persona en la conversacion, girando una botella. si Bob escribiera /bottle, el veria: Bob Gira la botella: Hexxy</string>
     <string name="command_description_closeroom">| Esto cerrara la conversacion privada actualmente abierta, quitandola de la lista y haciendo futuras entradas posibles solo por invitacion.</string>
     <string name="command_description_close">| Sale del canal actual.</string>
@@ -167,10 +167,10 @@
     <string name="command_description_invite">| invita otro personaje a la conversacion actual, dando permiso para entrar. Tu personaje actual debe ser un Chan-Op o el dueño de conversacion.</string>
     <string name="command_description_kick">[user] | Remueve al personaje de la actual conversacion privada. Si esta es abierta, no previene que vuelvan a entrar.</string>
     <string name="command_description_openroom">| Esto hara publica la actual conversacion privada, añadiendola a la lista de conversaciones privadas, permitiendo a qualquiera la entrada.</string>
-    <string name="command_description_priv">[user] | Esto abrira una session de mensajes privados con otro personaje.</string>
+    <string name="command_description_priv">[user] | Esto abrira una sesión de mensajes privados con otro personaje.</string>
     <string name="command_description_cop">[character] | añade un moderador/chan-op a la conversacion privada actual. [character] es el personaje que sera promovido.</string>
-    <string name="command_description_ad">| Envia una publicacion a el canal.</string>
-    <string name="command_description_setdescription">[text] | Esto pone la descripcion de la conversacion actual a el texto proporcionado.</string>
+    <string name="command_description_ad">| Envia una publicación a el canal.</string>
+    <string name="command_description_setdescription">[text] | Esto pone la descripción de la conversacion actual a el texto proporcionado.</string>
     <string name="command_description_setmode">[mode] | Esto determina el tipo de contenido que puede ser enviado en la conversacion privada actual. [mode] puede ser \'ads\', \'chat\', or \'both\' (Por defecto: both)</string>
     <string name="command_description_setowner">[character] | Esto da propiedad de la conversacion privada actual al personaje designado.</string>
     <string name="command_description_status">+ [optional text] | los estados son: online, looking, away, busy, dnd</string>
@@ -184,10 +184,10 @@
     <string name="handler_message_new_owner"> ahora tiene propiedad de %1$s</string>
     <string name="handler_message_demoted">ha sido degradado en %1$s</string>
     <string name="handler_message_unignored">ya no es ignorado</string>
-    <string name="handler_message_room_mode">el canal ahora muestra: %1$s</string>
+    <string name="handler_message_room_mode">El canal ahora muestra %1$s</string>
     <string name="handler_message_timeout_you">te ha excluido de %1$s durante %2$s minutos</string>
     <string name="handler_message_timeout_mod">ha sido excluido de %1$s durante %2$s minutos por %3$s</string>
-    <string name="handler_message_uptime">El servidor inicio: %1$s\n actualmente %2$s usuarios - maximo de %3$s usuarios</string>
+    <string name="handler_message_uptime">El servidor inicio: %1$s\n Actualmente %2$s usuarios - Máximo de %3$s usuarios</string>
 
 
     <string-array name="text_size_translation">

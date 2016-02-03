@@ -92,7 +92,7 @@
     <string name="export_perm_granted">You can now export logs</string>
     <string name="export_perm_denied">Log exporting will not work without storage permissions</string>
     <string name="export_failed">Can\'t write output, download directory doesn\'t exist</string>
-    <string name="command_help_menu">Help menu shows all usable commands: </string>
+    <string name="command_help_menu">Help menu shows all usable commands:</string>
     
     <string name="text_about">AndFChat is developed under the GPLv3 licence.
         \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
@@ -185,7 +185,7 @@
     <string name="handler_message_demoted">has been demoted in %1$s</string>
     <string name="handler_message_ignored">has been ignored</string>
     <string name="handler_message_unignored">has been unignored</string>
-    <string name="handler_message_room_mode">Channel now showing: %1$s</string>
+    <string name="handler_message_room_mode">Channel now showing %1$s</string>
     <string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes</string>
     <string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s</string>
     <string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users - Max of %3$s users</string>

@@ -79,7 +79,7 @@ public class IgnoreHandler extends TokenHandler {
                 if(flistChar != null) {
                     flistChar.setIgnored(true);
                 }
-                this.addChatEntryToActiveChat(entry);
+                broadcastSystemInfo(entry, flistChar);
                 Ln.v("Added " + character + " to the ignore list.");
             } else if (action.equals("delete")) {
                 //Removed character from ignore list
@@ -88,7 +88,7 @@ public class IgnoreHandler extends TokenHandler {
                 if(flistChar != null) {
                     flistChar.setIgnored(true);
                 }
-                this.addChatEntryToActiveChat(entry);
+                broadcastSystemInfo(entry, flistChar);
                 Ln.v("Removed " + character + " from the ignore list.");
             } else {
                 //This shouldn't happen, ever.

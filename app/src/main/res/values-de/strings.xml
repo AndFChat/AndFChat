@@ -110,9 +110,9 @@
 	<string name="title_debug">Debug</string>
 	<string name="title_general">Allgemein</string>
 
-	<string name="hello_world">Hey, you shouldn\'t be seeing this! There\'s no RP in here! D:</string>
+	<string name="hello_world">Sie sollten nicht das sehen! Es keine RP hier! D:</string>
 
-	<string name="action_settings">If you see this, send a note to AndFChat UI</string>
+	<string name="action_settings">Sie sollten nicht das sehen! Senden Sie bitte eine Note an AndFChat UI</string>
 
 	<string name="title_initial_channel">Channels nach der Anmeldung</string>
 	<string name="description_initial_channel">Bereits bei Login offene Channel wählen</string>
@@ -135,9 +135,9 @@
 	<string name="description_led_feedback">Signallicht für neue Nachrichten</string>
 
 	<string name="title_use_debug_channel">Zeigen Debug Angaben</string>
-	<string name="description_use_debug_channel">Shows the input/output tags in the console</string>
+	<string name="description_use_debug_channel">Zeigt Eingabe-Ausgabetags in der Konsole an</string>
 
-	<string name="title_theme">App style</string>
+	<string name="title_theme">App Stil</string>
 	<string name="description_theme">App-Design auswählen (Neustart erforderlich)</string>
 
 	<string name="title_chat_text_size">Schriftgröße</string>
@@ -156,39 +156,39 @@
 	<string name="status">Status:</string>
 
 	<!-- Descriptions of /commands -->
-	<string name="command_description_ban">[user] | Removes the character from the current room and prevents them from re-entering. You can\'t ban a character who is not currently online and in the room.</string>
-	<string name="command_description_bottle">| Selects one person in the room, purportedly by spinning a bottle. If Bob were to type /bottle, he might see: Bob spins the bottle: Hexxy</string>
-	<string name="command_description_closeroom">| This will close the current opened private room, removing it from the list and making further entry invite-only.</string>
-	<string name="command_description_close">| Leaves the current channel.</string>
-	<string name="command_description_makeroom">[name] | Open a new private room named [name].</string>
-	<string name="command_description_cdeop">[character] | Removes a moderator/chan-op from the current private room. [character] is the character to demote.</string>
-	<string name="command_description_roll">| This command rolls a number of dice. If Bob wanted to roll two dice with six sides each, he\'d type: /roll 2d6</string>
-	<string name="command_description_ignore">| This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
-	<string name="command_description_invite">| Invites another character to the current room, giving them permission to enter. Your current character must be a Chan-Op or Room Owner.</string>
-	<string name="command_description_kick">[user] | Removes the character from the current private room. If it is an open private room, it does not prevent them from re-entering.</string>
-	<string name="command_description_openroom">| This will make the current private room open, adding it to the list of private rooms, and allowing anyone to join.</string>
-	<string name="command_description_priv">[user] | This opens a private message session with another character.</string>
-	<string name="command_description_cop">[character] | Adds a moderator/chan-op to the current private room. [character] is the character to be promoted.</string>
-	<string name="command_description_ad">| Posts an ad to the channel.</string>
-	<string name="command_description_setdescription">[text] | This sets the current room\'s description to the given text.</string>
-	<string name="command_description_setmode">[mode] | This determines the type of content that can be sent in the current private room. [mode] can be \'ads\', \'chat\', or \'both\' (Default: both)</string>
-	<string name="command_description_setowner">[character] | This sets the owner of the current room to the designated character.</string>
-	<string name="command_description_status">+ [optional text] | Statuses are: online, looking, away, busy, dnd</string>
-	<string name="command_description_timeout">[user] | Temporarily bans a character from the room for 30 minutes.</string>
-	<string name="command_description_unban">[user] | Permit a previously banned character to enter the current room again.</string>
-	<string name="command_description_unignore">[name] | Reverses the /ignore command, to allow communication once again.</string>
-	<string name="command_description_uptime">| Reports how long the server has been running.</string>
+	<string name="command_description_ban">[user] | Schmeißt [user] aus dem momentanen Raum und lässt ihn/sie ihn nicht wieder betreten. Dazu muss das Ziel online und im momentanen Raum sein.</string>
+	<string name="command_description_bottle">| Wählt zufällig durch \"Flaschendrehen\" eine Person im momentanen Raum aus. Wenn Bob beispielsweise dieses Kommando verwendet, könnte das so aussehen: Bob spins the bottle: Hexxy</string>
+	<string name="command_description_closeroom">| Verschließt den momentanen (privaten) Raum, damit wird er aus der Liste entfernt und nur durch Einladung betretbar.</string>
+	<string name="command_description_close">| Momentanen Raum verlassen.</string>
+	<string name="command_description_makeroom">[name] | Öffnet einen neuen Raum namens [name].</string>
+	<string name="command_description_cdeop">[user] | Entfernt den Moderatorenstatus von [user] im momentanen Raum.</string>
+	<string name="command_description_roll">[dice]| Würfeln. Beispiel, um zwei sechsseitige Würfel zu werfen: /roll 2d6</string>
+	<string name="command_description_ignore">[user] | Ignoriert auf allen eigenen Charaktern den Charakter [user]. [user] wird beim Versuch, dir Nachrichten zu senden darüber benachrichtigt.</string>
+	<string name="command_description_invite">[user]| Lädt [user] zum momentanen Raum ein und gibt ihm/ihr damit Beitrittsrechte. Dafür musst du Moderator oder Eigentümer des Raums sein.</string>
+	<string name="command_description_kick">[user] | Schmeißt [user] aus dem momentanen Raum. Das hält sie aber nur bei geschlossenen privaten Räumen vom Zurückkommen ab.</string>
+	<string name="command_description_openroom">| Öffnet den momentanen (privaten Raum), damit wird er zur Liste hinzugefügt und für alle betretbar.</string>
+	<string name="command_description_priv">[user] | Öffnet einen privaten Chat mit [user].</string>
+	<string name="command_description_cop">[user] | Befördert [user] zum Moderator im momentanen Raum.</string>
+	<string name="command_description_ad">| Sendet einen Ad an den momentanen Raum.</string>
+	<string name="command_description_setdescription">[text] | Setzt die Beschreibung des momentanen Raums auf [text].</string>
+	<string name="command_description_setmode">[modus] | Setzt den erlaubten Inhalt des momentanen Raums auf [modus]. [modus] kann dabei \'ads\', \'chat\' oder \'both\' sein. (Standard ist \'both\'.)</string>
+	<string name="command_description_setowner">[user] | Macht [user] zum Eigentümer des momentanen Raums.</string>
+	<string name="command_description_status">[status] [optionaler text] | [status]kann \'online\', \'looking\', \'away\', \'busy\' oder \'dnd\' sein.</string>
+	<string name="command_description_timeout">[user] | Bannt [user] für 30 Minuten aus dem momentanen Raum.</string>
+	<string name="command_description_unban">[user] | Entfernt den Ban von [user] im momentanen Raum.</string>
+	<string name="command_description_unignore">[user] | [user] darf dir damit wieder Nachrichten senden (Umkehrung von /ignore).</string>
+	<string name="command_description_uptime">| Gibt aus, wie lange der letzte Reboot des Servers zurückliegt.</string>
 
 	<!-- Messages displayed by handlers -->
-	<string name="handler_message_promoted">has been promoted in %1$s</string>
-	<string name="handler_message_new_owner">has been made the owner of %1$s</string>
-	<string name="handler_message_demoted">has been demoted in %1$s</string>
-	<string name="handler_message_ignored">has been ignored</string>
-	<string name="handler_message_unignored">has been unignored</string>
-	<string name="handler_message_room_mode">Channel now showing: %1$s</string>
-	<string name="handler_message_timeout_you">has banned you from %1$s for %2$s minutes</string>
-	<string name="handler_message_timeout_mod">has been banned from %1$s for %2$s minutes by %3$s</string>
-	<string name="handler_message_uptime">Server started: %1$s\n Currently %2$s users - Max of %3$s users</string>
+	<string name="handler_message_promoted">wurde in %1$s befördert</string>
+	<string name="handler_message_new_owner">wurde zum Eigentümer von %1$s befördert</string>
+	<string name="handler_message_demoted">wurde in %1$s degradiert</string>
+	<string name="handler_message_ignored">wird nun ignoriert</string>
+	<string name="handler_message_unignored">wird nun nicht mehr ignoriert</string>
+	<string name="handler_message_room_mode">In diesem Channel wird nun angezeigt %1$s</string>
+	<string name="handler_message_timeout_you">hat dich von %1$s für %2$s gebannt</string>
+	<string name="handler_message_timeout_mod">wurde von %3$s aus %1$s für %2$s gebannt</string>
+	<string name="handler_message_uptime">Server läuft seit: %1$s\n User online: Momentan %2$s, Maximum %3$s seit letztem Neustart</string>
 
 
 	<string-array name="text_size_translation">
