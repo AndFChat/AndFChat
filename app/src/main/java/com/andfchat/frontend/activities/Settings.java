@@ -86,7 +86,7 @@ public class Settings extends RoboPreferenceActivity {
         //title += ": " + sessionData.getSessionSettings().getInitialChannel();
         initialChannelList.setTitle(title);
 
-        final ListPreference textSizeList = (ListPreference)findPreference("chat_text_size");
+        /*final ListPreference textSizeList = (ListPreference)findPreference("chat_text_size");
 
         textSizeList.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
@@ -106,7 +106,7 @@ public class Settings extends RoboPreferenceActivity {
 
         title = getString(R.string.title_chat_text_size);
         title += ": " + textSizeList.getEntry();
-        textSizeList.setTitle(title);
+        textSizeList.setTitle(title);*/
 
         Preference button = findPreference("button");
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {

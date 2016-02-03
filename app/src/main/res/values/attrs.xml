@@ -27,11 +27,11 @@
         <item>AppTheme.Light</item>
     </string-array>
     
-    <string-array name="TextSize">
+    <!--<string-array name="TextSize">
         <item>very_small</item>
         <item>small</item>
         <item>medium</item>
         <item>big</item>
-    </string-array>    
+    </string-array>-->
     
 </resources>

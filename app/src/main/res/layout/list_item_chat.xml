@@ -36,6 +36,7 @@
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
+        android:textStyle="bold"
         android:scrollHorizontally="true"
         android:layout_width="wrap_content"
     	android:layout_height="wrap_content"

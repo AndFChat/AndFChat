@@ -36,16 +36,21 @@
 	    android:layout_height="wrap_content"        
         android:id="@+id/itemText"
         android:textSize="@dimen/text_size_button_small"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
         android:singleLine="true"
         android:text="Username"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/itemIcon"
+        android:layout_toLeftOf="@id/ChatroomImage"
     />
 
     <Button
         android:id="@+id/pmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="7dp"
         android:text="@string/pm_user"
         android:layout_alignParentRight="true"
     />

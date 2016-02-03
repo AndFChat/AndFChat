@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+      This file is part of AndFChat.
+  
+      AndFChat is free software: you can redistribute it and/or modify
+      it under the terms of the GNU General Public License as published by
+      the Free Software Foundation, either version 3 of the License, or
+      (at your option) any later version.
+  
+      AndFChat is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU General Public License for more details.
+  
+      You should have received a copy of the GNU General Public License
+      along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+
+    <!-- Simple stuff for buttons, title etc. -->
+    <string name="app_name">AndFChat</string>
+    <string name="menu_settings">Configurações</string>
+
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+
+    <string name="account">ID</string>
+    <string name="password">Palavra-passe</string>
+    <string name="login">Log In</string>
+    <string name="connecting">Conectando-se</string>
+    <string name="remember_account">Lembrar Conta</string>
+    <string name="logout">Deslogar</string>
+    <string name="about">Sobre</string>
+    <string name="settings">Configurações</string>
+    <string name="bookmark_user">+Bookmark</string>
+    <string name="unbookmark_user">-Bookmark</string>
+    <string name="show_details">Mostrar Detalhess</string>
+    <string name="show_profile">Profile</string>
+    <string name="pm_user">Abrir PM</string>
+    <string name="close">Fechar</string>
+    <string name="chatmessage_hint">Escreve uma mensagem</string>
+    <string name="send_message">Enviar</string>
+    <string name="friendlist">Amigos &amp; Bookmarks</string>
+    <string name="hide">Esconder</string>
+    <string name="show">Mostrar</string>
+    <string name="arrows_left">&lt;&lt;</string>
+    <string name="arrows_right">&gt;&gt;</string>
+    <string name="channels">Canais</string>
+    <string name="public_channels">Canais Públicos</string>
+    <string name="private_channels">Canais Privados</string>
+    <string name="friends_selector">Amigos</string>
+    <string name="bookmarks_selector">Bookmarks</string>
+    <string name="leave_channel">Sair</string>
+    <string name="export_text">Exportar</string>
+    <string name="post_ad_text">Postar Anuncio</string>
+    <string name="channel_description">Descrição</string>
+    <string name="actions">Acções</string>
+    <string name="select_character">Seleciona Personagem</string>
+    <string name="ad_clickable_advertisement">[Clicka para ver o anuncio]</string>
+    <string name="exit">Sair</string>
+
+
+    <string name="notification_connected">Conectado ao F-chat</string>
+    <string name="notification_disconnect">Desconectado do F-Chat</string>
+    <plurals name="notification_attention">
+        <item quantity="one">Tu tens %d mensagens novas</item>
+        <item quantity="other">Tu tens %d mensagens novas</item>
+    </plurals>
+
+    <!-- Messages for the chat directly, they will be posted into the chat with a users name at the beginning. Like "XYZ connected." -->
+    <string name="message_channel_joined">juntou-se ao canal</string>
+    <string name="message_channel_left">desconectou-se do canal</string>
+    <string name="message_connected">conectou-se</string>
+    <string name="message_disconnected">desconectou-se</string>
+    <string name="message_status_changed">esta agora %1$s</string>
+    <string name="message_status_changed_with_message">esta agora %1$s [%2$s]</string>
+    <string name="message_invite_to_channel">convidou-te para the juntares a [session=%1$s]%2$s[/session]</string>
+
+    <string name="question_disconnect">Desejas mesmo sair?</string>
+    <string name="question_back">Desejas mesmo sair?</string>
+    <string name="question_delete_log">Queres mesmo apagar este log?</string>
+
+    <!-- longer text messages -->
+    <string name="error_login">Login falhou: </string>
+    <string name="error_disconnected">Desconectado: </string>
+    <string name="error_disconnected_no_connection">Perdeu a conecção ao servidor</string>
+    <string name="error_command_not_allowed">Este comando não é aceitavel aqui</string>
+    <string name="error_name_not_found">Nenhum utilizador com o nome \'%1$s\' encontrado</string>
+    <string name="error_no_name_given">Por favor de um nome de utilizador como parâmetro</string>
+
+    <string name="exported">Directoria de download exportada corretamente, nome: %1$s</string>
+    <string name="export_perm_granted">Podes agora exportar os logs</string>
+    <string name="export_perm_denied">Exportar os logs não irá resultar sem a permissão de armazenamento</string>
+    <string name="export_failed">Nao pode escrever output, directoria de download não existe</string>
+    <string name="command_help_menu">Menu de ajuda, mostra todos os comandos:</string>
+    
+    <string name="text_about">AndFChat foi criado sobre a licensa GPLv3 
+        \n\nAndFChat é uma aplicação de [color=red]terceira parte[/color] para o f-list, e ainda está em [color=red]beta[/color], então por favor seja paciente com o cliente!
+        \n\nFound bugs encontrados podem ser enviados via note para o AndFChat (Sim, alguns tags ainda não estão completos) ou diretamente sobre problemas para GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
+        \n
+        [b][color=red]Ainda a procura de ajuda![/color][/b]\n
+        <!--* Artist/designer to improve the interface and add some images.\n-->
+        * Programador de android experiente para design de UI, especialmente para scaling para displays de layouts diferentes.\n</string>
+
+    <!-- Displayed after the App crashed -->
+    <string name="crash_toast_text">Desculpe! Por favor mande-nos uma crash report via F-list note para ambos AndFChat UI e AndFChat, ou via email para githublimon@gmail.com</string>
+
+    <!-- Settings translations title + description -->
+    <string name="title_feedback">Feedback</string>
+    <string name="title_debug">Debug</string>
+    <string name="title_general">General</string>
+
+    <string name="hello_world">Hey! Não devias estar a ver isto! Não existe nenhuma rp aqui!</string>
+
+    <string name="action_settings">Se vires isto, manda uma note para AndFChat UI</string>
+
+    <string name="title_initial_channel">Canais no login</string>
+    <string name="description_initial_channel">Escolha que canais abrir ao conectar-se</string>
+    <string name="title_log_history">Salvar histórico do chat</string>
+    <string name="description_log_history">Salvar chatlogs para armazenamento internal</string>
+    <string name="title_log_channel">Log de canais publicos</string>
+    <string name="description_log_channel">Log canais publicos e pms</string>
+    <string name="title_delete_history">Apagar histórico</string>
+    <string name="description_delete_history">Remover todos os logs do armazenemento interno</string>
+
+    <string name="title_show_channel_info">Mostrar info do canal</string>
+    <string name="description_show_channel_info">Mostrar notificações de entrada/saida do canal</string>
+    <string name="title_show_user_status_changes">Mostrar mudança de status do usuário</string>
+    <string name="description_show_user_status_changes">Mostrar notificação de status de amigos/bookmarks</string>
+    <string name="title_vibration_feedback">Vibrar com mensagens novas</string>
+    <string name="description_vibration_feedback">Novas mensagens ativam vibração</string>
+    <string name="title_audio_feedback">Audio em mensagens novas</string>
+    <string name="description_audio_feedback">Novas mensagens ativam audio</string>
+    <string name="title_led_feedback">Notification light on new messages</string>
+    <string name="description_led_feedback">New messages trigger white notification light</string>
+
+    <string name="title_use_debug_channel">Mostrar informação de debug</string>
+    <string name="description_use_debug_channel">Mostrar o input/output de tags na consola</string>
+
+    <string name="title_theme">Estilo da App </string>
+    <string name="description_theme">Escolha um tema (Requere restart)</string>
+
+    <string name="title_chat_text_size">Tamanho da Fonte </string>
+    <string name="description_chat_text_size">Escolhe o tamanho da fonte para mensagens no chat</string>
+
+    <string name="title_show_avatar_pictures">Mostrar avatars na lista do chat</string>
+    <string name="description_show_avatar_pictures">Mostrar fotos de avatar em conversas privadas</string>
+
+    <string name="title_show_notifications">Mostrar notificações</string>
+    <string name="description_show_notifications">Mostrar notificações na barra de notificações</string>
+    <string name="dismiss">Ignorar</string>
+    <string name="show_ads">Mostrar anuncios</string>
+    <string name="show_avatar">Mostrar Avatar</string>
+    <string name="description_separate_friends">Separar amigos e bookmarks na lista de amigos?</string>
+    <string name="title_separate_friends">Separar amigos e bookmarks</string>
+    <string name="status">Status:</string>
+
+    <!-- Descriptions of /commands -->
+    <string name="command_description_ban">[user] | Bane uma personagem de um room e prevente a re-entrada. Não podes dar ban numa personagem que não esteja no room e/ou online.</string>
+    <string name="command_description_bottle">| Seleciona uma personagem no room, rodando a garrafa. Exemplo: Se o Bob rodar a garrafa, ele pode ver: Bob roda a garrafa:Hexxy</string>
+    <string name="command_description_closeroom">| Isto irá fechar o quarto privado, removendo-o da lista e fazendo com que uma nova entrada seja apenas por convite. </string>
+    <string name="command_description_close">| Deixa o canal.</string>
+    <string name="command_description_makeroom">[name] | Abre um novo quarto privado [name].</string>
+    <string name="command_description_cdeop">[character] | Remove um moderator/chan-op do quarto privado currente [character] é a personagem a despromover.</string>
+    <string name="command_description_roll">| Este comando rola um dado. Se o Bob quiser rolar dois dados com 6 lados cada ele ira escrever: /roll 2d6</string>
+    <string name="command_description_ignore">| Isto ira prevenir qualquer comunicação no f-chat da tua conta(todas as personagens) e essa personagem.</string>
+    <string name="command_description_invite">| Convida uma personagem para o canal currente, dando-lhes permissão para entrar. A personagem que estejas a usar para fazer o convite tem de ser o dono do canal ou um moderador do canal.</string>
+    <string name="command_description_kick">[user] | Remove a personagem do canal privado currente. Se for um canal privado aberto, não prevente que a pessoa volta a re-entrar.</string>
+    <string name="command_description_openroom">| Isto irá fazer com que o canal privado currente seja aberto ao publico, adicionando-o a lista de canais privados e permitindo a qualquer pessoa que se junte.</string>
+    <string name="command_description_priv">[user] | Isto abre uma mensagem privada com outra personagem.</string>
+    <string name="command_description_cop">[character] | Adiciona um moderator/chan-op ao canal privado currente, [character] é o nome da personagem a ser promovida.</string>
+    <string name="command_description_ad">| Publica um anuncio no canal.</string>
+    <string name="command_description_setdescription">[text] | Isto muda a descrição do quarto currente.</string>
+    <string name="command_description_setmode">[mode] | Isto determina o tipo de mensagems que pode ser enviado no canal. [mode] pode ser \'ads\', \'chat\', or \'both\' (Default: both)</string>
+    <string name="command_description_setowner">[character] | Coloca a personagem selecionado como a dono/a do canal.</string>
+    <string name="command_description_status">+ [optional text] | Os status disponiveis para utilização são: online, looking, away, busy, dnd</string>
+    <string name="command_description_timeout">[user] | Temporariamente bane uma personagem do canal por 30 minutos.</string>
+    <string name="command_description_unban">[user] |Permite a uma personagem previamente banida, a voltar a re-entrar no canal.</string>
+    <string name="command_description_unignore">[name] | Reverte o comando /ignore e permite comunicação com a personagem outravez.</string>
+    <string name="command_description_uptime">| Mostra a quanto tempo o servidor esta a correr.</string>
+
+    <!-- Messages displayed by handlers -->
+    <string name="handler_message_promoted">foi promovido em %1$s</string>
+    <string name="handler_message_new_owner">foi feito/a dono/a de %1$s</string>
+    <string name="handler_message_demoted">foi despromovido/a de %1$s</string>
+    <string name="handler_message_ignored">foi ignorando/a</string>
+    <string name="handler_message_unignored">já não está a ser ignorado/a</string>
+    <string name="handler_message_room_mode">Canal a mostrar agora %1$s</string>
+    <string name="handler_message_timeout_you">baniu-te de %1$s por %2$s minutos</string>
+    <string name="handler_message_timeout_mod">foi banido %1$s por %2$s minutos por %3$s</string>
+    <string name="handler_message_uptime">O servidor começou: %1$s\n Currentemente: %2$s utilizadores - Maximo de usuários: %3$s</string>
+
+
+    <string-array name="text_size_translation">
+        <item>Pequeno</item>
+        <item>Normal</item>
+        <item>Grande</item>
+        <item>Enorme</item>
+    </string-array>
+
+    <!-- Themes -->
+    <string-array name="themes_translation">
+        <item>Slate</item>
+        <item>Cobalt</item>
+        <item>Ice</item>
+    </string-array>
+
+</resources>
