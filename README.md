@@ -3,7 +3,7 @@ Developed for minimum API Level: 14, Android 4.0 (Ice Cream Sandwich) or higher
 
 It's a beta! Don't panic!
 
-<img src="http://i.imgur.com/SLTaF4S.png" width="300"> <img src="http://i.imgur.com/40tVtFs.png" width="300"> <img src="http://i.imgur.com/RORaZgL.png" width="300">
+<img src="http://i.imgur.com/SLTaF4S.png" width="275"> <img src="http://i.imgur.com/40tVtFs.png" width="275"> <img src="http://i.imgur.com/RORaZgL.png" width="275">
 
 Any help, tips and thanks are welcomed! :)
 
