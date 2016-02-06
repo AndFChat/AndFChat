@@ -42,7 +42,9 @@ We currently don't see any reason to complicate this by adding multiple connecti
 ***How do I post an ad?***
 
 There are two ways to post an ad: 
+
 1. Starting your post with /ad [text] will automatically post the text as an ad.
+
 2. Write your post and don't send it, select Post Ad in the Actions menu.
  
 ***How do I ignore or unignore a user?***
