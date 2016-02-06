@@ -76,6 +76,7 @@ public class FriendListAction {
                 public void onClick(View v) {
                     adapter.clear();
                     adapter.addAll(friendsData);
+                    adapter.sortList();
                 }
             });
 
@@ -86,20 +87,23 @@ public class FriendListAction {
                 public void onClick(View v) {
                     adapter.clear();
                     adapter.addAll(bookmarksData);
+                    adapter.sortList();
                 }
             });
 
             // Set friends active first
             adapter.addAll(friendsData);
+            adapter.sortList();
         }
         else {
             adapter.addAll(friendsData);
-            // Add all bookmarks not allready added (friends can be bookmarked too)
+            // Add all bookmarks not already added (friends can be bookmarked too)
             for (FCharacter character : bookmarksData) {
                 if (character.isFriend() == false) {
                     adapter.add(character);
                 }
             }
+            adapter.sortList();
             Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
             showFriends.setVisibility(View.GONE);
             Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
