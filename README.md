@@ -3,9 +3,9 @@ Developed for minimum API Level: 14, Android 4.0 (Ice Cream Sandwich) or higher
 
 It's a beta! Don't panic!
 
-<img src="http://i.imgur.com/SLTaF4S.png" width="275"> <img src="http://i.imgur.com/40tVtFs.png" width="275"> <img src="http://i.imgur.com/RORaZgL.png" width="275">
+<img src="http://i.imgur.com/SLTaF4S.png" width="280"> <img src="http://i.imgur.com/40tVtFs.png" width="280"> <img src="http://i.imgur.com/RORaZgL.png" width="280">
 
-Any help, tips and thanks are welcomed! :)
+Any help, tips, and thanks are welcomed! :)
 
 You are welcome to contact either of us on F-list for bug reports:
 
@@ -30,16 +30,17 @@ autobahn-0.5.2.jar
 - jackson-mapper-asl.1.9.7.jar
 
 ## FAQ
-***Switching from wlan(WiFi) -> mobile internet or mobile internet -> wlan is disconnecting me, help?!***
+***Switching between Wifi networks or between WiFi and mobile internet is disconnecting me, help?!***
+Sorry, you are switching IP addresses. There is no easy way to fix this, other than reconnecting with the other IP, but automatic reconnecting is not implemented right now. 
 
-Sorry, you are switching IP addresses. I see no easy way to fix this, despite reconnecting with the other IP, but automatic reconnecting is not implemented right now. 
+***Why can I only connect with one character at a time? Will there be any update to fix this?***
+There is barely enough space on a phone for one character.
+We currently don't see any reason to complicate this by adding multiple connections at the same time. 
 
-***Why can I only connect with one character at the same time? Will there be any update to fix this?***
-
-There is barely enough space on a phone for one character. We currently don't see any reason to complicate this by adding multiple connections at the same time. 
-
-***How do I post Ads?***
-
+***How do I post an ad?***
 There are two ways to post an ad: 
-1. Start your post with /ad [text] that will automatically post as ad. 
-2. Write your post and don't send it, select Post ad in the action Menu.
+1. Starting your post with /ad [text] will automatically post the text as an ad.
+2. Write your post and don't send it, select Post Ad in the Actions menu.
+ 
+***How do I ignore or unignore a user?***
+Just type /ignore [name] to ignore, or /unignore [name] to unignore.
