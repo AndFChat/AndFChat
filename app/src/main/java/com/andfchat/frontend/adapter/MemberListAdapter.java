@@ -330,7 +330,6 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         if (position == 1) {
             Ln.d("Redrawn");
         }
-        //sortList();
 
         return rowView;
     }
