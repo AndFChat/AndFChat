@@ -31,7 +31,6 @@ public class FlistCharComparator implements Comparator<FCharacter> {
 
     @Override
     public int compare(FCharacter lhs, FCharacter rhs) {
-        int compareInt;
 
         if (lhs == null) {
             return 1;
@@ -61,9 +60,6 @@ public class FlistCharComparator implements Comparator<FCharacter> {
         else if (!lhs.isImportant() && rhs.isImportant()) {
             return 1;
         }
-        /*else if (lhs.isImportant() && rhs.isImportant()) {
-            return lhs.getName().compareTo(rhs.getName());
-        }*/
 
         //compare status
         if (lhs.getStatus().equals(CharStatus.LOOKING) && !rhs.getStatus().equals(CharStatus.LOOKING)) {
