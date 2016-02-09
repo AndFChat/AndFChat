@@ -435,7 +435,6 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
 
         //
         // Leave active chatFragment
-        // TODO Convert to being long-press action, rather than QuickActionBar item
         //
         final CheckActionItem showProfilePic = new CheckActionItem(getString(R.string.show_avatar), ContextCompat.getDrawable(this, R.drawable.avatar));
         showProfilePic.setQuickActionClickListener(new QuickActionOnClickListener() {
@@ -659,6 +658,12 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     protected void onDestroy() {
         Ln.i("onDestroy");
         notificationManager.cancelAll();
+        if (loginPopup.isShowing()) {
+            loginPopup.dismiss();
+        }
+        if (charSelectionPopup.isShowing()) {
+            charSelectionPopup.dismiss();
+        }
         super.onDestroy();
     }
 
@@ -728,6 +733,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             @Override
             public void onYes() {
                 connection.closeConnection(ChatScreen.this);
+                notificationManager.cancelAll();
                 finish();
             }
 

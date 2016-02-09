@@ -156,7 +156,6 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
                 chatroomManager.setActiveChat(chatroom);
             }
         });
-        sortList();
 
         return rowView;
     }
