@@ -28,24 +28,13 @@
             android:entries="@array/themes_translation"
             android:entryValues="@array/Themes"    
             android:defaultValue="AppTheme"
-        />
-
-        <CheckBoxPreference
-            android:key="show_notifications"
-            android:summary="@string/description_show_notifications"
-            android:title="@string/title_show_notifications"
-            android:widgetLayout="@layout/preference_switch"
-            android:defaultValue="true"
             />
-        
-        <!-- <ListPreference
-            android:key="chat_text_size"
-            android:title="@string/title_chat_text_size"
-            android:summary="@string/description_chat_text_size"
-            android:entries="@array/text_size_translation"
-            android:entryValues="@array/TextSize"
-            android:defaultValue="medium"
-        /> -->
+
+        <MultiSelectListPreference
+            android:key="initial_channels"
+            android:summary="@string/description_initial_channel"
+            android:title="@string/title_initial_channel"
+            />
 
         <CheckBoxPreference
             android:key="show_avatar_pictures"
@@ -53,7 +42,7 @@
             android:title="@string/title_show_avatar_pictures"
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
-        />
+            />
 
         <CheckBoxPreference
             android:key="separate_friends"
@@ -62,12 +51,6 @@
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
             />
-
-        <MultiSelectListPreference
-            android:key="initial_channels"
-            android:summary="@string/description_initial_channel"
-            android:title="@string/title_initial_channel"
-        />
         
         <CheckBoxPreference
             android:key="log_history"
@@ -75,7 +58,7 @@
             android:title="@string/title_log_history"
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
-        />
+            />
         
         <CheckBoxPreference
             android:key="log_channel"
@@ -83,34 +66,26 @@
             android:title="@string/title_log_channel"
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
-        />
+            />
         
         <Preference
             android:key="button"
             android:title="@string/title_delete_history"
             android:summary="@string/description_delete_history"
-        />
+            />
     </PreferenceCategory>
         
     <PreferenceCategory 
         android:title="@string/title_feedback"
         android:key="feedback">
-    
+
         <CheckBoxPreference
-            android:key="show_channel_info"
-            android:summary="@string/description_show_channel_info"
-            android:title="@string/title_show_channel_info"
-            android:widgetLayout="@layout/preference_switch"
-            android:defaultValue="false"
-        />
-        
-        <CheckBoxPreference
-            android:key="show_user_status_changes"
-            android:summary="@string/description_show_user_status_changes"
-            android:title="@string/title_show_user_status_changes"
+            android:key="show_notifications"
+            android:summary="@string/description_show_notifications"
+            android:title="@string/title_show_notifications"
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
-        />
+            />
 
         <CheckBoxPreference
             android:key="audio_feedback"
@@ -127,7 +102,7 @@
             android:widgetLayout="@layout/preference_switch"
             android:hapticFeedbackEnabled="true"
             android:defaultValue="true"
-        />
+            />
         
         <CheckBoxPreference
             android:key="led_feedback"
@@ -135,7 +110,23 @@
             android:title="@string/title_led_feedback"
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="true"
-        />                
+            />
+
+        <CheckBoxPreference
+            android:key="show_user_status_changes"
+            android:summary="@string/description_show_user_status_changes"
+            android:title="@string/title_show_user_status_changes"
+            android:widgetLayout="@layout/preference_switch"
+            android:defaultValue="true"
+            />
+
+        <CheckBoxPreference
+            android:key="show_channel_info"
+            android:summary="@string/description_show_channel_info"
+            android:title="@string/title_show_channel_info"
+            android:widgetLayout="@layout/preference_switch"
+            android:defaultValue="false"
+            />
     </PreferenceCategory>
     
     <PreferenceCategory 
@@ -148,7 +139,7 @@
             android:title="@string/title_use_debug_channel"
             android:widgetLayout="@layout/preference_switch"
             android:defaultValue="false"
-        />
+            />
         
     </PreferenceCategory>
 </PreferenceScreen>

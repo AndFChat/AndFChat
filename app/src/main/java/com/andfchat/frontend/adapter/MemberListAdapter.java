@@ -106,7 +106,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             @Override
             public void onClick(ActionItem item, View view) {
                 Chatroom chatroom;
-                if (chatroomManager.hasOpenPrivateConversation(activeCharacter) == false) {
+                if (!chatroomManager.hasOpenPrivateConversation(activeCharacter)) {
                     int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
                     chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, activeCharacter, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
 
@@ -134,7 +134,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
             @Override
             public void onClick(ActionItem item, View view) {
-			
+
                 OkHttpClient client = new OkHttpClient();
                 //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
 
@@ -233,25 +233,53 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         });
     }
 
+    private class UserViewHolder{
+        public TextView textView;
+        public ImageView itemIcon;
+        public ImageView itemIconOverlay;
+        View userLabel;
+
+        public UserViewHolder(TextView textView, ImageView itemIcon, ImageView itemIconOverlay, View userLabel){
+            this.textView = textView;
+            this.itemIcon = itemIcon;
+            this.itemIconOverlay = itemIconOverlay;
+            this.userLabel = userLabel;
+        }
+    }
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final FCharacter character = this.getItem(position);
 
+        TextView textView;
+        ImageView itemIcon;
+        ImageView itemIconOverlay;
+        View userLabel;
+
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_item_user, null);
+
+            textView = (TextView) convertView.findViewById(R.id.itemText);
+            itemIcon = (ImageView)convertView.findViewById(R.id.itemIcon);
+            itemIconOverlay = (ImageView)convertView.findViewById(R.id.itemIconOverlay);
+            userLabel = convertView.findViewById(R.id.userlabel);
+            convertView.setTag(new UserViewHolder(textView, itemIcon, itemIconOverlay, userLabel));
+        } else {
+            UserViewHolder holder = (UserViewHolder) convertView.getTag();
+            textView = holder.textView;
+            itemIcon = holder.itemIcon;
+            itemIconOverlay = holder.itemIconOverlay;
+            userLabel = holder.userLabel;
         }
 
         final View rowView = convertView;
         rowView.setSelected(false);
 
         // Set username
-        TextView textView = (TextView)rowView.findViewById(R.id.itemText);
         textView.setText(new NameSpannable(character, null, getContext().getResources()));
 
         // Set icon
-        ImageView itemIcon = (ImageView)rowView.findViewById(R.id.itemIcon);
-
         switch (character.getStatus()) {
             case ONLINE:
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
@@ -279,15 +307,12 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         }
 
         // Set icon
-        ImageView itemIconOverlay = (ImageView)rowView.findViewById(R.id.itemIconOverlay);
         if (character.isGlobalOperator() || chatroomManager.getActiveChat().isChannelMod(character)) {
             itemIconOverlay.setVisibility(View.VISIBLE);
         }
         else {
             itemIconOverlay.setVisibility(View.GONE);
         }
-
-        View userLabel = rowView.findViewById(R.id.userlabel);
 
         userLabel.setOnClickListener(new OnClickListener() {
             @Override
@@ -305,7 +330,6 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         if (position == 1) {
             Ln.d("Redrawn");
         }
-        sortList();
 
         return rowView;
     }

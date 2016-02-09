@@ -72,7 +72,6 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         super(context, R.layout.list_item_friend, chars);
 
         if (chars.size() > 1) {
-            this.sort(COMPARATOR);
             sortList();
         }
 
@@ -157,7 +156,6 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
                 chatroomManager.setActiveChat(chatroom);
             }
         });
-        sortList();
 
         return rowView;
     }
