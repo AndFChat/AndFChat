@@ -20,13 +20,13 @@
     <attr name="ToggleDirectionButton" format="reference" />
     <!-- STYLES -->
     <attr name="UserListBackground" format="color|reference"/>
-    
-    <string-array name="Themes">
+
+    <string-array translatable="false" name="Themes">
         <item>AppTheme</item>
         <item>AppTheme.Blue</item>
         <item>AppTheme.Light</item>
     </string-array>
-    
+
     <!--<string-array name="TextSize">
         <item>very_small</item>
         <item>small</item>

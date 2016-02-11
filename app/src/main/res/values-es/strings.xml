@@ -184,6 +184,7 @@
     <string name="handler_message_new_owner"> ahora tiene propiedad de %1$s</string>
     <string name="handler_message_demoted">ha sido degradado en %1$s</string>
     <string name="handler_message_unignored">ya no es ignorado</string>
+    <string name="handler_message_ignored">has been ignored</string>
     <string name="handler_message_room_mode">El canal ahora muestra %1$s</string>
     <string name="handler_message_timeout_you">te ha excluido de %1$s durante %2$s minutos</string>
     <string name="handler_message_timeout_mod">ha sido excluido de %1$s durante %2$s minutos por %3$s</string>
