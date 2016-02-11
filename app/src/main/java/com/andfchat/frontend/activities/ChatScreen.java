@@ -625,6 +625,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         }
         if (version.isLowerThan("0.5.0")) {
             Ln.i("Updating to version 0.5.0");
+            historyManager.clearHistory(true);
             sessionData.getSessionSettings().setVersion("0.5.0");
         }
     }
