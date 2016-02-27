@@ -37,6 +37,7 @@
         <item name="BackgroundChatTab">@color/background_chat_tab</item>
         <item name="BackgroundChatTabActive">@color/background_chat_tab_active</item>
         <item name="BackgroundChatTabAttention">@color/background_chat_tab_attention</item>
+        <item name="BackgroundChatTabStatus">@color/background_chat_tab_status</item>
         <!-- TEXT COLORS -->
         <item name="ChatTextColor">@color/text_chat_color</item>
         <!-- IMAGES -->
@@ -65,6 +66,7 @@
         <item name="BackgroundChatTab">@color/background_chat_tab_blue</item>
         <item name="BackgroundChatTabActive">@color/background_chat_tab_active_blue</item>
         <item name="BackgroundChatTabAttention">@color/background_chat_tab_attention_blue</item>
+        <item name="BackgroundChatTabStatus">@color/background_chat_tab_status_blue</item>
         <!-- TEXT COLORS -->
            
         <!-- IMAGES -->
@@ -93,6 +95,7 @@
         <item name="BackgroundChatTab">@color/background_chat_tab_light</item>
         <item name="BackgroundChatTabActive">@color/background_chat_tab_active_light</item>
         <item name="BackgroundChatTabAttention">@color/background_chat_tab_attention_light</item>
+        <item name="BackgroundChatTabStatus">@color/background_chat_tab_status_light</item>
         <!-- TEXT COLORS -->
 
         <!-- IMAGES -->

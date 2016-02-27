@@ -111,27 +111,31 @@ public class FlistWebSocketConnection {
     }
 
     public boolean isConnected() {
-        return application.isBound() != false && application.getConnection().isConnected();
+        return application.isBound() && application.getConnection().isConnected();
     }
 
     public void sendMessage(ClientToken token, JSONObject data) {
-        if (data == null) {
-            Ln.d("Sending token: " + token.name());
-            application.getConnection().sendTextMessage(token.name());
-
-            if (sessionData.getSessionSettings().useDebugChannel()) {
-                FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
-                ChatEntry entry = new MessageEntry(systemChar, token.name());
-                chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), entry);
-            }
+        if (token == null || token.name() == null) {
+            Ln.i("Null token or token name.");
         } else {
-            Ln.d("Sending message: " + token.name() + " " + data.toString());
-            application.getConnection().sendTextMessage(token.name() + " " + data.toString());
+            if (data == null) {
+                Ln.d("Sending token: " + token.name());
+                application.getConnection().sendTextMessage(token.name());
 
-            if (sessionData.getSessionSettings().useDebugChannel()) {
-                FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
-                ChatEntry entry = new MessageEntry(systemChar, token.name() + " " + data.toString());
-                chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), entry);
+                if (sessionData.getSessionSettings().useDebugChannel()) {
+                    FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
+                    ChatEntry entry = new MessageEntry(systemChar, token.name());
+                    chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), entry);
+                }
+            } else {
+                Ln.d("Sending message: " + token.name() + " " + data.toString());
+                application.getConnection().sendTextMessage(token.name() + " " + data.toString());
+
+                if (sessionData.getSessionSettings().useDebugChannel()) {
+                    FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM_OUTPUT);
+                    ChatEntry entry = new MessageEntry(systemChar, token.name() + " " + data.toString());
+                    chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), entry);
+                }
             }
         }
     }

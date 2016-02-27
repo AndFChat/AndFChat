@@ -163,7 +163,7 @@
 	<string name="command_description_makeroom">[name] | Öffnet einen neuen Raum namens [name].</string>
 	<string name="command_description_cdeop">[user] | Entfernt den Moderatorenstatus von [user] im momentanen Raum.</string>
 	<string name="command_description_roll">| Würfeln. Um beispielsweise zwei sechsseitige Würfel zu werfen: /roll 2d6</string>
-	<string name="command_description_ignore">| Ignoriert auf allen eigenen Charaktern den Charakter [user]. [user] wird beim Versuch, dir Nachrichten zu senden darüber benachrichtigt.</string>
+	<string name="command_description_ignore">[user] | Ignoriert auf allen eigenen Charaktern den Charakter [user]. [user] wird beim Versuch, dir Nachrichten zu senden darüber benachrichtigt.</string>
 	<string name="command_description_invite">| Lädt [user] in den aktuellen Raum ein und gibt ihm/ihr damit Beitrittsrechte. Dafür musst du Moderator oder Eigentümer des Raums sein.</string>
 	<string name="command_description_kick">[user] | Wirft [user] aus dem momentanen Raum. Das hält ihn/sie aber nur bei geschlossenen (privaten) Räumen vom Zurückkommen ab.</string>
 	<string name="command_description_openroom">| Macht einen privaten Raum öffentlich, damit er der Liste hinzugefügt und auch ohne Einladung betretbar wird.</string>

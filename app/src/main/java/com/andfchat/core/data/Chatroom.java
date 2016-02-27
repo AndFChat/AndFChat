@@ -57,6 +57,7 @@ public class Chatroom {
     private Spannable description;
 
     private boolean hasNewMessage = false;
+    private boolean hasNewStatus = false;
     private List<String> channelMods = new ArrayList<String>();
 
     private String entry;
@@ -152,6 +153,14 @@ public class Chatroom {
         hasNewMessage = value;
     }
 
+    public boolean hasNewStatus() {
+        return hasNewStatus;
+    }
+
+    public void setHasNewStatus(boolean value) {
+        hasNewStatus = value;
+    }
+
     public List<ChatEntry> getLastMessages(int amount) {
         List<ChatEntry> lastMessages = new ArrayList<ChatEntry>(amount);
 
@@ -172,6 +181,10 @@ public class Chatroom {
     }
 
     protected void addMessage(ChatEntry entry) {
+        chatMessages.add(entry);
+    }
+
+    protected void addStatus(ChatEntry entry) {
         chatMessages.add(entry);
     }
 

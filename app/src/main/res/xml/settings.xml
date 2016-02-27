@@ -103,14 +103,6 @@
             android:hapticFeedbackEnabled="true"
             android:defaultValue="true"
             />
-        
-        <CheckBoxPreference
-            android:key="led_feedback"
-            android:summary="@string/description_led_feedback"
-            android:title="@string/title_led_feedback"
-            android:widgetLayout="@layout/preference_switch"
-            android:defaultValue="true"
-            />
 
         <CheckBoxPreference
             android:key="show_user_status_changes"

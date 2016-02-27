@@ -161,22 +161,22 @@
     <string name="command_description_closeroom">| Isto irá fechar o quarto privado, removendo-o da lista e fazendo com que uma nova entrada seja apenas por convite. </string>
     <string name="command_description_close">| Deixa o canal.</string>
     <string name="command_description_makeroom">[name] | Abre um novo quarto privado [name].</string>
-    <string name="command_description_cdeop">[character] | Remove um moderator/chan-op do quarto privado currente [character] é a personagem a despromover.</string>
+    <string name="command_description_cdeop">[user] | Remove um moderator/chan-op do quarto privado currente [character] é a personagem a despromover.</string>
     <string name="command_description_roll">| Este comando rola um dado. Se o Bob quiser rolar dois dados com 6 lados cada ele ira escrever: /roll 2d6</string>
-    <string name="command_description_ignore">| Isto ira prevenir qualquer comunicação no f-chat da tua conta(todas as personagens) e essa personagem.</string>
+    <string name="command_description_ignore">[user] | Isto ira prevenir qualquer comunicação no f-chat da tua conta(todas as personagens) e essa personagem.</string>
     <string name="command_description_invite">| Convida uma personagem para o canal currente, dando-lhes permissão para entrar. A personagem que estejas a usar para fazer o convite tem de ser o dono do canal ou um moderador do canal.</string>
     <string name="command_description_kick">[user] | Remove a personagem do canal privado currente. Se for um canal privado aberto, não prevente que a pessoa volta a re-entrar.</string>
     <string name="command_description_openroom">| Isto irá fazer com que o canal privado currente seja aberto ao publico, adicionando-o a lista de canais privados e permitindo a qualquer pessoa que se junte.</string>
     <string name="command_description_priv">[user] | Isto abre uma mensagem privada com outra personagem.</string>
-    <string name="command_description_cop">[character] | Adiciona um moderator/chan-op ao canal privado currente, [character] é o nome da personagem a ser promovida.</string>
+    <string name="command_description_cop">[user] | Adiciona um moderator/chan-op ao canal privado currente, [character] é o nome da personagem a ser promovida.</string>
     <string name="command_description_ad">| Publica um anuncio no canal.</string>
     <string name="command_description_setdescription">[text] | Isto muda a descrição do quarto currente.</string>
     <string name="command_description_setmode">[mode] | Isto determina o tipo de mensagems que pode ser enviado no canal. [mode] pode ser \'ads\', \'chat\', or \'both\' (Default: both)</string>
-    <string name="command_description_setowner">[character] | Coloca a personagem selecionado como a dono/a do canal.</string>
+    <string name="command_description_setowner">[user] | Coloca a personagem selecionado como a dono/a do canal.</string>
     <string name="command_description_status">+ [optional text] | Os status disponiveis para utilização são: online, looking, away, busy, dnd</string>
     <string name="command_description_timeout">[user] | Temporariamente bane uma personagem do canal por 30 minutos.</string>
     <string name="command_description_unban">[user] |Permite a uma personagem previamente banida, a voltar a re-entrar no canal.</string>
-    <string name="command_description_unignore">[name] | Reverte o comando /ignore e permite comunicação com a personagem outravez.</string>
+    <string name="command_description_unignore">[user] | Reverte o comando /ignore e permite comunicação com a personagem outravez.</string>
     <string name="command_description_uptime">| Mostra a quanto tempo o servidor esta a correr.</string>
 
     <!-- Messages displayed by handlers -->

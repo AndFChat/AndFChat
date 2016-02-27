@@ -59,6 +59,7 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
     private final int activeColor;
     private final int attentionColor;
     private final int standardColor;
+    private final int statusColor;
 
     public ChatroomListAdapter(Context context, List<Chatroom> entries) {
         super(context, R.layout.list_item_chat, entries);
@@ -68,11 +69,13 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         TypedArray colorArray = context.getTheme().obtainStyledAttributes(new int[]{
                 R.attr.BackgroundChatTab,
                 R.attr.BackgroundChatTabActive,
-                R.attr.BackgroundChatTabAttention});
+                R.attr.BackgroundChatTabAttention,
+                R.attr.BackgroundChatTabStatus});
 
         standardColor = colorArray.getColor(0, 0);
         activeColor = colorArray.getColor(1, 0);
         attentionColor = colorArray.getColor(2, 0);
+        statusColor = colorArray.getColor(3, 0);
 
         colorArray.recycle();
 
@@ -115,6 +118,10 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         }
         else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
             rowView.setBackgroundColor(attentionColor);
+            title.setSelected(false);
+        }
+        else if (chatroom.hasNewStatus() && chatroom.isSystemChat() == false) {
+            rowView.setBackgroundColor(statusColor);
             title.setSelected(false);
         }
         else {

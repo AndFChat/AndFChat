@@ -76,23 +76,29 @@ public class JoinChannelAction {
         final CheckboxAdapter adapter = new CheckboxAdapter(activity, chatroomManager.getOfficialChannels());
         channelList.setAdapter(adapter);
 
-        Button showPublicChannel = (Button)layout.findViewById(R.id.publicChannelButton);
+        final Button showPublicChannel = (Button)layout.findViewById(R.id.publicChannelButton);
+        final Button showPrivateChannel = (Button)layout.findViewById(R.id.privateChannelButton);
+        showPublicChannel.setEnabled(false);
+
         showPublicChannel.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 adapter.clear();
+                showPrivateChannel.setEnabled(true);
+                showPublicChannel.setEnabled(false);
                 adapter.replaceChannels(chatroomManager.getOfficialChannels());
                 adapter.setPrivate(false);
             }
         });
 
-        Button showPrivateChannel = (Button)layout.findViewById(R.id.privateChannelButton);
         showPrivateChannel.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 adapter.clear();
+                showPrivateChannel.setEnabled(false);
+                showPublicChannel.setEnabled(true);
                 FeedbackListener feedbackListener = new FeedbackListener() {
 
                     @Override
@@ -158,6 +164,16 @@ public class JoinChannelAction {
                             connection.joinChannel(channelName);
                         }
                         checkbox.setChecked(true);
+                    } else {
+                        String chanID;
+                        if (isPrivate) {
+                            Channel channel = chatroomManager.getPrivateChannelByName(channelName);
+                            chanID = channel.getChannelId();
+                        } else {
+                            chanID = channelName;
+                        }
+                        connection.leaveChannel(chatroomManager.getChatroom(chanID));
+                        checkbox.setChecked(false);
                     }
                 }
             });

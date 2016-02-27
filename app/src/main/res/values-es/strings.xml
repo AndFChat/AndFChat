@@ -161,22 +161,22 @@
     <string name="command_description_closeroom">| Esto cerrara la conversacion privada actualmente abierta, quitandola de la lista y haciendo futuras entradas posibles solo por invitacion.</string>
     <string name="command_description_close">| Sale del canal actual.</string>
     <string name="command_description_makeroom">[name] | Abre una nueva conversacion privada llamada [name].</string>
-    <string name="command_description_cdeop">[character] | Remueve un moderador/chan-op de la actual conversacion privada. [character] es el personaje que sera degradado.</string>
+    <string name="command_description_cdeop">[user] | Remueve un moderador/chan-op de la actual conversacion privada. [character] es el personaje que sera degradado.</string>
     <string name="command_description_roll">| Este comando tira un numero de dados. si Bob quisiera tirar dos dados con seis lados, escribiria: /roll 2d6</string>
-    <string name="command_description_ignore">| Esto prohibira futura comunicacion en F-Chat entre tu cuenta (todos los personajes) y ese personake.</string>
+    <string name="command_description_ignore">[user] | Esto prohibira futura comunicacion en F-Chat entre tu cuenta (todos los personajes) y ese personake.</string>
     <string name="command_description_invite">| invita otro personaje a la conversacion actual, dando permiso para entrar. Tu personaje actual debe ser un Chan-Op o el dueño de conversacion.</string>
     <string name="command_description_kick">[user] | Remueve al personaje de la actual conversacion privada. Si esta es abierta, no previene que vuelvan a entrar.</string>
     <string name="command_description_openroom">| Esto hara publica la actual conversacion privada, añadiendola a la lista de conversaciones privadas, permitiendo a qualquiera la entrada.</string>
     <string name="command_description_priv">[user] | Esto abrira una sesión de mensajes privados con otro personaje.</string>
-    <string name="command_description_cop">[character] | añade un moderador/chan-op a la conversacion privada actual. [character] es el personaje que sera promovido.</string>
+    <string name="command_description_cop">[user] | añade un moderador/chan-op a la conversacion privada actual. [character] es el personaje que sera promovido.</string>
     <string name="command_description_ad">| Envia una publicación a el canal.</string>
     <string name="command_description_setdescription">[text] | Esto pone la descripción de la conversacion actual a el texto proporcionado.</string>
     <string name="command_description_setmode">[mode] | Esto determina el tipo de contenido que puede ser enviado en la conversacion privada actual. [mode] puede ser \'ads\', \'chat\', or \'both\' (Por defecto: both)</string>
-    <string name="command_description_setowner">[character] | Esto da propiedad de la conversacion privada actual al personaje designado.</string>
+    <string name="command_description_setowner">[user] | Esto da propiedad de la conversacion privada actual al personaje designado.</string>
     <string name="command_description_status">+ [optional text] | los estados son: online, looking, away, busy, dnd</string>
     <string name="command_description_timeout">[user] | Temporalmente excluye a un personaje de la conversacion durante 30 minutos.</string>
     <string name="command_description_unban">[user] | Permite que un personaje previamente excluido pueda unirse a la conversacion nuevamente.</string>
-    <string name="command_description_unignore">[name] | Revierte el comando /ignore , para permitir comunicacion nuevamente.</string>
+    <string name="command_description_unignore">[user] | Revierte el comando /ignore , para permitir comunicacion nuevamente.</string>
     <string name="command_description_uptime">| Reporta cuanto tiempo ha estado activo el servidor.</string>
 
     <!-- Messages displayed by handlers -->

@@ -161,22 +161,22 @@
     <string name="command_description_closeroom">| This will close the current opened private room, removing it from the list and making further entry invite-only.</string>
     <string name="command_description_close">| Leaves the current channel.</string>
     <string name="command_description_makeroom">[name] | Open a new private room named [name].</string>
-    <string name="command_description_cdeop">[character] | Removes a moderator/chan-op from the current private room. [character] is the character to demote.</string>
+    <string name="command_description_cdeop">[user] | Removes a moderator/chan-op from the current private room. [character] is the character to demote.</string>
     <string name="command_description_roll">| This command rolls a number of dice. If Bob wanted to roll two dice with six sides each, he\'d type: /roll 2d6</string>
-    <string name="command_description_ignore">| This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
+    <string name="command_description_ignore">[user] | (Case Sensitive) This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
     <string name="command_description_invite">| Invites another character to the current room, giving them permission to enter. Your current character must be a Chan-Op or Room Owner.</string>
     <string name="command_description_kick">[user] | Removes the character from the current private room. If it is an open private room, it does not prevent them from re-entering.</string>
     <string name="command_description_openroom">| This will make the current private room open, adding it to the list of private rooms, and allowing anyone to join.</string>
     <string name="command_description_priv">[user] | This opens a private message session with another character.</string>
-    <string name="command_description_cop">[character] | Adds a moderator/chan-op to the current private room. [character] is the character to be promoted.</string>
+    <string name="command_description_cop">[user] | Adds a moderator/chan-op to the current private room. [user] is the character to be promoted.</string>
     <string name="command_description_ad">| Posts an ad to the channel.</string>
     <string name="command_description_setdescription">[text] | This sets the current room\'s description to the given text.</string>
     <string name="command_description_setmode">[mode] | This determines the type of content that can be sent in the current private room. [mode] can be \'ads\', \'chat\', or \'both\' (Default: both)</string>
-    <string name="command_description_setowner">[character] | This sets the owner of the current room to the designated character.</string>
+    <string name="command_description_setowner">[user] | This sets the owner of the current room to the designated character.</string>
     <string name="command_description_status">+ [optional text] | Statuses are: online, looking, away, busy, dnd</string>
     <string name="command_description_timeout">[user] | Temporarily bans a character from the room for 30 minutes.</string>
     <string name="command_description_unban">[user] | Permit a previously banned character to enter the current room again.</string>
-    <string name="command_description_unignore">[name] | Reverses the /ignore command, to allow communication once again.</string>
+    <string name="command_description_unignore">[user] | (Case Sensitive) Reverses the /ignore command, to allow communication once again.</string>
     <string name="command_description_uptime">| Reports how long the server has been running.</string>
 
     <!-- Messages displayed by handlers -->

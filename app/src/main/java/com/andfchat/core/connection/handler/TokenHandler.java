@@ -55,21 +55,8 @@ public abstract class TokenHandler {
     public abstract ServerToken[] getAcceptableTokens();
 
     protected void broadcastSystemInfo(ChatEntry chatEntry, FCharacter flistChar) {
-        //chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry); //This can get annoying, especially if you have lots of bookmarks or friends.
-        // Add broadcast message also to the console.
-        chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), chatEntry);
-
-        if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
-            // If private conversation is already the active chat, do not post it again.
-            if (chatroomManager.isActiveChat(chatroomManager.getPrivateChatFor(flistChar)) == false) {
-                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(flistChar), chatEntry);
-            }
-        }
-    }
-
-    protected void broadcastInviteInfo(ChatEntry chatEntry, FCharacter flistChar) {
-        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry); //This gets extremely annoying, especially if you have lots of bookmarks or friends.
-        // Add broadcast message also to the console.
+        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
+        // Add invite message to the console.
         if (!chatroomManager.getActiveChat().isSystemChat()) {
             chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), chatEntry);
         }
@@ -81,6 +68,31 @@ public abstract class TokenHandler {
             }
         }
     }
+
+    protected void broadcastStatusInfo(ChatEntry chatEntry, FCharacter flistChar) {
+        //chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry); //This can get annoying, especially if you have lots of bookmarks or friends.
+        // Add broadcast message to the console.
+        chatroomManager.addStatus(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), chatEntry);
+
+        if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
+            chatroomManager.addStatus(chatroomManager.getPrivateChatFor(flistChar), chatEntry);
+        }
+    }
+
+    /*protected void broadcastInviteInfo(ChatEntry chatEntry, FCharacter flistChar) {
+        chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
+        // Add invite message to the console.
+        if (!chatroomManager.getActiveChat().isSystemChat()) {
+            chatroomManager.addMessage(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME), chatEntry);
+        }
+
+        if (chatroomManager.hasOpenPrivateConversation(flistChar)) {
+            // If private conversation is already the active chat, do not post it again.
+            if (chatroomManager.isActiveChat(chatroomManager.getPrivateChatFor(flistChar)) == false) {
+                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(flistChar), chatEntry);
+            }
+        }
+    }*/
 
     protected void addChatEntryToActiveChat(ChatEntry chatEntry) {
         chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);

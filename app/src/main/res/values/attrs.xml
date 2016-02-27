@@ -14,6 +14,7 @@
     <attr name="BackgroundChatTab" format="color|reference" />
     <attr name="BackgroundChatTabActive" format="color|reference" />
     <attr name="BackgroundChatTabAttention" format="color|reference" />
+    <attr name="BackgroundChatTabStatus" format="color|reference" />
     <!-- TEXT COLORS -->
     <attr name="ChatTextColor" format="color" />
     <!-- IMAGES -->

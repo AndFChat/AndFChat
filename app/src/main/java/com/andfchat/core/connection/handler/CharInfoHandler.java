@@ -56,7 +56,7 @@ public class CharInfoHandler extends TokenHandler {
                     entry = entryFactory.getNotation(flistChar, R.string.message_status_changed, new Object[]{status});
                 }
 
-                broadcastSystemInfo(entry, flistChar);
+                broadcastStatusInfo(entry, flistChar);
             }
         }
     }

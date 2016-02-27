@@ -107,13 +107,11 @@ public class AndFChatNotification {
 
             notif = nBuilder.build();
 
-            // If led feedback is allowed, do it
-            if (sessionData.getSessionSettings().ledFeedback()) {
-                notif.ledARGB = 0xFFffffff;
-                notif.flags = Notification.FLAG_SHOW_LIGHTS;
-                notif.ledOnMS = 300;
-                notif.ledOffMS = 300;
-            }
+            notif.ledARGB = 0xFFffffff;
+            notif.flags = Notification.FLAG_SHOW_LIGHTS;
+            notif.ledOnMS = 300;
+            notif.ledOffMS = 300;
+
         } else {
             nBuilder.setPriority(0);
             notif = nBuilder.build();

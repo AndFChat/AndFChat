@@ -69,23 +69,29 @@ public class FriendListAction {
         shownList.setAdapter(adapter);
 
         if (separateFriends == true) {
-            Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
+            final Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
+            final Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
+            showFriends.setEnabled(false);
+
             showFriends.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     adapter.clear();
+                    showFriends.setEnabled(false);
+                    showBookmarks.setEnabled(true);
                     adapter.addAll(friendsData);
                     adapter.sortList();
                 }
             });
 
-            Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
             showBookmarks.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     adapter.clear();
+                    showFriends.setEnabled(true);
+                    showBookmarks.setEnabled(false);
                     adapter.addAll(bookmarksData);
                     adapter.sortList();
                 }

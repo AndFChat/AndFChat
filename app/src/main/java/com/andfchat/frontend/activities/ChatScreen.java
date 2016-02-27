@@ -191,32 +191,34 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         eventManager.register(channelList);
         eventManager.register(inputFragment);
 
-        // PopUps
-        loginPopup = new FListLoginPopup();
-        charSelectionPopup = new FListCharSelectionPopup();
+        if (savedInstanceState == null) {
+            // PopUps
+            loginPopup = new FListLoginPopup();
+            charSelectionPopup = new FListCharSelectionPopup();
 
-        loginPopup.setDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if (sessionData.getTicket() == null) {
-                    openLogin();
+            loginPopup.setDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (sessionData.getTicket() == null) {
+                        openLogin();
+                    }
                 }
-            }
-        });
+            });
 
-        charSelectionPopup.setDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                if (!sessionData.isInChat()) {
-                    connection.closeConnection(ChatScreen.this);
-                    sessionData.setTicket(null);
-                    openLogin();
+            charSelectionPopup.setDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    if (!sessionData.isInChat()) {
+                        connection.closeConnection(ChatScreen.this);
+                        sessionData.setTicket(null);
+                        openLogin();
+                    }
                 }
-            }
-        });
+            });
 
-        RoboGuice.injectMembers(this, charSelectionPopup);
-        RoboGuice.injectMembers(this, loginPopup);
+            RoboGuice.injectMembers(this, charSelectionPopup);
+            RoboGuice.injectMembers(this, loginPopup);
+        }
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -636,6 +638,13 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
 
         super.onPause();
 
+        if (loginPopup != null && loginPopup.isShowing()) {
+            loginPopup.dismiss();
+        }
+        if (loginPopup != null && loginPopup.isShowing()) {
+            loginPopup.dismiss();
+        }
+
         if (connection.isConnected()) {
             Ln.d("Show notification");
             notificationManager.updateNotification(0);
@@ -659,11 +668,19 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     protected void onDestroy() {
         Ln.i("onDestroy");
         notificationManager.cancelAll();
-        if (loginPopup.isShowing()) {
-            loginPopup.dismiss();
+        try {
+            if (loginPopup.isShowing()) {
+                loginPopup.dismiss();
+            }
+        } catch (NullPointerException e) {
+            Ln.i("loginPopup not showing on destroy");
         }
-        if (charSelectionPopup.isShowing()) {
-            charSelectionPopup.dismiss();
+        try {
+            if (charSelectionPopup.isShowing()) {
+                charSelectionPopup.dismiss();
+            }
+        } catch (NullPointerException e) {
+            Ln.i("charSelectionPopup not showing on destroy");
         }
         super.onDestroy();
     }
@@ -688,6 +705,12 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 FriendListAction.open(this, chatFragment.getView());
                 return true;
             case R.id.action_disconnect:
+                if (loginPopup != null) {
+                    loginPopup.dismiss();
+                }
+                if (charSelectionPopup != null) {
+                    charSelectionPopup.dismiss();
+                }
                 DisconnectAction.disconnect(this);
                 return true;
             case R.id.action_open_settings:
@@ -769,8 +792,13 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         }
 
         if (sessionData.getTicket() == null) {
-            if (!loginPopup.isShowing()) {
-                loginPopup.show(getFragmentManager(), "login_fragment");
+            try {
+                if (!loginPopup.isShowing()) {
+                    loginPopup.show(getFragmentManager(), "login_fragment");
+                    //loginPopup.show(getSupportFragmentManager(),"login_fragment");
+                }
+            } catch (NullPointerException e) {
+                Ln.i("NPE on openLogin");
             }
         }
         else {
@@ -794,8 +822,12 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     public void openSelection() {
-        if (!charSelectionPopup.isShowing()) {
-            charSelectionPopup.show(getFragmentManager(), "select_fragment");
+        try {
+            if (!charSelectionPopup.isShowing()) {
+                charSelectionPopup.show(getFragmentManager(), "select_fragment");
+            }
+        } catch (NullPointerException e) {
+            Ln.i("NPE on openLogin");
         }
     }
 
@@ -818,17 +850,31 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onEvent(ConnectionEventType type) {
         if (type == ConnectionEventType.CONNECTED) {
-            if (loginPopup.isShowing()) {
-                loginPopup.dismiss();
+            try {
+                if (loginPopup.isShowing()) {
+                    loginPopup.dismiss();
+                }
+            } catch (NullPointerException e) {
+                Ln.i("NPE in CONNECTED onEvent");
             }
 
             openSelection();
         }
         else if (type == ConnectionEventType.CHAR_CONNECTED) {
-            if (charSelectionPopup.isShowing()) {
-                charSelectionPopup.dismiss();
+            try {
+                if (charSelectionPopup.isShowing()) {
+                    charSelectionPopup.dismiss();
+                }
+            } catch (NullPointerException e) {
+                Ln.i("NPE in CHAR_CONNECTED onEvent");
             }
 
             sessionData.setDisconnectReason(null);

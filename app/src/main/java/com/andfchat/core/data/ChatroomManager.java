@@ -120,10 +120,12 @@ public class ChatroomManager {
             // old active chat has no new messages
             if (activeChat != null) {
                 activeChat.setHasNewMessage(false);
+                activeChat.setHasNewStatus(false);
             }
 
             activeChat = chatroom;
             activeChat.setHasNewMessage(false);
+            activeChat.setHasNewStatus(false);
             // Inform about active chat change
             eventManager.fire(chatroom, ChatroomEventType.ACTIVE);
         }
@@ -143,6 +145,23 @@ public class ChatroomManager {
         if (chatroom.hasNewMessage() == false && isActiveChat(chatroom) == false) {
             chatroom.setHasNewMessage(true);
             eventManager.fire(chatroom, ChatroomEventType.NEW_MESSAGE);
+        }
+    }
+
+    public void addStatus(Chatroom chatroom, ChatEntry entry) {
+        if (chatroom == null) {
+            Ln.e("Cant find chatroom, is null");
+            return;
+        }
+
+        chatroom.addStatus(entry);
+        eventManager.fire(entry, chatroom);
+
+        entry.setOwned(sessionData.isUser(entry.getOwner()));
+
+        if (chatroom.hasNewMessage() == false && chatroom.hasNewStatus() == false && isActiveChat(chatroom) == false) {
+            chatroom.setHasNewStatus(true);
+            eventManager.fire(chatroom, ChatroomEventType.NEW_STATUS);
         }
     }
 
