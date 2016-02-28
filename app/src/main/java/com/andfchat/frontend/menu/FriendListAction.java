@@ -42,6 +42,8 @@ import com.andfchat.frontend.popup.FListPopupWindow;
 
 public class FriendListAction {
 
+    private static FriendListAdapter adapter;
+
     public static void open(Activity activity, View parent) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -65,7 +67,7 @@ public class FriendListAction {
         final List<FCharacter> friendsData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getFriendCharacters());
         final List<FCharacter> bookmarksData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getBookmarkedCharacters());
 
-        final FriendListAdapter adapter = new FriendListAdapter(activity, new ArrayList<FCharacter>());
+        adapter = new FriendListAdapter(activity, new ArrayList<FCharacter>());
         shownList.setAdapter(adapter);
 
         if (separateFriends == true) {
@@ -115,5 +117,9 @@ public class FriendListAction {
             Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
             showBookmarks.setVisibility(View.GONE);
         }
+    }
+
+    public void clearList() {
+        adapter.clear();
     }
 }

@@ -19,6 +19,8 @@
 package com.andfchat.frontend.menu;
 
 import roboguice.RoboGuice;
+import roboguice.util.Ln;
+
 import android.app.Activity;
 
 import com.andfchat.R;
@@ -33,6 +35,8 @@ public class DisconnectAction {
 
             @Override
             public void onYes() {
+                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).leaveAllChannels();
+                try {RoboGuice.getInjector(activity).getInstance(FriendListAction.class).clearList();} catch (NullPointerException e) {Ln.i("No friends list to clear on disconnect.");}
                 RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection(activity);
             }
 

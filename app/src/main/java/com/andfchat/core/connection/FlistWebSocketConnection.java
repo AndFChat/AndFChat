@@ -213,6 +213,16 @@ public class FlistWebSocketConnection {
     }
 
     /**
+     * Leaves all channels.
+     */
+    public void leaveAllChannels() {
+        List<Chatroom> currentChats = chatroomManager.getChatRooms();
+        for (int i=0; i<currentChats.size(); i++) {
+            leaveChannel(currentChats.get(i));
+        }
+    }
+
+    /**
      * Sends a message to an channel.
      */
     public void sendMessageToChannel(Chatroom chatroom, String msg) {

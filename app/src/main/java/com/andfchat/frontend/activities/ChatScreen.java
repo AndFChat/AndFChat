@@ -171,7 +171,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         tintManager.setStatusBarTintEnabled(true);
         tintManager.setTintColor(getResources().getColor(R.color.primary_color_dark));
 
-        toggleSidebarRight.setSelected(false);
+        //toggleSidebarRight.setSelected(false);
 
         eventManager.clear();
         eventManager.register((ChatroomEventListener) this);
@@ -190,6 +190,12 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         eventManager.register((UserEventListener) userList);
         eventManager.register(channelList);
         eventManager.register(inputFragment);
+
+        // Hide UI on launch
+        channelList.toggleVisibility();
+        userList.toggleVisibility();
+        toggleSidebarRight.setVisibility(View.GONE);
+        toggleSidebarLeft.setVisibility(View.GONE);
 
         if (savedInstanceState == null) {
             // PopUps
@@ -298,7 +304,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             @Override
             public void onOpen(ActionItem item) {
                 Chatroom chat = chatroomManager.getActiveChat();
-                item.setEnabled(chat.isSystemChat() == false);
+                item.setEnabled(!chat.isSystemChat());
             }
         });
         actionBar.addActionItem(exportActiveChat);
@@ -419,7 +425,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             public void onOpen(ActionItem item) {
                 Chatroom chat = chatroomManager.getActiveChat();
                 // Show only in channel
-                if (chat.isChannel() && chat.isSystemChat() == false) {
+                if (chat.isChannel() && !chat.isSystemChat()) {
                     item.setVisibility(View.VISIBLE);
                 }
                 else {
@@ -515,16 +521,25 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
 
             if (chatroom.isSystemChat()) {
                 toggleSidebarRight.setVisibility(View.GONE);
-            } else {
-                toggleSidebarRight.setVisibility(View.VISIBLE);
-
-                if (chatroom.isPrivateChat()) {
-                    toggleSidebarRight.setVisibility(View.GONE);
+                toggleSidebarLeft.setVisibility(View.GONE);
+                if (!channelList.isVisible()) {
+                    channelList.toggleVisibility();
                 }
+                actionButton.setVisibility(View.GONE);
+            } else if (chatroom.isPrivateChat()) {
+                toggleSidebarLeft.setVisibility(View.VISIBLE);
+                toggleSidebarRight.setVisibility(View.GONE);
+                actionButton.setVisibility(View.VISIBLE);
+            } else {
+                toggleSidebarLeft.setVisibility(View.VISIBLE);
+                toggleSidebarRight.setVisibility(View.VISIBLE);
+                actionButton.setVisibility(View.VISIBLE);
             }
 
             if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
                 setChannelTitle(/*chatroom.getName() + " - " + */Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString());
+            } else if (chatroom.isSystemChat()) {
+                setChannelTitle(context.getString(R.string.app_name));
             } else {
                 setChannelTitle(chatroom.getName());
             }

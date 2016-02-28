@@ -116,11 +116,11 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             rowView.setBackgroundColor(activeColor);
             title.setSelected(true);
         }
-        else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
+        else if (chatroom.hasNewMessage() && !chatroom.isSystemChat()) {
             rowView.setBackgroundColor(attentionColor);
             title.setSelected(false);
         }
-        else if (chatroom.hasNewStatus() && chatroom.isSystemChat() == false) {
+        else if (chatroom.hasNewStatus() && !chatroom.isSystemChat()) {
             rowView.setBackgroundColor(statusColor);
             title.setSelected(false);
         }
