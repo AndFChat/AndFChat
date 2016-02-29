@@ -61,9 +61,7 @@ public class ChannelListHandler extends TokenHandler {
 
                 Channel channel = new Channel(channelId, channelName, ChatroomType.PRIVATE_CHANNEL);
                 Ln.i("Found channel: " + channel.toString());
-                if (channelUsers>0) {
-                    chatroomManager.addPrivateChannel(channel);
-                }
+                chatroomManager.addPrivateChannel(channel);
             }
 
             // Feedback, private channel list
