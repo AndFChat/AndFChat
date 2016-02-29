@@ -150,7 +150,7 @@ public class FListLoginPopup extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                if (isLoggingIn == false) {
+                if (!isLoggingIn) {
                     isLoggingIn = true;
 
                     Runnable runnable = new Runnable() {

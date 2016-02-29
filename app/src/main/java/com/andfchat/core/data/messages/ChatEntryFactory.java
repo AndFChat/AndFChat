@@ -51,6 +51,12 @@ public class ChatEntryFactory {
         return entry;
     }
 
+    public ChatEntry getHelp(FCharacter owner, String text) {
+        AdEntry entry = new AdEntry(owner, text, context.getString(R.string.command_help_menu));
+        entry.setIcon(R.drawable.ic_info_dark);
+        return entry;
+    }
+
     public ChatEntry getAd(FCharacter owner, String text) {
         AdEntry entry = new AdEntry(owner, text, context.getString(R.string.ad_clickable_advertisement));
         entry.setIcon(R.drawable.ic_ad);

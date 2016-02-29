@@ -52,13 +52,13 @@ public class CharacterManager {
 
     public FCharacter findCharacter(String name, boolean create) {
         synchronized(this) {
-            if (knownCharacters.containsKey(name) == false) {
+            if (!knownCharacters.containsKey(name.toLowerCase())) {
                 if (create) {
                     FCharacter character = new FCharacter(name);
                     addCharacter(character);
                 }
             }
-            return knownCharacters.get(name);
+            return knownCharacters.get(name.toLowerCase());
         }
     }
 
@@ -72,20 +72,25 @@ public class CharacterManager {
         character.setGlobalOperator(globalMods.contains(character.getName()));
 
         synchronized(this) {
-            if (knownCharacters.containsKey(character.getName()) == true) {
-                knownCharacters.get(character.getName()).setInfo(character);
+            if (knownCharacters.containsKey(character.getName().toLowerCase())) {
+                knownCharacters.get(character.getName().toLowerCase()).setInfo(character);
             } else {
-                knownCharacters.put(character.getName(), character);
+                knownCharacters.put(character.getName().toLowerCase(), character);
             }
         }
     }
 
     public void initCharacters(HashMap<String, FCharacter> characterList) {
         synchronized(this) {
+            HashMap<String, FCharacter> newList = new HashMap<String, FCharacter>();
+            for (String key : characterList.keySet()) {
+                FCharacter fch = characterList.get(key);
+                newList.put(key.toLowerCase(), fch);
+            }
             for (FCharacter character : characterList.values()) {
                 relationManager.addRelationsToCharacter(character);
             }
-            knownCharacters.putAll(characterList);
+            knownCharacters.putAll(newList);
 
             if (globalMods.size() > 0) {
                 setGlobalMods(globalMods);
@@ -95,7 +100,7 @@ public class CharacterManager {
 
     public void removeCharacter(FCharacter character) {
         synchronized(this) {
-            knownCharacters.remove(character.getName());
+            knownCharacters.remove(character.getName().toLowerCase());
         }
     }
 
@@ -153,8 +158,8 @@ public class CharacterManager {
         this.globalMods = globalMods;
 
         for (String mod : globalMods) {
-            if (knownCharacters.containsKey(mod)) {
-                knownCharacters.get(mod).setGlobalOperator(true);
+            if (knownCharacters.containsKey(mod.toLowerCase())) {
+                knownCharacters.get(mod.toLowerCase()).setGlobalOperator(true);
             }
         }
     }

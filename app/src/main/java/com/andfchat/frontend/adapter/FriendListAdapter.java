@@ -142,7 +142,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
             @Override
             public void onClick(View v) {
                 Chatroom chatroom;
-                if (chatroomManager.hasOpenPrivateConversation(character) == false) {
+                if (!chatroomManager.hasOpenPrivateConversation(character)) {
                     int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
                     chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, character, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
 

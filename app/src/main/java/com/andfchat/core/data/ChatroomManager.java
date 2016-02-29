@@ -79,7 +79,7 @@ public class ChatroomManager {
         synchronized(this) {
             Ln.d("Add chatroom '" + chatroom.getName() + "'");
             // Only load history for channel/pm's
-            if (chatroom.isSystemChat() == false) {
+            if (!chatroom.isSystemChat()) {
                 // HistoryManager loads data via the "channel" key.
                 chatroom.setChatHistory(historyManager.loadHistory(chatroom.getChannel()));
             }
@@ -142,7 +142,7 @@ public class ChatroomManager {
 
         entry.setOwned(sessionData.isUser(entry.getOwner()));
 
-        if (chatroom.hasNewMessage() == false && isActiveChat(chatroom) == false) {
+        if (!chatroom.hasNewMessage() && !isActiveChat(chatroom)) {
             chatroom.setHasNewMessage(true);
             eventManager.fire(chatroom, ChatroomEventType.NEW_MESSAGE);
         }
@@ -159,7 +159,7 @@ public class ChatroomManager {
 
         entry.setOwned(sessionData.isUser(entry.getOwner()));
 
-        if (chatroom.hasNewMessage() == false && chatroom.hasNewStatus() == false && isActiveChat(chatroom) == false) {
+        if (!chatroom.hasNewMessage() && !chatroom.hasNewStatus() && !isActiveChat(chatroom)) {
             chatroom.setHasNewStatus(true);
             eventManager.fire(chatroom, ChatroomEventType.NEW_STATUS);
         }
@@ -205,7 +205,7 @@ public class ChatroomManager {
     }
 
     public void addOfficialChannel(String name) {
-        if (officialChannelSet.contains(name) == false) {
+        if (!officialChannelSet.contains(name)) {
             officialChannelSet.add(name);
         }
     }

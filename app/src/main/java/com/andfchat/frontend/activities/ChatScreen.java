@@ -612,7 +612,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             Ln.d("Is not connected, open login");
             openLogin();
         }
-        else if (sessionData.isInChat() == false) {
+        else if (!sessionData.isInChat()) {
             Ln.d("Is connected, open selection");
             openSelection();
         }

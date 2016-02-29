@@ -202,7 +202,7 @@ public class Login extends RoboActivity {
 
             @Override
             public void onResponse(String response) {
-                if (parseJson(response, intent) == true) {
+                if (parseJson(response, intent)) {
                     Ln.i("Successfully logged in!");
                     startActivity(intent);
                 } else {

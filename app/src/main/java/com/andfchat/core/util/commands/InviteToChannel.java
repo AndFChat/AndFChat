@@ -40,7 +40,7 @@ public class InviteToChannel extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /invite [user] " + context.getString(R.string.command_description_invite);
+        return "*  /invite " + context.getString(R.string.command_description_invite);
     }
 
     @Override

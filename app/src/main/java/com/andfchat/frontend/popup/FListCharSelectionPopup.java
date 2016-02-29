@@ -113,7 +113,7 @@ public class FListCharSelectionPopup extends DialogFragment {
                 sessionData.clear();
 
                 // Reset data only when new character connects
-                if (sessionData.getCharacterName() == null || sessionData.getCharacterName().equals(characterName) == false) {
+                if (sessionData.getCharacterName() == null || !sessionData.getCharacterName().equals(characterName)) {
                     chatroomManager.clear();
                     characterManager.clear();
 

@@ -70,7 +70,7 @@ public class FriendListAction {
         adapter = new FriendListAdapter(activity, new ArrayList<FCharacter>());
         shownList.setAdapter(adapter);
 
-        if (separateFriends == true) {
+        if (separateFriends) {
             final Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
             final Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
             showFriends.setEnabled(false);
@@ -107,7 +107,7 @@ public class FriendListAction {
             adapter.addAll(friendsData);
             // Add all bookmarks not already added (friends can be bookmarked too)
             for (FCharacter character : bookmarksData) {
-                if (character.isFriend() == false) {
+                if (!character.isFriend()) {
                     adapter.add(character);
                 }
             }

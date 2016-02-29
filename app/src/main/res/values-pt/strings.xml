@@ -92,7 +92,7 @@
     <string name="export_perm_granted">Podes agora exportar os logs</string>
     <string name="export_perm_denied">Exportar os logs não irá resultar sem a permissão de armazenamento</string>
     <string name="export_failed">Nao pode escrever output, directoria de download não existe</string>
-    <string name="command_help_menu">Menu de ajuda, mostra todos os comandos:</string>
+    <string name="command_help_menu">Menu de ajuda, mostra todos os comandos</string>
     
     <string name="text_about">AndFChat foi criado sobre a licensa GPLv3 
         \n\nAndFChat é uma aplicação de [color=red]terceira parte[/color] para o f-list, e ainda está em [color=red]beta[/color], então por favor seja paciente com o cliente!
@@ -131,17 +131,12 @@
     <string name="description_vibration_feedback">Novas mensagens ativam vibração</string>
     <string name="title_audio_feedback">Audio em mensagens novas</string>
     <string name="description_audio_feedback">Novas mensagens ativam audio</string>
-    <string name="title_led_feedback">Notification light on new messages</string>
-    <string name="description_led_feedback">New messages trigger white notification light</string>
 
     <string name="title_use_debug_channel">Mostrar informação de debug</string>
     <string name="description_use_debug_channel">Mostrar o input/output de tags na consola</string>
 
     <string name="title_theme">Estilo da App </string>
     <string name="description_theme">Escolha um tema (Requere restart)</string>
-
-    <string name="title_chat_text_size">Tamanho da Fonte </string>
-    <string name="description_chat_text_size">Escolhe o tamanho da fonte para mensagens no chat</string>
 
     <string name="title_show_avatar_pictures">Mostrar avatars na lista do chat</string>
     <string name="description_show_avatar_pictures">Mostrar fotos de avatar em conversas privadas</string>
@@ -162,18 +157,18 @@
     <string name="command_description_close">| Deixa o canal.</string>
     <string name="command_description_makeroom">[name] | Abre um novo quarto privado [name].</string>
     <string name="command_description_cdeop">[user] | Remove um moderator/chan-op do quarto privado currente [character] é a personagem a despromover.</string>
-    <string name="command_description_roll">| Este comando rola um dado. Se o Bob quiser rolar dois dados com 6 lados cada ele ira escrever: /roll 2d6</string>
+    <string name="command_description_roll">[#d##] | Este comando rola um dado. Se o Bob quiser rolar dois dados com 6 lados cada ele ira escrever: /roll 2d6</string>
     <string name="command_description_ignore">[user] | Isto ira prevenir qualquer comunicação no f-chat da tua conta(todas as personagens) e essa personagem.</string>
-    <string name="command_description_invite">| Convida uma personagem para o canal currente, dando-lhes permissão para entrar. A personagem que estejas a usar para fazer o convite tem de ser o dono do canal ou um moderador do canal.</string>
+    <string name="command_description_invite">[user] | Convida uma personagem para o canal currente, dando-lhes permissão para entrar. A personagem que estejas a usar para fazer o convite tem de ser o dono do canal ou um moderador do canal.</string>
     <string name="command_description_kick">[user] | Remove a personagem do canal privado currente. Se for um canal privado aberto, não prevente que a pessoa volta a re-entrar.</string>
     <string name="command_description_openroom">| Isto irá fazer com que o canal privado currente seja aberto ao publico, adicionando-o a lista de canais privados e permitindo a qualquer pessoa que se junte.</string>
     <string name="command_description_priv">[user] | Isto abre uma mensagem privada com outra personagem.</string>
     <string name="command_description_cop">[user] | Adiciona um moderator/chan-op ao canal privado currente, [character] é o nome da personagem a ser promovida.</string>
-    <string name="command_description_ad">| Publica um anuncio no canal.</string>
+    <string name="command_description_ad">[text] | Publica um anuncio no canal.</string>
     <string name="command_description_setdescription">[text] | Isto muda a descrição do quarto currente.</string>
     <string name="command_description_setmode">[mode] | Isto determina o tipo de mensagems que pode ser enviado no canal. [mode] pode ser \'ads\', \'chat\', or \'both\' (Default: both)</string>
     <string name="command_description_setowner">[user] | Coloca a personagem selecionado como a dono/a do canal.</string>
-    <string name="command_description_status">+ [optional text] | Os status disponiveis para utilização são: online, looking, away, busy, dnd</string>
+    <string name="command_description_status">[optional text] | Os status disponiveis para utilização são: online, looking, away, busy, dnd</string>
     <string name="command_description_timeout">[user] | Temporariamente bane uma personagem do canal por 30 minutos.</string>
     <string name="command_description_unban">[user] |Permite a uma personagem previamente banida, a voltar a re-entrar no canal.</string>
     <string name="command_description_unignore">[user] | Reverte o comando /ignore e permite comunicação com a personagem outravez.</string>

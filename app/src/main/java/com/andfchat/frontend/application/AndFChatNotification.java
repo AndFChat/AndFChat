@@ -109,8 +109,8 @@ public class AndFChatNotification {
 
             notif.ledARGB = 0xFFffffff;
             notif.flags = Notification.FLAG_SHOW_LIGHTS;
-            notif.ledOnMS = 300;
-            notif.ledOffMS = 300;
+            //notif.ledOnMS = 300;
+            //notif.ledOffMS = 300;
 
         } else {
             nBuilder.setPriority(0);

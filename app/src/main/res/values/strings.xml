@@ -92,7 +92,7 @@
     <string name="export_perm_granted">You can now export logs</string>
     <string name="export_perm_denied">Log exporting will not work without storage permissions</string>
     <string name="export_failed">Can\'t write output, download directory doesn\'t exist</string>
-    <string name="command_help_menu">Help menu shows all usable commands:</string>
+    <string name="command_help_menu">Help menu shows all usable commands</string>
     
     <string name="text_about">AndFChat is developed under the GPLv3 licence.
         \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
@@ -131,17 +131,12 @@
     <string name="description_vibration_feedback">New messages trigger vibration</string>
     <string name="title_audio_feedback">Tone on new messages</string>
     <string name="description_audio_feedback">New messages trigger notification audio</string>
-    <string name="title_led_feedback">Light on new messages</string>
-    <string name="description_led_feedback">New messages trigger white notification light</string>
     
     <string name="title_use_debug_channel">Show debug information</string>
     <string name="description_use_debug_channel">Shows the input/output tags in the console</string>
     
     <string name="title_theme">App style</string>
     <string name="description_theme">Choose an app theme (Requires restart)</string>
-    
-    <string name="title_chat_text_size">Font size</string>
-    <string name="description_chat_text_size">Choose the font size for chat</string>
 
     <string name="title_show_avatar_pictures">Show avatars in the chat list</string>
     <string name="description_show_avatar_pictures">Shows F-list avatar pictures for private chats</string>
@@ -162,21 +157,21 @@
     <string name="command_description_close">| Leaves the current channel.</string>
     <string name="command_description_makeroom">[name] | Open a new private room named [name].</string>
     <string name="command_description_cdeop">[user] | Removes a moderator/chan-op from the current private room. [character] is the character to demote.</string>
-    <string name="command_description_roll">| This command rolls a number of dice. If Bob wanted to roll two dice with six sides each, he\'d type: /roll 2d6</string>
-    <string name="command_description_ignore">[user] | (Case Sensitive) This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
-    <string name="command_description_invite">| Invites another character to the current room, giving them permission to enter. Your current character must be a Chan-Op or Room Owner.</string>
+    <string name="command_description_roll">[#d##] | This command rolls a number of dice. If Bob wanted to roll two dice with six sides each, he\'d type: /roll 2d6</string>
+    <string name="command_description_ignore">[user] | This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
+    <string name="command_description_invite">[user] | Invites another character to the current room, giving them permission to enter. Your current character must be a Chan-Op or Room Owner.</string>
     <string name="command_description_kick">[user] | Removes the character from the current private room. If it is an open private room, it does not prevent them from re-entering.</string>
     <string name="command_description_openroom">| This will make the current private room open, adding it to the list of private rooms, and allowing anyone to join.</string>
     <string name="command_description_priv">[user] | This opens a private message session with another character.</string>
     <string name="command_description_cop">[user] | Adds a moderator/chan-op to the current private room. [user] is the character to be promoted.</string>
-    <string name="command_description_ad">| Posts an ad to the channel.</string>
+    <string name="command_description_ad">[text] | Posts an ad to the channel.</string>
     <string name="command_description_setdescription">[text] | This sets the current room\'s description to the given text.</string>
     <string name="command_description_setmode">[mode] | This determines the type of content that can be sent in the current private room. [mode] can be \'ads\', \'chat\', or \'both\' (Default: both)</string>
     <string name="command_description_setowner">[user] | This sets the owner of the current room to the designated character.</string>
-    <string name="command_description_status">+ [optional text] | Statuses are: online, looking, away, busy, dnd</string>
+    <string name="command_description_status">[optional text] | Statuses are: online, looking, away, busy, dnd</string>
     <string name="command_description_timeout">[user] | Temporarily bans a character from the room for 30 minutes.</string>
     <string name="command_description_unban">[user] | Permit a previously banned character to enter the current room again.</string>
-    <string name="command_description_unignore">[user] | (Case Sensitive) Reverses the /ignore command, to allow communication once again.</string>
+    <string name="command_description_unignore">[user] | Reverses the /ignore command, to allow communication once again.</string>
     <string name="command_description_uptime">| Reports how long the server has been running.</string>
 
     <!-- Messages displayed by handlers -->
