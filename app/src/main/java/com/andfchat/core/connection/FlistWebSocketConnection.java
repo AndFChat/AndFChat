@@ -46,6 +46,7 @@ import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.andfchat.frontend.events.ConnectionEventListener;
+import com.andfchat.frontend.menu.FriendListAction;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -76,6 +77,8 @@ public class FlistWebSocketConnection {
     private ChatEntryFactory entryFactory;
     @Inject
     private Context context;
+    @Inject
+    private FriendListAction friendListAction;
 
     private final AndFChatApplication application;
 
@@ -213,16 +216,6 @@ public class FlistWebSocketConnection {
     }
 
     /**
-     * Leaves all channels.
-     */
-    public void leaveAllChannels() {
-        List<Chatroom> currentChats = chatroomManager.getChatRooms();
-        for (int i=0; i<currentChats.size(); i++) {
-            leaveChannel(currentChats.get(i));
-        }
-    }
-
-    /**
      * Sends a message to an channel.
      */
     public void sendMessageToChannel(Chatroom chatroom, String msg) {
@@ -232,7 +225,7 @@ public class FlistWebSocketConnection {
             data.put("character", sessionData.getCharacterName());
             data.put("message", msg);
             sendMessage(ClientToken.MSG, data);
-            msg =  Html.toHtml(new SpannableString(msg.trim())).toString().trim();
+            msg =  Html.toHtml(new SpannableString(msg.trim())).trim();
             String[] firstcut = msg.split(">", 2);
             int i = firstcut[1].lastIndexOf("<");
             String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
@@ -254,7 +247,7 @@ public class FlistWebSocketConnection {
             data.put("channel", chatroom.getId());
             data.put("message", adMessage);
             sendMessage(ClientToken.LRP, data);
-            adMessage =  Html.toHtml(new SpannableString(adMessage.trim())).toString().trim();
+            adMessage =  Html.toHtml(new SpannableString(adMessage.trim())).trim();
             String[] firstcut = adMessage.split(">", 2);
             int i = firstcut[1].lastIndexOf("<");
             String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
@@ -280,13 +273,17 @@ public class FlistWebSocketConnection {
             String channelname = PrivateMessageHandler.PRIVATE_MESSAGE_TOKEN + recipient;
             Chatroom chatroom = chatroomManager.getChatroom(channelname);
             if (chatroom != null) {
-                msg =  Html.toHtml(new SpannableString(msg.trim())).toString().trim();
+                msg =  Html.toHtml(new SpannableString(msg.trim())).trim();
                 String[] firstcut = msg.split(">", 2);
-                int i = firstcut[1].lastIndexOf("<");
-                String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
-                Ln.i(secondcut[0]);
-                ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
-                chatroomManager.addMessage(chatroom, entry);
+                try {
+                    int i = firstcut[1].lastIndexOf("<");
+                    String[] secondcut = {firstcut[1].substring(0, i), firstcut[1].substring(i)};
+                    Ln.i(secondcut[0]);
+                    ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
+                    chatroomManager.addMessage(chatroom, entry);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    Ln.e("Private message \"" + msg + "\" was not split.");
+                }
             }
             else {
                 Ln.e("Can't find log for private message recipient " + recipient);
@@ -332,6 +329,34 @@ public class FlistWebSocketConnection {
     public void closeConnection(Context context) {
         Ln.d("Disconnect!");
 
+        if (application.getConnection().isConnected()) {
+            application.getConnection().disconnect();
+        }
+
+        socketHandler.disconnected();
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                eventManager.fire(ConnectionEventListener.ConnectionEventType.DISCONNECTED);
+            }
+        };
+
+        new Handler(Looper.getMainLooper()).postDelayed(runnable, 250);
+        notification.disconnectNotification();
+    }
+
+    public void closeConnectionLogout(Context context) {
+        if (!chatroomManager.getActiveChat().isSystemChat()) {
+            Ln.d("Set chat to console");
+            chatroomManager.setActiveChat(chatroomManager.getChatroom(AndFChatApplication.DEBUG_CHANNEL_NAME));
+        }
+        try {
+            Ln.d("Clear friends list");
+            friendListAction.clearList();
+        } catch (NullPointerException e) {Ln.i("No friends list to clear on disconnect");}
+
+        Ln.d("Disconnect!");
         if (application.getConnection().isConnected()) {
             application.getConnection().disconnect();
         }

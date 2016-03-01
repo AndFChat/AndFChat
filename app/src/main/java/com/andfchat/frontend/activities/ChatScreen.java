@@ -199,31 +199,35 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
 
         if (savedInstanceState == null) {
             // PopUps
-            loginPopup = new FListLoginPopup();
-            charSelectionPopup = new FListCharSelectionPopup();
+            if (loginPopup == null){loginPopup = new FListLoginPopup();}
+            if (charSelectionPopup == null) {charSelectionPopup = new FListCharSelectionPopup();}
 
-            loginPopup.setDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    if (sessionData.getTicket() == null) {
-                        openLogin();
+            if (loginPopup != null) {
+                loginPopup.setDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (sessionData.getTicket() == null) {
+                            openLogin();
+                        }
                     }
-                }
-            });
+                });
+                RoboGuice.injectMembers(this, loginPopup);
+            }
 
-            charSelectionPopup.setDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    if (!sessionData.isInChat()) {
-                        connection.closeConnection(ChatScreen.this);
-                        sessionData.setTicket(null);
-                        openLogin();
+            if (charSelectionPopup != null) {
+                charSelectionPopup.setDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (!sessionData.isInChat()) {
+                            connection.closeConnection(ChatScreen.this);
+                            sessionData.setTicket(null);
+                            openLogin();
+                        }
                     }
-                }
-            });
+                });
+                RoboGuice.injectMembers(this, charSelectionPopup);
+            }
 
-            RoboGuice.injectMembers(this, charSelectionPopup);
-            RoboGuice.injectMembers(this, loginPopup);
         }
 
         Display display = getWindowManager().getDefaultDisplay();

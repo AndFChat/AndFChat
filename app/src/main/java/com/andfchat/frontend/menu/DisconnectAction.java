@@ -35,9 +35,7 @@ public class DisconnectAction {
 
             @Override
             public void onYes() {
-                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).leaveAllChannels();
-                try {RoboGuice.getInjector(activity).getInstance(FriendListAction.class).clearList();} catch (NullPointerException e) {Ln.i("No friends list to clear on disconnect.");}
-                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection(activity);
+                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnectionLogout(activity);
             }
 
             @Override
