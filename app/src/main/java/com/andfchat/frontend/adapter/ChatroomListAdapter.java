@@ -139,11 +139,11 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
                     .placeholder(R.drawable.chat_priv_icon)
                     .error(R.drawable.chat_priv_icon)
                     .into(image);
-        }
-        else if (chatroom.isSystemChat()) {
+        } else if (chatroom.isPrivateChat()) {
+            image.setImageResource(R.drawable.chat_priv_icon);
+        } else if (chatroom.isSystemChat()) {
             image.setImageResource(R.drawable.chat_sys_icon);
-        }
-        else {
+        } else {
             image.setImageResource(R.drawable.chat_room_icon);
         }
 
