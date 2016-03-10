@@ -41,12 +41,15 @@ public class ErrorMessageHandler extends TokenHandler {
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
         if (token == ServerToken.ERR) {
             JSONObject json = new JSONObject(msg);
+            String message = json.getString("message");
 
-            Ln.i("ERROR: " + json.getString("message"));
+            Ln.i("ERROR: " + message);
 
-            FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-            ChatEntry entry = entryFactory.getError(systemChar, json.getString("message"));
-            this.addChatEntryToActiveChat(entry);
+            if(!message.equals("You are already in the requested channel.")) {
+                FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
+                ChatEntry entry = entryFactory.getError(systemChar, message);
+                this.addChatEntryToActiveChat(entry);
+            }
         }
     }
 

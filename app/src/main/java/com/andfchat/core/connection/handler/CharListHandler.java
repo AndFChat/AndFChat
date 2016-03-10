@@ -82,11 +82,11 @@ public class CharListHandler extends TokenHandler {
 
             if (fCharacter.isImportant()) {
                 ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_connected);
-                broadcastSystemInfo(entry, fCharacter);
+                broadcastStatusInfo(entry, fCharacter);
             }
             else if (chatroomManager.hasOpenPrivateConversation(fCharacter)) {
                 ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_connected);
-                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), entry);
+                broadcastStatusInfo(entry, fCharacter);
             }
 
         } // Character left
@@ -97,11 +97,11 @@ public class CharListHandler extends TokenHandler {
 
             if (fCharacter.isImportant()) {
                 ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_disconnected);
-                broadcastSystemInfo(entry, fCharacter);
+                broadcastStatusInfo(entry, fCharacter);
             }
             else if (chatroomManager.hasOpenPrivateConversation(fCharacter)) {
                 ChatEntry entry = entryFactory.getNotation(fCharacter, R.string.message_disconnected);
-                chatroomManager.addMessage(chatroomManager.getPrivateChatFor(fCharacter), entry);
+                broadcastStatusInfo(entry, fCharacter);
             }
 
             characterManager.removeCharacter(fCharacter);

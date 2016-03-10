@@ -86,13 +86,13 @@ public class FListCharSelectionPopup extends DialogFragment {
         return getDialog().isShowing();
     }
 
-    @Override
+    /*@Override
     public int show(FragmentTransaction transaction, String tag) {
         ArrayAdapter<String> charListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, sessionData.getCharList());
         charSelector.setAdapter(charListAdapter);
 
         return super.show(transaction, tag);
-    }
+    }*/
 
     @Override
     public void onStart() {
@@ -113,7 +113,7 @@ public class FListCharSelectionPopup extends DialogFragment {
                 sessionData.clear();
 
                 // Reset data only when new character connects
-                if (sessionData.getCharacterName() == null || sessionData.getCharacterName().equals(characterName) == false) {
+                if (sessionData.getCharacterName() == null || !sessionData.getCharacterName().equals(characterName)) {
                     chatroomManager.clear();
                     characterManager.clear();
 

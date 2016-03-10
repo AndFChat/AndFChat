@@ -42,6 +42,8 @@ import com.andfchat.frontend.popup.FListPopupWindow;
 
 public class FriendListAction {
 
+    private static FriendListAdapter adapter;
+
     public static void open(Activity activity, View parent) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -65,27 +67,33 @@ public class FriendListAction {
         final List<FCharacter> friendsData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getFriendCharacters());
         final List<FCharacter> bookmarksData = new ArrayList<FCharacter>(RoboGuice.getInjector(activity).getInstance(CharacterManager.class).getBookmarkedCharacters());
 
-        final FriendListAdapter adapter = new FriendListAdapter(activity, new ArrayList<FCharacter>());
+        adapter = new FriendListAdapter(activity, new ArrayList<FCharacter>());
         shownList.setAdapter(adapter);
 
-        if (separateFriends == true) {
-            Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
+        if (separateFriends) {
+            final Button showFriends = (Button) layout.findViewById(R.id.friendsButton);
+            final Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
+            showFriends.setEnabled(false);
+
             showFriends.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     adapter.clear();
+                    showFriends.setEnabled(false);
+                    showBookmarks.setEnabled(true);
                     adapter.addAll(friendsData);
                     adapter.sortList();
                 }
             });
 
-            Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
             showBookmarks.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     adapter.clear();
+                    showFriends.setEnabled(true);
+                    showBookmarks.setEnabled(false);
                     adapter.addAll(bookmarksData);
                     adapter.sortList();
                 }
@@ -99,7 +107,7 @@ public class FriendListAction {
             adapter.addAll(friendsData);
             // Add all bookmarks not already added (friends can be bookmarked too)
             for (FCharacter character : bookmarksData) {
-                if (character.isFriend() == false) {
+                if (!character.isFriend()) {
                     adapter.add(character);
                 }
             }
@@ -109,5 +117,9 @@ public class FriendListAction {
             Button showBookmarks = (Button) layout.findViewById(R.id.bookmarksButton);
             showBookmarks.setVisibility(View.GONE);
         }
+    }
+
+    public void clearList() {
+        adapter.clear();
     }
 }

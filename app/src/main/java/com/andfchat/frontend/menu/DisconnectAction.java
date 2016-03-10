@@ -19,6 +19,8 @@
 package com.andfchat.frontend.menu;
 
 import roboguice.RoboGuice;
+import roboguice.util.Ln;
+
 import android.app.Activity;
 
 import com.andfchat.R;
@@ -33,7 +35,7 @@ public class DisconnectAction {
 
             @Override
             public void onYes() {
-                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnection(activity);
+                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnectionLogout(activity);
             }
 
             @Override

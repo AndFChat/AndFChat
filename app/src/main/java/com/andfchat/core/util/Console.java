@@ -145,14 +145,14 @@ public class Console {
 
     private void showHelp() {
 
-        String message = context.getString(R.string.command_help_menu);
+        String message = "";
 
         for (TextCommand command : availableCommands) {
             message += "\n" + command.getDescription();
         }
 
         FCharacter systemChar = characterManager.findCharacter(CharacterManager.USER_SYSTEM);
-        ChatEntry chatEntry = entryFactory.getNotation(systemChar, message);
+        ChatEntry chatEntry = entryFactory.getHelp(systemChar, message);
         chatroomManager.addMessage(chatroomManager.getActiveChat(), chatEntry);
     }
 }

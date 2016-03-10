@@ -18,6 +18,8 @@
 
 package com.andfchat.core.connection.handler;
 
+import android.text.Html;
+
 import java.util.List;
 
 import org.json.JSONArray;
@@ -54,7 +56,8 @@ public class ChannelListHandler extends TokenHandler {
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 String channelId = jsonArray.getJSONObject(i).getString("name");
-                String channelName = jsonArray.getJSONObject(i).getString("title");
+                String channelName = Html.fromHtml(jsonArray.getJSONObject(i).getString("title")).toString();
+                int channelUsers =  Integer.parseInt(jsonArray.getJSONObject(i).getString("characters"));
 
                 Channel channel = new Channel(channelId, channelName, ChatroomType.PRIVATE_CHANNEL);
                 Ln.i("Found channel: " + channel.toString());

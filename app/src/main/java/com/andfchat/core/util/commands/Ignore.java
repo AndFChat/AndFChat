@@ -36,7 +36,7 @@ public class Ignore extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /ignore [name] " + context.getString(R.string.command_description_ignore);
+        return "*  /ignore " + context.getString(R.string.command_description_ignore);
     }
 
     @Override

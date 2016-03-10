@@ -59,6 +59,7 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
     private final int activeColor;
     private final int attentionColor;
     private final int standardColor;
+    private final int statusColor;
 
     public ChatroomListAdapter(Context context, List<Chatroom> entries) {
         super(context, R.layout.list_item_chat, entries);
@@ -68,11 +69,13 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         TypedArray colorArray = context.getTheme().obtainStyledAttributes(new int[]{
                 R.attr.BackgroundChatTab,
                 R.attr.BackgroundChatTabActive,
-                R.attr.BackgroundChatTabAttention});
+                R.attr.BackgroundChatTabAttention,
+                R.attr.BackgroundChatTabStatus});
 
         standardColor = colorArray.getColor(0, 0);
         activeColor = colorArray.getColor(1, 0);
         attentionColor = colorArray.getColor(2, 0);
+        statusColor = colorArray.getColor(3, 0);
 
         colorArray.recycle();
 
@@ -113,8 +116,12 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             rowView.setBackgroundColor(activeColor);
             title.setSelected(true);
         }
-        else if (chatroom.hasNewMessage() && chatroom.isSystemChat() == false) {
+        else if (chatroom.hasNewMessage() && !chatroom.isSystemChat()) {
             rowView.setBackgroundColor(attentionColor);
+            title.setSelected(false);
+        }
+        else if (chatroom.hasNewStatus() && !chatroom.isSystemChat()) {
+            rowView.setBackgroundColor(statusColor);
             title.setSelected(false);
         }
         else {
@@ -129,11 +136,14 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
             picasso.load(url)
-                    .placeholder(R.drawable.chat_room_icon)
-                    .error(R.drawable.chat_room_icon)
+                    .placeholder(R.drawable.chat_priv_icon)
+                    .error(R.drawable.chat_priv_icon)
                     .into(image);
-        }
-        else {
+        } else if (chatroom.isPrivateChat()) {
+            image.setImageResource(R.drawable.chat_priv_icon);
+        } else if (chatroom.isSystemChat()) {
+            image.setImageResource(R.drawable.chat_sys_icon);
+        } else {
             image.setImageResource(R.drawable.chat_room_icon);
         }
 

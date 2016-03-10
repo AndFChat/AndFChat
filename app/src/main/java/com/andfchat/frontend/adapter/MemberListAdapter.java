@@ -18,6 +18,7 @@
 
 package com.andfchat.frontend.adapter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -94,7 +95,12 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             sortList();
         }
 
-        this.chars = chars;
+        this.chars = new ArrayList<FCharacter>();
+        for (int i=0; i<chars.size(); i++) {
+            if (!chars.get(i).isIgnored()) {
+                this.chars.add(chars.get(i));
+            }
+        }
 
         quickActionBar = new QuickActionBar(context);
         quickActionBar.setAlignment(PopUpAlignment.LEFT);
@@ -344,14 +350,14 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
         boolean added = false;
         for (int i = 0; i < chars.size(); i++) {
-            if (COMPARATOR.compare(chars.get(i), fCharacter) >= 0) {
+            if (COMPARATOR.compare(chars.get(i), fCharacter) >= 0 && !fCharacter.isIgnored()) {
                 chars.add(i, fCharacter);
                 added = true;
                 break;
             }
         }
 
-        if (!added) {
+        if (!added && !fCharacter.isIgnored()) {
             chars.add(fCharacter);
         }
         sortList();

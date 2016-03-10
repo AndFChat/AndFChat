@@ -36,7 +36,7 @@ public class Dice extends TextCommand {
 
     @Override
     public String getDescription() {
-        return "*  /roll [#d##] " + context.getString(R.string.command_description_roll);
+        return "*  /roll " + context.getString(R.string.command_description_roll);
     }
 
     @Override

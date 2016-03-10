@@ -9,6 +9,7 @@ public interface ChatroomEventListener {
         NEW,
         LEFT,
         NEW_MESSAGE,
+        NEW_STATUS,
     }
 
     public void onEvent(Chatroom chatroom, ChatroomEventType type);

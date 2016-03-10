@@ -19,6 +19,7 @@
 package com.andfchat.frontend.activities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import roboguice.activity.RoboPreferenceActivity;
@@ -63,9 +64,12 @@ public class Settings extends RoboPreferenceActivity {
         final MultiSelectListPreference initialChannelList = (MultiSelectListPreference)findPreference("initial_channels");
         ArrayList<String> channels = new ArrayList<String>(chatroomManager.getOfficialChannels());
         Collections.sort(channels);
+        String[] defaults = {"Frontpage"};
+        ArrayList<String> defaultChannels = new ArrayList<String>(Arrays.asList(defaults));
 
         initialChannelList.setEntries(channels.toArray(new String[channels.size()]));
         initialChannelList.setEntryValues(channels.toArray(new String[channels.size()]));
+        initialChannelList.setDefaultValue(defaultChannels.toArray());
 
         /*initialChannelList.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override

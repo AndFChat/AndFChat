@@ -131,8 +131,8 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
         picasso.load(url)
-                .placeholder(R.drawable.chat_room_icon)
-                .error(R.drawable.chat_room_icon)
+                .placeholder(R.drawable.chat_priv_icon)
+                .error(R.drawable.chat_priv_icon)
                 .into(image);
 
         // Set button
@@ -142,7 +142,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
             @Override
             public void onClick(View v) {
                 Chatroom chatroom;
-                if (chatroomManager.hasOpenPrivateConversation(character) == false) {
+                if (!chatroomManager.hasOpenPrivateConversation(character)) {
                     int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
                     chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, character, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
 

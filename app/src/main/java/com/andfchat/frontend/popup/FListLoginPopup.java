@@ -128,8 +128,10 @@ public class FListLoginPopup extends DialogFragment {
     public void onResume() {
         super.onResume();
 
-        if (sessionData.getDisconnectReason() != null) {
+        try{
             setError(sessionData.getDisconnectReason());
+        } catch (NullPointerException e) {
+            Ln.i("No disconnect reason");
         }
     }
 
@@ -148,7 +150,7 @@ public class FListLoginPopup extends DialogFragment {
 
             @Override
             public void onClick(View v) {
-                if (isLoggingIn == false) {
+                if (!isLoggingIn) {
                     isLoggingIn = true;
 
                     Runnable runnable = new Runnable() {

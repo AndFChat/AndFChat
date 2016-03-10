@@ -79,7 +79,7 @@ public class ChatroomManager {
         synchronized(this) {
             Ln.d("Add chatroom '" + chatroom.getName() + "'");
             // Only load history for channel/pm's
-            if (chatroom.isSystemChat() == false) {
+            if (!chatroom.isSystemChat()) {
                 // HistoryManager loads data via the "channel" key.
                 chatroom.setChatHistory(historyManager.loadHistory(chatroom.getChannel()));
             }
@@ -120,10 +120,12 @@ public class ChatroomManager {
             // old active chat has no new messages
             if (activeChat != null) {
                 activeChat.setHasNewMessage(false);
+                activeChat.setHasNewStatus(false);
             }
 
             activeChat = chatroom;
             activeChat.setHasNewMessage(false);
+            activeChat.setHasNewStatus(false);
             // Inform about active chat change
             eventManager.fire(chatroom, ChatroomEventType.ACTIVE);
         }
@@ -140,9 +142,26 @@ public class ChatroomManager {
 
         entry.setOwned(sessionData.isUser(entry.getOwner()));
 
-        if (chatroom.hasNewMessage() == false && isActiveChat(chatroom) == false) {
+        if (!chatroom.hasNewMessage() && !isActiveChat(chatroom)) {
             chatroom.setHasNewMessage(true);
             eventManager.fire(chatroom, ChatroomEventType.NEW_MESSAGE);
+        }
+    }
+
+    public void addStatus(Chatroom chatroom, ChatEntry entry) {
+        if (chatroom == null) {
+            Ln.e("Cant find chatroom, is null");
+            return;
+        }
+
+        chatroom.addStatus(entry);
+        eventManager.fire(entry, chatroom);
+
+        entry.setOwned(sessionData.isUser(entry.getOwner()));
+
+        if (!chatroom.hasNewMessage() && !chatroom.hasNewStatus() && !isActiveChat(chatroom)) {
+            chatroom.setHasNewStatus(true);
+            eventManager.fire(chatroom, ChatroomEventType.NEW_STATUS);
         }
     }
 
@@ -186,7 +205,7 @@ public class ChatroomManager {
     }
 
     public void addOfficialChannel(String name) {
-        if (officialChannelSet.contains(name) == false) {
+        if (!officialChannelSet.contains(name)) {
             officialChannelSet.add(name);
         }
     }

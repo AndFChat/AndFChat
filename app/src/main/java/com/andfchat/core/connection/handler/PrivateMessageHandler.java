@@ -84,14 +84,14 @@ public class PrivateMessageHandler extends TokenHandler {
             // If vibration is allowed, do it on new messages!
             if (sessionData.getSessionSettings().vibrationFeedback()) {
                 // Vibrate if the active channel is not the same as the "messaged" one or the app is not visible and the chatroom isn't already set to "hasNewMessage".
-                if ((chatroomManager.getActiveChat().equals(chatroom) == false || sessionData.isVisible() == false) && chatroom.hasNewMessage() == false) {
+                if ((!chatroomManager.getActiveChat().equals(chatroom) || !sessionData.isVisible()) && !chatroom.hasNewMessage()) {
                     Ln.d("New Message Vibration on!");
                     vibrator.vibrate(VIBRATING_TIME);
                 }
             }
 
             // Update notification
-            if (sessionData.isVisible() == false) {
+            if (!sessionData.isVisible()) {
                 notification.updateNotification(sessionData.addMessage());
             }
 

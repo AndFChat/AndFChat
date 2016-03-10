@@ -68,7 +68,7 @@ public class FirstConnectionHandler extends TokenHandler {
         else {
             for (Chatroom chatroom : chatroomManager.getChatRooms()) {
                 // Join all previous channel but not the main one
-                if (chatroom.isChannel() && chatroom.getId().equals(channels) == false) {
+                if (chatroom.isChannel() && !chatroom.getId().equals(channels)) {
                     connection.joinChannel(chatroom.getId());
                 }
             }

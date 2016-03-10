@@ -50,7 +50,7 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListe
 
     private MemberListAdapter memberListData;
 
-    private boolean isVisible = false;
+    private boolean isVisible = true;
     private boolean canBeDisplayed = true;
 
     @Override

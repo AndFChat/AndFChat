@@ -58,7 +58,7 @@ public class AdEntry extends ChatEntry {
 
         final Spannable textSpan = SmileyReader.addSmileys(context, BBCodeReader.createSpannableWithBBCode(text, context));
 
-        if (adClickListener != null && showText == false) {
+        if (adClickListener != null && !showText) {
             // Create display text
             Spannable displayedSpan = new SpannableString(displayText);
 

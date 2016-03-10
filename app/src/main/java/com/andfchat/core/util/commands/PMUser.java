@@ -74,7 +74,7 @@ public class PMUser extends TextCommand {
             chatroomManager.addMessage(chatroomManager.getActiveChat(), entry);
         } else {
             Chatroom chatroom;
-            if (chatroomManager.hasOpenPrivateConversation(flistChar) == false) {
+            if (!chatroomManager.hasOpenPrivateConversation(flistChar)) {
                 int maxTextLength = sessionData.getIntVariable(Variable.priv_max);
                 chatroom = PrivateMessageHandler.openPrivateChat(chatroomManager, flistChar, maxTextLength, sessionData.getSessionSettings().showAvatarPictures());
 
