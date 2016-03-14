@@ -48,7 +48,7 @@
         
             <Button
                 android:id="@+id/toggleSidebarLeft"
-                android:layout_width="50dp"
+                android:layout_width="36dp"
                 android:layout_height="wrap_content"            
                 android:onClick="toggleSidebarLeft"
                 android:background="?attr/ToggleDirectionButton"
@@ -70,7 +70,7 @@
                     
                 <Button
                     android:id="@+id/toggleSidebarRight"
-                    android:layout_width="50dp"
+                    android:layout_width="36dp"
                     android:layout_height="wrap_content"
                     android:onClick="toggleSidebarRight"
                     android:background="?attr/ToggleDirectionButton"
