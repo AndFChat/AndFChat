@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'pandora'
-            keyPassword 'changeit'
-            storeFile file('C:/Users/proxy_87wj288/.android/debug.keystore')
-            storePassword 'changeit'
-        }
-    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
 
@@ -25,14 +17,12 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
-            signingConfig signingConfigs.config
         }
     }
 
