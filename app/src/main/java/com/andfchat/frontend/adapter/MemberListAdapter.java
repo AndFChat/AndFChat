@@ -37,6 +37,7 @@ import roboguice.util.Ln;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.design.widget.Snackbar;
@@ -223,6 +224,14 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             @Override
             public void onClick(ActionItem item, View view) {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.f-list.net/c/" + activeCharacter.getName())); //was https
+                if (android.os.Build.VERSION.SDK_INT >= 18) {
+                    final String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
+                    Bundle extras = new Bundle();
+                    extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null);
+                    final String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
+                    browserIntent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.primary_color);
+                    browserIntent.putExtras(extras);
+                }
                 getContext().startActivity(browserIntent);
             }
         });

@@ -202,7 +202,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             if (loginPopup == null){loginPopup = new FListLoginPopup();}
             if (charSelectionPopup == null) {charSelectionPopup = new FListCharSelectionPopup();}
 
-            if (loginPopup != null) {
+            if (loginPopup != null && !loginPopup.isShowing()) {
                 loginPopup.setDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -214,7 +214,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 RoboGuice.injectMembers(this, loginPopup);
             }
 
-            if (charSelectionPopup != null) {
+            if (charSelectionPopup != null && !charSelectionPopup.isShowing()) {
                 charSelectionPopup.setDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -360,6 +360,14 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             public void onClick(ActionItem item, View view) {
                 Chatroom chat = chatroomManager.getActiveChat();
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.f-list.net/c/" + chat.getCharacters().get(0).getName())); //was https
+                if (android.os.Build.VERSION.SDK_INT >= 18) {
+                    final String EXTRA_CUSTOM_TABS_SESSION = "android.support.customtabs.extra.SESSION";
+                    Bundle extras = new Bundle();
+                    extras.putBinder(EXTRA_CUSTOM_TABS_SESSION, null);
+                    final String EXTRA_CUSTOM_TABS_TOOLBAR_COLOR = "android.support.customtabs.extra.TOOLBAR_COLOR";
+                    browserIntent.putExtra(EXTRA_CUSTOM_TABS_TOOLBAR_COLOR, R.color.primary_color);
+                    browserIntent.putExtras(extras);
+                }
                 startActivity(browserIntent);
             }
         });
