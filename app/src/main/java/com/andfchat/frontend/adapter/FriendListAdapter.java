@@ -120,6 +120,12 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
             case AWAY:
                 itemIcon.setBackgroundResource(R.drawable.icon_grey);
                 break;
+            case IDLE:
+                itemIcon.setBackgroundResource(R.drawable.icon_grey2);
+                break;
+            case CROWN:
+                itemIcon.setBackgroundResource(R.drawable.icon_gold);
+                break;
             default:
                 itemIcon.setBackgroundResource(R.drawable.icon_blue);
         }
@@ -131,8 +137,8 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
         picasso.load(url)
-                .placeholder(R.drawable.chat_priv_icon)
-                .error(R.drawable.chat_priv_icon)
+                .placeholder(R.drawable.ic_chat_priv)
+                .error(R.drawable.ic_chat_priv)
                 .into(image);
 
         // Set button

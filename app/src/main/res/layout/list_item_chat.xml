@@ -27,7 +27,7 @@
 	    android:layout_width="@dimen/image_size_chatroom"
 	    android:layout_height="@dimen/image_size_chatroom"
         android:contentDescription="Avatar"
-	    android:src="@drawable/chat_room_icon"
+	    android:src="@drawable/ic_chat_room"
 	    android:gravity="center"
     />
     

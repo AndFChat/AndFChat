@@ -136,15 +136,15 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
             picasso.load(url)
-                    .placeholder(R.drawable.chat_priv_icon)
-                    .error(R.drawable.chat_priv_icon)
+                    .placeholder(R.drawable.ic_chat_priv)
+                    .error(R.drawable.ic_chat_priv)
                     .into(image);
         } else if (chatroom.isPrivateChat()) {
-            image.setImageResource(R.drawable.chat_priv_icon);
+            image.setImageResource(R.drawable.ic_chat_priv);
         } else if (chatroom.isSystemChat()) {
-            image.setImageResource(R.drawable.chat_sys_icon);
+            image.setImageResource(R.drawable.ic_chat_sys);
         } else {
-            image.setImageResource(R.drawable.chat_room_icon);
+            image.setImageResource(R.drawable.ic_chat_room);
         }
 
         return rowView;
