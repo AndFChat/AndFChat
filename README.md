@@ -36,17 +36,19 @@ Sorry, you are switching IP addresses. There is no easy way to fix this, other t
 
 ***Why can I only connect with one character at a time? Will there be any update to fix this?***
 
-There is barely enough space on a phone for one character.
-We currently don't see any reason to complicate this by adding multiple connections at the same time. 
+There is barely enough space on a phone for one character. We currently don't see any reason to complicate this by adding multiple connections at the same time. 
 
 ***How do I post an ad?***
 
 There are two ways to post an ad: 
 
 1. Starting your post with /ad [text] will automatically post the text as an ad.
-
 2. Write your post and don't send it, select Post Ad in the Actions menu.
  
 ***How do I ignore or unignore a user?***
 
 Just type /ignore [name] to ignore, or /unignore [name] to unignore.
+
+***My device is in battery saver mode and every time I put AndFChat in the background, it logs out. What gives?***
+
+Unfortunately, that is out of our control. That is just how battery saver mode works.
