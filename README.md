@@ -6,8 +6,7 @@ It's a beta! Don't panic!
 
 Any help, tips, and thanks are welcomed! :)  
 
-You are welcome to contact either of us on F-list for bug reports:
-
+You are welcome to contact either of us on F-list for bug reports:  
 [AndFChat](https://www.f-list.net/c/AndFChat/)  
 [AndFChat UI](https://www.f-list.net/c/andfchat%20ui)
 
@@ -21,6 +20,8 @@ roboguice-3.0
 autobahn-0.5.2.jar
 - jackson-core-asl-1.9.7.jar
 - jackson-mapper-asl.1.9.7.jar
+
+****  
 
 ## FAQ
 ***Switching between Wifi networks or between WiFi and mobile internet is disconnecting me, help?!***  
