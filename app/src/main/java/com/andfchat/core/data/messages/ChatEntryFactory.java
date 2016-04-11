@@ -26,11 +26,21 @@ public class ChatEntryFactory {
     public ChatEntry getMessage(FCharacter owner, String text) {
         if (text.startsWith("/me")) {
             text = text.substring(3);
-            return new EmoteEntry(owner, text.trim());
+            if(!text.trim().isEmpty()) {
+                return new EmoteEntry(owner, text.trim());
+            }
+            else {
+                return null;
+            }
         }
         else if (text.startsWith("/warn ")) {
             text = text.substring(6);
-            return new WarningEntry(owner, text.trim());
+            if(!text.trim().isEmpty()) {
+                return new WarningEntry(owner, text.trim());
+            }
+            else {
+                return null;
+            }
         }
         else {
             return new MessageEntry(owner, text.trim());
@@ -103,6 +113,6 @@ public class ChatEntryFactory {
     }
 
     public interface AdClickListener {
-        public void openAd(Spannable text);
+        void openAd(Spannable text);
     }
 }

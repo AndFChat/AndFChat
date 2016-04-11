@@ -4,7 +4,7 @@ import com.andfchat.core.data.Chatroom;
 
 public interface ChatroomEventListener {
 
-    public enum ChatroomEventType {
+    enum ChatroomEventType {
         ACTIVE,
         NEW,
         LEFT,
@@ -12,5 +12,5 @@ public interface ChatroomEventListener {
         NEW_STATUS,
     }
 
-    public void onEvent(Chatroom chatroom, ChatroomEventType type);
+    void onEvent(Chatroom chatroom, ChatroomEventType type);
 }

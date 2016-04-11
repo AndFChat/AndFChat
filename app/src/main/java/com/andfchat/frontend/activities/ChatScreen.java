@@ -66,6 +66,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
@@ -620,13 +621,14 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             actionButton.setVisibility(View.GONE);
         }
 
-        if (!connection.isConnected()) {
+        /*if (!connection.isConnected()) {
             Ln.d("Is not connected, open login");
             openLogin();
         }
-        else if (!sessionData.isInChat()) {
+        else*/ if (!sessionData.isInChat()) {
             Ln.d("Is connected, open selection");
-            openSelection();
+            //openSelection();
+            openLogin();
         }
 
         notificationManager.cancelLedNotification();
@@ -692,27 +694,6 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     @Override
-    protected void onDestroy() {
-        Ln.i("onDestroy");
-        notificationManager.cancelAll();
-        try {
-            if (loginPopup.isShowing()) {
-                loginPopup.dismiss();
-            }
-        } catch (NullPointerException e) {
-            Ln.i("loginPopup not showing on destroy");
-        }
-        try {
-            if (charSelectionPopup.isShowing()) {
-                charSelectionPopup.dismiss();
-            }
-        } catch (NullPointerException e) {
-            Ln.i("charSelectionPopup not showing on destroy");
-        }
-        super.onDestroy();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
@@ -732,13 +713,14 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 FriendListAction.open(this, chatFragment.getView());
                 return true;
             case R.id.action_disconnect:
-                if (loginPopup != null) {
-                    loginPopup.dismiss();
-                }
                 if (charSelectionPopup != null) {
                     charSelectionPopup.dismiss();
                 }
+                if (loginPopup != null) {
+                    loginPopup.dismiss();
+                }
                 DisconnectAction.disconnect(this);
+                loginPopup.show(getFragmentManager(), "login_fragment");
                 return true;
             case R.id.action_open_settings:
                 startActivity(new Intent(this, Settings.class));
@@ -766,6 +748,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             View w = getCurrentFocus();
             int scrcoords[] = new int[2];
             w.getLocationOnScreen(scrcoords);
+
             float x = event.getRawX() + w.getLeft() - scrcoords[0];
             float y = event.getRawY() + w.getTop() - scrcoords[1];
 
@@ -834,13 +817,13 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    if (connection.isConnected()) {
+                    /*if (connection.isConnected()) {
                         openSelection();
                     }
-                    else {
+                    else {*/
                         sessionData.setTicket(null);
                         openLogin();
-                    }
+                    //}
                 }
             };
 
@@ -849,31 +832,69 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     public void openSelection() {
+        if (paused) {
+            return;
+        }
+
         try {
             if (!charSelectionPopup.isShowing()) {
                 charSelectionPopup.show(getFragmentManager(), "select_fragment");
             }
         } catch (NullPointerException e) {
-            Ln.i("NPE on openLogin");
+            Ln.i("NPE on openSelection");
         }
+    }
+
+    private boolean doubleBackToExitPressedOnce;
+    private Handler mHandler = new Handler();
+
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            doubleBackToExitPressedOnce = false;
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        Ln.i("onDestroy");
+        notificationManager.cancelAll();
+        try {
+            if (loginPopup.isShowing()) {
+                loginPopup.dismiss();
+            }
+        } catch (NullPointerException e) {
+            Ln.i("loginPopup not showing on destroy");
+        }
+        try {
+            if (charSelectionPopup.isShowing()) {
+                charSelectionPopup.dismiss();
+            }
+        } catch (NullPointerException e) {
+            Ln.i("charSelectionPopup not showing on destroy");
+        }
+        super.onDestroy();
+
+        if (mHandler != null) { mHandler.removeCallbacks(mRunnable); }
     }
 
     @Override
     public void onBackPressed() {
-        FlistAlertDialog dialog = new FlistAlertDialog(this, getString(R.string.question_back)) {
+        if (loginPopup.isShowing()) {
+            connection.closeConnection(ChatScreen.this);
+            notificationManager.cancelAll();
+            finish();
+        }
 
-            @Override
-            public void onYes() {
-                ChatScreen.super.onBackPressed();
-            }
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
 
-            @Override
-            public void onNo() {
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
 
-            }
-        };
-
-        dialog.show();
+        mHandler.postDelayed(mRunnable, 2000);
     }
 
     @Override
@@ -912,12 +933,12 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             historyManager.saveHistory();
             actionButton.setVisibility(View.GONE);
 
-            if (connection.isConnected()) {
+            /*if (connection.isConnected()) {
                 openSelection();
             }
-            else {
+            else {*/
                 openLogin();
-            }
+            //}
         }
     }
 }

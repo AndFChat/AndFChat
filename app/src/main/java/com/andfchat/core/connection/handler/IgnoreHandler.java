@@ -90,8 +90,6 @@ public class IgnoreHandler extends TokenHandler {
                 }
                 broadcastSystemInfo(entry, flistChar);
                 Ln.v("Removed " + character + " from the ignore list.");
-            } else {
-                //This shouldn't happen, ever.
             }
 
         }

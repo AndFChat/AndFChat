@@ -85,8 +85,10 @@ public class PMUser extends TextCommand {
                 chatroom = chatroomManager.getPrivateChatFor(flistChar);
             }
 
-            chatroomManager.setActiveChat(chatroom);
-            eventManager.fire(chatroom);
+            if (chatroom != null) {
+                chatroomManager.setActiveChat(chatroom);
+                eventManager.fire(chatroom);
+            }
         }
     }
 }

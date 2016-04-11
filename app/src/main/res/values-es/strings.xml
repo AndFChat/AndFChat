@@ -74,7 +74,7 @@
     <string name="message_disconnected">Se desconecto</string>
     <string name="message_status_changed">Es ahora %1$s</string>
     <string name="message_status_changed_with_message">Es ahora %1$s [%2$s]</string>
-    <string name="message_invite_to_channel">Te ha invitado  </string>
+    <string name="message_invite_to_channel">Te ha invitado [session=%1$s]%2$s[/session]</string>
 
     <string name="question_disconnect">Realmente quieres desconectarte?</string>
     <string name="question_back">Realmente quieres regresar?</string>
@@ -82,7 +82,7 @@
 
     <!-- longer text messages -->
     <string name="error_login">Sesión fallo: </string>
-    <string name="error_disconnected">Desconexion: </string>
+    <string name="error_disconnected">Desconexion: %1$s</string>
     <string name="error_disconnected_no_connection">Se perdio la conexion con el servidor</string>
     <string name="error_command_not_allowed">Este comando no esta permitido aquí</string>
     <string name="error_name_not_found">No se ha encontrado el usuario \'%1$s\'</string>

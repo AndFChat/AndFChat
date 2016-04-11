@@ -82,7 +82,7 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListe
 
     @Override
     public void onEvent(Chatroom chatroom, ChatroomEventType type) {
-        if (type == ChatroomEventType.ACTIVE) {
+        if (type == ChatroomEventType.ACTIVE && getView()!= null) {
             canBeDisplayed = chatroom.showUserList();
 
             if (canBeDisplayed && isVisible) {
@@ -100,7 +100,7 @@ public class UserListFragment extends RoboFragment implements ChatroomEventListe
     }
 
     public boolean toggleVisibility() {
-        if (canBeDisplayed) {
+        if (canBeDisplayed && getView() != null) {
             if (isVisible) {
                 getView().setVisibility(View.GONE);
                 isVisible = false;

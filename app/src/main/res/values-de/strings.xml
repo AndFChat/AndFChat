@@ -82,7 +82,7 @@
 
 	<!-- longer text messages -->
 	<string name="error_login">Anmeldung fehlgeschlagen: </string>
-	<string name="error_disconnected">Verbindungsabbruch: </string>
+	<string name="error_disconnected">Verbindungsabbruch: %1$s</string>
 	<string name="error_disconnected_no_connection">Verbindung zum Server unterbrochen</string>
 	<string name="error_command_not_allowed">Dieser Befehl ist hier nicht erlaubt</string>
 	<string name="error_name_not_found">Niemand namens \'%1$s\' gefunden</string> <!-- Niemand namens \'%1$s\' gefunden -->

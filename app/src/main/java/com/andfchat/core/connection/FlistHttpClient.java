@@ -24,7 +24,7 @@ public interface FlistHttpClient {
     @POST("/json/api/bookmark-remove.php")
     Call<Object> removeBookmark(@Query("account") String account, @Query("ticket") String ticket, @Query("name") String name);
 
-    public class LoginData {
+    class LoginData {
         private List<String> characters;
 
         private String ticket;

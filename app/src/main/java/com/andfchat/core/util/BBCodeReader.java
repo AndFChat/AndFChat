@@ -294,7 +294,7 @@ public class BBCodeReader {
                 String link = "http://f-list.net/c/" + text.subSequence(start, end).toString();
 
                 Ln.d("Url: " + link);
-                if (link != null && URLUtil.isValidUrl(link)) {
+                if (URLUtil.isValidUrl(link)) {
                     text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 }
             }
@@ -319,8 +319,8 @@ public class BBCodeReader {
     }
 
     public interface Matcher {
-        public boolean isStart(String text, BBCodeType type);
-        public boolean isEnd(String text, BBCodeType type);
+        boolean isStart(String text, BBCodeType type);
+        boolean isEnd(String text, BBCodeType type);
     }
 
     /**

@@ -10,7 +10,7 @@ public enum TextSize {
 
     private int textSizeId;
 
-    private TextSize(int id) {
+    TextSize(int id) {
         textSizeId = id;
     }
 

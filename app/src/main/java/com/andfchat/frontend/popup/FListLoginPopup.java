@@ -173,13 +173,15 @@ public class FListLoginPopup extends DialogFragment {
                             isLoggingIn = false;
                             FlistHttpClient.LoginData loginData = response.body();
 
-                            if (loginData.getError() == null || loginData.getError().length() == 0) {
-                                Ln.i("Successfully logged in!");
-                                addData(loginData);
-                                // Connect to chat server
-                                connection.connect(true);
-                            } else {
-                                onError(loginData.getError());
+                            if (loginData != null) {
+                                if (loginData.getError() == null || loginData.getError().length() == 0) {
+                                    Ln.i("Successfully logged in!");
+                                    addData(loginData);
+                                    // Connect to chat server
+                                    connection.connect(true);
+                                } else {
+                                    onError(loginData.getError());
+                                }
                             }
                         }
 
@@ -267,10 +269,9 @@ public class FListLoginPopup extends DialogFragment {
 
     public void setError(String message) {
         if (message.contains("Host is unresolved")) {
-            errorField.setText(getActivity().getString(R.string.error_disconnected) + getActivity().getString(R.string.error_disconnected_no_connection));
-        }
-        else {
-            errorField.setText(getActivity().getString(R.string.error_disconnected) + message);
+            errorField.setText(String.format(getActivity().getString(R.string.error_disconnected), R.string.error_disconnected_no_connection));
+        } else if (!message.isEmpty()) {
+            errorField.setText(getActivity().getString(R.string.error_disconnected, message));
         }
     }
 }

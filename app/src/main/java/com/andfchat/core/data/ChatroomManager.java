@@ -60,7 +60,7 @@ public class ChatroomManager {
             }
         }
 
-        if (activeChat != null) {
+        if (activeChat != null && entry != null) {
             eventManager.fire(entry, activeChat);
         }
     }
@@ -135,6 +135,9 @@ public class ChatroomManager {
         if (chatroom == null) {
             Ln.e("Cant find chatroom, is null");
             return;
+        } else if (entry == null) {
+            Ln.e("Cant find entry, is null");
+            return;
         }
 
         chatroom.addMessage(entry);
@@ -151,6 +154,9 @@ public class ChatroomManager {
     public void addStatus(Chatroom chatroom, ChatEntry entry) {
         if (chatroom == null) {
             Ln.e("Cant find chatroom, is null");
+            return;
+        } else if (entry == null) {
+            Ln.e("Cant find entry, is null");
             return;
         }
 
