@@ -95,7 +95,7 @@
     <string name="command_help_menu">El menu de ayuda muestra todos los comandos</string>
 
     <string name="text_about">AndFChat fue desarollado con la licencia GPLv3.
-        \n\nAndFChat es un cliente de Terceros , y todavia esta en beta, por favor, se paciente!
+        \n\nAndFChat %1$s es un cliente de Terceros, y todavia esta en beta, por favor, se paciente!
         \n\nErrores encontrados pueden ser enviados por AndFChat (si, algunos tipos no están registrados) o directamente como problemas a GitHub github.com\n
         \n
         Aun buscamos ayuda!\n
@@ -103,7 +103,7 @@
         * Desarrollador experimentado de android para diseñar el UI, especialmente preguntas escalantes para differentes dispocisiones de muestra.\n</string>
 
     <!-- Displayed after the App crashed -->
-    <string name="crash_toast_text">Disculpas! por favor mandanos un reporte de crash atravez de nota F-list a AMBOS AndFChat UI y AndFChat, o via email a githublimon@gmail.com</string>
+    <string name="crash_toast_text">Disculpas! Por favor mandanos un reporte de crash atravez de nota F-list a AMBOS AndFChat UI y AndFChat, o via email a githublimon@gmail.com</string>
 
     <!-- Settings translations title + description -->
     <string name="title_feedback">Suggerencias/comentarios</string>

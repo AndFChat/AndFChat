@@ -46,7 +46,17 @@
                 android:layout_height="@dimen/image_size_user_status"
                 android:layout_width="@dimen/image_size_user_status"
                 android:background="@drawable/icon_op"
-                android:contentDescription="Op Status"
+                android:contentDescription="Global Op Status"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                />
+
+            <ImageView
+                android:id="@+id/itemIconOverlay2"
+                android:layout_height="@dimen/image_size_user_status"
+                android:layout_width="@dimen/image_size_user_status"
+                android:background="@drawable/icon_op2"
+                android:contentDescription="Channel Mod Status"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 />

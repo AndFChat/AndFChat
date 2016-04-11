@@ -95,7 +95,7 @@
     <string name="command_help_menu">Help menu shows all usable commands</string>
     
     <string name="text_about">AndFChat is developed under the GPLv3 licence.
-        \n\nAndFChat is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
+        \n\nAndFChat %1$s is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!
         \n\nFound bugs can be sent via note to AndFChat (yes, some tags are still not parsed) or directly as issues via GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
         \n
         [b][color=red]Still looking for help![/color][/b]\n

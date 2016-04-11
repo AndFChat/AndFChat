@@ -95,7 +95,7 @@
 	<string name="command_help_menu">Mögliche Befehle</string>
     
     <string name="text_about">AndFChat wird unter der GPLv3-Lizenz entwickelt.
-        \n\nAndFChat ist ein [color=red]Third-Party[/color]-Client für F-List, und noch in der [color=red]Beta[/color], hab also bitte Geduld!
+        \n\nAndFChat %1$s ist ein [color=red]Third-Party[/color]-Client für F-List, und noch in der [color=red]Beta[/color], hab also bitte Geduld!
         \n\nBugs kannst du direkt an AndFChat schicken (Manche Tags funktionieren noch nicht, das ist uns aber schon bekannt), oder direkt eine "Issue" bei GitHub anlegen [url]https://github.com/AndFChat/AndFChat/[/url]\n
         \n
         [b][color=red]Hilfe gesucht![/color][/b]\n

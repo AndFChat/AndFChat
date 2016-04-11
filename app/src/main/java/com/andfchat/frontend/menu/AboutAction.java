@@ -35,7 +35,7 @@ import com.andfchat.frontend.popup.FListPopupWindow;
 
 public class AboutAction {
 
-    public static void open(Activity activity, View parent) {
+    public static void open(Activity activity, View parent, String aboutText) {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View layout = inflater.inflate(R.layout.popup_about, null);
@@ -52,7 +52,7 @@ public class AboutAction {
         // Make links clickable.
         text.setMovementMethod(LinkMovementMethod.getInstance());
         // Replace text with bb encoded text.
-        text.setText(BBCodeReader.createSpannableWithBBCode(text.getText().toString(), activity));
+        text.setText(BBCodeReader.createSpannableWithBBCode(aboutText, activity));
 
         final PopupWindow popupWindow = new FListPopupWindow(layout, width, height);
         popupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);

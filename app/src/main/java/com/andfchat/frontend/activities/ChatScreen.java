@@ -39,6 +39,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaScannerConnection;
@@ -726,7 +727,14 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 startActivity(new Intent(this, Settings.class));
                 return true;
             case R.id.action_about:
-                AboutAction.open(this, chatFragment.getView());
+                String aboutText;
+                try {
+                    PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                    aboutText = (String.format(getString(R.string.text_about), pInfo.versionName));
+                } catch (PackageManager.NameNotFoundException e){
+                    aboutText = (String.format(getString(R.string.text_about), "Beta"));
+                }
+                AboutAction.open(this, chatFragment.getView(), aboutText);
                 return true;
             case R.id.action_exit:
                 onQuit();
