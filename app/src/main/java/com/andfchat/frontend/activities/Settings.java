@@ -124,11 +124,6 @@ public class Settings extends RoboPreferenceActivity {
                                     Ln.d("Clear history!");
                                     historyManager.clearHistory(true);
                                 }
-
-                                @Override
-                                public void onNo() {
-                                    // Do nothing
-                                }
                             };
 
                             dialog.show();

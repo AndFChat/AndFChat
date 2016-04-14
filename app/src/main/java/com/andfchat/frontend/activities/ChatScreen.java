@@ -714,14 +714,14 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 FriendListAction.open(this, chatFragment.getView());
                 return true;
             case R.id.action_disconnect:
-                if (charSelectionPopup != null) {
+                if (charSelectionPopup != null && charSelectionPopup.isAdded()) {
                     charSelectionPopup.dismiss();
                 }
-                if (loginPopup != null) {
+                if (loginPopup != null && loginPopup.isAdded()) {
                     loginPopup.dismiss();
                 }
                 DisconnectAction.disconnect(this);
-                loginPopup.show(getFragmentManager(), "login_fragment");
+                //loginPopup.show(getFragmentManager(), "login_fragment");
                 return true;
             case R.id.action_open_settings:
                 startActivity(new Intent(this, Settings.class));
@@ -778,9 +778,6 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 notificationManager.cancelAll();
                 finish();
             }
-
-            @Override
-            public void onNo() {}
         };
 
         dialog.show();
@@ -825,13 +822,13 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    /*if (connection.isConnected()) {
+                    if (connection.isConnected()) {
                         openSelection();
                     }
-                    else {*/
+                    else {
                         sessionData.setTicket(null);
                         openLogin();
-                    //}
+                    }
                 }
             };
 
@@ -941,12 +938,12 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             historyManager.saveHistory();
             actionButton.setVisibility(View.GONE);
 
-            /*if (connection.isConnected()) {
+            if (connection.isConnected()) {
                 openSelection();
             }
-            else {*/
+            else {
                 openLogin();
-            //}
+            }
         }
     }
 }
