@@ -41,12 +41,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FeedbackListener;
-import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.CharRelation;

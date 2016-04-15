@@ -43,14 +43,7 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.webkit.URLUtil;
 
-import com.andfchat.core.connection.handler.PrivateMessageHandler;
-import com.andfchat.core.connection.handler.VariableHandler;
-import com.andfchat.core.data.Channel;
-import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FCharacter;
-import com.andfchat.core.data.SessionData;
-import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.util.OpenChatroomSpan;
 import com.google.inject.Inject;
 

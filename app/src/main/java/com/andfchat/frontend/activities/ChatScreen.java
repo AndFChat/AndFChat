@@ -48,6 +48,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -246,7 +247,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -257,7 +258,6 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 } else {
                     Snackbar.make(this.findViewById(android.R.id.content), R.string.export_perm_denied, Snackbar.LENGTH_LONG).show();
                 }
-                return;
             }
         }
     }

@@ -18,8 +18,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/BackgroundColor"
+
     tools:context=".ChatScreen">
+    <!--android:background="?attr/BackgroundColor"-->
     
     <ListView 
         android:id="@+id/channelList"

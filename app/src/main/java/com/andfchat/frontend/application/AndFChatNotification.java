@@ -3,13 +3,9 @@ package com.andfchat.frontend.application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInstaller;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
@@ -18,8 +14,6 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.activities.ChatScreen;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
-import java.text.Format;
 
 import roboguice.util.Ln;
 

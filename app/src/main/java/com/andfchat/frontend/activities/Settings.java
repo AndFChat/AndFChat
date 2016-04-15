@@ -26,10 +26,8 @@ import roboguice.activity.RoboPreferenceActivity;
 import roboguice.util.Ln;
 import android.app.NotificationManager;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 
 import com.andfchat.R;
 import com.andfchat.core.data.ChatroomManager;

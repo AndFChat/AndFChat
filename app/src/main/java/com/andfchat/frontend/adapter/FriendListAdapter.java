@@ -18,7 +18,6 @@
 
 package com.andfchat.frontend.adapter;
 
-import java.util.Collections;
 import java.util.List;
 
 import roboguice.RoboGuice;
@@ -44,10 +43,8 @@ import com.andfchat.core.util.FlistCharComparator;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
-import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class FriendListAdapter extends ArrayAdapter<FCharacter> {

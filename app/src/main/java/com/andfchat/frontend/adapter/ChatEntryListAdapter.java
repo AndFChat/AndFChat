@@ -53,7 +53,7 @@ public class ChatEntryListAdapter extends ArrayAdapter<ChatEntry> {
     public ChatEntryListAdapter(Context context, float textSize) {
         super(context, R.layout.list_item_message, new ArrayList<ChatEntry>());
 
-        this.clickListener = clickListener;
+        //this.clickListener = clickListener; //Variable assigned to itself??
 
         // Load theme colors
         TypedArray styles = context.getTheme().obtainStyledAttributes(new int[]{

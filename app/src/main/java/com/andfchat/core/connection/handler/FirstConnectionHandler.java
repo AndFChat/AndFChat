@@ -19,7 +19,6 @@
 package com.andfchat.core.connection.handler;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -52,8 +51,8 @@ public class FirstConnectionHandler extends TokenHandler {
         if (channels != null) {
             Object[] channelObjArray = channels.toArray();
             String[] channelArray = Arrays.copyOf(channelObjArray, channelObjArray.length, String[].class);
-            for (int i=0; i<channelArray.length; i++) {
-                connection.joinChannel(channelArray[i]);
+            for (String aChannelArray : channelArray) {
+                connection.joinChannel(aChannelArray);
             }
 
         }
@@ -68,8 +67,10 @@ public class FirstConnectionHandler extends TokenHandler {
         else {
             for (Chatroom chatroom : chatroomManager.getChatRooms()) {
                 // Join all previous channel but not the main one
-                if (chatroom.isChannel() && !chatroom.getId().equals(channels)) {
-                    connection.joinChannel(chatroom.getId());
+                if (channels != null) {
+                    if (chatroom.isChannel() && !channels.contains(chatroom.getId())) {
+                        connection.joinChannel(chatroom.getId());
+                    }
                 }
             }
         }

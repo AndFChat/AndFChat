@@ -28,19 +28,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.util.TextSize;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Retrofit;
-import roboguice.util.Ln;
 
 @Singleton
 public class SessionData {
@@ -235,17 +228,15 @@ public class SessionData {
         public int getTheme() {
             String theme = preferences.getString(PropertyName.THEME.name().toLowerCase(), "AppTheme");
 
-            if (theme.equals("AppTheme")) {
-                return R.style.AppTheme;
-            }
-            else if (theme.equals("AppTheme.Blue")) {
-                return R.style.AppTheme_Blue;
-            }
-            else if (theme.equals("AppTheme.Light")) {
-                return R.style.AppTheme_Light;
-            }
-            else {
-                return R.style.AppTheme;
+            switch (theme) {
+                case "AppTheme":
+                    return R.style.AppTheme;
+                case "AppTheme.Blue":
+                    return R.style.AppTheme_Blue;
+                case "AppTheme.Light":
+                    return R.style.AppTheme_Light;
+                default:
+                    return R.style.AppTheme;
             }
         }
 

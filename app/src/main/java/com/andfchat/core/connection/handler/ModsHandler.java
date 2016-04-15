@@ -21,8 +21,6 @@ package com.andfchat.core.connection.handler;
 import com.andfchat.core.connection.FeedbackListener;
 import com.andfchat.core.connection.ServerToken;
 import com.andfchat.core.data.Chatroom;
-import com.andfchat.core.data.FCharacter;
-import com.andfchat.core.data.messages.ChatEntry;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -36,7 +36,6 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntry;
-import com.andfchat.frontend.activities.ChatScreen;
 import com.andfchat.frontend.adapter.ChatEntryListAdapter;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener;

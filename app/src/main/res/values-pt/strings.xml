@@ -91,10 +91,10 @@
     <string name="exported">Directoria de download exportada corretamente, nome: %1$s</string>
     <string name="export_perm_granted">Podes agora exportar os logs</string>
     <string name="export_perm_denied">Exportar os logs não irá resultar sem a permissão de armazenamento</string>
-    <string name="export_failed">Nao pode escrever output, directoria de download não existe</string>
+    <string name="export_failed">Não pode escrever output, directoria de download não existe</string>
     <string name="command_help_menu">Menu de ajuda, mostra todos os comandos</string>
     
-    <string name="text_about">AndFChat foi criado sobre a licensa GPLv3 
+    <string name="text_about">AndFChat foi criado sobre a licença GPLv3
         \n\nAndFChat %1$s é uma aplicação de [color=red]terceira parte[/color] para o f-list, e ainda está em [color=red]beta[/color], então por favor seja paciente com o cliente!
         \n\nFound bugs encontrados podem ser enviados via note para o AndFChat (Sim, alguns tags ainda não estão completos) ou diretamente sobre problemas para GitHub [url]https://github.com/AndFChat/AndFChat/[/url]\n
         \n

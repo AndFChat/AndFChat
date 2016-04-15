@@ -155,7 +155,7 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
                 chatroomManager.addMessage(chatroom, entry);
             }
 
-            ServerToken token = null;
+            ServerToken token;
             try {
                 token = ServerToken.valueOf(payload.substring(0, 3));
                 Ln.v("Incoming message with token: " + token.name());

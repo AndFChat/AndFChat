@@ -18,15 +18,12 @@
 
 package com.andfchat.frontend.adapter;
 
-import java.util.Collections;
 import java.util.List;
 
 import roboguice.RoboGuice;
-import roboguice.util.Ln;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,10 +38,8 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
-import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {

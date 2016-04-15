@@ -20,8 +20,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"    
    	android:gravity="center_horizontal"     
-    android:background="?attr/BackgroundColor"
+
     tools:context=".Login" >
+    <!--android:background="?attr/BackgroundColor"-->
 
     <TextView
         android:id="@+id/loginErrorField"

@@ -1,10 +1,7 @@
 package com.andfchat.frontend.popup;
 
 import android.support.v7.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,18 +23,10 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
-import okhttp3.Response;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -118,10 +107,7 @@ public class FListLoginPopup extends DialogFragment {
     }
 
     public boolean isShowing() {
-        if (getDialog() == null) {
-            return false;
-        }
-        return getDialog().isShowing();
+        return getDialog() != null && getDialog().isShowing();
     }
 
     @Override
@@ -237,8 +223,7 @@ public class FListLoginPopup extends DialogFragment {
         // Add bookmarks to the RelationManager
 
         Set<String> bookmarksList = new HashSet<String>();
-        for (Iterator<FlistHttpClient.LoginData.Bookmark> iterator = loginData.getBookmarks().iterator(); iterator.hasNext(); ) {
-            FlistHttpClient.LoginData.Bookmark bookmark = iterator.next();
+        for (FlistHttpClient.LoginData.Bookmark bookmark : loginData.getBookmarks()) {
             bookmarksList.add(bookmark.getName());
         }
         relationManager.addCharacterToList(CharRelation.BOOKMARKED, bookmarksList);
@@ -246,8 +231,7 @@ public class FListLoginPopup extends DialogFragment {
 
         // Add friends to the RelationManager
         Set<String> friendList = new HashSet<String>();
-        for (Iterator<FlistHttpClient.LoginData.Friend> iterator = loginData.getFriends().iterator(); iterator.hasNext(); ) {
-            FlistHttpClient.LoginData.Friend friend = iterator.next();
+        for (FlistHttpClient.LoginData.Friend friend : loginData.getFriends()) {
             friendList.add(friend.getFriend());
         }
         relationManager.addCharacterToList(CharRelation.FRIEND, friendList);

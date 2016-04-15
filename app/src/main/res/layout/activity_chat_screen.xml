@@ -20,8 +20,9 @@
     android:id="@+id/mainframe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/BackgroundColor"
+
     tools:context=".ChatScreen">
+    <!--android:background="?attr/BackgroundColor"-->
 	        
     <fragment
         android:id="@+id/channelListFragment"

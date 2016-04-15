@@ -1,10 +1,7 @@
 package com.andfchat.frontend.popup;
 
 import android.support.v7.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -80,10 +77,7 @@ public class FListCharSelectionPopup extends DialogFragment {
     }
 
     public boolean isShowing() {
-        if (getDialog() == null) {
-            return false;
-        }
-        return getDialog().isShowing();
+        return getDialog() != null && getDialog().isShowing();
     }
 
     /*@Override

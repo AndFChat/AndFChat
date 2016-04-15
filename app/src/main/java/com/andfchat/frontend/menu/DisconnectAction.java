@@ -19,7 +19,6 @@
 package com.andfchat.frontend.menu;
 
 import roboguice.RoboGuice;
-import roboguice.util.Ln;
 
 import android.app.Activity;
 

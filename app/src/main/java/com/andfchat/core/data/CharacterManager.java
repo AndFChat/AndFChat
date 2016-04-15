@@ -27,8 +27,6 @@ import java.util.List;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import roboguice.util.Ln;
-
 @Singleton
 public class CharacterManager {
 

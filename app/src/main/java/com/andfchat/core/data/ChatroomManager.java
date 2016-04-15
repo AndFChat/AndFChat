@@ -25,10 +25,8 @@ import java.util.Set;
 
 import roboguice.util.Ln;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.core.data.messages.ChatEntry;
-import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.andfchat.frontend.events.UserEventListener.UserEventType;
