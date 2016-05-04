@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 
 import com.andfchat.R;
@@ -28,9 +29,13 @@ public class AndFChatNotification {
     private Context context;
 
     @Inject
+    protected Vibrator vibrator;
+    @Inject
     public AndFChatNotification(Context context) {
         this.context = context;
     }
+
+    private final long[] PATTERN = {0, 100, 100, 100};
 
     public void updateNotification(int messages) {
         if (sessionData.getSessionSettings().showNotifications()) {
@@ -41,6 +46,10 @@ public class AndFChatNotification {
                 msg = context.getResources().getQuantityString(R.plurals.notification_attention, messages, messages);
                 Ln.i(msg);
                 startNotification(msg, icon, true, messages);
+                if (sessionData.getSessionSettings().vibrationFeedback()) {
+                    Ln.d("New Message Vibration on!");
+                    vibrator.vibrate(PATTERN, -1);
+                }
             } else {
                 startNotification(msg, icon, false, 0);
             }

@@ -25,7 +25,7 @@ import com.andfchat.core.data.Chatroom;
 import com.andfchat.core.data.FCharacter;
 
 
-public class FlistCharComparator implements Comparator<FCharacter> {
+public class FlistCharComparatorGender implements Comparator<FCharacter> {
 
     private Chatroom chatroom;
 
@@ -73,6 +73,10 @@ public class FlistCharComparator implements Comparator<FCharacter> {
             return 1;
         }
 
+        //compare gender
+        else if ((compareInt = lhs.getGender().getName().compareTo(rhs.getGender().getName())) != 0) {
+            return compareInt;
+        }
         //compare name
         else {
             return lhs.getName().compareTo(rhs.getName());

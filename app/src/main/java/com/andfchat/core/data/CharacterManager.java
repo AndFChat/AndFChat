@@ -85,8 +85,12 @@ public class CharacterManager {
                 FCharacter fch = characterList.get(key);
                 newList.put(key.toLowerCase(), fch);
             }
-            for (FCharacter character : characterList.values()) {
-                relationManager.addRelationsToCharacter(character);
+            if (!characterList.isEmpty()) {
+                for (FCharacter character : characterList.values()) {
+                    if (character != null && !character.getName().isEmpty()) {
+                        relationManager.addRelationsToCharacter(character);
+                    }
+                }
             }
             knownCharacters.putAll(newList);
 

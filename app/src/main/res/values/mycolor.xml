@@ -18,18 +18,18 @@
 <resources>    
        
     <!--  USED STANDARD COLORS -->
-    <color name="red">#FF4444</color>
-    <color name="green">#44FF44</color>
-    <color name="blue">#1E90FF</color>
+    <color name="red">#ff4444</color>
+    <color name="green">#44ff44</color>
+    <color name="blue">#1e90ff</color>
     <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="gray">#D3D3D3</color>
-    <color name="orange">#FFA500</color>
-    <color name="cyan">#00FFFF</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#d3d3d3</color>
+    <color name="orange">#ffa500</color>
+    <color name="cyan">#00ffff</color>
     <color name="brown">#967117</color>
-    <color name="yellow">#FFFF00</color>
-    <color name="pink">#FFCBDB</color>
-    <color name="purple">#DD00FF</color>
+    <color name="yellow">#ffff00</color>
+    <color name="pink">#ffcbdb</color>
+    <color name="purple">#dd00ff</color>
     
     <!-- GENDERS -->
     <color name="name_male">#6699ff</color>
@@ -46,8 +46,8 @@
     <color name="text_timestamp_color">#bbbbcc</color>
     
     <!-- NAMEPLATES -->
-    <color name="name_bookmark">#44ff44</color>
-    <color name="name_friend">#44ff44</color>
+    <color name="name_important">#44ff44</color>
+    <color name="name_ignored">#d3d3d3</color>
     
     <!-- THEME -->
     <!-- THEME -->

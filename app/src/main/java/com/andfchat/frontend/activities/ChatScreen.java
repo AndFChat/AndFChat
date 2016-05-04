@@ -36,6 +36,7 @@ import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -514,7 +515,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     public void showDescription() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View layout = inflater.inflate(R.layout.popup_description, null);
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.popup_description, null);
 
         int height = (int)(this.height * 0.8f);
         int width = (int)(this.width * 0.8f);
@@ -770,7 +771,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     public void onQuit() {
-        FlistAlertDialog dialog = new FlistAlertDialog(this, getResources().getString(R.string.question_back)) {
+        @SuppressLint("ValidFragment") FlistAlertDialog dialog = new FlistAlertDialog(this, getResources().getString(R.string.question_back)) {
 
             @Override
             public void onYes() {
@@ -787,7 +788,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     public void openAd(Spannable text) {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View layout = inflater.inflate(R.layout.popup_description, null);
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.popup_description, null);
 
         int height = (int)(this.height * 0.8f);
         int width = (int)(this.width * 0.8f);
@@ -865,14 +866,14 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         Ln.i("onDestroy");
         notificationManager.cancelAll();
         try {
-            if (loginPopup.isShowing()) {
+            if (loginPopup != null && loginPopup.isShowing()) {
                 loginPopup.dismiss();
             }
         } catch (NullPointerException e) {
             Ln.i("loginPopup not showing on destroy");
         }
         try {
-            if (charSelectionPopup.isShowing()) {
+            if (charSelectionPopup != null && charSelectionPopup.isShowing()) {
                 charSelectionPopup.dismiss();
             }
         } catch (NullPointerException e) {
@@ -885,7 +886,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
 
     @Override
     public void onBackPressed() {
-        if (loginPopup.isShowing()) {
+        if (loginPopup != null && loginPopup.isShowing()) {
             connection.closeConnection(ChatScreen.this);
             notificationManager.cancelAll();
             finish();
@@ -912,7 +913,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     public void onEvent(ConnectionEventType type) {
         if (type == ConnectionEventType.CONNECTED) {
             try {
-                if (loginPopup.isShowing()) {
+                if (loginPopup != null && loginPopup.isShowing()) {
                     loginPopup.dismiss();
                 }
             } catch (NullPointerException e) {
@@ -923,7 +924,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         }
         else if (type == ConnectionEventType.CHAR_CONNECTED) {
             try {
-                if (charSelectionPopup.isShowing()) {
+                if (charSelectionPopup != null && charSelectionPopup.isShowing()) {
                     charSelectionPopup.dismiss();
                 }
             } catch (NullPointerException e) {

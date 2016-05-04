@@ -26,7 +26,7 @@ import okhttp3.OkHttpClient;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
+//import java.util.Iterator;
 import java.util.Set;
 
 import retrofit2.Call;

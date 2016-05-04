@@ -57,14 +57,14 @@ import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntryFactory;
-import com.andfchat.core.util.FlistCharComparator;
+import com.andfchat.core.util.FlistCharComparatorGender;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
 
 public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
-    public final static FlistCharComparator COMPARATOR = new FlistCharComparator();
+    public final static FlistCharComparatorGender COMPARATOR = new FlistCharComparatorGender();
 
     @Inject
     private ChatroomManager chatroomManager;

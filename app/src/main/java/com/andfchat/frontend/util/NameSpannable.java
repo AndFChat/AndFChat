@@ -37,11 +37,8 @@ public class NameSpannable extends SpannableString {
         if (colorId == null) {
             color = resources.getColor(flistChar.getGender().getColorId());
 
-            if (flistChar.isFriend()) {
-                color = resources.getColor(R.color.name_friend);
-            }
-            else if (flistChar.isBookmarked()) {
-                color = resources.getColor(R.color.name_bookmark);
+            if (flistChar.isImportant()) {
+                color = resources.getColor(R.color.name_important);
             }
         } else {
             color = resources.getColor(colorId);

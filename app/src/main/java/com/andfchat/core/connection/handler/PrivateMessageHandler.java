@@ -53,6 +53,7 @@ public class PrivateMessageHandler extends TokenHandler {
     protected AndFChatNotification notification;
 
     private final static int VIBRATING_TIME = 300;
+    private final static long[] PATTERN = {0, 100, 100, 100};
 
     private int messages = 0;
 
@@ -83,7 +84,7 @@ public class PrivateMessageHandler extends TokenHandler {
                 // Vibrate if the active channel is not the same as the "messaged" one or the app is not visible and the chatroom isn't already set to "hasNewMessage".
                 if ((!chatroomManager.getActiveChat().equals(chatroom) || !sessionData.isVisible()) && !chatroom.hasNewMessage()) {
                     Ln.d("New Message Vibration on!");
-                    vibrator.vibrate(VIBRATING_TIME);
+                    vibrator.vibrate(PATTERN, -1);
                 }
             }
 
