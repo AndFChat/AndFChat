@@ -104,7 +104,7 @@
 
     <!-- Settings translations title + description -->
     <string name="title_debug">Debug</string>
-    <string name="title_feedback">Sugerencias/Comentarios</string>
+    <string name="title_feedback">Notificaciones</string>
     <string name="title_general">General</string>
 
     <string name="title_theme">Estilo de aplicación</string>
