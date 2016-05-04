@@ -29,66 +29,66 @@
     <string name="chatmessage_hint">Escribe un mensaje</string>
     <string name="close">Cerrar</string>
     <string name="connecting">Conectando…</string>
-    <string name="dismiss">Despedir</string>
+    <string name="dismiss">Ignorar</string>
     <string name="exit">Salir</string>
     <string name="export_text">Exportar</string>
     <string name="friends_selector">Amigos</string>
     <string name="friendlist">Amigos &amp; Marcadores</string>
     <string name="hide">Ocultar</string>
     <string name="leave_channel">Salir</string>
-    <string name="login">Iniciar Sesión</string>
-    <string name="logout">Cerrar Sesión</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="logout">Cerrar sesión</string>
     <string name="menu_settings">Configuración</string>
     <string name="no">No</string>
     <string name="password">Contraseña</string>
-    <string name="pm_user">Abrir MP</string>
+    <string name="pm_user">Enviar mensaje</string>
     <string name="post_ad_text">Publicar</string>
     <string name="private_channels">Canales privados</string>
     <string name="public_channels">Canales públicos</string>
-    <string name="remember_account">Recordar Cuenta</string>
-    <string name="select_character">Selecionar personaje</string>
+    <string name="remember_account">Recordar cuenta</string>
+    <string name="select_character">Seleccionar personaje</string>
     <string name="send_message">Enviar</string>
     <string name="settings">Configuración</string>
     <string name="show">Mostrar</string>
     <string name="show_ads">Mostrar publicación</string>
-    <string name="show_avatar">Mostrar Avatar</string>
-    <string name="show_details">Open Details</string>
-    <string name="show_profile">Perfil</string>
+    <string name="show_avatar">Mostrar avatar</string>
+    <string name="show_details">Mostrar detalles</string>
+    <string name="show_profile">Mostrar perfil</string>
     <string name="status">Estado:</string>
     <string name="unbookmark_user">-Marcador</string>
     <string name="yes">Si</string>
 
     <!-- Notification text -->
     <plurals name="notification_attention">
-        <item quantity="one">Tu tienes un %d Nuevo mensaje</item>
-        <item quantity="other">Tu tienes %d Nuevos mensajes</item>
+        <item quantity="one">Tienes un %d nuevo mensaje</item>
+        <item quantity="other">Tienes %d nuevos mensajes</item>
     </plurals>
     <string name="notification_connected">Conectado a F-chat</string>
     <string name="notification_disconnect">Desconectado de F-Chat</string>
 
     <!-- Messages for the chat directly, they will be posted into the chat with a users name at the beginning. Like "XYZ connected." -->
     <string name="message_channel_joined">se ha unido al canal</string>
-    <string name="message_channel_left">se ha ido del canal</string>
-    <string name="message_connected">se connecto</string>
+    <string name="message_channel_left">ha dejado el canal</string>
+    <string name="message_connected">acaba de conectarse</string>
     <string name="message_disconnected">se desconecto</string>
-    <string name="message_invite_to_channel">te ha invitado [session=%1$s]%2$s[/session]</string>
+    <string name="message_invite_to_channel">te ha invitado a [session=%1$s]%2$s[/session]</string>
     <string name="message_status_changed">ss ahora %1$s</string>
     <string name="message_status_changed_with_message">ss ahora %1$s [%2$s]</string>
 
-    <string name="question_back">Realmente quieres regresar?</string>
-    <string name="question_delete_log">Do you really want to delete this log?</string>
-    <string name="question_disconnect">Realmente quieres desconectarte?</string>
+    <string name="question_back">¿Quieres salir de F-chat?</string>
+    <string name="question_delete_log">¿Seguro que quieres borrar el historial?</string>
+    <string name="question_disconnect">¿Quieres salir de F-chat?</string>
 
     <!-- longer text messages -->
     <string name="command_help_menu">El menu de ayuda muestra todos los comandos</string>
     <string name="error_command_not_allowed">Este comando no esta permitido aquí</string>
     <string name="error_disconnected">Desconexion: %1$s</string>
-    <string name="error_disconnected_no_connection">Se perdio la conexion con el servidor</string>
-    <string name="error_login">Sesión fallo: </string>
+    <string name="error_disconnected_no_connection">Se perdió la conexion con el servidor</string>
+    <string name="error_login">No se pudo conectar: </string>
     <string name="error_name_not_found">No se ha encontrado el usuario \'%1$s\'</string>
-    <string name="error_no_name_given">Por favor da un nombre como parametro</string>
-    <string name="export_failed">No se puede exportar! no existe el directorio!</string>
-    <string name="export_perm_denied">Exportacion de archivos no funcionara sin permisos</string>
+    <string name="error_no_name_given">Por favor escribe un nombre como parametro</string>
+    <string name="export_failed">No se puede exportar! No existe la carpeta!</string>
+    <string name="export_perm_denied">No se puede exportar archivos sin permiso</string>
     <string name="export_perm_granted">Ahora puedes exportar archivos</string>
     <string name="exported">Se ha exportado con éxito, nombre de archivo: %1$s</string>
 
@@ -104,71 +104,71 @@
 
     <!-- Settings translations title + description -->
     <string name="title_debug">Debug</string>
-    <string name="title_feedback">Suggerencias/comentarios</string>
+    <string name="title_feedback">Sugerencias/Comentarios</string>
     <string name="title_general">General</string>
 
-    <string name="title_theme">Estilo de applicacion</string>
-    <string name="description_theme">Escoge un tema de applicacion (Requiere reinicio)</string>
+    <string name="title_theme">Estilo de aplicación</string>
+    <string name="description_theme">Escoge un tema de aplicación (Requiere reinicio)</string>
     <string name="title_initial_channel">Canales al iniciar sesión</string>
-    <string name="description_initial_channel">Escoge que canales abir al iniciar sesión</string>
-    <string name="title_show_avatar_pictures">Mostrar avatares en la lista de chat</string>
-    <string name="description_show_avatar_pictures">Muestra las imágenes avatar F-list para chats privados</string>
+    <string name="description_initial_channel">Escoge que canales abrir al iniciar sesión</string>
+    <string name="title_show_avatar_pictures">Mostrar avatares en la lista de usuarios</string>
+    <string name="description_show_avatar_pictures">Mostrar avatares en los chats privados</string>
     <string name="title_separate_friends">Separa marcadores y amigos</string>
     <string name="description_separate_friends">Separar marcadores y amigos en la lista de amigos?</string>
     <string name="title_log_history">Guardar historial</string>
-    <string name="description_log_history">Guardar archivos de chat al la memoria interna </string>
-    <string name="title_log_channel">Archivar canales publicós</string>
-    <string name="description_log_channel">Archivar canales publicós así como MP</string>
+    <string name="description_log_history">Guardar historial en la memoria interna</string>
+    <string name="title_log_channel">Guardar canales públicos</string>
+    <string name="description_log_channel">Guardar canales públicos y mensajes privados</string>
     <string name="title_delete_history">Eliminar historial</string>
     <string name="description_delete_history">Remover archivos de la memoria interna</string>
 
     <string name="title_show_notifications">Mostrar notificaciones</string>
     <string name="description_show_notifications">Muestra notificaciones en la barra de estado</string>
     <string name="title_audio_feedback">Audio con nuevos mensajes</string>
-    <string name="description_audio_feedback">Nuevos mensajes activan audio</string>
+    <string name="description_audio_feedback">Alerta de mensajes nuevos con audio</string>
     <string name="title_vibration_feedback">Vibrar con mensajes nuevos</string>
-    <string name="description_vibration_feedback">Nuevos mensajes activan vibracion</string>
+    <string name="description_vibration_feedback">Alerta de mensajes nuevos con vibración</string>
     <string name="title_show_user_status_changes">Mostrar notificaciones de estado de usuarios</string>
     <string name="description_show_user_status_changes">Mostrar notificaciones de estado para amigos/marcadores</string>
-    <string name="title_show_channel_info">Mostrar informacion del canal</string>
-    <string name="description_show_channel_info">Mostrar noticiaciones de entrada/salida del canal</string>
+    <string name="title_show_channel_info">Mostrar información del canal</string>
+    <string name="description_show_channel_info">Mostrar notificaciones de entrada/salida del canal</string>
 
-    <string name="title_use_debug_channel">mostrar informacion de debug</string>
+    <string name="title_use_debug_channel">Mostrar información de debug</string>
     <string name="description_use_debug_channel">Muestra las etiquetas de ingreso/egreso en la consola</string>
 
     <!-- Descriptions of /commands -->
     <string name="command_description_ad">[text] | Envia una publicación a el canal.</string>
-    <string name="command_description_ban">[user] | Remueve el personaje de la conversacion actual y previene que vuelvan a entrar, No puedes excluir un personaje que no este en línea y actualmente en la conversacion.</string>
-    <string name="command_description_bottle">| Selecciona una persona en la conversacion, girando una botella. si Bob escribiera /bottle, el veria: Bob Gira la botella: Hexxy</string>
-    <string name="command_description_cdeop">[user] | Remueve un moderador/chan-op de la actual conversacion privada. [character] es el personaje que sera degradado.</string>
-    <string name="command_description_close">| Sale del canal actual.</string>
-    <string name="command_description_closeroom">| Esto cerrara la conversacion privada actualmente abierta, quitandola de la lista y haciendo futuras entradas posibles solo por invitacion.</string>
-    <string name="command_description_code">| Copies the code of the current private room into the clipboard.</string>
-    <string name="command_description_cop">[user] | añade un moderador/chan-op a la conversacion privada actual. [character] es el personaje que sera promovido.</string>
+    <string name="command_description_ban">[user] | Bannea el personaje del canal actual y previene que vuelva a entrar, no puedes banear un personaje que no este en línea y actualmente en el canal.</string>
+    <string name="command_description_bottle">| Juega a la botella. Ej: si Bob escribiera /bottle, el veria: Bob gira la botella: Hexxy</string>
+    <string name="command_description_cdeop">[user] | Relega a un moderador/operador de canal de su puesto en el canal actual. [personaje] es el personaje que sera relegado de su puesto.</string>
+    <string name="command_description_close">| Sales del canal actual.</string>
+    <string name="command_description_closeroom">| Esto cerrara el canal privada actualmente abierto, quitándolo de la lista y haciendo futuras entradas posibles solo por invitación.</string>
+    <string name="command_description_code">| Copia el código del canal actual para luego invitar a alguien con el mismo.</string>
+    <string name="command_description_cop">[user] | añade un moderador/chan-op a la conversacion privada actual. [personaje] es el personaje que sera promovido.</string>
     <string name="command_description_ignore">[user] | Esto prohibira futura comunicacion en F-Chat entre tu cuenta (todos los personajes) y ese personake.</string>
     <string name="command_description_invite">[user] | invita otro personaje a la conversacion actual, dando permiso para entrar. Tu personaje actual debe ser un Chan-Op o el dueño de conversacion.</string>
-    <string name="command_description_kick">[user] | Remueve al personaje de la actual conversacion privada. Si esta es abierta, no previene que vuelvan a entrar.</string>
-    <string name="command_description_makeroom">[name] | Abre una nueva conversacion privada llamada [name].</string>
-    <string name="command_description_openroom">| Esto hara publica la actual conversacion privada, añadiendola a la lista de conversaciones privadas, permitiendo a qualquiera la entrada.</string>
-    <string name="command_description_priv">[user] | Esto abrira una sesión de mensajes privados con otro personaje.</string>
+    <string name="command_description_kick">[user] | Remueve al personaje del canal privado. Si este es un canal abierto, no previene que vuelvan a entrar.</string>
+    <string name="command_description_makeroom">[name] | Crea un nuevo canal privado llamado [nombre].</string>
+    <string name="command_description_openroom">| Esto hara publica el canal actual, añadiendola a la lista de canales privadas, permitiendo a cualquiera entrar.</string>
+    <string name="command_description_priv">[user] | Esto abrirá una sesión de mensajes privados con otro personaje.</string>
     <string name="command_description_roll">[#d##] | Este comando tira un numero de dados. si Bob quisiera tirar dos dados con seis lados, escribiria: /roll 2d6</string>
-    <string name="command_description_setdescription">[text] | Esto pone la descripción de la conversacion actual a el texto proporcionado.</string>
-    <string name="command_description_setmode">[mode] | Esto determina el tipo de contenido que puede ser enviado en la conversacion privada actual. [mode] puede ser \'ads\', \'chat\', or \'both\' (Por defecto: both)</string>
-    <string name="command_description_setowner">[user] | Esto da propiedad de la conversacion privada actual al personaje designado.</string>
-    <string name="command_description_status">[optional text] | los estados son: online, looking, away, busy, dnd</string>
-    <string name="command_description_unban">[user] | Permite que un personaje previamente excluido pueda unirse a la conversacion nuevamente.</string>
+    <string name="command_description_setdescription">[text] | Esto cambia la descripción de la conversacion actual al texto proporcionado.</string>
+    <string name="command_description_setmode">[mode] | Esto determina el tipo de contenido que puede ser enviado en al canal actual. [mode] puede ser \'ads\', \'chat\', or \'both\' (Por defecto: both)</string>
+    <string name="command_description_setowner">[user] | Se transfiere la propiedad del canal al personaje designado.</string>
+    <string name="command_description_status">[optional text] | los estados son: online (en linea), looking (buscando RP), away (inactivo), busy (ocupado), dnd (no molestar)</string>
+    <string name="command_description_unban">[user] | Permite que un personaje previamente banneado pueda unirse a la conversacion nuevamente.</string>
     <string name="command_description_unignore">[user] | Revierte el comando /ignore , para permitir comunicacion nuevamente.</string>
     <string name="command_description_uptime">| Reporta cuanto tiempo ha estado activo el servidor.</string>
-    <string name="command_description_timeout">[user] | Temporalmente excluye a un personaje de la conversacion durante 30 minutos.</string>
+    <string name="command_description_timeout">[user] | Temporalmente bannea a un personaje de la conversacion durante 30 minutos.</string>
 
     <!-- Messages displayed by handlers -->
     <string name="handler_message_demoted">ha sido degradado en %1$s</string>
-    <string name="handler_message_ignored">has been ignored</string>
-    <string name="handler_message_new_owner"> ahora tiene propiedad de %1$s</string>
+    <string name="handler_message_ignored">ha sido ignorado</string>
+    <string name="handler_message_new_owner"> ahora es dueño de %1$s</string>
     <string name="handler_message_promoted">ha sido promovido en %1$s</string>
     <string name="handler_message_room_mode">El canal ahora muestra %1$s</string>
-    <string name="handler_message_timeout_mod">ha sido excluido de %1$s durante %2$s minutos por %3$s</string>
-    <string name="handler_message_timeout_you">te ha excluido de %1$s durante %2$s minutos</string>
+    <string name="handler_message_timeout_mod">ha sido banneado de %1$s durante %2$s minutos por %3$s</string>
+    <string name="handler_message_timeout_you">te ha banneado de %1$s durante %2$s minutos</string>
     <string name="handler_message_unignored">ya no es ignorado</string>
     <string name="handler_message_uptime">El servidor inicio: %1$s\n Actualmente %2$s usuarios - Máximo de %3$s usuarios</string>
 
