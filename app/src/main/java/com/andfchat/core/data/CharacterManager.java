@@ -87,7 +87,7 @@ public class CharacterManager {
             }
             if (!characterList.isEmpty()) {
                 for (FCharacter character : characterList.values()) {
-                    if (character != null && !character.getName().isEmpty()) {
+                    if (character != null && relationManager != null) {
                         relationManager.addRelationsToCharacter(character);
                     }
                 }

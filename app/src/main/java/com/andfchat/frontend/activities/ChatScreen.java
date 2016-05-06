@@ -609,6 +609,9 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         super.onResume();
         paused = false;
         sessionData.setIsVisible(true);
+        if (!channelList.isVisible()) {
+            channelList.toggleVisibility();
+        }
 
         AdEntry.setAdClickListener(this);
 
