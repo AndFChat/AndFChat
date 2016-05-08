@@ -65,7 +65,9 @@ public class CharacterManager {
     }
 
     public void addCharacter(FCharacter character) {
-        relationManager.addRelationsToCharacter(character);
+        if (character != null && relationManager != null) {
+            relationManager.addRelationsToCharacter(character);
+        }
         // Set global mods
         character.setGlobalOperator(globalMods.contains(character.getName()));
 
@@ -85,11 +87,9 @@ public class CharacterManager {
                 FCharacter fch = characterList.get(key);
                 newList.put(key.toLowerCase(), fch);
             }
-            if (!characterList.isEmpty()) {
-                for (FCharacter character : characterList.values()) {
-                    if (character != null && relationManager != null) {
-                        relationManager.addRelationsToCharacter(character);
-                    }
+            for (FCharacter character : characterList.values()) {
+                if (character != null && relationManager != null) {
+                    relationManager.addRelationsToCharacter(character);
                 }
             }
             knownCharacters.putAll(newList);

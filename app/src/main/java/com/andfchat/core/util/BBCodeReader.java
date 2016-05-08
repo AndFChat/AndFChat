@@ -34,6 +34,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
@@ -290,6 +291,14 @@ public class BBCodeReader {
                 if (URLUtil.isValidUrl(link)) {
                     text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 }
+            }
+            else if (bbCodeType == BBCodeType.SUPERSCRIPT) {
+                text.setSpan(new SuperscriptSpan(), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                text.setSpan(new RelativeSizeSpan(0.8f), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            }
+            else if (bbCodeType == BBCodeType.SUBSCRIPT) {
+                text.setSpan(new SubscriptSpan(), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                text.setSpan(new RelativeSizeSpan(0.8f), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             }
             else {
                 text.setSpan(bbCodeType.spannableType, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
