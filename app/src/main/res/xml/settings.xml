@@ -36,6 +36,12 @@
             android:title="@string/title_initial_channel"
             />
 
+        <MultiSelectListPreference
+            android:key="initial_private_channels"
+            android:summary="@string/description_initial_private_channel"
+            android:title="@string/title_initial_private_channel"
+            />
+
         <CheckBoxPreference
             android:key="show_avatar_pictures"
             android:summary="@string/description_show_avatar_pictures"

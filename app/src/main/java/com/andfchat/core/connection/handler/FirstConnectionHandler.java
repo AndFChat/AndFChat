@@ -34,6 +34,8 @@ import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.events.ConnectionEventListener;
 import com.google.inject.Inject;
 
+import roboguice.util.Ln;
+
 /**
  * After Identification this handler is called first.
  * @author AndFChat
@@ -47,16 +49,36 @@ public class FirstConnectionHandler extends TokenHandler {
 
     @Override
     public void incomingMessage(ServerToken token, String msg, List<FeedbackListener> feedbackListener) throws JSONException {
+        connection.askForPrivateChannel();
+        connection.requestOfficialChannels();
+
         Set<String> channels = sessionData.getSessionSettings().getInitialChannel();
         if (channels != null) {
             Object[] channelObjArray = channels.toArray();
             String[] channelArray = Arrays.copyOf(channelObjArray, channelObjArray.length, String[].class);
             for (String aChannelArray : channelArray) {
+                Ln.i("Joining Channel " + aChannelArray);
                 connection.joinChannel(aChannelArray);
             }
-
         }
-        connection.requestOfficialChannels();
+
+        Set<String> privChannels = sessionData.getSessionSettings().getInitialPrivateChannel();
+        if (privChannels != null) {
+            if (privChannels.isEmpty()) {
+                Ln.i("privChannels is empty.");
+            } else {
+                Ln.i("privChannels isn't empty.");
+            }
+            Object[] privChannelObjArray = privChannels.toArray();
+            String[] privChannelArray = Arrays.copyOf(privChannelObjArray, privChannelObjArray.length, String[].class);
+            for (String aPrivChannelArray : privChannelArray) {
+                Ln.i("Joining Channel " + aPrivChannelArray);
+                connection.joinChannel(aPrivChannelArray);
+            }
+
+        } else {
+            Ln.i("privChannels is null");
+        }
 
         sessionData.setIsInChat(true);
 

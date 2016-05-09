@@ -209,6 +209,10 @@ public class SessionData {
             return preferences.getStringSet(PropertyName.INITIAL_CHANNELS.name().toLowerCase(), null);
         }
 
+        public Set<String> getInitialPrivateChannel() {
+            return preferences.getStringSet(PropertyName.INITIAL_PRIVATE_CHANNELS.name().toLowerCase(), null);
+        }
+
         public boolean useHistory() {
             return preferences.getBoolean(PropertyName.LOG_HISTORY.name().toLowerCase(), true);
         }
