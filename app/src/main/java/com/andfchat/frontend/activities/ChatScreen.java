@@ -553,6 +553,22 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
 
             if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
                 String statusTitle = Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString();
+                int pointer = 0;
+                while (pointer < statusTitle.length()) {
+                    int start = statusTitle.indexOf("[", pointer);
+                    int end = statusTitle.indexOf("]", start);
+                    // If no [ or ] found, break loop, no BBCode
+                    if (start == -1 || end == -1) {
+                        break;
+                    } else {
+                        // Getting the ] at the end of the token.
+                        end++;
+                    }
+                    // Remove BBCode
+                    statusTitle = statusTitle.substring(0, start) + statusTitle.substring(end);
+                    // Move pointer
+                    pointer = start;
+                }
                 setChannelTitle(statusTitle);
             } else if (chatroom.isSystemChat()) {
                 setChannelTitle(context.getString(R.string.app_name));
