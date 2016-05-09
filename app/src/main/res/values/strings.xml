@@ -84,7 +84,9 @@
     <string name="question_disconnect">Do you really want to log off?</string>
     
     <!-- longer text messages -->
+    <string name="back_quit_toast">Press again to exit</string>
     <string name="command_help_menu">Help menu shows all usable commands</string>
+    <string name="copied_room_code">Room code copied to clipboard.</string>
     <string name="error_command_not_allowed">This command isn\'t allowed here</string>
     <string name="error_disconnected">Disconnected: %1$s</string>
     <string name="error_disconnected_no_connection">Lost connection to server</string>
@@ -151,6 +153,7 @@
     <string name="command_description_cop">[user] | Adds a moderator/chan-op to the current private room. [user] is the character to be promoted.</string>
     <string name="command_description_ignore">[user] | This will prevent any further communication on F-Chat between your account (all your characters) and that character.</string>
     <string name="command_description_invite">[user] | Invites another character to the current room, giving them permission to enter. Your current character must be a Chan-Op or Room Owner.</string>
+    <string name="command_description_join">[name] | Joins public or private room named [name]. For private channels, use the room code instead of the name.</string>
     <string name="command_description_kick">[user] | Removes the character from the current private room. If it is an open private room, it does not prevent them from re-entering.</string>
     <string name="command_description_makeroom">[name] | Open a new private room named [name].</string>
     <string name="command_description_openroom">| This will make the current private room open, adding it to the list of private rooms, and allowing anyone to join.</string>

@@ -34,11 +34,13 @@ import com.andfchat.core.util.commands.Ban;
 import com.andfchat.core.util.commands.Bottle;
 import com.andfchat.core.util.commands.CloseChannelToPublic;
 import com.andfchat.core.util.commands.CloseChatroom;
+import com.andfchat.core.util.commands.Code;
 import com.andfchat.core.util.commands.CreateChannel;
 import com.andfchat.core.util.commands.Demote;
 import com.andfchat.core.util.commands.Dice;
 import com.andfchat.core.util.commands.Ignore;
 import com.andfchat.core.util.commands.InviteToChannel;
+import com.andfchat.core.util.commands.Join;
 import com.andfchat.core.util.commands.Kick;
 import com.andfchat.core.util.commands.OpenChannelToPublic;
 import com.andfchat.core.util.commands.PMUser;
@@ -80,6 +82,8 @@ public class Console {
         availableCommands.add(new CloseChatroom());
         availableCommands.add(new SendAd());
         availableCommands.add(new Uptime());
+        availableCommands.add(new Code());
+        availableCommands.add(new Join());
 
         // Channel OP commands
         availableCommands.add(new CreateChannel());

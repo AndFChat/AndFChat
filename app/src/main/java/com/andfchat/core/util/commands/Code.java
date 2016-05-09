@@ -18,39 +18,43 @@
 
 package com.andfchat.core.util.commands;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.andfchat.R;
-import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
-public class Unignore extends TextCommand{
+public class Code extends TextCommand{
 
-    public Unignore() {
-        allowedIn = ChatroomType.values();
+    public Code() {
+        allowedIn = new Chatroom.ChatroomType[]{Chatroom.ChatroomType.PRIVATE_CHANNEL};
     }
 
+    @Inject
+    protected SessionData sessionData;
     @Inject
     protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /unignore " + context.getString(R.string.command_description_unignore);
+        return "*  /code " + context.getString(R.string.command_description_code);
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/unignore");
+        return token.equals("/code");
     }
 
     @Override
     public void runCommand(String token, String text) {
-        if (text != null) {
-            FCharacter flistChar = characterManager.findCharacter(text.trim(), false);
-            if (flistChar != null){
-                connection.unignore(flistChar.getName());
-            }
-        }
+        ClipboardManager clipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+        String channelCode = chatroomManager.getActiveChat().getId();
+        ClipData clip = ClipData.newPlainText("code", channelCode);
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(context, R.string.copied_room_code, Toast.LENGTH_SHORT).show();
     }
 }

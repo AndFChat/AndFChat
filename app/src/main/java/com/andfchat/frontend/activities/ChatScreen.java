@@ -552,7 +552,8 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             }
 
             if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
-                setChannelTitle(/*chatroom.getName() + " - " + */Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString());
+                String statusTitle = Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString();
+                setChannelTitle(statusTitle);
             } else if (chatroom.isSystemChat()) {
                 setChannelTitle(context.getString(R.string.app_name));
             } else {
@@ -906,7 +907,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.back_quit_toast, Toast.LENGTH_SHORT).show();
 
         mHandler.postDelayed(mRunnable, 2000);
     }

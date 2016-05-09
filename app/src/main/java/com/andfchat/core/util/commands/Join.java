@@ -21,36 +21,52 @@ package com.andfchat.core.util.commands;
 import android.content.Context;
 
 import com.andfchat.R;
+import com.andfchat.core.data.Channel;
 import com.andfchat.core.data.Chatroom.ChatroomType;
-import com.andfchat.core.data.FCharacter;
+import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 
-public class Unignore extends TextCommand{
+import java.util.Set;
 
-    public Unignore() {
+public class Join extends TextCommand{
+
+    public Join() {
         allowedIn = ChatroomType.values();
     }
 
+    @Inject
+    protected SessionData sessionData;
     @Inject
     protected Context context;
 
     @Override
     public String getDescription() {
-        return "*  /unignore " + context.getString(R.string.command_description_unignore);
+        return "*  /join " + context.getString(R.string.command_description_join);
     }
 
     @Override
     public boolean fitToCommand(String token) {
-        return token.equals("/unignore");
+        return token.equals("/join");
     }
 
     @Override
     public void runCommand(String token, String text) {
         if (text != null) {
-            FCharacter flistChar = characterManager.findCharacter(text.trim(), false);
-            if (flistChar != null){
-                connection.unignore(flistChar.getName());
+            Set<String> officialChannels = chatroomManager.getOfficialChannels();
+            Set<String> privateChannels = chatroomManager.getPrivateChannelNames();
+            String channelName = text.trim();
+            if (officialChannels.contains(channelName)) {
+                connection.joinChannel(channelName);
+            } else {
+                Channel foundChannel = chatroomManager.getPrivateChannelById(channelName);
+                if (foundChannel != null) {
+                    String foundChannelName = foundChannel.getChannelName();
+                    if (foundChannelName != null && privateChannels.contains(foundChannelName)) {
+                        connection.joinChannel(channelName);
+                    }
+                }
             }
+
         }
     }
 }
