@@ -97,6 +97,7 @@
     <string name="export_perm_denied">Log exporting will not work without storage permissions</string>
     <string name="export_perm_granted">You can now export logs</string>
     <string name="exported">Successfully exported to the download directory, filename: %1$s</string>
+    <string name="fast_message">Way past fast! Slow down!</string>
     
     <string name="text_about">AndFChat is developed under the GPLv3 licence.
         \n\nAndFChat %1$s is a [color=red]third-party[/color] client for F-list, and is still a [color=red]beta[/color], so please be patient with it!

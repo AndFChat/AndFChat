@@ -88,7 +88,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
         if (inputText.getText().toString().length() == 0) {
             return;
         }
-        // Text command like /help / open /close shouldn't be send to the server, console commands too.
+        // Console commands and text commands like /help /open and /close shouldn't be sent to the server.
         if (commands.checkForCommands(inputText.getText().toString()) || activeChat.isSystemChat()) {
             cleanInput();
             return;
@@ -103,7 +103,7 @@ public class ChatInputFragment extends RoboFragment implements ChatroomEventList
             lastMessage = System.currentTimeMillis();
         }
         else {
-            Snackbar.make(getActivity().findViewById(android.R.id.content), "Sonic, you're going too fast!", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(getActivity().findViewById(android.R.id.content), R.string.fast_message, Snackbar.LENGTH_SHORT).show();
         }
 
         // Reset input

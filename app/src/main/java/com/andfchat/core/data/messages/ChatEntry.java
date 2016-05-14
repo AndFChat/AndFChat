@@ -36,7 +36,7 @@ public abstract class ChatEntry implements Serializable {
 
     protected final static int DATE_CHAR_LENGTH = 10;
 
-    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("[KK:mm aa]", Locale.ENGLISH);
+    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("[hh:mm aa]", Locale.ENGLISH);
     protected static final DateFormat DATE_FORMAT_OLD = new SimpleDateFormat("[dd/MM/yy]", Locale.ENGLISH);
 
     protected final Date date;
