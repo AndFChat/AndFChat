@@ -8,8 +8,8 @@ android {
         applicationId "com.andfchat"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 7
-        versionName "0.5.2"
+        versionCode 8
+        versionName "0.6.0"
     }
     buildTypes {
         release {
@@ -17,12 +17,14 @@ android {
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 
@@ -32,6 +34,7 @@ android {
         exclude 'META-INF/ASL2.0'
     }
 
+    //noinspection GroovyMissingReturnStatement
     dexOptions {
     }
 }
