@@ -120,7 +120,7 @@
     <string name="description_initial_channel">Choose which channels open upon login</string>
     <string name="title_initial_private_channel">Private channels on login</string>
     <string name="description_initial_private_channel">Choose which private channels open upon login</string>
-    <string name="title_show_avatar_pictures">Show avatars in the chat list</string>
+    <string name="title_show_avatar_pictures">Show avatars</string>
     <string name="description_show_avatar_pictures">Shows F-list avatar pictures for private chats</string>
     <string name="title_separate_friends">Separate Friends and Bookmarks</string>
     <string name="description_separate_friends">Separate friends and bookmarks in the friend list?</string>

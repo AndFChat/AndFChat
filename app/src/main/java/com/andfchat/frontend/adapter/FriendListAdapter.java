@@ -130,13 +130,17 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
 
         //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
         image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
-        String name = character.getName().toLowerCase().replace(" ", "%20");
-        String url = "https://static.f-list.net/images/avatar/" + name + ".png";
+        if (sessionData.getSessionSettings().showAvatarPictures()) {
+            String name = character.getName().toLowerCase().replace(" ", "%20");
+            String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
-        picasso.load(url)
-                .placeholder(R.drawable.ic_chat_priv)
-                .error(R.drawable.ic_chat_priv)
-                .into(image);
+            picasso.load(url)
+                    .placeholder(R.drawable.ic_chat_priv)
+                    .error(R.drawable.ic_chat_priv)
+                    .into(image);
+        } else {
+            image.setImageResource(R.drawable.ic_chat_priv);
+        }
 
         // Set button
         Button pmButton = (Button)rowView.findViewById(R.id.pmButton);
