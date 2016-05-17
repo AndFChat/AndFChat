@@ -48,6 +48,9 @@ public class Chatroom {
     private boolean showAdText = false;
     private boolean showAvatar = true;
 
+    private boolean isTyping = false;
+    private boolean isTypingPaused = false;
+
     private final Channel channel;
     private final int maxTextLength;
 
@@ -179,6 +182,28 @@ public class Chatroom {
     public boolean chatChangedSince(Date date) {
         return chatMessages.get(chatMessages.size() - 1).getDate().after(date);
     }
+
+    protected void setTypingStatus(String typingStatus) {
+        switch (typingStatus) {
+            case "typing":
+                isTyping = true;
+                isTypingPaused = false;
+                break;
+            case "paused":
+                isTypingPaused = true;
+                isTyping = false;
+
+                break;
+            default:
+                isTyping = false;
+                isTypingPaused = false;
+                break;
+        }
+    }
+
+    public boolean getIsTyping() {return isTyping;}
+
+    public boolean getIsTypingPaused() {return isTypingPaused;}
 
     protected void addMessage(ChatEntry entry) {
         chatMessages.add(entry);

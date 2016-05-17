@@ -149,6 +149,19 @@ public class ChatroomManager {
         }
     }
 
+    public void addTyping(Chatroom chatroom, String typingStatus) {
+        if (chatroom == null) {
+            Ln.e("Cant find chatroom, is null");
+            return;
+        } else if (typingStatus == null) {
+            Ln.e("Typing Status is null");
+            return;
+        }
+
+        chatroom.setTypingStatus(typingStatus);
+        eventManager.fire(chatroom, ChatroomEventType.NEW_TYPING_STATUS);
+    }
+
     public void addStatus(Chatroom chatroom, ChatEntry entry) {
         if (chatroom == null) {
             Ln.e("Cant find chatroom, is null");

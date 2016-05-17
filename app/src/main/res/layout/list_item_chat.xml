@@ -15,8 +15,8 @@
       You should have received a copy of the GNU General Public License
       along with AndFChat.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/image_size_chatroom"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
@@ -30,6 +30,28 @@
 	    android:src="@drawable/ic_chat_room"
 	    android:gravity="center"
     />
+
+	<ImageView
+		android:id="@+id/TypingImage"
+		android:scaleType="fitXY"
+		android:layout_alignTop="@id/ChatroomImage"
+        android:layout_alignBottom="@id/ChatroomImage"
+		android:layout_width="@dimen/image_size_chatroom"
+		android:layout_height="@dimen/image_size_chatroom"
+        android:src="@drawable/ic_typing"
+        android:contentDescription="Typing"
+    />
+
+    <ImageView
+        android:id="@+id/TypingPausedImage"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@id/ChatroomImage"
+        android:layout_alignBottom="@id/ChatroomImage"
+        android:layout_width="@dimen/image_size_chatroom"
+        android:layout_height="@dimen/image_size_chatroom"
+        android:src="@drawable/ic_typing_paused"
+        android:contentDescription="Typing Paused"
+        />
     
     <TextView
         android:id="@+id/ChatroomName"
@@ -38,7 +60,8 @@
         android:singleLine="true"
         android:textStyle="bold"
         android:scrollHorizontally="true"
-        android:layout_width="wrap_content"
+        android:layout_below="@id/ChatroomImage"
+        android:layout_width="@dimen/image_size_chatroom"
     	android:layout_height="wrap_content"
     	android:maxLines="1"
     	android:gravity="center"
@@ -47,4 +70,4 @@
         android:textSize="@dimen/text_size_button_very_small"
     />
     
-</LinearLayout>
+</RelativeLayout>

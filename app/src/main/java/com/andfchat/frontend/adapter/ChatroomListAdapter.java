@@ -125,7 +125,6 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         }
 
         ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
-        // sessionData.getSessionSettings().showAvatarPictures()
         if (chatroom.isPrivateChat() && chatroom.getShowAvatar()) {
             String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";
@@ -140,6 +139,22 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             image.setImageResource(R.drawable.ic_chat_sys);
         } else {
             image.setImageResource(R.drawable.ic_chat_room);
+        }
+
+        ImageView typing = (ImageView)rowView.findViewById(R.id.TypingImage);
+        typing.setVisibility(View.INVISIBLE);
+        ImageView typingPaused = (ImageView)rowView.findViewById(R.id.TypingPausedImage);
+        typingPaused.setVisibility(View.INVISIBLE);
+
+        if (chatroom.isPrivateChat() && chatroom.getIsTyping()) {
+            typing.setVisibility(View.VISIBLE);
+            typingPaused.setVisibility(View.INVISIBLE);
+        } else if (chatroom.isPrivateChat() && chatroom.getIsTypingPaused()) {
+            typingPaused.setVisibility(View.VISIBLE);
+            typing.setVisibility(View.INVISIBLE);
+        } else {
+            typing.setVisibility(View.INVISIBLE);
+            typingPaused.setVisibility(View.INVISIBLE);
         }
 
         return rowView;
