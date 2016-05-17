@@ -58,9 +58,9 @@ public class BBCodeReader {
         SUPERSCRIPT("sup", new SuperscriptSpan(), new SimpleTextMatcher()),
         SUBSCRIPT("sub", new SubscriptSpan(), new SimpleTextMatcher()),
         COLOR("color", null, new VariableTextMatcher()),
-        //UNPARSED("noparse", , ), TODO noparse
-        //ICON("icon", , ), TODO icon
-        //EICON("eicon", , ), TODO eicon
+        //UNPARSED("noparse", null , new SimpleTextMatcher()), //TODO noparse
+        //ICON("icon", null, new SimpleTextMatcher()), //TODO icon
+        //EICON("eicon", , ), //TODO eicon
         LINK("url", null, new VariableTextMatcher()),
         USER("user", new UnderlineSpan(), new SimpleTextMatcher()),
         PRIVATE_CHANNEL("session", null, new VariableTextMatcher()),
@@ -231,6 +231,9 @@ public class BBCodeReader {
         @Inject
         private ChatroomManager chatroomManager;
 
+        //OkHttpClient client = new OkHttpClient();
+        //Picasso picasso;
+
         public Span(int start, BBCodeType type, String token) {
             this.start = start;
             this.bbCodeType = type;
@@ -246,7 +249,14 @@ public class BBCodeReader {
         }
 
         public void addToText(Spannable text, Context context) {
-            if (bbCodeType == BBCodeType.COLOR) {
+            /*picasso = new Picasso.Builder(context)
+                    .downloader(new OkHttp3Downloader(client))
+                    .build();
+
+            if (bbCodeType == BBCodeType.UNPARSED) {
+                text.setSpan(new StyleSpan(Typeface.NORMAL), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            }
+            else*/ if (bbCodeType == BBCodeType.COLOR) {
                 String colorText = bbCodeType.getVariable(token);
                 if (colorText != null) {
                     try {
@@ -292,6 +302,33 @@ public class BBCodeReader {
                     text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 }
             }
+            /*else if (bbCodeType == BBCodeType.ICON) {
+                ImageView image = new ImageView(context);
+                String url = "https://static.f-list.net/images/avatar/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20") + ".png";
+
+                final Context fContext = context;
+                final Spannable fText = text;
+
+                final SimpleTarget target = new SimpleTarget<Bitmap>(100, 100) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                        fText.setSpan(new ImageSpan(fContext, bitmap), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                    }
+                };
+
+                Ln.d("Icon Url: " + url);
+                if (URLUtil.isValidUrl(url)) {
+                    Ln.d("Valid Icon Url: " + url);
+                    Glide.with(context)
+                            .load(url)
+                            .asBitmap()
+                            .placeholder(R.drawable.ic_chat_priv)
+                            .error(R.drawable.ic_chat_priv)
+                            .into(target);
+                    //Drawable dImage = image.getDrawable();
+                    text.setSpan(new ImageSpan(context, R.drawable.ic_chat_priv), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                }
+            }*/
             else if (bbCodeType == BBCodeType.SUPERSCRIPT) {
                 text.setSpan(new SuperscriptSpan(), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
                 text.setSpan(new RelativeSizeSpan(0.8f), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
