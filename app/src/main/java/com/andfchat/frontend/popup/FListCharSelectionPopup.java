@@ -111,7 +111,7 @@ public class FListCharSelectionPopup extends DialogFragment {
                     chatroomManager.clear();
                     characterManager.clear();
 
-                    sessionData.setCharname(characterName);
+                    sessionData.setCharacterName(characterName);
                 }
                 // Websocket is connected?
                 if (connection.isConnected()) {

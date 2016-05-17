@@ -98,7 +98,7 @@ public class PickChar extends RoboActivity {
 
         String characterName = characters[charSelector.getSelectedItemPosition()];
 
-        sessionData.setCharname(characterName);
+        sessionData.setCharacterName(characterName);
         // Websocket is connected?
         if (connection.isConnected()) {
             Ln.i("Connected to WebSocket!");

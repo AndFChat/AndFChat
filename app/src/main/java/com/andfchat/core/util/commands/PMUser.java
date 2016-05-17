@@ -67,6 +67,10 @@ public class PMUser extends TextCommand {
             return;
         }
 
+        if (text.equals(sessionData.getCharacterName())) {
+            return;
+        }
+
         FCharacter flistChar = characterManager.findCharacter(text, false);
 
         if (flistChar == null) {

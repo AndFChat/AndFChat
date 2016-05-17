@@ -75,7 +75,7 @@ public class SessionData {
         this.password = password;
     }
 
-    public void setCharname(String name) {
+    public void setCharacterName(String name) {
         characterName = name;
     }
 
