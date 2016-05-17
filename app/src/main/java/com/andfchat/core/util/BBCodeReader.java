@@ -33,6 +33,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
@@ -167,6 +168,12 @@ public class BBCodeReader {
         Spannable textSpan = new SpannableString(text);
         for (Span span : spans) {
             if (span.closed()) {
+                if (span.bbCodeType.equals(BBCodeType.LINK) && (span.end - span.start == 0)) {
+                    Spannable linkTextSpan = new SpannableString("[LINK]");
+                    CharSequence newText = TextUtils.concat(textSpan.subSequence(0, span.start), linkTextSpan, textSpan.subSequence(span.end, textSpan.length()));
+                    textSpan = new SpannableStringBuilder(newText);
+                    span.setEnd(span.end + linkTextSpan.length());
+                }
                 Ln.v("ADD span: " + span.toString());
                 span.addToText(textSpan, context);
             }
