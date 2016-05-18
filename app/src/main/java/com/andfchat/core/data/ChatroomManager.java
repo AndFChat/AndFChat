@@ -237,7 +237,9 @@ public class ChatroomManager {
     }
 
     public void addPrivateChannel(Channel channel) {
-        privateChannelSet.add(channel);
+        if (!privateChannelSet.contains(channel)) {
+            privateChannelSet.add(channel);
+        }
     }
 
     public Set<String> getPrivateChannelNames() {
