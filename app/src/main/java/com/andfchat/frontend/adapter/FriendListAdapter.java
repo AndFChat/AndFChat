@@ -129,7 +129,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
 
 
         //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
-        image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
+        image = (ImageView)rowView.findViewById(R.id.AvatarImage);
         if (sessionData.getSessionSettings().showAvatarPictures()) {
             String name = character.getName().toLowerCase().replace(" ", "%20");
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";

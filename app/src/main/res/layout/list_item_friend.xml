@@ -59,7 +59,8 @@
         android:layout_height="36dp"
         android:layout_width="36dp"
         android:background="@drawable/ic_chat_priv"
-        android:id="@+id/ChatroomImage"
+        android:id="@+id/AvatarImage"
+        android:contentDescription="Avatar"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/pmButton"
         />
