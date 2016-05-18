@@ -26,8 +26,11 @@ import java.util.List;
 import roboguice.RoboGuice;
 import roboguice.util.Ln;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -35,6 +38,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
@@ -44,9 +48,14 @@ import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.webkit.URLUtil;
+import android.widget.ImageView;
 
+import com.andfchat.R;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.frontend.util.OpenChatroomSpan;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.inject.Inject;
 
 public class BBCodeReader {
@@ -60,7 +69,7 @@ public class BBCodeReader {
         SUBSCRIPT("sub", new SubscriptSpan(), new SimpleTextMatcher()),
         COLOR("color", null, new VariableTextMatcher()),
         //UNPARSED("noparse", null , new SimpleTextMatcher()), //TODO noparse
-        //ICON("icon", null, new SimpleTextMatcher()), //TODO icon
+        ICON("icon", null, new SimpleTextMatcher()),
         //EICON("eicon", , ), //TODO eicon
         LINK("url", null, new VariableTextMatcher()),
         USER("user", new UnderlineSpan(), new SimpleTextMatcher()),
@@ -175,7 +184,7 @@ public class BBCodeReader {
                     span.setEnd(span.end + linkTextSpan.length());
                 }
                 Ln.v("ADD span: " + span.toString());
-                span.addToText(textSpan, context);
+                textSpan = span.addToText(textSpan, context);
             }
         }
 
@@ -234,12 +243,11 @@ public class BBCodeReader {
 
         private String key = null;
         private String replacement = null;
+        private Spannable text;
+        StateListDrawable icon = new StateListDrawable();
 
         @Inject
         private ChatroomManager chatroomManager;
-
-        //OkHttpClient client = new OkHttpClient();
-        //Picasso picasso;
 
         public Span(int start, BBCodeType type, String token) {
             this.start = start;
@@ -255,12 +263,9 @@ public class BBCodeReader {
             return end != null;
         }
 
-        public void addToText(Spannable text, Context context) {
-            /*picasso = new Picasso.Builder(context)
-                    .downloader(new OkHttp3Downloader(client))
-                    .build();
-
-            if (bbCodeType == BBCodeType.UNPARSED) {
+        public Spannable addToText(Spannable aText, final Context context) {
+            text = aText;
+            /*if (bbCodeType == BBCodeType.UNPARSED) {
                 text.setSpan(new StyleSpan(Typeface.NORMAL), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
             }
             else*/ if (bbCodeType == BBCodeType.COLOR) {
@@ -309,33 +314,36 @@ public class BBCodeReader {
                     text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 }
             }
-            /*else if (bbCodeType == BBCodeType.ICON) {
-                ImageView image = new ImageView(context);
+            else if (bbCodeType == BBCodeType.ICON) {
                 String url = "https://static.f-list.net/images/avatar/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20") + ".png";
-
-                final Context fContext = context;
-                final Spannable fText = text;
-
-                final SimpleTarget target = new SimpleTarget<Bitmap>(100, 100) {
-                    @Override
-                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
-                        fText.setSpan(new ImageSpan(fContext, bitmap), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                    }
-                };
 
                 Ln.d("Icon Url: " + url);
                 if (URLUtil.isValidUrl(url)) {
-                    Ln.d("Valid Icon Url: " + url);
+                    icon.addState(new int[]{android.R.attr.state_first}, context.getResources().getDrawable(R.drawable.ic_chat_priv));
+                    icon.setState(new int[]{android.R.attr.state_first});
+
                     Glide.with(context)
                             .load(url)
                             .asBitmap()
-                            .placeholder(R.drawable.ic_chat_priv)
-                            .error(R.drawable.ic_chat_priv)
-                            .into(target);
-                    //Drawable dImage = image.getDrawable();
-                    text.setSpan(new ImageSpan(context, R.drawable.ic_chat_priv), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                            .into(new SimpleTarget<Bitmap>(100,100) {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                    ImageView image = new ImageView(context);
+                                    image.setImageBitmap(resource); // Possibly runOnUiThread()
+                                    Drawable dImage = image.getDrawable();
+                                    dImage.setBounds(0, 0, dImage.getIntrinsicWidth(), dImage.getIntrinsicHeight());
+                                    icon.addState(new int[]{android.R.attr.state_last}, dImage);
+                                    icon.setState(new int[]{android.R.attr.state_last});
+                                    Ln.i("Does this even happen?");
+                                }
+                            });
+                    icon.setVisible(true, false);
+                    if (icon != null) {
+                        icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+                        text.setSpan(new ImageSpan(icon), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
                 }
-            }*/
+            }
             else if (bbCodeType == BBCodeType.SUPERSCRIPT) {
                 text.setSpan(new SuperscriptSpan(), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
                 text.setSpan(new RelativeSizeSpan(0.8f), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -347,6 +355,8 @@ public class BBCodeReader {
             else {
                 text.setSpan(bbCodeType.spannableType, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             }
+
+            return text;
         }
 
         public void doReplacement(SpannableStringBuilder text) {

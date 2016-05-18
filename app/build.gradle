@@ -52,6 +52,7 @@ dependencies {
     provided 'org.roboguice:roboblender:3.0.1'
     // Image handling
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.okhttp3:okhttp:3.0.0-RC1'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.0.0-RC1'
     // Fix squareup broken compatibility with picasso 2 and okhttp 3
