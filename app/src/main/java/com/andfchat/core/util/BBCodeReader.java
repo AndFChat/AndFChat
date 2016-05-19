@@ -70,7 +70,7 @@ public class BBCodeReader {
         COLOR("color", null, new VariableTextMatcher()),
         //UNPARSED("noparse", null , new SimpleTextMatcher()), //TODO noparse
         ICON("icon", null, new SimpleTextMatcher()),
-        //EICON("eicon", , ), //TODO eicon
+        EICON("eicon", null, new SimpleTextMatcher()),
         LINK("url", null, new VariableTextMatcher()),
         USER("user", new UnderlineSpan(), new SimpleTextMatcher()),
         PRIVATE_CHANNEL("session", null, new VariableTextMatcher()),
@@ -316,6 +316,36 @@ public class BBCodeReader {
             }
             else if (bbCodeType == BBCodeType.ICON) {
                 String url = "https://static.f-list.net/images/avatar/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20") + ".png";
+
+                Ln.d("Icon Url: " + url);
+                if (URLUtil.isValidUrl(url)) {
+                    icon.addState(new int[]{android.R.attr.state_first}, context.getResources().getDrawable(R.drawable.ic_chat_priv));
+                    icon.setState(new int[]{android.R.attr.state_first});
+
+                    Glide.with(context)
+                            .load(url)
+                            .asBitmap()
+                            .into(new SimpleTarget<Bitmap>(100,100) {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                    ImageView image = new ImageView(context);
+                                    image.setImageBitmap(resource); // Possibly runOnUiThread()
+                                    Drawable dImage = image.getDrawable();
+                                    dImage.setBounds(0, 0, dImage.getIntrinsicWidth(), dImage.getIntrinsicHeight());
+                                    icon.addState(new int[]{android.R.attr.state_last}, dImage);
+                                    icon.setState(new int[]{android.R.attr.state_last});
+                                    Ln.i("Does this even happen?");
+                                }
+                            });
+                    icon.setVisible(true, false);
+                    if (icon != null) {
+                        icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+                        text.setSpan(new ImageSpan(icon), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
+            else if (bbCodeType == BBCodeType.EICON) {
+                String url = "https://static.f-list.net/images/eicon/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20") + ".png";
 
                 Ln.d("Icon Url: " + url);
                 if (URLUtil.isValidUrl(url)) {
