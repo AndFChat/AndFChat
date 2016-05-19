@@ -40,7 +40,7 @@ import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.FlistCharComparator;
-import com.andfchat.frontend.util.NameSpannable;
+import com.andfchat.frontend.util.NormalNameSpannable;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
 
@@ -95,7 +95,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         final View rowView = convertView;
         // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
-        textView.setText(new NameSpannable(character, null, getContext().getResources()));
+        textView.setText(new NormalNameSpannable(character, null, getContext().getResources()));
         textView.setSelected(true);
 
         // Set icon
