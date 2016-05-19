@@ -43,6 +43,8 @@ public class NameSpannable extends SpannableString {
             else if (flistChar.isBookmarked()) {
                 color = resources.getColor(R.color.name_bookmark);
             }
+            else if (flistChar.isIgnored()) {
+                color = resources.getColor(R.color.name_ignored);
             }
         } else {
             color = resources.getColor(colorId);
