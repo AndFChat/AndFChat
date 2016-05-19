@@ -46,7 +46,8 @@
     <color name="text_timestamp_color">#bbbbcc</color>
     
     <!-- NAMEPLATES -->
-    <color name="name_important">#44ff44</color>
+    <color name="name_friend">#44ff44</color>
+    <color name="name_bookmark">#3bdd3b</color>
     <color name="name_ignored">#d3d3d3</color>
     
     <!-- THEME -->

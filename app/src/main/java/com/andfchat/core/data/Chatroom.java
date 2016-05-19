@@ -192,7 +192,6 @@ public class Chatroom {
             case "paused":
                 isTypingPaused = true;
                 isTyping = false;
-
                 break;
             default:
                 isTyping = false;
