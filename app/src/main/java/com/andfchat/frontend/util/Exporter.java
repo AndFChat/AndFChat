@@ -11,7 +11,7 @@ public class Exporter {
 
         String text = "";
 
-        for (ChatEntry entry : chatroom.getChatHistory()) {
+        for (ChatEntry entry : chatroom.getExportableChatHistory()) {
             text += entry.getChatMessage(context).toString() + "\n";
         }
 

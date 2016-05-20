@@ -61,7 +61,7 @@ public class DiceBottleHandler extends TokenHandler {
                 // Remove the first name, is already displayed by the ChatEntry.
                 message = message.substring(message.indexOf("[/user]") + "[/user]".length());
                 ChatEntry entry = entryFactory.getNotation(owner, message);
-                chatroomManager.addMessage(chatroom, entry);
+                chatroomManager.addChat(chatroom, entry);
             }
         }
     }

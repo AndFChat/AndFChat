@@ -55,6 +55,7 @@ public class Chatroom {
     private final int maxTextLength;
 
     private List<ChatEntry> chatMessages;
+    private List<ChatEntry> exportableChatMessages;
     private final List<FCharacter> characters = new ArrayList<FCharacter>();
 
     private Spannable description;
@@ -69,6 +70,7 @@ public class Chatroom {
         this.channel = channel;
         this.maxTextLength = maxTextLength;
         this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
+        this.exportableChatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
     }
 
     public Chatroom(Channel channel, FCharacter character, int maxTextLength, boolean showAvatar) {
@@ -76,6 +78,7 @@ public class Chatroom {
         this.characters.add(character);
         this.maxTextLength = maxTextLength;
         this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
+        this.exportableChatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
         this.showAvatar = showAvatar;
     }
 
@@ -208,6 +211,11 @@ public class Chatroom {
         chatMessages.add(entry);
     }
 
+    protected void addChat(ChatEntry entry) {
+        chatMessages.add(entry);
+        exportableChatMessages.add(entry);
+    }
+
     protected void addStatus(ChatEntry entry) {
         chatMessages.add(entry);
     }
@@ -269,6 +277,10 @@ public class Chatroom {
 
     public List<ChatEntry> getChatHistory() {
         return chatMessages;
+    }
+
+    public List<ChatEntry> getExportableChatHistory() {
+        return exportableChatMessages;
     }
 
     public void setChatHistory(List<ChatEntry> chatHistory) {

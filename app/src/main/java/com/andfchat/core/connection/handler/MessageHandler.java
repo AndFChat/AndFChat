@@ -51,7 +51,7 @@ public class MessageHandler extends TokenHandler {
             if (chatroom != null) {
                 if(!characterManager.findCharacter(character).isIgnored()) {
                     ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
-                    chatroomManager.addMessage(chatroom, entry);
+                    chatroomManager.addChat(chatroom, entry);
                 } else {
                     Ln.d("Blocked a message from an ignored character.");
                 }

@@ -149,6 +149,26 @@ public class ChatroomManager {
         }
     }
 
+    public void addChat(Chatroom chatroom, ChatEntry entry) {
+        if (chatroom == null) {
+            Ln.e("Cant find chatroom, is null");
+            return;
+        } else if (entry == null) {
+            Ln.e("Cant find entry, is null");
+            return;
+        }
+
+        chatroom.addChat(entry);
+        eventManager.fire(entry, chatroom);
+
+        entry.setOwned(sessionData.isUser(entry.getOwner()));
+
+        if (!chatroom.hasNewMessage() && !isActiveChat(chatroom)) {
+            chatroom.setHasNewMessage(true);
+            eventManager.fire(chatroom, ChatroomEventType.NEW_MESSAGE);
+        }
+    }
+
     public void addTyping(Chatroom chatroom, String typingStatus) {
         if (chatroom == null) {
             Ln.e("Cant find chatroom, is null");

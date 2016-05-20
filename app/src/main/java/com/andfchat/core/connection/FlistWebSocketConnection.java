@@ -231,7 +231,7 @@ public class FlistWebSocketConnection {
             String[] secondcut =  {firstcut[1].substring(0, i), firstcut[1].substring(i)};
             Ln.i(secondcut[0]);
             ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
-            chatroomManager.addMessage(chatroom, entry);
+            chatroomManager.addChat(chatroom, entry);
 
         } catch (JSONException e) {
             Ln.w("exception occurred while sending message: " + e.getMessage());
@@ -280,7 +280,7 @@ public class FlistWebSocketConnection {
                     String[] secondcut = {firstcut[1].substring(0, i), firstcut[1].substring(i)};
                     Ln.i(secondcut[0]);
                     ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(sessionData.getCharacterName()), secondcut[0]);
-                    chatroomManager.addMessage(chatroom, entry);
+                    chatroomManager.addChat(chatroom, entry);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     Ln.e("Private message \"" + msg + "\" was not split.");
                 }
