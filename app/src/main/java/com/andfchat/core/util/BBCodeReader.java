@@ -316,6 +316,7 @@ public class BBCodeReader {
             }
             else if (bbCodeType == BBCodeType.ICON) {
                 String url = "https://static.f-list.net/images/avatar/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20") + ".png";
+                String link = "http://f-list.net/c/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20");
 
                 Ln.d("Icon Url: " + url);
                 if (URLUtil.isValidUrl(url)) {
@@ -340,7 +341,11 @@ public class BBCodeReader {
                     icon.setVisible(true, false);
                     if (icon != null) {
                         icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
-                        text.setSpan(new ImageSpan(icon), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        ImageSpan iconSpan = new ImageSpan(icon);
+                        text.setSpan(iconSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        if (URLUtil.isValidUrl(link)) {
+                            text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                        }
                     }
                 }
             }
