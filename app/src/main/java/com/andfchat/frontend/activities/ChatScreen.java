@@ -551,7 +551,10 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 actionButton.setVisibility(View.VISIBLE);
             }
 
-            if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
+            if(chatroom.isPrivateChat() && charManager.findCharacter(chatroom.getRecipient().getName(), false) == null) {
+                setChannelTitle("OFFLINE");
+            }
+            else if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
                 String statusTitle = Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString();
                 int pointer = 0;
                 while (pointer < statusTitle.length()) {
