@@ -65,7 +65,9 @@ public class CharacterManager {
     }
 
     public void addCharacter(FCharacter character) {
-        if (character != null && relationManager != null) {
+        if (relationManager == null) {
+            relationManager = new RelationManager();
+        } else {
             relationManager.addRelationsToCharacter(character);
         }
         // Set global mods
@@ -88,7 +90,9 @@ public class CharacterManager {
                 newList.put(key.toLowerCase(), fch);
             }
             for (FCharacter character : characterList.values()) {
-                if (character != null && relationManager != null) {
+                if (relationManager == null) {
+                    relationManager = new RelationManager();
+                } else {
                     relationManager.addRelationsToCharacter(character);
                 }
             }
