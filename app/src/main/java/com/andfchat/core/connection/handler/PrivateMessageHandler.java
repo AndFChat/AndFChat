@@ -95,6 +95,7 @@ public class PrivateMessageHandler extends TokenHandler {
 
             ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
             chatroomManager.addChat(chatroom, entry);
+            chatroomManager.addTyping(chatroom, "clear");
         } else {
             Ln.d("Blocked a private message from an ignored character.");
         }
