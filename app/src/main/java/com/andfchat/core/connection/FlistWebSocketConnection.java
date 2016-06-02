@@ -56,8 +56,6 @@ import de.tavendo.autobahn.WebSocketException;
 public class FlistWebSocketConnection {
 
     private final static String CLIENT_NAME = "AndFChat";
-    private final static String SERVER_URL_DEV = "ws://chat.f-list.net:8722/";
-    private final static String SERVER_URL_LIVE = "ws://chat.f-list.net:9722/";
 
     @Inject
     private FlistWebSocketHandler handler;
@@ -88,16 +86,12 @@ public class FlistWebSocketConnection {
         application = (AndFChatApplication)context.getApplicationContext();
     }
 
-    public void connect(boolean onLive) {
+    public void connect() {
         try {
             WebSocketOptions options = new WebSocketOptions();
 
             options.setMaxFramePayloadSize(256000);
-            if (onLive) {
-                application.getConnection().connect(SERVER_URL_LIVE, handler, options);
-            } else {
-                application.getConnection().connect(SERVER_URL_DEV, handler, options);
-            }
+			application.getConnection().connect(sessionData.getHost(), handler, options);
             eventManager.fire(ConnectionEventListener.ConnectionEventType.CONNECTED);
         } catch (WebSocketException e) {
             e.printStackTrace();

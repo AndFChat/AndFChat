@@ -10,6 +10,7 @@ import com.andfchat.core.data.FCharacter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import java.util.Date;
 import java.util.MissingFormatArgumentException;
 
 @Singleton
@@ -24,10 +25,14 @@ public class ChatEntryFactory {
     }
 
     public ChatEntry getMessage(FCharacter owner, String text) {
+        return getMessage(owner, text, new Date());
+    }
+
+    public ChatEntry getMessage(FCharacter owner, String text, Date date) {
         if (text.startsWith("/me")) {
             text = text.substring(3);
             if(!text.trim().isEmpty()) {
-                return new EmoteEntry(owner, text.trim());
+                return new EmoteEntry(owner, text.trim(), date);
             }
             else {
                 return null;
@@ -36,14 +41,14 @@ public class ChatEntryFactory {
         else if (text.startsWith("/warn ")) {
             text = text.substring(6);
             if(!text.trim().isEmpty()) {
-                return new WarningEntry(owner, text.trim());
+                return new WarningEntry(owner, text.trim(), date);
             }
             else {
                 return null;
             }
         }
         else {
-            return new MessageEntry(owner, text.trim());
+            return new MessageEntry(owner, text.trim(), date);
         }
     }
 
@@ -52,11 +57,11 @@ public class ChatEntryFactory {
     }
 
     public ChatEntry getNotation(FCharacter owner, int stringId, Object[] textParts) {
-        return getNotation(owner, getText(stringId, textParts));
+        return getNotation(owner, getText(stringId, textParts), new Date());
     }
 
-    public ChatEntry getNotation(FCharacter owner, String text) {
-        ChatEntry entry = new NotationEntry(owner, text);
+    public ChatEntry getNotation(FCharacter owner, String text, Date time) {
+        ChatEntry entry = new NotationEntry(owner, text, time);
         entry.setIcon(R.drawable.ic_info_dark);
         return entry;
     }
@@ -68,7 +73,11 @@ public class ChatEntryFactory {
     }
 
     public ChatEntry getAd(FCharacter owner, String text) {
-        AdEntry entry = new AdEntry(owner, text, context.getString(R.string.ad_clickable_advertisement));
+        return getAd(owner, text, new Date());
+    }
+
+    public ChatEntry getAd(FCharacter owner, String text, Date time) {
+        AdEntry entry = new AdEntry(owner, text, context.getString(R.string.ad_clickable_advertisement), time);
         entry.setIcon(R.drawable.ic_ad);
         return entry;
     }

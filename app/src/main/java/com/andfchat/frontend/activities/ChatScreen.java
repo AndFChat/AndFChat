@@ -846,7 +846,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             }
         }
         else {
-            connection.connect(true);
+            connection.connect();
 
             Runnable runnable = new Runnable() {
                 @Override

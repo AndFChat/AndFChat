@@ -18,6 +18,7 @@
 
 package com.andfchat.core.connection.handler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -43,6 +44,7 @@ public class DiceBottleHandler extends TokenHandler {
             String recipient = json.optString("recipient");
             String message = json.getString("message");
             String character = json.getString("character");
+            Date time = json.has("time") ? parseDate(json.getLong("time")) : new Date();
 
             FCharacter owner = characterManager.findCharacter(character);
 
@@ -60,7 +62,7 @@ public class DiceBottleHandler extends TokenHandler {
             if (chatroom != null) {
                 // Remove the first name, is already displayed by the ChatEntry.
                 message = message.substring(message.indexOf("[/user]") + "[/user]".length());
-                ChatEntry entry = entryFactory.getNotation(owner, message);
+                ChatEntry entry = entryFactory.getNotation(owner, message, time);
                 chatroomManager.addChat(chatroom, entry);
             }
         }

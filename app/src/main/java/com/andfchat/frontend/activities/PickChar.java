@@ -81,7 +81,7 @@ public class PickChar extends RoboActivity {
                  // Connect websocket
                  if (!connection.isConnected()) {
                      Ln.d("Connecting...");
-                     connection.connect(getIntent().getBooleanExtra("isLive", true));
+                     connection.connect();
                  }
              }
         }, 2000);
@@ -110,7 +110,7 @@ public class PickChar extends RoboActivity {
         } else {
             Ln.i("Can't connect to WebSocket!");
             Ln.d("Connecting...");
-            connection.connect(getIntent().getBooleanExtra("isLive", true));
+            connection.connect();
         }
 
     }

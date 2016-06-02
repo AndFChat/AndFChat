@@ -18,7 +18,10 @@
 
 package com.andfchat.core.connection.handler;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.json.JSONException;
 
@@ -67,6 +70,13 @@ public abstract class TokenHandler {
                 chatroomManager.addMessage(chatroomManager.getPrivateChatFor(flistChar), chatEntry);
             }
         }
+    }
+
+    protected Date parseDate(long time) {
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(time * 1000);
+        calendar.setTimeZone(TimeZone.getDefault());
+        return calendar.getTime();
     }
 
     protected void broadcastStatusInfo(ChatEntry chatEntry, FCharacter flistChar) {

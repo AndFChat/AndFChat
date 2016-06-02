@@ -5,14 +5,16 @@ import android.graphics.Typeface;
 
 import com.andfchat.core.data.FCharacter;
 
+import java.util.Date;
+
 public class EmoteEntry extends ChatEntry {
 
     private static final long serialVersionUID = 1L;
 
     private final String text;
 
-    public EmoteEntry(FCharacter owner, String text) {
-        super(owner, MessageType.EMOTE);
+    public EmoteEntry(FCharacter owner, String text, Date date) {
+        super(owner, MessageType.EMOTE, date);
         this.text = text;
 
         delimiterBetweenDateAndName = " * ";

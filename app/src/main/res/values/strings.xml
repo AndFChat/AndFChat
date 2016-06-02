@@ -50,6 +50,9 @@
     <string name="private_channels">Private Channels</string>
     <string name="public_channels">Public Channels</string>
     <string name="remember_account">Remember Account</string>
+	<string name="remember_password">Remember Password</string>
+	<string name="show_advanced">Show advanced settings</string>
+	<string name="host">Host</string>
     <string name="select_character">Select Character</string>
     <string name="send_message">Send</string>
     <string name="settings">Settings</string>

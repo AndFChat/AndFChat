@@ -12,6 +12,8 @@ import com.andfchat.core.data.messages.ChatEntryFactory.AdClickListener;
 import com.andfchat.core.util.BBCodeReader;
 import com.andfchat.core.util.SmileyReader;
 
+import java.util.Date;
+
 public class AdEntry extends ChatEntry {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +26,11 @@ public class AdEntry extends ChatEntry {
     private transient boolean showText = false;
 
     public AdEntry(FCharacter owner, String text, String displayText) {
-        super(owner, MessageType.AD);
+        this(owner, text, displayText, new Date());
+    }
+
+    public AdEntry(FCharacter owner, String text, String displayText, Date date) {
+        super(owner, MessageType.AD, date);
         this.text = text;
         this.displayText = displayText;
 

@@ -18,7 +18,12 @@
 
 package com.andfchat.core.connection.handler;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +68,7 @@ public class PrivateMessageHandler extends TokenHandler {
 
         String character = jsonObject.getString("character");
         String message = jsonObject.getString("message");
+        Date time = jsonObject.has("time") ? parseDate(jsonObject.getLong("time")) : new Date();
 
         if (!characterManager.findCharacter(character).isIgnored()) {
 
@@ -93,7 +99,7 @@ public class PrivateMessageHandler extends TokenHandler {
                 notification.updateNotification(sessionData.addMessage());
             }
 
-            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
+            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message, time);
             chatroomManager.addChat(chatroom, entry);
             chatroomManager.addTyping(chatroom, "clear");
         } else {

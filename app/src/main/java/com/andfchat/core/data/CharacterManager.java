@@ -18,6 +18,7 @@
 
 package com.andfchat.core.data;
 
+import android.content.Context;
 import android.text.Html;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ import java.util.List;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import roboguice.RoboGuice;
 
 @Singleton
 public class CharacterManager {
@@ -44,8 +47,9 @@ public class CharacterManager {
     public static final String USER_SYSTEM_INPUT = "Input";
 
     @Inject
-    public CharacterManager() {
+    public CharacterManager(Context context) {
         clear();
+        relationManager = RoboGuice.getInjector(context).getInstance(RelationManager.class);
     }
 
     public FCharacter findCharacter(String name, boolean create) {
@@ -65,11 +69,7 @@ public class CharacterManager {
     }
 
     public void addCharacter(FCharacter character) {
-        if (relationManager == null) {
-            relationManager = new RelationManager();
-        } else {
-            relationManager.addRelationsToCharacter(character);
-        }
+        relationManager.addRelationsToCharacter(character);
         // Set global mods
         character.setGlobalOperator(globalMods.contains(character.getName()));
 
@@ -90,11 +90,7 @@ public class CharacterManager {
                 newList.put(key.toLowerCase(), fch);
             }
             for (FCharacter character : characterList.values()) {
-                if (relationManager == null) {
-                    relationManager = new RelationManager();
-                } else {
-                    relationManager.addRelationsToCharacter(character);
-                }
+                relationManager.addRelationsToCharacter(character);
             }
             knownCharacters.putAll(newList);
 

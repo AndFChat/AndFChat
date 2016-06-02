@@ -247,7 +247,7 @@ public class Login extends RoboActivity {
                 }
 
                 // Init session
-                sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString(), password.toString());
+                //sessionData.initSession(jsonDocument.getString(JsonTokens.ticket.name()), account.getText().toString(), password.toString());
                 // Add bookmarks to the RelationManager
                 JSONArray bookmarks = jsonDocument.getJSONArray(JsonTokens.bookmarks.name());
                 Set<String> bookmarksList = new HashSet<String>();

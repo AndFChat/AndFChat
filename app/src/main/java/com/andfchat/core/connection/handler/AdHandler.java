@@ -18,6 +18,7 @@
 
 package com.andfchat.core.connection.handler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -42,8 +43,9 @@ public class AdHandler extends TokenHandler {
             Chatroom chatroom = chatroomManager.getChatroom(json.getString("channel"));
             FCharacter flistChar = characterManager.findCharacter(json.getString("character"));
             String message = json.getString("message");
+            Date time = json.has("time") ? parseDate(json.getLong("time")) : new Date();
 
-            ChatEntry entry = entryFactory.getAd(flistChar, message);
+            ChatEntry entry = entryFactory.getAd(flistChar, message, time);
             chatroomManager.addMessage(chatroom, entry);
         }
     }

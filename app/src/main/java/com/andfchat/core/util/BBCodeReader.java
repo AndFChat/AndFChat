@@ -68,7 +68,7 @@ public class BBCodeReader {
         SUPERSCRIPT("sup", new SuperscriptSpan(), new SimpleTextMatcher()),
         SUBSCRIPT("sub", new SubscriptSpan(), new SimpleTextMatcher()),
         COLOR("color", null, new VariableTextMatcher()),
-        //UNPARSED("noparse", null , new SimpleTextMatcher()), //TODO noparse
+        NOPARSE("noparse", null, new SimpleTextMatcher()),
         ICON("icon", null, new SimpleTextMatcher()),
         EICON("eicon", null, new SimpleTextMatcher()),
         LINK("url", null, new VariableTextMatcher()),
@@ -122,6 +122,7 @@ public class BBCodeReader {
 
         text = text.replace(NEW_LINE_DELIMITER, "\n");
 
+        boolean noParse = false;
         while (pointer < text.length()) {
             int start = text.indexOf("[", pointer);
             int end = text.indexOf("]", start);
@@ -140,9 +141,16 @@ public class BBCodeReader {
             boolean found = false;
             // Test each BBCodeType for matching start/end
             for (BBCodeType bbCodeType : BBCodeType.values()) {
-
+                if(noParse) {
+                    if(bbCodeType == BBCodeType.NOPARSE && bbCodeType.isEnd(token)) {
+                        noParse = false;
+                        found = true;
+                    }
+                    continue;
+                }
                 if (bbCodeType.isStart(token)) {
-                    spans.add(new Span(start, bbCodeType, token));
+                    if(bbCodeType == BBCodeType.NOPARSE) noParse = true;
+                    else spans.add(new Span(start, bbCodeType, token));
                     found = true;
                 }
                 else if (bbCodeType.isEnd(token)) {

@@ -49,6 +49,7 @@ public class SessionData {
     private String account;
     private String characterName;
     private String password;
+    private String host;
 
     private List<String> charList;
     private String defaultChar;
@@ -69,10 +70,11 @@ public class SessionData {
         sessionSettings = new SessionSettings(context);
     }
 
-    public void initSession(String ticket, String account, String password) {
+    public void initSession(String ticket, String account, String password, String host) {
         this.ticket = ticket;
         this.account = account;
         this.password = password;
+		this.host = host;
     }
 
     public void setCharacterName(String name) {
@@ -90,6 +92,8 @@ public class SessionData {
     public String getTicket() {
         return ticket;
     }
+
+    public String getHost() { return host; }
 
     public void setTicket(String ticket) {
         this.ticket = ticket;
