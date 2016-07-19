@@ -31,7 +31,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:fullBackupContent="@xml/settings"
-        android:logo="@android:color/transparent">
+        android:logo="@android:color/transparent"
+        android:resizeableActivity="true">
 
         <service android:name="com.andfchat.core.connection.AndFChatConnectionService" />
 
