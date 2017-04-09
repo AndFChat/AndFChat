@@ -21,14 +21,14 @@ package com.andfchat.core.util.commands;
 import android.content.Context;
 
 import com.andfchat.R;
-import com.andfchat.core.data.Chatroom;
+import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.FCharacter;
 import com.google.inject.Inject;
 
 public class Ignore extends TextCommand {
 
     public Ignore() {
-        allowedIn = Chatroom.ChatroomType.values();
+        allowedIn = ChatroomType.values();
     }
 
     @Inject

@@ -56,5 +56,7 @@ public abstract class FlistAlertDialog extends DialogFragment {
     }
 
     public abstract void onYes();
-    public abstract void onNo();
+    public void onNo() {
+        //do nothing.
+    }
 }

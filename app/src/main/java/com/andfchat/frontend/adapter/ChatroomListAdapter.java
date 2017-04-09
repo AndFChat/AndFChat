@@ -18,15 +18,12 @@
 
 package com.andfchat.frontend.adapter;
 
-import java.util.Collections;
 import java.util.List;
 
 import roboguice.RoboGuice;
-import roboguice.util.Ln;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Rect;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,10 +38,8 @@ import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
-import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
@@ -130,7 +125,6 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
         }
 
         ImageView image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
-        // sessionData.getSessionSettings().showAvatarPictures()
         if (chatroom.isPrivateChat() && chatroom.getShowAvatar()) {
             String name = chatroom.getCharacters().get(0).getName().toLowerCase().replace(" ", "%20");
             String url = "https://static.f-list.net/images/avatar/" + name + ".png";
@@ -145,6 +139,22 @@ public class ChatroomListAdapter extends ArrayAdapter<Chatroom> {
             image.setImageResource(R.drawable.ic_chat_sys);
         } else {
             image.setImageResource(R.drawable.ic_chat_room);
+        }
+
+        ImageView typing = (ImageView)rowView.findViewById(R.id.TypingImage);
+        typing.setVisibility(View.INVISIBLE);
+        ImageView typingPaused = (ImageView)rowView.findViewById(R.id.TypingPausedImage);
+        typingPaused.setVisibility(View.INVISIBLE);
+
+        if (chatroom.isPrivateChat() && chatroom.getIsTyping()) {
+            typing.setVisibility(View.VISIBLE);
+            typingPaused.setVisibility(View.INVISIBLE);
+        } else if (chatroom.isPrivateChat() && chatroom.getIsTypingPaused()) {
+            typingPaused.setVisibility(View.VISIBLE);
+            typing.setVisibility(View.INVISIBLE);
+        } else {
+            typing.setVisibility(View.INVISIBLE);
+            typingPaused.setVisibility(View.INVISIBLE);
         }
 
         return rowView;

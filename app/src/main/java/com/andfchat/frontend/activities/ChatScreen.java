@@ -36,9 +36,11 @@ import roboguice.inject.InjectView;
 import roboguice.util.Ln;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.media.MediaScannerConnection;
@@ -47,6 +49,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -66,6 +69,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andfchat.R;
 import com.andfchat.core.connection.FlistWebSocketConnection;
@@ -244,7 +248,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 // If request is cancelled, the result arrays are empty.
@@ -255,7 +259,6 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 } else {
                     Snackbar.make(this.findViewById(android.R.id.content), R.string.export_perm_denied, Snackbar.LENGTH_LONG).show();
                 }
-                return;
             }
         }
     }
@@ -512,7 +515,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     public void showDescription() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View layout = inflater.inflate(R.layout.popup_description, null);
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.popup_description, null);
 
         int height = (int)(this.height * 0.8f);
         int width = (int)(this.width * 0.8f);
@@ -548,8 +551,28 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 actionButton.setVisibility(View.VISIBLE);
             }
 
-            if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
-                setChannelTitle(/*chatroom.getName() + " - " + */Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString());
+            if(chatroom.isPrivateChat() && charManager.findCharacter(chatroom.getRecipient().getName(), false) == null) {
+                setChannelTitle("OFFLINE");
+            }
+            else if (chatroom.isPrivateChat() && chatroom.getRecipient().getStatusMsg() != null) {
+                String statusTitle = Html.fromHtml(chatroom.getRecipient().getStatusMsg()).toString();
+                int pointer = 0;
+                while (pointer < statusTitle.length()) {
+                    int start = statusTitle.indexOf("[", pointer);
+                    int end = statusTitle.indexOf("]", start);
+                    // If no [ or ] found, break loop, no BBCode
+                    if (start == -1 || end == -1) {
+                        break;
+                    } else {
+                        // Getting the ] at the end of the token.
+                        end++;
+                    }
+                    // Remove BBCode
+                    statusTitle = statusTitle.substring(0, start) + statusTitle.substring(end);
+                    // Move pointer
+                    pointer = start;
+                }
+                setChannelTitle(statusTitle);
             } else if (chatroom.isSystemChat()) {
                 setChannelTitle(context.getString(R.string.app_name));
             } else {
@@ -606,6 +629,9 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         super.onResume();
         paused = false;
         sessionData.setIsVisible(true);
+        if (!channelList.isVisible()) {
+            channelList.toggleVisibility();
+        }
 
         AdEntry.setAdClickListener(this);
 
@@ -620,13 +646,14 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             actionButton.setVisibility(View.GONE);
         }
 
-        if (!connection.isConnected()) {
+        /*if (!connection.isConnected()) {
             Ln.d("Is not connected, open login");
             openLogin();
         }
-        else if (!sessionData.isInChat()) {
+        else*/ if (!sessionData.isInChat()) {
             Ln.d("Is connected, open selection");
-            openSelection();
+            //openSelection();
+            openLogin();
         }
 
         notificationManager.cancelLedNotification();
@@ -656,6 +683,11 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             Ln.i("Updating to version 0.5.0");
             historyManager.clearHistory(true);
             sessionData.getSessionSettings().setVersion("0.5.0");
+        }
+        if (version.isLowerThan("0.6.0")) {
+            Ln.i("Updating to version 0.6.0");
+            historyManager.clearHistory(true);
+            sessionData.getSessionSettings().setVersion("0.6.0");
         }
     }
 
@@ -692,27 +724,6 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     @Override
-    protected void onDestroy() {
-        Ln.i("onDestroy");
-        notificationManager.cancelAll();
-        try {
-            if (loginPopup.isShowing()) {
-                loginPopup.dismiss();
-            }
-        } catch (NullPointerException e) {
-            Ln.i("loginPopup not showing on destroy");
-        }
-        try {
-            if (charSelectionPopup.isShowing()) {
-                charSelectionPopup.dismiss();
-            }
-        } catch (NullPointerException e) {
-            Ln.i("charSelectionPopup not showing on destroy");
-        }
-        super.onDestroy();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
@@ -732,19 +743,27 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 FriendListAction.open(this, chatFragment.getView());
                 return true;
             case R.id.action_disconnect:
-                if (loginPopup != null) {
-                    loginPopup.dismiss();
-                }
-                if (charSelectionPopup != null) {
+                if (charSelectionPopup != null && charSelectionPopup.isAdded()) {
                     charSelectionPopup.dismiss();
                 }
+                if (loginPopup != null && loginPopup.isAdded()) {
+                    loginPopup.dismiss();
+                }
                 DisconnectAction.disconnect(this);
+                //loginPopup.show(getFragmentManager(), "login_fragment");
                 return true;
             case R.id.action_open_settings:
                 startActivity(new Intent(this, Settings.class));
                 return true;
             case R.id.action_about:
-                AboutAction.open(this, chatFragment.getView());
+                String aboutText;
+                try {
+                    PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                    aboutText = (String.format(getString(R.string.text_about), pInfo.versionName));
+                } catch (PackageManager.NameNotFoundException e){
+                    aboutText = (String.format(getString(R.string.text_about), "Beta"));
+                }
+                AboutAction.open(this, chatFragment.getView(), aboutText);
                 return true;
             case R.id.action_exit:
                 onQuit();
@@ -766,6 +785,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             View w = getCurrentFocus();
             int scrcoords[] = new int[2];
             w.getLocationOnScreen(scrcoords);
+
             float x = event.getRawX() + w.getLeft() - scrcoords[0];
             float y = event.getRawY() + w.getTop() - scrcoords[1];
 
@@ -779,7 +799,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     public void onQuit() {
-        FlistAlertDialog dialog = new FlistAlertDialog(this, getResources().getString(R.string.question_back)) {
+        @SuppressLint("ValidFragment") FlistAlertDialog dialog = new FlistAlertDialog(this, getResources().getString(R.string.question_back)) {
 
             @Override
             public void onYes() {
@@ -787,9 +807,6 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
                 notificationManager.cancelAll();
                 finish();
             }
-
-            @Override
-            public void onNo() {}
         };
 
         dialog.show();
@@ -799,7 +816,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     public void openAd(Spannable text) {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View layout = inflater.inflate(R.layout.popup_description, null);
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.popup_description, null);
 
         int height = (int)(this.height * 0.8f);
         int width = (int)(this.width * 0.8f);
@@ -829,7 +846,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
             }
         }
         else {
-            connection.connect(true);
+            connection.connect();
 
             Runnable runnable = new Runnable() {
                 @Override
@@ -849,31 +866,69 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     }
 
     public void openSelection() {
+        if (paused) {
+            return;
+        }
+
         try {
             if (!charSelectionPopup.isShowing()) {
                 charSelectionPopup.show(getFragmentManager(), "select_fragment");
             }
         } catch (NullPointerException e) {
-            Ln.i("NPE on openLogin");
+            Ln.i("NPE on openSelection");
         }
+    }
+
+    private boolean doubleBackToExitPressedOnce;
+    private Handler mHandler = new Handler();
+
+    private final Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            doubleBackToExitPressedOnce = false;
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        Ln.i("onDestroy");
+        notificationManager.cancelAll();
+        try {
+            if (loginPopup != null && loginPopup.isShowing()) {
+                loginPopup.dismiss();
+            }
+        } catch (NullPointerException e) {
+            Ln.i("loginPopup not showing on destroy");
+        }
+        try {
+            if (charSelectionPopup != null && charSelectionPopup.isShowing()) {
+                charSelectionPopup.dismiss();
+            }
+        } catch (NullPointerException e) {
+            Ln.i("charSelectionPopup not showing on destroy");
+        }
+        super.onDestroy();
+
+        if (mHandler != null) { mHandler.removeCallbacks(mRunnable); }
     }
 
     @Override
     public void onBackPressed() {
-        FlistAlertDialog dialog = new FlistAlertDialog(this, getString(R.string.question_back)) {
+        if (loginPopup != null && loginPopup.isShowing()) {
+            connection.closeConnection(ChatScreen.this);
+            notificationManager.cancelAll();
+            finish();
+        }
 
-            @Override
-            public void onYes() {
-                ChatScreen.super.onBackPressed();
-            }
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
 
-            @Override
-            public void onNo() {
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, R.string.back_quit_toast, Toast.LENGTH_SHORT).show();
 
-            }
-        };
-
-        dialog.show();
+        mHandler.postDelayed(mRunnable, 2000);
     }
 
     @Override
@@ -886,7 +941,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
     public void onEvent(ConnectionEventType type) {
         if (type == ConnectionEventType.CONNECTED) {
             try {
-                if (loginPopup.isShowing()) {
+                if (loginPopup != null && loginPopup.isShowing()) {
                     loginPopup.dismiss();
                 }
             } catch (NullPointerException e) {
@@ -897,7 +952,7 @@ public class ChatScreen extends RoboActionBarActivity implements ChatroomEventLi
         }
         else if (type == ConnectionEventType.CHAR_CONNECTED) {
             try {
-                if (charSelectionPopup.isShowing()) {
+                if (charSelectionPopup != null && charSelectionPopup.isShowing()) {
                     charSelectionPopup.dismiss();
                 }
             } catch (NullPointerException e) {

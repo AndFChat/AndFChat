@@ -6,12 +6,8 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-/**
- * Created by AndFChat on 06.04.2015.
- */
 public interface FlistHttpClient {
 
     @FormUrlEncoded
@@ -24,7 +20,7 @@ public interface FlistHttpClient {
     @POST("/json/api/bookmark-remove.php")
     Call<Object> removeBookmark(@Query("account") String account, @Query("ticket") String ticket, @Query("name") String name);
 
-    public class LoginData {
+    class LoginData {
         private List<String> characters;
 
         private String ticket;

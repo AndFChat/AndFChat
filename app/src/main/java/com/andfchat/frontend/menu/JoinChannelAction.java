@@ -99,20 +99,8 @@ public class JoinChannelAction {
                 adapter.clear();
                 showPrivateChannel.setEnabled(false);
                 showPublicChannel.setEnabled(true);
-                FeedbackListener feedbackListener = new FeedbackListener() {
-
-                    @Override
-                    public void onResponse(String response) {
-                        adapter.replaceChannels(chatroomManager.getPrivateChannelNames());
-                        adapter.setPrivate(true);
-                    }
-
-                    @Override
-                    public void onError(Exception ex) {}
-                };
-
-                connection.registerFeedbackListener(ServerToken.ORS, feedbackListener);
-                connection.askForPrivateChannel();
+                adapter.replaceChannels(chatroomManager.getPrivateChannelNames());
+                adapter.setPrivate(true);
             }
         });
     }

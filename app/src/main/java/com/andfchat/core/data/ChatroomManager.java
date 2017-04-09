@@ -25,10 +25,8 @@ import java.util.Set;
 
 import roboguice.util.Ln;
 
-import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.history.HistoryManager;
 import com.andfchat.core.data.messages.ChatEntry;
-import com.andfchat.frontend.application.AndFChatApplication;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.andfchat.frontend.events.UserEventListener.UserEventType;
@@ -60,7 +58,7 @@ public class ChatroomManager {
             }
         }
 
-        if (activeChat != null) {
+        if (activeChat != null && entry != null) {
             eventManager.fire(entry, activeChat);
         }
     }
@@ -135,6 +133,9 @@ public class ChatroomManager {
         if (chatroom == null) {
             Ln.e("Cant find chatroom, is null");
             return;
+        } else if (entry == null) {
+            Ln.e("Cant find entry, is null");
+            return;
         }
 
         chatroom.addMessage(entry);
@@ -148,9 +149,45 @@ public class ChatroomManager {
         }
     }
 
+    public void addChat(Chatroom chatroom, ChatEntry entry) {
+        if (chatroom == null) {
+            Ln.e("Cant find chatroom, is null");
+            return;
+        } else if (entry == null) {
+            Ln.e("Cant find entry, is null");
+            return;
+        }
+
+        chatroom.addChat(entry);
+        eventManager.fire(entry, chatroom);
+
+        entry.setOwned(sessionData.isUser(entry.getOwner()));
+
+        if (!chatroom.hasNewMessage() && !isActiveChat(chatroom)) {
+            chatroom.setHasNewMessage(true);
+            eventManager.fire(chatroom, ChatroomEventType.NEW_MESSAGE);
+        }
+    }
+
+    public void addTyping(Chatroom chatroom, String typingStatus) {
+        if (chatroom == null) {
+            Ln.e("Cant find chatroom, is null");
+            return;
+        } else if (typingStatus == null) {
+            Ln.e("Typing Status is null");
+            return;
+        }
+
+        chatroom.setTypingStatus(typingStatus);
+        eventManager.fire(chatroom, ChatroomEventType.NEW_TYPING_STATUS);
+    }
+
     public void addStatus(Chatroom chatroom, ChatEntry entry) {
         if (chatroom == null) {
             Ln.e("Cant find chatroom, is null");
+            return;
+        } else if (entry == null) {
+            Ln.e("Cant find entry, is null");
             return;
         }
 
@@ -220,7 +257,9 @@ public class ChatroomManager {
     }
 
     public void addPrivateChannel(Channel channel) {
-        privateChannelSet.add(channel);
+        if (!privateChannelSet.contains(channel)) {
+            privateChannelSet.add(channel);
+        }
     }
 
     public Set<String> getPrivateChannelNames() {

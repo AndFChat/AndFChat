@@ -20,8 +20,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"    
    	android:gravity="center_horizontal"     
-    android:background="?attr/BackgroundColor"
+
     tools:context=".Login" >
+    <!--android:background="?attr/BackgroundColor"-->
 
     <TextView
         android:id="@+id/loginErrorField"
@@ -78,5 +79,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
         />
-        </LinearLayout>
+		
+		<CheckBox
+			android:id="@+id/rememberPassword"
+			android:text="@string/remember_password"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:enabled="false" />
+
+		<CheckBox
+			android:id="@+id/showAdvanced"
+			android:text="@string/show_advanced"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+		<LinearLayout
+			android:id="@+id/advanced"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:visibility="gone">
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/host"
+				android:textAppearance="@android:style/TextAppearance.Small" />
+
+			<EditText
+				android:id="@+id/hostField"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:inputType="textUri"
+				android:textAppearance="@android:style/TextAppearance.Medium" />
+		</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

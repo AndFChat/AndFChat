@@ -18,7 +18,6 @@
 
 package com.andfchat.frontend.adapter;
 
-import java.util.Collections;
 import java.util.List;
 
 import roboguice.RoboGuice;
@@ -41,13 +40,11 @@ import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntryFactory;
 import com.andfchat.core.util.FlistCharComparator;
-import com.andfchat.frontend.util.NameSpannable;
+import com.andfchat.frontend.util.NormalNameSpannable;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 
 import com.jakewharton.picasso.OkHttp3Downloader;
-import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class FriendListAdapter extends ArrayAdapter<FCharacter> {
@@ -98,7 +95,7 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
         final View rowView = convertView;
         // Set username
         TextView textView = (TextView)rowView.findViewById(R.id.itemText);
-        textView.setText(new NameSpannable(character, null, getContext().getResources()));
+        textView.setText(new NormalNameSpannable(character, null, getContext().getResources()));
         textView.setSelected(true);
 
         // Set icon
@@ -132,14 +129,18 @@ public class FriendListAdapter extends ArrayAdapter<FCharacter> {
 
 
         //client.setProtocols(Collections.singletonList(Protocol.HTTP_1_1));
-        image = (ImageView)rowView.findViewById(R.id.ChatroomImage);
-        String name = character.getName().toLowerCase().replace(" ", "%20");
-        String url = "https://static.f-list.net/images/avatar/" + name + ".png";
+        image = (ImageView)rowView.findViewById(R.id.AvatarImage);
+        if (sessionData.getSessionSettings().showAvatarPictures()) {
+            String name = character.getName().toLowerCase().replace(" ", "%20");
+            String url = "https://static.f-list.net/images/avatar/" + name + ".png";
 
-        picasso.load(url)
-                .placeholder(R.drawable.ic_chat_priv)
-                .error(R.drawable.ic_chat_priv)
-                .into(image);
+            picasso.load(url)
+                    .placeholder(R.drawable.ic_chat_priv)
+                    .error(R.drawable.ic_chat_priv)
+                    .into(image);
+        } else {
+            image.setImageResource(R.drawable.ic_chat_priv);
+        }
 
         // Set button
         Button pmButton = (Button)rowView.findViewById(R.id.pmButton);

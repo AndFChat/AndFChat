@@ -44,7 +44,7 @@ public class VariableHandler extends TokenHandler {
 
         private final Class type;
 
-        private Variable(Class type) {
+        Variable(Class type) {
             this.type = type;
         }
 

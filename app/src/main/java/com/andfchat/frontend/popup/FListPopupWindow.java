@@ -18,7 +18,6 @@
 
 package com.andfchat.frontend.popup;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.PopupWindow;

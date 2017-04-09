@@ -1,10 +1,7 @@
 package com.andfchat.frontend.popup;
 
 import android.support.v7.app.AlertDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,18 +24,10 @@ import com.andfchat.core.data.SessionData;
 import com.andfchat.frontend.events.AndFChatEventManager;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
-import okhttp3.Response;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+//import java.util.Iterator;
 import java.util.Set;
 
 import retrofit2.Call;
@@ -48,7 +38,10 @@ import roboguice.util.Ln;
 public class FListLoginPopup extends DialogFragment {
 
     private static String SAVE_ACCOUNT_NAME = "SAVE_ACCOUNT_NAME";
+    private static String SAVE_PASSWORD = "SAVE_PASSWORD";
     private static String ACCOUNT_NAME = "ACCOUNT_NAME";
+    private static String PASSWORD = "PASSWORD";
+    private static String HOST = "HOST";
 
     @Inject
     protected SessionData sessionData;
@@ -73,10 +66,9 @@ public class FListLoginPopup extends DialogFragment {
 
     private View view;
 
-    private EditText account;
-    private EditText password;
+    private EditText account, password, host;
     private TextView errorField;
-    private CheckBox rememberAccount;
+    private CheckBox rememberAccount, rememberPassword;
 
     private boolean isLoggingIn = false;
 
@@ -99,15 +91,36 @@ public class FListLoginPopup extends DialogFragment {
         account = (EditText)view.findViewById(R.id.accountField);
 
         password = (EditText)view.findViewById(R.id.passwordField);
+        host = (EditText)view.findViewById(R.id.hostField);
         errorField = (TextView)view.findViewById(R.id.loginErrorField);
 
         rememberAccount = (CheckBox)view.findViewById(R.id.rememberAccount);
         rememberAccount.setChecked(preferences.getBoolean(SAVE_ACCOUNT_NAME, false));
+        rememberAccount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                rememberPassword.setEnabled(isChecked);
+            }
+        });
+        rememberPassword = (CheckBox)view.findViewById(R.id.rememberPassword);
+        rememberPassword.setEnabled(rememberAccount.isChecked());
+
+        CheckBox showAdvanced = (CheckBox) view.findViewById(R.id.showAdvanced);
+        showAdvanced.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                view.findViewById(R.id.advanced).setVisibility(isChecked ? View.VISIBLE : View.GONE);
+            }
+        });
 
         if (rememberAccount.isChecked()) {
             account.setText(preferences.getString(ACCOUNT_NAME, account.getText().toString()));
-            password.requestFocus();
+            rememberPassword.setChecked(preferences.getBoolean(SAVE_PASSWORD, false));
+            if(rememberPassword.isChecked()) {
+                password.setText(preferences.getString(PASSWORD, ""));
+            } else password.requestFocus();
         }
+        host.setText(preferences.getString(HOST, "ws://chat.f-list.net:9722/"));
 
         builder.setView(view);
         builder.setPositiveButton(R.string.login, null);
@@ -118,10 +131,7 @@ public class FListLoginPopup extends DialogFragment {
     }
 
     public boolean isShowing() {
-        if (getDialog() == null) {
-            return false;
-        }
-        return getDialog().isShowing();
+        return getDialog() != null && getDialog().isShowing();
     }
 
     @Override
@@ -173,13 +183,15 @@ public class FListLoginPopup extends DialogFragment {
                             isLoggingIn = false;
                             FlistHttpClient.LoginData loginData = response.body();
 
-                            if (loginData.getError() == null || loginData.getError().length() == 0) {
-                                Ln.i("Successfully logged in!");
-                                addData(loginData);
-                                // Connect to chat server
-                                connection.connect(true);
-                            } else {
-                                onError(loginData.getError());
+                            if (loginData != null) {
+                                if (loginData.getError() == null || loginData.getError().length() == 0) {
+                                    Ln.i("Successfully logged in!");
+                                    addData(loginData);
+                                    // Connect to chat server
+                                    connection.connect();
+                                } else {
+                                    onError(loginData.getError());
+                                }
                             }
                         }
 
@@ -231,12 +243,11 @@ public class FListLoginPopup extends DialogFragment {
 
     private void addData(FlistHttpClient.LoginData loginData) {
         // Init session
-        sessionData.initSession(loginData.getTicket(), account.getText().toString(), password.getText().toString());
+        sessionData.initSession(loginData.getTicket(), account.getText().toString(), password.getText().toString(), host.getText().toString());
         // Add bookmarks to the RelationManager
 
         Set<String> bookmarksList = new HashSet<String>();
-        for (Iterator<FlistHttpClient.LoginData.Bookmark> iterator = loginData.getBookmarks().iterator(); iterator.hasNext(); ) {
-            FlistHttpClient.LoginData.Bookmark bookmark = iterator.next();
+        for (FlistHttpClient.LoginData.Bookmark bookmark : loginData.getBookmarks()) {
             bookmarksList.add(bookmark.getName());
         }
         relationManager.addCharacterToList(CharRelation.BOOKMARKED, bookmarksList);
@@ -244,8 +255,7 @@ public class FListLoginPopup extends DialogFragment {
 
         // Add friends to the RelationManager
         Set<String> friendList = new HashSet<String>();
-        for (Iterator<FlistHttpClient.LoginData.Friend> iterator = loginData.getFriends().iterator(); iterator.hasNext(); ) {
-            FlistHttpClient.LoginData.Friend friend = iterator.next();
+        for (FlistHttpClient.LoginData.Friend friend : loginData.getFriends()) {
             friendList.add(friend.getFriend());
         }
         relationManager.addCharacterToList(CharRelation.FRIEND, friendList);
@@ -253,11 +263,18 @@ public class FListLoginPopup extends DialogFragment {
 
         SharedPreferences.Editor prefEditor = preferences.edit();
         prefEditor.putBoolean(SAVE_ACCOUNT_NAME, rememberAccount.isChecked());
+        prefEditor.putBoolean(SAVE_PASSWORD, rememberPassword.isChecked());
         if (rememberAccount.isChecked()) {
             prefEditor.putString(ACCOUNT_NAME, account.getText().toString());
         } else {
             prefEditor.remove(ACCOUNT_NAME);
         }
+        if(rememberAccount.isChecked() && rememberPassword.isChecked()) {
+            prefEditor.putString(PASSWORD, password.getText().toString());
+        } else {
+            prefEditor.remove(PASSWORD);
+        }
+        prefEditor.putString(HOST, host.getText().toString());
         prefEditor.apply();
 
         Collections.sort(loginData.getCharacters());
@@ -267,10 +284,9 @@ public class FListLoginPopup extends DialogFragment {
 
     public void setError(String message) {
         if (message.contains("Host is unresolved")) {
-            errorField.setText(getActivity().getString(R.string.error_disconnected) + getActivity().getString(R.string.error_disconnected_no_connection));
-        }
-        else {
-            errorField.setText(getActivity().getString(R.string.error_disconnected) + message);
+            errorField.setText(String.format(getActivity().getString(R.string.error_disconnected), R.string.error_disconnected_no_connection));
+        } else if (!message.isEmpty()) {
+            errorField.setText(getActivity().getString(R.string.error_disconnected, message));
         }
     }
 }

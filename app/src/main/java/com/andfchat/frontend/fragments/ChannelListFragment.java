@@ -60,11 +60,19 @@ public class ChannelListFragment extends RoboFragment implements ChatroomEventLi
 
     public boolean toggleVisibility() {
         if (isVisible) {
-            getView().setVisibility(View.GONE);
-            isVisible = false;
+            try {
+                getView().setVisibility(View.GONE);
+                isVisible = false;
+            } catch (NullPointerException e) {
+                return isVisible;
+            }
         } else {
-            getView().setVisibility(View.VISIBLE);
-            isVisible = true;
+            try {
+                getView().setVisibility(View.VISIBLE);
+                isVisible = true;
+            } catch (NullPointerException e) {
+                return isVisible;
+            }
         }
         return isVisible;
     }

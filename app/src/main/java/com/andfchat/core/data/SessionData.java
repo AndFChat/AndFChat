@@ -28,19 +28,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.andfchat.R;
-import com.andfchat.core.connection.FlistHttpClient;
 import com.andfchat.core.connection.handler.VariableHandler.Variable;
 import com.andfchat.core.util.Version;
 import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.util.TextSize;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Retrofit;
-import roboguice.util.Ln;
 
 @Singleton
 public class SessionData {
@@ -56,6 +49,7 @@ public class SessionData {
     private String account;
     private String characterName;
     private String password;
+    private String host;
 
     private List<String> charList;
     private String defaultChar;
@@ -76,13 +70,14 @@ public class SessionData {
         sessionSettings = new SessionSettings(context);
     }
 
-    public void initSession(String ticket, String account, String password) {
+    public void initSession(String ticket, String account, String password, String host) {
         this.ticket = ticket;
         this.account = account;
         this.password = password;
+		this.host = host;
     }
 
-    public void setCharname(String name) {
+    public void setCharacterName(String name) {
         characterName = name;
     }
 
@@ -97,6 +92,8 @@ public class SessionData {
     public String getTicket() {
         return ticket;
     }
+
+    public String getHost() { return host; }
 
     public void setTicket(String ticket) {
         this.ticket = ticket;
@@ -216,6 +213,10 @@ public class SessionData {
             return preferences.getStringSet(PropertyName.INITIAL_CHANNELS.name().toLowerCase(), null);
         }
 
+        public Set<String> getInitialPrivateChannel() {
+            return preferences.getStringSet(PropertyName.INITIAL_PRIVATE_CHANNELS.name().toLowerCase(), null);
+        }
+
         public boolean useHistory() {
             return preferences.getBoolean(PropertyName.LOG_HISTORY.name().toLowerCase(), true);
         }
@@ -235,17 +236,15 @@ public class SessionData {
         public int getTheme() {
             String theme = preferences.getString(PropertyName.THEME.name().toLowerCase(), "AppTheme");
 
-            if (theme.equals("AppTheme")) {
-                return R.style.AppTheme;
-            }
-            else if (theme.equals("AppTheme.Blue")) {
-                return R.style.AppTheme_Blue;
-            }
-            else if (theme.equals("AppTheme.Light")) {
-                return R.style.AppTheme_Light;
-            }
-            else {
-                return R.style.AppTheme;
+            switch (theme) {
+                case "AppTheme":
+                    return R.style.AppTheme;
+                case "AppTheme.Blue":
+                    return R.style.AppTheme_Blue;
+                case "AppTheme.Light":
+                    return R.style.AppTheme_Light;
+                default:
+                    return R.style.AppTheme;
             }
         }
 
@@ -254,7 +253,7 @@ public class SessionData {
         }
 
         public Version getVersion() {
-            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.5.1"));
+            return new Version(preferences.getString(PropertyName.VERSION.name().toLowerCase(), "0.6.0"));
         }
 
         public void setVersion(String version) {

@@ -50,6 +50,7 @@ import com.andfchat.core.connection.handler.PromotionHandler;
 import com.andfchat.core.connection.handler.RoomModeHandler;
 import com.andfchat.core.connection.handler.TimeoutHandler;
 import com.andfchat.core.connection.handler.TokenHandler;
+import com.andfchat.core.connection.handler.TypingHandler;
 import com.andfchat.core.connection.handler.UptimeHandler;
 import com.andfchat.core.connection.handler.VariableHandler;
 import com.andfchat.core.data.CharacterManager;
@@ -117,6 +118,7 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
         availableTokenHandler.add(new UptimeHandler());
         availableTokenHandler.add(new DemotionHandler());
         availableTokenHandler.add(new TimeoutHandler());
+        availableTokenHandler.add(new TypingHandler());
 
         Injector injector = RoboGuice.getInjector(context);
 
@@ -155,7 +157,7 @@ public class FlistWebSocketHandler extends WebSocketConnectionHandler {
                 chatroomManager.addMessage(chatroom, entry);
             }
 
-            ServerToken token = null;
+            ServerToken token;
             try {
                 token = ServerToken.valueOf(payload.substring(0, 3));
                 Ln.v("Incoming message with token: " + token.name());

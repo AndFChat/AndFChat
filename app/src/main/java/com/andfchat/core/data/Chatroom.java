@@ -48,10 +48,14 @@ public class Chatroom {
     private boolean showAdText = false;
     private boolean showAvatar = true;
 
+    private boolean isTyping = false;
+    private boolean isTypingPaused = false;
+
     private final Channel channel;
     private final int maxTextLength;
 
     private List<ChatEntry> chatMessages;
+    private List<ChatEntry> exportableChatMessages;
     private final List<FCharacter> characters = new ArrayList<FCharacter>();
 
     private Spannable description;
@@ -66,6 +70,7 @@ public class Chatroom {
         this.channel = channel;
         this.maxTextLength = maxTextLength;
         this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
+        this.exportableChatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
     }
 
     public Chatroom(Channel channel, FCharacter character, int maxTextLength, boolean showAvatar) {
@@ -73,6 +78,7 @@ public class Chatroom {
         this.characters.add(character);
         this.maxTextLength = maxTextLength;
         this.chatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
+        this.exportableChatMessages = new ArrayList<ChatEntry>(channel.getType().maxEntries);
         this.showAvatar = showAvatar;
     }
 
@@ -180,8 +186,34 @@ public class Chatroom {
         return chatMessages.get(chatMessages.size() - 1).getDate().after(date);
     }
 
+    protected void setTypingStatus(String typingStatus) {
+        switch (typingStatus) {
+            case "typing":
+                isTyping = true;
+                isTypingPaused = false;
+                break;
+            case "paused":
+                isTypingPaused = true;
+                isTyping = false;
+                break;
+            default:
+                isTyping = false;
+                isTypingPaused = false;
+                break;
+        }
+    }
+
+    public boolean getIsTyping() {return isTyping;}
+
+    public boolean getIsTypingPaused() {return isTypingPaused;}
+
     protected void addMessage(ChatEntry entry) {
         chatMessages.add(entry);
+    }
+
+    protected void addChat(ChatEntry entry) {
+        chatMessages.add(entry);
+        exportableChatMessages.add(entry);
     }
 
     protected void addStatus(ChatEntry entry) {
@@ -245,6 +277,10 @@ public class Chatroom {
 
     public List<ChatEntry> getChatHistory() {
         return chatMessages;
+    }
+
+    public List<ChatEntry> getExportableChatHistory() {
+        return exportableChatMessages;
     }
 
     public void setChatHistory(List<ChatEntry> chatHistory) {

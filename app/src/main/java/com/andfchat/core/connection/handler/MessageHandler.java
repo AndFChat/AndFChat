@@ -18,6 +18,7 @@
 
 package com.andfchat.core.connection.handler;
 
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONException;
@@ -45,13 +46,14 @@ public class MessageHandler extends TokenHandler {
             String character = jsonObject.getString("character");
             String message = jsonObject.getString("message");
             String channel = jsonObject.getString("channel");
+			Date time = jsonObject.has("time") ? parseDate(jsonObject.getLong("time")) : new Date();
 
             Chatroom chatroom = chatroomManager.getChatroom(channel);
 
             if (chatroom != null) {
                 if(!characterManager.findCharacter(character).isIgnored()) {
-                    ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
-                    chatroomManager.addMessage(chatroom, entry);
+                    ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message, time);
+                    chatroomManager.addChat(chatroom, entry);
                 } else {
                     Ln.d("Blocked a message from an ignored character.");
                 }

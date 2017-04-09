@@ -26,14 +26,20 @@ import java.util.List;
 import roboguice.RoboGuice;
 import roboguice.util.Ln;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
+import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.text.style.SubscriptSpan;
@@ -42,16 +48,14 @@ import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.webkit.URLUtil;
+import android.widget.ImageView;
 
-import com.andfchat.core.connection.handler.PrivateMessageHandler;
-import com.andfchat.core.connection.handler.VariableHandler;
-import com.andfchat.core.data.Channel;
-import com.andfchat.core.data.Chatroom;
+import com.andfchat.R;
 import com.andfchat.core.data.ChatroomManager;
-import com.andfchat.core.data.FCharacter;
-import com.andfchat.core.data.SessionData;
-import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.util.OpenChatroomSpan;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.inject.Inject;
 
 public class BBCodeReader {
@@ -64,9 +68,9 @@ public class BBCodeReader {
         SUPERSCRIPT("sup", new SuperscriptSpan(), new SimpleTextMatcher()),
         SUBSCRIPT("sub", new SubscriptSpan(), new SimpleTextMatcher()),
         COLOR("color", null, new VariableTextMatcher()),
-        //UNPARSED("noparse", , ), TODO noparse
-        //ICON("icon", , ), TODO icon
-        //EICON("eicon", , ), TODO eicon
+        NOPARSE("noparse", null, new SimpleTextMatcher()),
+        ICON("icon", null, new SimpleTextMatcher()),
+        EICON("eicon", null, new SimpleTextMatcher()),
         LINK("url", null, new VariableTextMatcher()),
         USER("user", new UnderlineSpan(), new SimpleTextMatcher()),
         PRIVATE_CHANNEL("session", null, new VariableTextMatcher()),
@@ -118,6 +122,7 @@ public class BBCodeReader {
 
         text = text.replace(NEW_LINE_DELIMITER, "\n");
 
+        boolean noParse = false;
         while (pointer < text.length()) {
             int start = text.indexOf("[", pointer);
             int end = text.indexOf("]", start);
@@ -136,9 +141,16 @@ public class BBCodeReader {
             boolean found = false;
             // Test each BBCodeType for matching start/end
             for (BBCodeType bbCodeType : BBCodeType.values()) {
-
+                if(noParse) {
+                    if(bbCodeType == BBCodeType.NOPARSE && bbCodeType.isEnd(token)) {
+                        noParse = false;
+                        found = true;
+                    }
+                    continue;
+                }
                 if (bbCodeType.isStart(token)) {
-                    spans.add(new Span(start, bbCodeType, token));
+                    if(bbCodeType == BBCodeType.NOPARSE) noParse = true;
+                    else spans.add(new Span(start, bbCodeType, token));
                     found = true;
                 }
                 else if (bbCodeType.isEnd(token)) {
@@ -173,8 +185,14 @@ public class BBCodeReader {
         Spannable textSpan = new SpannableString(text);
         for (Span span : spans) {
             if (span.closed()) {
+                if (span.bbCodeType.equals(BBCodeType.LINK) && (span.end - span.start == 0)) {
+                    Spannable linkTextSpan = new SpannableString("[LINK]");
+                    CharSequence newText = TextUtils.concat(textSpan.subSequence(0, span.start), linkTextSpan, textSpan.subSequence(span.end, textSpan.length()));
+                    textSpan = new SpannableStringBuilder(newText);
+                    span.setEnd(span.end + linkTextSpan.length());
+                }
                 Ln.v("ADD span: " + span.toString());
-                span.addToText(textSpan, context);
+                textSpan = span.addToText(textSpan, context);
             }
         }
 
@@ -233,6 +251,8 @@ public class BBCodeReader {
 
         private String key = null;
         private String replacement = null;
+        private Spannable text;
+        StateListDrawable icon = new StateListDrawable();
 
         @Inject
         private ChatroomManager chatroomManager;
@@ -251,8 +271,12 @@ public class BBCodeReader {
             return end != null;
         }
 
-        public void addToText(Spannable text, Context context) {
-            if (bbCodeType == BBCodeType.COLOR) {
+        public Spannable addToText(Spannable aText, final Context context) {
+            text = aText;
+            /*if (bbCodeType == BBCodeType.UNPARSED) {
+                text.setSpan(new StyleSpan(Typeface.NORMAL), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            }
+            else*/ if (bbCodeType == BBCodeType.COLOR) {
                 String colorText = bbCodeType.getVariable(token);
                 if (colorText != null) {
                     try {
@@ -294,13 +318,88 @@ public class BBCodeReader {
                 String link = "http://f-list.net/c/" + text.subSequence(start, end).toString();
 
                 Ln.d("Url: " + link);
-                if (link != null && URLUtil.isValidUrl(link)) {
+                if (URLUtil.isValidUrl(link)) {
                     text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 }
+            }
+            else if (bbCodeType == BBCodeType.ICON) {
+                String url = "https://static.f-list.net/images/avatar/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20") + ".png";
+                String link = "http://f-list.net/c/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20");
+
+                Ln.d("Icon Url: " + url);
+                if (URLUtil.isValidUrl(url)) {
+                    icon.addState(new int[]{android.R.attr.state_first}, context.getResources().getDrawable(R.drawable.ic_chat_priv));
+                    icon.setState(new int[]{android.R.attr.state_first});
+
+                    Glide.with(context)
+                            .load(url)
+                            .asBitmap()
+                            .into(new SimpleTarget<Bitmap>(100,100) {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                    ImageView image = new ImageView(context);
+                                    image.setImageBitmap(resource); // Possibly runOnUiThread()
+                                    Drawable dImage = image.getDrawable();
+                                    dImage.setBounds(0, 0, dImage.getIntrinsicWidth(), dImage.getIntrinsicHeight());
+                                    icon.addState(new int[]{android.R.attr.state_last}, dImage);
+                                    icon.setState(new int[]{android.R.attr.state_last});
+                                    Ln.i("Does this even happen?");
+                                }
+                            });
+                    icon.setVisible(true, false);
+                    if (icon != null) {
+                        icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+                        ImageSpan iconSpan = new ImageSpan(icon);
+                        text.setSpan(iconSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        if (URLUtil.isValidUrl(link)) {
+                            text.setSpan(new URLSpan(link), start, end, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                        }
+                    }
+                }
+            }
+            else if (bbCodeType == BBCodeType.EICON) {
+                String url = "https://static.f-list.net/images/eicon/" + text.subSequence(start, end).toString().toLowerCase().replace(" ", "%20") + ".png";
+
+                Ln.d("Icon Url: " + url);
+                if (URLUtil.isValidUrl(url)) {
+                    icon.addState(new int[]{android.R.attr.state_first}, context.getResources().getDrawable(R.drawable.ic_chat_priv));
+                    icon.setState(new int[]{android.R.attr.state_first});
+
+                    Glide.with(context)
+                            .load(url)
+                            .asBitmap()
+                            .into(new SimpleTarget<Bitmap>(100,100) {
+                                @Override
+                                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                                    ImageView image = new ImageView(context);
+                                    image.setImageBitmap(resource); // Possibly runOnUiThread()
+                                    Drawable dImage = image.getDrawable();
+                                    dImage.setBounds(0, 0, dImage.getIntrinsicWidth(), dImage.getIntrinsicHeight());
+                                    icon.addState(new int[]{android.R.attr.state_last}, dImage);
+                                    icon.setState(new int[]{android.R.attr.state_last});
+                                    Ln.i("Does this even happen?");
+                                }
+                            });
+                    icon.setVisible(true, false);
+                    if (icon != null) {
+                        icon.setBounds(0, 0, icon.getIntrinsicWidth(), icon.getIntrinsicHeight());
+                        text.setSpan(new ImageSpan(icon), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    }
+                }
+            }
+            else if (bbCodeType == BBCodeType.SUPERSCRIPT) {
+                text.setSpan(new SuperscriptSpan(), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                text.setSpan(new RelativeSizeSpan(0.8f), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            }
+            else if (bbCodeType == BBCodeType.SUBSCRIPT) {
+                text.setSpan(new SubscriptSpan(), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                text.setSpan(new RelativeSizeSpan(0.8f), start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             }
             else {
                 text.setSpan(bbCodeType.spannableType, start, end, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
             }
+
+            return text;
         }
 
         public void doReplacement(SpannableStringBuilder text) {
@@ -319,8 +418,8 @@ public class BBCodeReader {
     }
 
     public interface Matcher {
-        public boolean isStart(String text, BBCodeType type);
-        public boolean isEnd(String text, BBCodeType type);
+        boolean isStart(String text, BBCodeType type);
+        boolean isEnd(String text, BBCodeType type);
     }
 
     /**

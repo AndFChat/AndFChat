@@ -19,7 +19,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center_horizontal"
-    android:background="?attr/BackgroundColor">
+    >
+    <!--android:background="?attr/BackgroundColor"-->
 
     <LinearLayout
         android:layout_width="250dp"

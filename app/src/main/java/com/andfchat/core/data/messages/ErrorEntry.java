@@ -6,6 +6,8 @@ import android.graphics.Typeface;
 import com.andfchat.R;
 import com.andfchat.core.data.FCharacter;
 
+import java.util.Date;
+
 public class ErrorEntry extends ChatEntry {
 
     private static final long serialVersionUID = 1L;
@@ -13,7 +15,7 @@ public class ErrorEntry extends ChatEntry {
     private final String text;
 
     public ErrorEntry(FCharacter owner, String text) {
-        super(owner, MessageType.ERROR);
+        super(owner, MessageType.ERROR, new Date());
         this.text = text;
     }
 

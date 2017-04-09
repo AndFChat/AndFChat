@@ -36,8 +36,8 @@ public abstract class ChatEntry implements Serializable {
 
     protected final static int DATE_CHAR_LENGTH = 10;
 
-    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("[KK:mm aa]", Locale.ENGLISH);
-    protected static final DateFormat DATE_FORMAT_OLD = new SimpleDateFormat("[dd/MM/yy]", Locale.ENGLISH);
+    protected static final DateFormat DATE_FORMAT = DateFormat.getTimeInstance(DateFormat.SHORT);
+    protected static final DateFormat DATE_FORMAT_OLD = DateFormat.getDateInstance(DateFormat.SHORT);
 
     protected final Date date;
     protected final MessageType type;
@@ -52,11 +52,10 @@ public abstract class ChatEntry implements Serializable {
 
     public Integer iconId = null;
 
-    public ChatEntry(FCharacter owner, MessageType type) {
+    public ChatEntry(FCharacter owner, MessageType type, Date date) {
         this.owner = owner;
         this.type = type;
-
-        this.date = new Date();
+        this.date = date;
     }
 
     public boolean isOwned() {
@@ -114,11 +113,7 @@ public abstract class ChatEntry implements Serializable {
     }
 
     protected Spannable createDateSpannable(Context context) {
-        String dateText = DATE_FORMAT.format(date);
-        // older than 24h
-        if (date.before(new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000))) {
-            dateText = DATE_FORMAT_OLD.format(date);
-        }
+        String dateText = '[' + (date.before(new Date(System.currentTimeMillis() - 86400000)) ? DATE_FORMAT_OLD : DATE_FORMAT).format(date) + ']';
         Spannable dateSpan = new SpannableString(dateText);
         dateSpan.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.text_timestamp_color)), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         dateSpan.setSpan(new RelativeSizeSpan(0.70f), 0, dateText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);

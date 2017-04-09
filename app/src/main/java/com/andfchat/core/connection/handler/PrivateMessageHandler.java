@@ -18,7 +18,12 @@
 
 package com.andfchat.core.connection.handler;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,9 +40,6 @@ import com.andfchat.core.data.Chatroom.ChatroomType;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.messages.ChatEntry;
-import com.andfchat.core.data.messages.ChatEntryFactory;
-import com.andfchat.core.data.messages.MessageEntry;
-import com.andfchat.core.data.messages.NotationEntry;
 import com.andfchat.frontend.application.AndFChatNotification;
 import com.andfchat.frontend.events.ChatroomEventListener.ChatroomEventType;
 import com.google.inject.Inject;
@@ -56,6 +58,7 @@ public class PrivateMessageHandler extends TokenHandler {
     protected AndFChatNotification notification;
 
     private final static int VIBRATING_TIME = 300;
+    private final static long[] PATTERN = {0, 100, 100, 100};
 
     private int messages = 0;
 
@@ -65,6 +68,7 @@ public class PrivateMessageHandler extends TokenHandler {
 
         String character = jsonObject.getString("character");
         String message = jsonObject.getString("message");
+        Date time = jsonObject.has("time") ? parseDate(jsonObject.getLong("time")) : new Date();
 
         if (!characterManager.findCharacter(character).isIgnored()) {
 
@@ -82,11 +86,11 @@ public class PrivateMessageHandler extends TokenHandler {
             }
 
             // If vibration is allowed, do it on new messages!
-            if (sessionData.getSessionSettings().vibrationFeedback()) {
+            if (sessionData.getSessionSettings().vibrationFeedback() && chatroom != null) {
                 // Vibrate if the active channel is not the same as the "messaged" one or the app is not visible and the chatroom isn't already set to "hasNewMessage".
                 if ((!chatroomManager.getActiveChat().equals(chatroom) || !sessionData.isVisible()) && !chatroom.hasNewMessage()) {
                     Ln.d("New Message Vibration on!");
-                    vibrator.vibrate(VIBRATING_TIME);
+                    vibrator.vibrate(PATTERN, -1);
                 }
             }
 
@@ -95,8 +99,9 @@ public class PrivateMessageHandler extends TokenHandler {
                 notification.updateNotification(sessionData.addMessage());
             }
 
-            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message);
-            chatroomManager.addMessage(chatroom, entry);
+            ChatEntry entry = entryFactory.getMessage(characterManager.findCharacter(character), message, time);
+            chatroomManager.addChat(chatroom, entry);
+            chatroomManager.addTyping(chatroom, "clear");
         } else {
             Ln.d("Blocked a private message from an ignored character.");
         }

@@ -35,9 +35,9 @@ public enum CharStatus {
 
     private boolean allowedToSet = true;
 
-    private CharStatus() {}
+    CharStatus() {}
 
-    private CharStatus(boolean isAllowedToSet) {
+    CharStatus(boolean isAllowedToSet) {
         allowedToSet = isAllowedToSet;
     }
 

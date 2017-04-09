@@ -61,9 +61,7 @@ public class SmileyReader {
         for (Entry<Pattern, Integer> entry : emoticons.entrySet()) {
             Matcher matcher = entry.getKey().matcher(text);
             while (matcher.find()) {
-                text.setSpan(new ImageSpan(context, entry.getValue()),
-                        matcher.start(), matcher.end(),
-                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                text.setSpan(new ImageSpan(context, entry.getValue()), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
                 

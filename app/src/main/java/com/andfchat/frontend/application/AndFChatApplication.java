@@ -35,7 +35,7 @@ import com.andfchat.core.connection.AndFChatConnectionService;
 import com.andfchat.core.connection.AndFChatConnectionService.ConnectionServiceBinder;
 
 import de.tavendo.autobahn.WebSocketConnection;
-import roboguice.RoboGuice;
+//import roboguice.RoboGuice;
 import roboguice.util.Ln;
 
 @ReportsCrashes(formKey = "", // will not be used

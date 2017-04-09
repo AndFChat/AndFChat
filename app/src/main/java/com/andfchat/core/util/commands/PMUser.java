@@ -67,6 +67,10 @@ public class PMUser extends TextCommand {
             return;
         }
 
+        if (text.equals(sessionData.getCharacterName())) {
+            return;
+        }
+
         FCharacter flistChar = characterManager.findCharacter(text, false);
 
         if (flistChar == null) {
@@ -85,8 +89,10 @@ public class PMUser extends TextCommand {
                 chatroom = chatroomManager.getPrivateChatFor(flistChar);
             }
 
-            chatroomManager.setActiveChat(chatroom);
-            eventManager.fire(chatroom);
+            if (chatroom != null) {
+                chatroomManager.setActiveChat(chatroom);
+                eventManager.fire(chatroom);
+            }
         }
     }
 }

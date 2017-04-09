@@ -26,12 +26,11 @@ import roboguice.activity.RoboPreferenceActivity;
 import roboguice.util.Ln;
 import android.app.NotificationManager;
 import android.os.Bundle;
-import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 
 import com.andfchat.R;
+import com.andfchat.core.connection.FlistWebSocketConnection;
 import com.andfchat.core.data.ChatroomManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.history.HistoryManager;
@@ -50,6 +49,8 @@ public class Settings extends RoboPreferenceActivity {
     protected SessionData sessionData;
     @Inject
     protected HistoryManager historyManager;
+    @Inject
+    private FlistWebSocketConnection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +91,28 @@ public class Settings extends RoboPreferenceActivity {
         //title += ": " + sessionData.getSessionSettings().getInitialChannel();
         initialChannelList.setTitle(title);
 
+        final MultiSelectListPreference initialPrivChannelList = (MultiSelectListPreference)findPreference("initial_private_channels");
+        ArrayList<String> privChannels = new ArrayList<String>(chatroomManager.getPrivateChannelNames());
+        Collections.sort(privChannels);
+        ArrayList<String> privChannelIDs = new ArrayList<>();
+        for (int i=0; i<privChannels.size(); i++) {
+            String channelID = chatroomManager.getPrivateChannelByName(privChannels.get(i)).getChannelId();
+            privChannelIDs.add(channelID);
+        }
+        String[] privDefaults = {"ADH-e16df7b19f4a38938ee0"};
+        ArrayList<String> defaultPrivChannels = new ArrayList<String>(Arrays.asList(privDefaults));
+
+        initialPrivChannelList.setEntries(privChannels.toArray(new String[privChannels.size()]));
+        initialPrivChannelList.setEntryValues(privChannelIDs.toArray(new String[privChannelIDs.size()]));
+        initialPrivChannelList.setDefaultValue(defaultPrivChannels.toArray());
+
+        if(sessionData.getSessionSettings().getInitialPrivateChannel() != null) {
+            initialPrivChannelList.setValues(sessionData.getSessionSettings().getInitialPrivateChannel());
+        }
+
+        String privTitle = getString(R.string.title_initial_private_channel);
+        initialPrivChannelList.setTitle(privTitle);
+
         /*final ListPreference textSizeList = (ListPreference)findPreference("chat_text_size");
 
         textSizeList.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
@@ -123,11 +146,6 @@ public class Settings extends RoboPreferenceActivity {
                                 public void onYes() {
                                     Ln.d("Clear history!");
                                     historyManager.clearHistory(true);
-                                }
-
-                                @Override
-                                public void onNo() {
-                                    // Do nothing
                                 }
                             };
 

@@ -33,7 +33,7 @@ public enum Gender {
     private String name;
     private int color;
 
-    private Gender(String name, int color) {
+    Gender(String name, int color) {
         this.name = name;
         this.color = color;
     }

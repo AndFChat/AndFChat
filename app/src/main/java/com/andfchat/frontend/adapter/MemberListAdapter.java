@@ -19,7 +19,6 @@
 package com.andfchat.frontend.adapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.sourcerer.quickaction.ActionItem;
@@ -38,9 +37,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,16 +57,14 @@ import com.andfchat.core.data.FCharacter;
 import com.andfchat.core.data.RelationManager;
 import com.andfchat.core.data.SessionData;
 import com.andfchat.core.data.messages.ChatEntryFactory;
-import com.andfchat.core.util.FlistCharComparator;
-import com.andfchat.frontend.popup.FListLoginPopup;
+import com.andfchat.core.util.FlistCharComparatorGender;
 import com.andfchat.frontend.util.NameSpannable;
 import com.google.inject.Inject;
 import okhttp3.OkHttpClient;
-import okhttp3.Protocol;
 
 public class MemberListAdapter extends ArrayAdapter<FCharacter> {
 
-    public final static FlistCharComparator COMPARATOR = new FlistCharComparator();
+    public final static FlistCharComparatorGender COMPARATOR = new FlistCharComparatorGender();
 
     @Inject
     private ChatroomManager chatroomManager;
@@ -252,12 +246,14 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         public TextView textView;
         public ImageView itemIcon;
         public ImageView itemIconOverlay;
+        public ImageView itemIconOverlay2;
         View userLabel;
 
-        public UserViewHolder(TextView textView, ImageView itemIcon, ImageView itemIconOverlay, View userLabel){
+        public UserViewHolder(TextView textView, ImageView itemIcon, ImageView itemIconOverlay, ImageView itemIconOverlay2, View userLabel){
             this.textView = textView;
             this.itemIcon = itemIcon;
             this.itemIconOverlay = itemIconOverlay;
+            this.itemIconOverlay2 = itemIconOverlay2;
             this.userLabel = userLabel;
         }
     }
@@ -269,6 +265,7 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         TextView textView;
         ImageView itemIcon;
         ImageView itemIconOverlay;
+        ImageView itemIconOverlay2;
         View userLabel;
 
         if (convertView == null) {
@@ -278,13 +275,15 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
             textView = (TextView) convertView.findViewById(R.id.itemText);
             itemIcon = (ImageView)convertView.findViewById(R.id.itemIcon);
             itemIconOverlay = (ImageView)convertView.findViewById(R.id.itemIconOverlay);
+            itemIconOverlay2 = (ImageView)convertView.findViewById(R.id.itemIconOverlay2);
             userLabel = convertView.findViewById(R.id.userlabel);
-            convertView.setTag(new UserViewHolder(textView, itemIcon, itemIconOverlay, userLabel));
+            convertView.setTag(new UserViewHolder(textView, itemIcon, itemIconOverlay, itemIconOverlay2, userLabel));
         } else {
             UserViewHolder holder = (UserViewHolder) convertView.getTag();
             textView = holder.textView;
             itemIcon = holder.itemIcon;
             itemIconOverlay = holder.itemIconOverlay;
+            itemIconOverlay2 = holder.itemIconOverlay2;
             userLabel = holder.userLabel;
         }
 
@@ -322,11 +321,17 @@ public class MemberListAdapter extends ArrayAdapter<FCharacter> {
         }
 
         // Set icon
-        if (character.isGlobalOperator() || chatroomManager.getActiveChat().isChannelMod(character)) {
+        if (character.isGlobalOperator()) {
             itemIconOverlay.setVisibility(View.VISIBLE);
+            itemIconOverlay2.setVisibility(View.GONE);
+        }
+        else if (chatroomManager.getActiveChat().isChannelMod(character)) {
+            itemIconOverlay.setVisibility(View.GONE);
+            itemIconOverlay2.setVisibility(View.VISIBLE);
         }
         else {
             itemIconOverlay.setVisibility(View.GONE);
+            itemIconOverlay2.setVisibility(View.GONE);
         }
 
         userLabel.setOnClickListener(new OnClickListener() {
