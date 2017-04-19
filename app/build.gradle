@@ -8,8 +8,11 @@ android {
         applicationId "com.andfchat"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 8
-        versionName "0.6.1"
+        versionCode 9
+        versionName "0.6.2"
+    }
+    lintOptions {
+        abortOnError false
     }
     buildTypes {
         release {
@@ -42,8 +45,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     // HTTP-Client
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
