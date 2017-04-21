@@ -51,6 +51,10 @@ public abstract class FlistAlertDialog extends DialogFragment {
         });
     }
 
+    public void setText(String text) {
+        dialog.setMessage(text);
+    }
+
     public void show() {
         dialog.create().show();
     }

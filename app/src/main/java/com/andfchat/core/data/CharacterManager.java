@@ -47,9 +47,9 @@ public class CharacterManager {
     public static final String USER_SYSTEM_INPUT = "Input";
 
     @Inject
-    public CharacterManager(Context context) {
+    public CharacterManager() {
         clear();
-        relationManager = RoboGuice.getInjector(context).getInstance(RelationManager.class);
+        //relationManager = RoboGuice.getInjector(context).getInstance(RelationManager.class);
     }
 
     public FCharacter findCharacter(String name, boolean create) {
