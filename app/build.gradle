@@ -4,6 +4,10 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "com.andfchat"
         minSdkVersion 14
@@ -19,14 +23,12 @@ android {
             minifyEnabled false
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
             //signingConfig signingConfigs.config
         }
         debug {
             minifyEnabled false
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            proguardFile 'C:/Users/Limon/AndroidStudioProjects/AndFChat/app/proguard-rules.pro'
             //signingConfig signingConfigs.config
         }
     }

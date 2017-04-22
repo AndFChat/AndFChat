@@ -24,6 +24,8 @@ import java.util.Collections;
 
 import roboguice.activity.RoboPreferenceActivity;
 import roboguice.util.Ln;
+
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.preference.MultiSelectListPreference;
@@ -140,7 +142,7 @@ public class Settings extends RoboPreferenceActivity {
                         @Override
                         public boolean onPreferenceClick(Preference arg0) {
 
-                            FlistAlertDialog dialog = new FlistAlertDialog(Settings.this, Settings.this.getResources().getString(R.string.question_delete_log)) {
+                            @SuppressLint("ValidFragment") FlistAlertDialog dialog = new FlistAlertDialog(Settings.this, Settings.this.getResources().getString(R.string.question_delete_log)) {
 
                                 @Override
                                 public void onYes() {

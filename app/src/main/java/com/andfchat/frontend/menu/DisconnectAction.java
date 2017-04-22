@@ -20,6 +20,7 @@ package com.andfchat.frontend.menu;
 
 import roboguice.RoboGuice;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 
 import com.andfchat.R;
@@ -30,12 +31,12 @@ public class DisconnectAction {
 
     public static void disconnect(final Activity activity) {
 
-        FlistAlertDialog dialog = new FlistAlertDialog(activity, activity.getResources().getString(R.string.question_disconnect)) {
+        @SuppressLint("ValidFragment") FlistAlertDialog dialog = new FlistAlertDialog(activity, activity.getResources().getString(R.string.question_disconnect)) {
 
-            @Override
-            public void onYes() {
-                RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnectionLogout(activity);
-            }
+        @Override
+        public void onYes() {
+            RoboGuice.getInjector(activity).getInstance(FlistWebSocketConnection.class).closeConnectionLogout(activity);
+        }
         };
 
         dialog.show();
