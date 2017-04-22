@@ -15,6 +15,9 @@ android {
         versionCode 9
         versionName "0.6.2"
     }
+    lintOptions {
+        abortOnError false
+    }
     buildTypes {
         release {
             minifyEnabled false
